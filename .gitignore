@@ -1,3 +1,4 @@
+.gitignore
 inst/doc
 README.Rmd
 README.html

@@ -131,361 +131,269 @@
     </p>"
 
   # guidelines.en ----
-  guidelines.en <- 
-  "<div id=header>
-  <h1 class=title toc-ignore>archeoViz</h1>
-  </div>
-  <p><code>archeoViz</code> is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial analysis methods (convex hull, regression surfaces, 2D kernel density estimation), and display excavation timeline. <code>archeoViz</code> can be used locally or deployed on a server, either with interactive input of data or with a static data set.</p>
-  <ul>
-  <li><a href=#installation><strong>Installation</strong></a>
-  <ul>
-  <li><a href=#local-use>Local use</a></li>
-  <li><a href=#deployed-use>Deployed use</a></li>
-  </ul></li>
-  <li><a href=#community-guidelines><strong>Community guidelines</strong></a>
-  <ul>
-  <li><a href=#reporting-bugs>Reporting bugs</a></li>
-  <li><a href=#suggesting-changes>Suggesting changes</a></li>
-  </ul></li>
-  <li><a href=#use><strong>Use</strong></a>
-  <ul>
-  <li><a href=#input-data>Input data</a></li>
-  <li><a href=#dataset-sub-setting>Data set sub-setting</a></li>
-  <li><a href=#interactive-visualisation>Interactive visualisation</a></li>
-  <li><a href=#graphical-outputs>Graphical outputs</a></li>
-  <li><a href=#spatial-statistics>Spatial statistics</a><br />
-  </li>
-  </ul></li>
-  <li><a href=#references><strong>References</strong></a></li>
-  </ul>
-  <div id=installation class=section level1>
-  <h1>Installation</h1>
-  <p><code>archeoViz</code> can be used in two ways:</p>
-  <ul>
-  <li>locally, on the user's machine</li>
-  <li>remotely, after deploying the app on a distant server</li>
-  </ul>
-  <div id=local-use class=section level2>
-  <h2>Local use</h2>
-  <p>The package can be installed from GitHub with:</p>
-  <pre class=r><code># install.packages(&quot;devtools&quot;)
-  devtools::install_github(&quot;sebastien-plutniak/archeoviz&quot;)</code></pre>
-  <p>Then, load the package and launch the app with:</p>
-  <pre class=r><code>library(archeoViz)
-  archeoViz()</code></pre>
-  </div>
-  <div id=deployed-use class=section level2>
-  <h2>Deployed use</h2>
-  <p>To deploy <code>archeoViz</code> on your Shiny server, first download and unzip the package:</p>
-  <pre class=r><code># set the working directory on your shiny server:
-  setwd(dir = &quot;/some/path/&quot;)
-  # download the package:
-  download.file(url = &quot;https://github.com/sebastien-plutniak/archeoviz/archive/master.zip&quot;,
-                destfile = &quot;archeoviz.zip&quot;)
-  # unzip it
-  unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
-  <p>Then, go to <a href=https:// class=uri>https://</a><your-shiny-server>/archeoviz.</p>
-  <p>To set the app with your data and preferences, edit the app.R file, located at the root of the directory:</p>
-  <pre class=r><code>archeoViz(objects.df = NULL,   # data.frame with data about the objects
-            refits.df = NULL,    # optional data.frame for refitting data
-            timeline.df = NULL,  # optional data.frame for the excavation timeline
-            title = NULL,        # title of the site / data set
-            home.text = NULL,    # html content to display on the home page
-            set.theme = &quot;cosmo&quot;) # graphic theme for the Shiny interface</code></pre>
-  <p>The possible values for the <code>set.theme</code> parameter are illustrated on <a href=https://rstudio.github.io/shinythemes>this page</a>. For an example, see <code>archeoViz</code> deployed on the <a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz><em>Huma Num</em> Shiny server</a>.</p>
-  </div>
-  </div>
-  <div id=community-guidelines class=section level1>
-  <h1>Community guidelines</h1>
-  <div id=reporting-bugs class=section level2>
-  <h2>Reporting bugs</h2>
-  <p>If you encounter a bug, please fill an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> with all the details needed to reproduce it.</p>
-  </div>
-  <div id=suggesting-changes class=section level2>
-  <h2>Suggesting changes</h2>
-  <p>Suggestions of changes to <code>archeoViz</code> are welcome. These requests may concern additional functions, changes to documentation, additional examples, new features, etc. They can be made by filling an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> and, even better, using pull requests and the <a href=https://help.github.com/articles/about-pull-requests>GitHub Fork and Pull model</a>.</p>
-  </div>
-  </div>
-  <div id=use class=section level1>
-  <h1>Use</h1>
-  <p>Having archaeological remains from a given site, <code>archeoViz</code> is designed to lower the technical barriers to fulfil three objectives:</p>
-  <ul>
-  <li>basic spatial exploration and generation of simple graphical reports;</li>
-  <li>fast pre-publication of archaeological data, intended for the scientific community;</li>
-  <li>fast deployment of a display and communication tool intended for a broader audience.</li>
-  </ul>
-  <p>N.B.: consequently, <code>archeoViz</code> is not intended to replace more sophisticated analysis tools (e.g., GIS, statistical packages, etc.)</p>
-  <div id=input-data class=section level2>
-  <h2>Input data</h2>
-  <p>There are three ways to input data in <code>archeoViz</code>:</p>
-  <ol style=list-style-type: decimal>
-  <li>uploading tables in the `Input data` tab,</li>
-  <li>using randomly generated data from the `Input data` tab;</li>
-  <li>set the <code>archeoviz</code> main function's parameters before running the application.</li>
-  </ol>
-  <div id=tables-upload class=section level3>
-  <h3>Tables upload</h3>
-  <p>Tables for three types of data can be uploaded from the `Input data` tab:</p>
-  <ul>
-  <li>an `objects` table (mandatory), with data about the objects;</li>
-  <li>a `refits` table (optional), with data about the refitting objects;</li>
-  <li>a `timeline` table (optional), with data about when each square of the site was excavated.</li>
-  </ul>
-  <p>The tables must be .csv files with the first row used containing the columns' labels (the separator can be set). More details about the required formats and columns are provided in the `Input data` tab.</p>
-  </div>
-  <div id=random-data class=section level3>
-  <h3>Random data</h3>
-  <p>For demonstration purposes using randomly generated data is made possible. To activate this feature, set the slider in `Input data` to a value higher than 0 (setting the value back to 0 deactivates the feature). Both an `objects` data set and a `timeline` data set are generated, making it possible to test all the <code>archeoViz</code> functionalities.</p>
-  </div>
-  <div id=function-parameters class=section level3>
-  <h3>Function parameters</h3>
-  <p><code>archeoViz</code> launch function (<code>archeoViz()</code>) can be run without parameter</p>
-  <pre class=r><code>archeoViz()</code></pre>
-  <p>or by setting it to input either the `objects` data only or the `objects` and `timeline` data.</p>
-  <pre class=r><code>archeoViz(objects.df = NULL,  # data.frame with data about the objects
-            timeline.df = NULL) # optional data frame for the excavation timeline</code></pre>
-  </div>
-  </div>
-  <div id=dataset-sub-setting class=section level2>
-  <h2>Dataset sub-setting</h2>
-  <p>Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording and the category of the objects.</p>
-  <div id=location-mode class=section level3>
-  <h3>Location mode</h3>
-  <p>The location of archaeological objects can be recorded in different ways, depending on the precision of the data: as points (xyz coordinates), on lines, plans, or within a volume (ranges of x, y, and z values). In <code>archeoViz</code>, a distinction is made between exact locations (points) and the other types of fuzzy location methods (lines, plans, volumes). The radio buttons allow selecting these options.</p>
-  </div>
-  <div id=objects-category class=section level3>
-  <h3>Objects category</h3>
-  <p>Sub-sets can be defined by object categories, using the `variable` and `values` fields. Once one of the `object_type` (or other possible `object_` variables) is selected, its values appear below and can be selected using the tick boxes. The selection must be validated by clicking on the `Validate` button. This selection determines the data that will be displayed in the plots and tables.</p>
-  </div>
-  <div id=layer-selection class=section level3>
-  <h3>Layer selection</h3>
-  <p>Layer selection is made using the legend in the <code>plotly</code> plots (see below).</p>
-  </div>
-  <div id=object-selection class=section level3>
-  <h3>Object selection</h3>
-  <p>In the `3D plot` tab, clicking on a point displays information about that point in the table below the plot.</p>
-  </div>
-  </div>
-  <div id=interactive-visualisation class=section level2>
-  <h2>Interactive visualisation</h2>
-  <p>The plots in the `3D plot`, `Map`, `Section X`, and `Section Y` tabs are generated using the <a href=https://CRAN.R-project.org/package=plotly><code>plotly</code></a> library. All the plots are dynamic and include a menu bar above the plot with several options (generating an image file, zooming, moving the view, etc). See details on the <a href=https://plotly.com/chart-studio-help/getting-to-know-the-plotly-modebar>plotly website</a>.</p>
-  <p>Clicking on a legend's item modifies the display:</p>
-  <ul>
-  <li>a simple click on an item activates/deactivates its display;</li>
-  <li>a double click on an item displays this item only (another double click cancels it)</li>
-  </ul>
-  <p>This feature makes it possible to choose which layers are shown.</p>
-  </div>
-  <div id=graphical-outputs class=section level2>
-  <h2>Graphical outputs</h2>
-  <p>Several graphical outputs can be generated in <code>archeoViz</code>.</p>
-  <ul>
-  <li>All the plots generated with <code>plotly</code> include an export function in .png format.</li>
-  <li>the excavation map (in the `Excavation timeline` tab) can be downloaded in .svg format with the button below the plot.</li>
-  </ul>
-  </div>
-  <div id=spatial-statistics class=section level2>
-  <h2>Spatial statistics</h2>
-  <p><code>archeoViz</code> includes some spatial analysis functionalities, intended for basic and exploratory use.</p>
-  <div id=regression-surfaces class=section level3>
-  <h3>Regression surfaces</h3>
-  <p>In the `3D plot` tab, clicking on `Compute surfaces` and `Draw` displays the regression surface associated with each layer (with at least 100 points). The surfaces are computed using the generalized additive model implemented in the <a href=https://CRAN.R-project.org/package=mgcv><code>mgcv</code></a> package.</p>
-  </div>
-  <div id=convex-hulls class=section level3>
-  <h3>Convex hulls</h3>
-  <p>In the `3D plot` tab, clicking on `Compute hulls` and `Draw` displays the convex hull associated with each layer (with at least 10 points). The convex hulls are computed using the <a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a> package.</p>
-  </div>
-  <div id=d-density-kernel class=section level3>
-  <h3>2D density kernel</h3>
-  <p>In the `plan` tab, ticking the `Compute density` box and clicking on `Draw` generates a map with contour lines showing the points' density. The 2D kernel density is computed with the <code>kde2d</code> function of the <a href=https://CRAN.R-project.org/package=MASS><code>MASS</code></a> package (through <a href=https://CRAN.R-project.org/package=ggplot2><code>ggplot2</code></a>).</p>
-  </div>
-  </div>
-  </div>
-  <div id=references class=section level1>
-  <h1>References</h1>
-  <ul>
-  <li>Plutniak, Sébastien. 2022. `archeoViz. A shiny application for the spatial visualisation, exploration, and web communication of field archaeological data`. v0.1, DOI: TODO.</li>
-  </ul>
-  </div></div>"
+  guidelines.en <- "
+  <h1 id=archeoviz>archeoViz</h1>
+<p><code>archeoViz</code> is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial statistics methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive <b>timeline</b> of an excavation. <code>archeoViz</code> can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The interface is available in English and in French.</p>
+<ul>
+<li><a href=#installation><strong>Installation</strong></a>
+<ul>
+<li><a href=#local-use>Local use</a></li>
+<li><a href=#deployed-use>Deployed use</a></li>
+</ul></li>
+<li><a href=#community-guidelines><strong>Community guidelines</strong></a>
+<ul>
+<li><a href=#reporting-bugs>Reporting bugs</a></li>
+<li><a href=#suggesting-changes>Suggesting changes</a></li>
+</ul></li>
+<li><a href=#use><strong>Use</strong></a>
+<ul>
+<li><a href=#input-data>Input data</a></li>
+<li><a href=#dataset-sub-setting>Data set sub-setting</a></li>
+<li><a href=#interactive-visualisation>Interactive visualisation</a></li>
+<li><a href=#graphical-outputs>Graphical outputs</a></li>
+<li><a href=#spatial-statistics>Spatial statistics</a></li>
+</ul></li>
+<li><a href=#references><strong>References</strong></a></li>
+</ul>
+<h1 id=installation>Installation</h1>
+<p><code>archeoViz</code> can be used in two ways:</p>
+<ul>
+<li>locally, on the user’s machine</li>
+<li>remotely, after deploying the app on a distant server</li>
+</ul>
+<h2 id=local-use>Local use</h2>
+<p>The package can be installed from GitHub with:</p>
+<div class=sourceCode id=cb1><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb1-1 data-line-number=1><span class=co># install.packages(&quot;devtools&quot;)</span></a>
+<a class=sourceLine id=cb1-2 data-line-number=2>devtools<span class=op>::</span><span class=kw>install_github</span>(<span class=st>&quot;sebastien-plutniak/archeoviz&quot;</span>)</a></code></pre></div>
+<p>Then, load the package and launch the app with:</p>
+<div class=sourceCode id=cb2><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb2-1 data-line-number=1><span class=kw>library</span>(archeoViz)</a>
+<a class=sourceLine id=cb2-2 data-line-number=2><span class=kw>archeoViz</span>()</a></code></pre></div>
+<h2 id=deployed-use>Deployed use</h2>
+<p>To deploy <code>archeoViz</code> on your Shiny server, first download and unzip the package:</p>
+<div class=sourceCode id=cb3><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb3-1 data-line-number=1><span class=co># set the working directory on your shiny server:</span></a>
+<a class=sourceLine id=cb3-2 data-line-number=2><span class=kw>setwd</span>(<span class=dt>dir =</span> <span class=st>&quot;/some/path/&quot;</span>)</a>
+<a class=sourceLine id=cb3-3 data-line-number=3><span class=co># download the package:</span></a>
+<a class=sourceLine id=cb3-4 data-line-number=4><span class=kw>download.file</span>(<span class=dt>url =</span> <span class=st>&quot;https://github.com/sebastien-plutniak/archeoviz/archive/master.zip&quot;</span>,</a>
+<a class=sourceLine id=cb3-5 data-line-number=5>              <span class=dt>destfile =</span> <span class=st>&quot;archeoviz.zip&quot;</span>)</a>
+<a class=sourceLine id=cb3-6 data-line-number=6><span class=co># unzip it</span></a>
+<a class=sourceLine id=cb3-7 data-line-number=7><span class=kw>unzip</span>(<span class=dt>zipfile =</span> <span class=st>&quot;archeoviz.zip&quot;</span>)</a></code></pre></div>
+<p>Then, go to <a href=https:// class=uri>https://</a><your-shiny-server>/archeoviz-main.</p>
+<p>To set the app with your data and preferences, edit the app.R file, located at the root of the directory:</p>
+<div class=sourceCode id=cb4><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb4-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>objects.df =</span> <span class=ot>NULL</span>,   <span class=co># data.frame with data about the objects</span></a>
+<a class=sourceLine id=cb4-2 data-line-number=2>          <span class=dt>refits.df =</span> <span class=ot>NULL</span>,    <span class=co># optional data.frame for refitting data</span></a>
+<a class=sourceLine id=cb4-3 data-line-number=3>          <span class=dt>timeline.df =</span> <span class=ot>NULL</span>,  <span class=co># optional data.frame for the excavation timeline</span></a>
+<a class=sourceLine id=cb4-4 data-line-number=4>          <span class=dt>title =</span> <span class=ot>NULL</span>,        <span class=co># title of the site / data set</span></a>
+<a class=sourceLine id=cb4-5 data-line-number=5>          <span class=dt>home.text =</span> <span class=ot>NULL</span>,    <span class=co># html content to display on the home page</span></a>
+<a class=sourceLine id=cb4-6 data-line-number=6>          <span class=dt>lang =</span> <span class=st>&quot;en&quot;</span>          <span class=co># interface language (English or French)</span></a>
+<a class=sourceLine id=cb4-7 data-line-number=7>          <span class=dt>set.theme =</span> <span class=st>&quot;cosmo&quot;</span>) <span class=co># graphic theme for the Shiny interface</span></a></code></pre></div>
+<p>The possible values for the <code>set.theme</code> parameter are illustrated on <a href=https://rstudio.github.io/shinythemes>this page</a>. The language of the application can be set with the <code>lang</code> parameter, either with an “en”/“English” or “fr”/“French” value. For a demo of the application, see <code>archeoViz</code> deployed on the <a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz><em>Huma Num</em> Shiny server</a>.</p>
+<h1 id=community-guidelines>Community guidelines</h1>
+<h2 id=reporting-bugs>Reporting bugs</h2>
+<p>If you encounter a bug, please fill an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> with all the details needed to reproduce it.</p>
+<h2 id=suggesting-changes>Suggesting changes</h2>
+<p>Suggestions of changes to <code>archeoViz</code> are welcome. These requests may concern additional functions, changes to documentation, additional examples, new features, etc. They can be made by filling an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> and, even better, using pull requests and the <a href=https://help.github.com/articles/about-pull-requests>GitHub Fork and Pull model</a>.</p>
+<h1 id=use>Use</h1>
+<p>Having archaeological remains from a given site, <code>archeoViz</code> is designed to lower the technical barriers to fulfil three objectives:</p>
+<ul>
+<li>basic spatial exploration and generation of simple graphical reports;</li>
+<li>fast pre-publication of archaeological data, intended for the scientific community;</li>
+<li>fast deployment of a display and communication tool intended for a broader audience.</li>
+</ul>
+<p>N.B.: consequently, <code>archeoViz</code> is not intended to replace more sophisticated analysis tools (e.g., GIS, statistical packages, etc.)</p>
+<h2 id=input-data>Input data</h2>
+<p>There are three ways to input data in <code>archeoViz</code>:</p>
+<ol>
+<li>uploading tables in the “Input data” tab,</li>
+<li>using randomly generated data from the “Input data” tab;</li>
+<li>set the <code>archeoviz</code> main function’s parameters before running the application.</li>
+</ol>
+<h3 id=tables-upload>Tables upload</h3>
+<p>Tables for three types of data can be uploaded from the “Input data” tab:</p>
+<ul>
+<li>an “objects” table (mandatory), with data about the objects;</li>
+<li>a “refits” table (optional), with data about the refitting objects;</li>
+<li>a “timeline” table (optional), with data about when each square of the site was excavated.</li>
+</ul>
+<p>The tables must be .csv files with the first row used containing the columns’ labels (the separator can be set). More details about the required formats and columns are provided in the “Input data” tab.</p>
+<h3 id=random-data>Random data</h3>
+<p>For demonstration purposes using randomly generated data is made possible. To activate this feature, set the slider in “Input data” to a value higher than 0 (setting the value back to 0 deactivates the feature). Both an “objects” data set and a “timeline” data set are generated, making it possible to test all the <code>archeoViz</code> functionalities.</p>
+<h3 id=function-parameters>Function parameters</h3>
+<p><code>archeoViz</code>’s launching function (<code>archeoViz()</code>) can be run without parameter</p>
+<div class=sourceCode id=cb5><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb5-1 data-line-number=1><span class=kw>archeoViz</span>()</a></code></pre></div>
+<p>or by using the <code>objects.df</code>, <code>refits.df</code>, or <code>timeline.df</code> parameters to input data.frames about the archaeological objects, refitting relationships between these objects, and the chronology of the excavation, respectively.</p>
+<div class=sourceCode id=cb6><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb6-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>objects.df =</span> <span class=ot>NULL</span>,  <span class=co># data.frame with data about the objects</span></a>
+<a class=sourceLine id=cb6-2 data-line-number=2>          <span class=dt>refits.df =</span> <span class=ot>NULL</span>,   <span class=co># data.frame for refitting objects</span></a>
+<a class=sourceLine id=cb6-3 data-line-number=3>          <span class=dt>timeline.df =</span> <span class=ot>NULL</span>) <span class=co># optional data frame for the excavation timeline</span></a></code></pre></div>
+<h2 id=dataset-sub-setting>Dataset sub-setting</h2>
+<p>Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording and the category of the objects.</p>
+<h3 id=location-mode>Location mode</h3>
+<p>The location of archaeological objects can be recorded in different ways, depending on the precision of the data: as points (xyz coordinates), on lines, plans, or within a volume (ranges of x, y, and z values). In <code>archeoViz</code>, a distinction is made between exact locations (points) and the other types of fuzzy location methods (lines, plans, volumes). The radio buttons allow selecting these options.</p>
+<h3 id=objects-category>Objects category</h3>
+<p>Sub-sets can be defined by object categories, using the “variable” and “values” fields. Once one of the “object_type” (or other possible “object_” variables) is selected, its values appear below and can be selected using the tick boxes. The selection must be validated by clicking on the “Validate” button. This selection determines the data that will be displayed in the plots and tables.</p>
+<h3 id=layer-selection>Layer selection</h3>
+<p>Layer selection is made using the legend in the <code>plotly</code> plots (see below).</p>
+<h3 id=object-selection>Object selection</h3>
+<p>In the “3D plot” tab, clicking on a point displays information about that point in the table below the plot.</p>
+<h2 id=interactive-visualisation>Interactive visualisation</h2>
+<p>The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” tabs are generated using the <a href=https://CRAN.R-project.org/package=plotly><code>plotly</code></a> library. All the plots are dynamic and include a menu bar above the plot with several options (generating an image file, zooming, moving the view, etc). See details on the <a href=https://plotly.com/chart-studio-help/getting-to-know-the-plotly-modebar>plotly website</a>.</p>
+<p>Clicking on a legend’s item modifies the display:</p>
+<ul>
+<li>a simple click on an item activates/deactivates its display;</li>
+<li>a double click on an item displays this item only (another double click cancels it)</li>
+</ul>
+<p>This feature makes it possible to choose which layers are shown.</p>
+<h2 id=graphical-outputs>Graphical outputs</h2>
+<p>Several graphical outputs can be generated in <code>archeoViz</code>.</p>
+<ul>
+<li>All the plots generated with <code>plotly</code> include an export function in .png format.</li>
+<li>the excavation map (in the “Excavation timeline” tab) can be downloaded in .svg format with the button below the plot.</li>
+</ul>
+<h2 id=spatial-statistics>Spatial statistics</h2>
+<p><code>archeoViz</code> includes some spatial analysis functionalities, intended for basic and exploratory use.</p>
+<h3 id=regression-surfaces>Regression surfaces</h3>
+<p>In the “3D plot” tab, clicking on “Compute surfaces” and “Ok” displays the regression surface associated with each layer (with at least 100 points). The surfaces are computed using the generalized additive model implemented in the <a href=https://CRAN.R-project.org/package=mgcv><code>mgcv</code></a> package.</p>
+<h3 id=convex-hulls>Convex hulls</h3>
+<p>In the “3D plot” tab, clicking on “Compute hulls” and “Ok” displays the convex hull associated with each layer (with at least 10 points). The convex hulls are computed using the <a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a> package.</p>
+<h3 id=2d-density-kernel>2D density kernel</h3>
+<p>In the “plan” tab, ticking the “Compute density” box and clicking on “Ok” generates a map with contour lines showing the points’ density. The 2D kernel density is computed with the <code>kde2d</code> function of the <a href=https://CRAN.R-project.org/package=MASS><code>MASS</code></a> package (through <a href=https://CRAN.R-project.org/package=ggplot2><code>ggplot2</code></a>).</p>
+<h1 id=references>References</h1>
+<ul>
+<li>Plutniak, Sébastien. 2022. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data”. v0.1, DOI: TODO.</li>
+</ul>
+  "
     
   
   # guidelines.fr ----
-  guidelines.fr <- 
-  "<div id=header>
-  <h1 class=title toc-ignore>archeoViz</h1>
-  </div>
-  <p><code>archeoViz</code> is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial analysis methods (convex hull, regression surfaces, 2D kernel density estimation), and display excavation timeline. <code>archeoViz</code> can be used locally or deployed on a server, either with interactive input of data or with a static data set.</p>
-  <ul>
-  <li><a href=#installation><strong>Installation</strong></a>
-  <ul>
-  <li><a href=#local-use>Local use</a></li>
-  <li><a href=#deployed-use>Deployed use</a></li>
-  </ul></li>
-  <li><a href=#community-guidelines><strong>Community guidelines</strong></a>
-  <ul>
-  <li><a href=#reporting-bugs>Reporting bugs</a></li>
-  <li><a href=#suggesting-changes>Suggesting changes</a></li>
-  </ul></li>
-  <li><a href=#use><strong>Use</strong></a>
-  <ul>
-  <li><a href=#input-data>Input data</a></li>
-  <li><a href=#dataset-sub-setting>Data set sub-setting</a></li>
-  <li><a href=#interactive-visualisation>Interactive visualisation</a></li>
-  <li><a href=#graphical-outputs>Graphical outputs</a></li>
-  <li><a href=#spatial-statistics>Spatial statistics</a><br />
-  </li>
-  </ul></li>
-  <li><a href=#references><strong>References</strong></a></li>
-  </ul>
-  <div id=installation class=section level1>
-  <h1>Installation</h1>
-  <p><code>archeoViz</code> can be used in two ways:</p>
-  <ul>
-  <li>locally, on the user's machine</li>
-  <li>remotely, after deploying the app on a distant server</li>
-  </ul>
-  <div id=local-use class=section level2>
-  <h2>Local use</h2>
-  <p>The package can be installed from GitHub with:</p>
-  <pre class=r><code># install.packages(&quot;devtools&quot;)
-  devtools::install_github(&quot;sebastien-plutniak/archeoviz&quot;)</code></pre>
-  <p>Then, load the package and launch the app with:</p>
-  <pre class=r><code>library(archeoViz)
-  archeoViz()</code></pre>
-  </div>
-  <div id=deployed-use class=section level2>
-  <h2>Deployed use</h2>
-  <p>To deploy <code>archeoViz</code> on your Shiny server, first download and unzip the package:</p>
-  <pre class=r><code># set the working directory on your shiny server:
-  setwd(dir = &quot;/some/path/&quot;)
-  # download the package:
-  download.file(url = &quot;https://github.com/sebastien-plutniak/archeoviz/archive/master.zip&quot;,
-                destfile = &quot;archeoviz.zip&quot;)
-  # unzip it
-  unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
-  <p>Then, go to <a href=https:// class=uri>https://</a><your-shiny-server>/archeoviz.</p>
-  <p>To set the app with your data and preferences, edit the app.R file, located at the root of the directory:</p>
-  <pre class=r><code>archeoViz(objects.df = NULL,   # data.frame with data about the objects
-            refits.df = NULL,    # optional data.frame for refitting data
-            timeline.df = NULL,  # optional data.frame for the excavation timeline
-            title = NULL,        # title of the site / data set
-            home.text = NULL,    # html content to display on the home page
-            set.theme = &quot;cosmo&quot;) # graphic theme for the Shiny interface</code></pre>
-  <p>The possible values for the <code>set.theme</code> parameter are illustrated on <a href=https://rstudio.github.io/shinythemes>this page</a>. For an example, see <code>archeoViz</code> deployed on the <a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz><em>Huma Num</em> Shiny server</a>.</p>
-  </div>
-  </div>
-  <div id=community-guidelines class=section level1>
-  <h1>Community guidelines</h1>
-  <div id=reporting-bugs class=section level2>
-  <h2>Reporting bugs</h2>
-  <p>If you encounter a bug, please fill an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> with all the details needed to reproduce it.</p>
-  </div>
-  <div id=suggesting-changes class=section level2>
-  <h2>Suggesting changes</h2>
-  <p>Suggestions of changes to <code>archeoViz</code> are welcome. These requests may concern additional functions, changes to documentation, additional examples, new features, etc. They can be made by filling an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> and, even better, using pull requests and the <a href=https://help.github.com/articles/about-pull-requests>GitHub Fork and Pull model</a>.</p>
-  </div>
-  </div>
-  <div id=use class=section level1>
-  <h1>Use</h1>
-  <p>Having archaeological remains from a given site, <code>archeoViz</code> is designed to lower the technical barriers to fulfil three objectives:</p>
-  <ul>
-  <li>basic spatial exploration and generation of simple graphical reports;</li>
-  <li>fast pre-publication of archaeological data, intended for the scientific community;</li>
-  <li>fast deployment of a display and communication tool intended for a broader audience.</li>
-  </ul>
-  <p>N.B.: consequently, <code>archeoViz</code> is not intended to replace more sophisticated analysis tools (e.g., GIS, statistical packages, etc.)</p>
-  <div id=input-data class=section level2>
-  <h2>Input data</h2>
-  <p>There are three ways to input data in <code>archeoViz</code>:</p>
-  <ol style=list-style-type: decimal>
-  <li>uploading tables in the `Input data` tab,</li>
-  <li>using randomly generated data from the `Input data` tab;</li>
-  <li>set the <code>archeoviz</code> main function's parameters before running the application.</li>
-  </ol>
-  <div id=tables-upload class=section level3>
-  <h3>Tables upload</h3>
-  <p>Tables for three types of data can be uploaded from the `Input data` tab:</p>
-  <ul>
-  <li>an `objects` table (mandatory), with data about the objects;</li>
-  <li>a `refits` table (optional), with data about the refitting objects;</li>
-  <li>a `timeline` table (optional), with data about when each square of the site was excavated.</li>
-  </ul>
-  <p>The tables must be .csv files with the first row used containing the columns' labels (the separator can be set). More details about the required formats and columns are provided in the `Input data` tab.</p>
-  </div>
-  <div id=random-data class=section level3>
-  <h3>Random data</h3>
-  <p>For demonstration purposes using randomly generated data is made possible. To activate this feature, set the slider in `Input data` to a value higher than 0 (setting the value back to 0 deactivates the feature). Both an `objects` data set and a `timeline` data set are generated, making it possible to test all the <code>archeoViz</code> functionalities.</p>
-  </div>
-  <div id=function-parameters class=section level3>
-  <h3>Function parameters</h3>
-  <p><code>archeoViz</code> launch function (<code>archeoViz()</code>) can be run without parameter</p>
-  <pre class=r><code>archeoViz()</code></pre>
-  <p>or by setting it to input either the `objects` data only or the `objects` and `timeline` data.</p>
-  <pre class=r><code>archeoViz(objects.df = NULL,  # data.frame with data about the objects
-            timeline.df = NULL) # optional data frame for the excavation timeline</code></pre>
-  </div>
-  </div>
-  <div id=dataset-sub-setting class=section level2>
-  <h2>Dataset sub-setting</h2>
-  <p>Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording and the category of the objects.</p>
-  <div id=location-mode class=section level3>
-  <h3>Location mode</h3>
-  <p>The location of archaeological objects can be recorded in different ways, depending on the precision of the data: as points (xyz coordinates), on lines, plans, or within a volume (ranges of x, y, and z values). In <code>archeoViz</code>, a distinction is made between exact locations (points) and the other types of fuzzy location methods (lines, plans, volumes). The radio buttons allow selecting these options.</p>
-  </div>
-  <div id=objects-category class=section level3>
-  <h3>Objects category</h3>
-  <p>Sub-sets can be defined by object categories, using the `variable` and `values` fields. Once one of the `object_type` (or other possible `object_` variables) is selected, its values appear below and can be selected using the tick boxes. The selection must be validated by clicking on the `Validate` button. This selection determines the data that will be displayed in the plots and tables.</p>
-  </div>
-  <div id=layer-selection class=section level3>
-  <h3>Layer selection</h3>
-  <p>Layer selection is made using the legend in the <code>plotly</code> plots (see below).</p>
-  </div>
-  <div id=object-selection class=section level3>
-  <h3>Object selection</h3>
-  <p>In the `3D plot` tab, clicking on a point displays information about that point in the table below the plot.</p>
-  </div>
-  </div>
-  <div id=interactive-visualisation class=section level2>
-  <h2>Interactive visualisation</h2>
-  <p>The plots in the `3D plot`, `Map`, `Section X`, and `Section Y` tabs are generated using the <a href=https://CRAN.R-project.org/package=plotly><code>plotly</code></a> library. All the plots are dynamic and include a menu bar above the plot with several options (generating an image file, zooming, moving the view, etc). See details on the <a href=https://plotly.com/chart-studio-help/getting-to-know-the-plotly-modebar>plotly website</a>.</p>
-  <p>Clicking on a legend's item modifies the display:</p>
-  <ul>
-  <li>a simple click on an item activates/deactivates its display;</li>
-  <li>a double click on an item displays this item only (another double click cancels it)</li>
-  </ul>
-  <p>This feature makes it possible to choose which layers are shown.</p>
-  </div>
-  <div id=graphical-outputs class=section level2>
-  <h2>Graphical outputs</h2>
-  <p>Several graphical outputs can be generated in <code>archeoViz</code>.</p>
-  <ul>
-  <li>All the plots generated with <code>plotly</code> include an export function in .png format.</li>
-  <li>the excavation map (in the `Excavation timeline` tab) can be downloaded in .svg format with the button below the plot.</li>
-  </ul>
-  </div>
-  <div id=spatial-statistics class=section level2>
-  <h2>Spatial statistics</h2>
-  <p><code>archeoViz</code> includes some spatial analysis functionalities, intended for basic and exploratory use.</p>
-  <div id=regression-surfaces class=section level3>
-  <h3>Regression surfaces</h3>
-  <p>In the `3D plot` tab, clicking on `Compute surfaces` and `Draw` displays the regression surface associated with each layer (with at least 100 points). The surfaces are computed using the generalized additive model implemented in the <a href=https://CRAN.R-project.org/package=mgcv><code>mgcv</code></a> package.</p>
-  </div>
-  <div id=convex-hulls class=section level3>
-  <h3>Convex hulls</h3>
-  <p>In the `3D plot` tab, clicking on `Compute hulls` and `Draw` displays the convex hull associated with each layer (with at least 10 points). The convex hulls are computed using the <a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a> package.</p>
-  </div>
-  <div id=d-density-kernel class=section level3>
-  <h3>2D density kernel</h3>
-  <p>In the `plan` tab, ticking the `Compute density` box and clicking on `Draw` generates a map with contour lines showing the points' density. The 2D kernel density is computed with the <code>kde2d</code> function of the <a href=https://CRAN.R-project.org/package=MASS><code>MASS</code></a> package (through <a href=https://CRAN.R-project.org/package=ggplot2><code>ggplot2</code></a>).</p>
-  </div>
-  </div>
-  </div>
-  <div id=references class=section level1>
-  <h1>References</h1>
-  <ul>
-  <li>Plutniak, Sébastien. 2022. `archeoViz. A shiny application for the spatial visualisation, exploration, and web communication of field archaeological data`. v0.1, DOI: TODO.</li>
-  </ul>
-  </div></div>"
+  guidelines.fr <- "
+  <h1 id=archeoviz>archeoViz</h1>
+<p><code>archeoViz</code> is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial statistics methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive <b>timeline</b> of an excavation. <code>archeoViz</code> can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The interface is available in English and in French.</p>
+<ul>
+<li><a href=#installation><strong>Installation</strong></a>
+<ul>
+<li><a href=#local-use>Local use</a></li>
+<li><a href=#deployed-use>Deployed use</a></li>
+</ul></li>
+<li><a href=#community-guidelines><strong>Community guidelines</strong></a>
+<ul>
+<li><a href=#reporting-bugs>Reporting bugs</a></li>
+<li><a href=#suggesting-changes>Suggesting changes</a></li>
+</ul></li>
+<li><a href=#use><strong>Use</strong></a>
+<ul>
+<li><a href=#input-data>Input data</a></li>
+<li><a href=#dataset-sub-setting>Data set sub-setting</a></li>
+<li><a href=#interactive-visualisation>Interactive visualisation</a></li>
+<li><a href=#graphical-outputs>Graphical outputs</a></li>
+<li><a href=#spatial-statistics>Spatial statistics</a></li>
+</ul></li>
+<li><a href=#references><strong>References</strong></a></li>
+</ul>
+<h1 id=installation>Installation</h1>
+<p><code>archeoViz</code> can be used in two ways:</p>
+<ul>
+<li>locally, on the user’s machine</li>
+<li>remotely, after deploying the app on a distant server</li>
+</ul>
+<h2 id=local-use>Local use</h2>
+<p>The package can be installed from GitHub with:</p>
+<div class=sourceCode id=cb1><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb1-1 data-line-number=1><span class=co># install.packages(&quot;devtools&quot;)</span></a>
+<a class=sourceLine id=cb1-2 data-line-number=2>devtools<span class=op>::</span><span class=kw>install_github</span>(<span class=st>&quot;sebastien-plutniak/archeoviz&quot;</span>)</a></code></pre></div>
+<p>Then, load the package and launch the app with:</p>
+<div class=sourceCode id=cb2><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb2-1 data-line-number=1><span class=kw>library</span>(archeoViz)</a>
+<a class=sourceLine id=cb2-2 data-line-number=2><span class=kw>archeoViz</span>()</a></code></pre></div>
+<h2 id=deployed-use>Deployed use</h2>
+<p>To deploy <code>archeoViz</code> on your Shiny server, first download and unzip the package:</p>
+<div class=sourceCode id=cb3><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb3-1 data-line-number=1><span class=co># set the working directory on your shiny server:</span></a>
+<a class=sourceLine id=cb3-2 data-line-number=2><span class=kw>setwd</span>(<span class=dt>dir =</span> <span class=st>&quot;/some/path/&quot;</span>)</a>
+<a class=sourceLine id=cb3-3 data-line-number=3><span class=co># download the package:</span></a>
+<a class=sourceLine id=cb3-4 data-line-number=4><span class=kw>download.file</span>(<span class=dt>url =</span> <span class=st>&quot;https://github.com/sebastien-plutniak/archeoviz/archive/master.zip&quot;</span>,</a>
+<a class=sourceLine id=cb3-5 data-line-number=5>              <span class=dt>destfile =</span> <span class=st>&quot;archeoviz.zip&quot;</span>)</a>
+<a class=sourceLine id=cb3-6 data-line-number=6><span class=co># unzip it</span></a>
+<a class=sourceLine id=cb3-7 data-line-number=7><span class=kw>unzip</span>(<span class=dt>zipfile =</span> <span class=st>&quot;archeoviz.zip&quot;</span>)</a></code></pre></div>
+<p>Then, go to <a href=https:// class=uri>https://</a><your-shiny-server>/archeoviz-main.</p>
+<p>To set the app with your data and preferences, edit the app.R file, located at the root of the directory:</p>
+<div class=sourceCode id=cb4><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb4-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>objects.df =</span> <span class=ot>NULL</span>,   <span class=co># data.frame with data about the objects</span></a>
+<a class=sourceLine id=cb4-2 data-line-number=2>          <span class=dt>refits.df =</span> <span class=ot>NULL</span>,    <span class=co># optional data.frame for refitting data</span></a>
+<a class=sourceLine id=cb4-3 data-line-number=3>          <span class=dt>timeline.df =</span> <span class=ot>NULL</span>,  <span class=co># optional data.frame for the excavation timeline</span></a>
+<a class=sourceLine id=cb4-4 data-line-number=4>          <span class=dt>title =</span> <span class=ot>NULL</span>,        <span class=co># title of the site / data set</span></a>
+<a class=sourceLine id=cb4-5 data-line-number=5>          <span class=dt>home.text =</span> <span class=ot>NULL</span>,    <span class=co># html content to display on the home page</span></a>
+<a class=sourceLine id=cb4-6 data-line-number=6>          <span class=dt>lang =</span> <span class=st>&quot;en&quot;</span>          <span class=co># interface language (English or French)</span></a>
+<a class=sourceLine id=cb4-7 data-line-number=7>          <span class=dt>set.theme =</span> <span class=st>&quot;cosmo&quot;</span>) <span class=co># graphic theme for the Shiny interface</span></a></code></pre></div>
+<p>The possible values for the <code>set.theme</code> parameter are illustrated on <a href=https://rstudio.github.io/shinythemes>this page</a>. The language of the application can be set with the <code>lang</code> parameter, either with an “en”/“English” or “fr”/“French” value. For a demo of the application, see <code>archeoViz</code> deployed on the <a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz><em>Huma Num</em> Shiny server</a>.</p>
+<h1 id=community-guidelines>Community guidelines</h1>
+<h2 id=reporting-bugs>Reporting bugs</h2>
+<p>If you encounter a bug, please fill an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> with all the details needed to reproduce it.</p>
+<h2 id=suggesting-changes>Suggesting changes</h2>
+<p>Suggestions of changes to <code>archeoViz</code> are welcome. These requests may concern additional functions, changes to documentation, additional examples, new features, etc. They can be made by filling an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> and, even better, using pull requests and the <a href=https://help.github.com/articles/about-pull-requests>GitHub Fork and Pull model</a>.</p>
+<h1 id=use>Use</h1>
+<p>Having archaeological remains from a given site, <code>archeoViz</code> is designed to lower the technical barriers to fulfil three objectives:</p>
+<ul>
+<li>basic spatial exploration and generation of simple graphical reports;</li>
+<li>fast pre-publication of archaeological data, intended for the scientific community;</li>
+<li>fast deployment of a display and communication tool intended for a broader audience.</li>
+</ul>
+<p>N.B.: consequently, <code>archeoViz</code> is not intended to replace more sophisticated analysis tools (e.g., GIS, statistical packages, etc.)</p>
+<h2 id=input-data>Input data</h2>
+<p>There are three ways to input data in <code>archeoViz</code>:</p>
+<ol>
+<li>uploading tables in the “Input data” tab,</li>
+<li>using randomly generated data from the “Input data” tab;</li>
+<li>set the <code>archeoviz</code> main function’s parameters before running the application.</li>
+</ol>
+<h3 id=tables-upload>Tables upload</h3>
+<p>Tables for three types of data can be uploaded from the “Input data” tab:</p>
+<ul>
+<li>an “objects” table (mandatory), with data about the objects;</li>
+<li>a “refits” table (optional), with data about the refitting objects;</li>
+<li>a “timeline” table (optional), with data about when each square of the site was excavated.</li>
+</ul>
+<p>The tables must be .csv files with the first row used containing the columns’ labels (the separator can be set). More details about the required formats and columns are provided in the “Input data” tab.</p>
+<h3 id=random-data>Random data</h3>
+<p>For demonstration purposes using randomly generated data is made possible. To activate this feature, set the slider in “Input data” to a value higher than 0 (setting the value back to 0 deactivates the feature). Both an “objects” data set and a “timeline” data set are generated, making it possible to test all the <code>archeoViz</code> functionalities.</p>
+<h3 id=function-parameters>Function parameters</h3>
+<p><code>archeoViz</code>’s launching function (<code>archeoViz()</code>) can be run without parameter</p>
+<div class=sourceCode id=cb5><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb5-1 data-line-number=1><span class=kw>archeoViz</span>()</a></code></pre></div>
+<p>or by using the <code>objects.df</code>, <code>refits.df</code>, or <code>timeline.df</code> parameters to input data.frames about the archaeological objects, refitting relationships between these objects, and the chronology of the excavation, respectively.</p>
+<div class=sourceCode id=cb6><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb6-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>objects.df =</span> <span class=ot>NULL</span>,  <span class=co># data.frame with data about the objects</span></a>
+<a class=sourceLine id=cb6-2 data-line-number=2>          <span class=dt>refits.df =</span> <span class=ot>NULL</span>,   <span class=co># data.frame for refitting objects</span></a>
+<a class=sourceLine id=cb6-3 data-line-number=3>          <span class=dt>timeline.df =</span> <span class=ot>NULL</span>) <span class=co># optional data frame for the excavation timeline</span></a></code></pre></div>
+<h2 id=dataset-sub-setting>Dataset sub-setting</h2>
+<p>Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording and the category of the objects.</p>
+<h3 id=location-mode>Location mode</h3>
+<p>The location of archaeological objects can be recorded in different ways, depending on the precision of the data: as points (xyz coordinates), on lines, plans, or within a volume (ranges of x, y, and z values). In <code>archeoViz</code>, a distinction is made between exact locations (points) and the other types of fuzzy location methods (lines, plans, volumes). The radio buttons allow selecting these options.</p>
+<h3 id=objects-category>Objects category</h3>
+<p>Sub-sets can be defined by object categories, using the “variable” and “values” fields. Once one of the “object_type” (or other possible “object_” variables) is selected, its values appear below and can be selected using the tick boxes. The selection must be validated by clicking on the “Validate” button. This selection determines the data that will be displayed in the plots and tables.</p>
+<h3 id=layer-selection>Layer selection</h3>
+<p>Layer selection is made using the legend in the <code>plotly</code> plots (see below).</p>
+<h3 id=object-selection>Object selection</h3>
+<p>In the “3D plot” tab, clicking on a point displays information about that point in the table below the plot.</p>
+<h2 id=interactive-visualisation>Interactive visualisation</h2>
+<p>The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” tabs are generated using the <a href=https://CRAN.R-project.org/package=plotly><code>plotly</code></a> library. All the plots are dynamic and include a menu bar above the plot with several options (generating an image file, zooming, moving the view, etc). See details on the <a href=https://plotly.com/chart-studio-help/getting-to-know-the-plotly-modebar>plotly website</a>.</p>
+<p>Clicking on a legend’s item modifies the display:</p>
+<ul>
+<li>a simple click on an item activates/deactivates its display;</li>
+<li>a double click on an item displays this item only (another double click cancels it)</li>
+</ul>
+<p>This feature makes it possible to choose which layers are shown.</p>
+<h2 id=graphical-outputs>Graphical outputs</h2>
+<p>Several graphical outputs can be generated in <code>archeoViz</code>.</p>
+<ul>
+<li>All the plots generated with <code>plotly</code> include an export function in .png format.</li>
+<li>the excavation map (in the “Excavation timeline” tab) can be downloaded in .svg format with the button below the plot.</li>
+</ul>
+<h2 id=spatial-statistics>Spatial statistics</h2>
+<p><code>archeoViz</code> includes some spatial analysis functionalities, intended for basic and exploratory use.</p>
+<h3 id=regression-surfaces>Regression surfaces</h3>
+<p>In the “3D plot” tab, clicking on “Compute surfaces” and “Ok” displays the regression surface associated with each layer (with at least 100 points). The surfaces are computed using the generalized additive model implemented in the <a href=https://CRAN.R-project.org/package=mgcv><code>mgcv</code></a> package.</p>
+<h3 id=convex-hulls>Convex hulls</h3>
+<p>In the “3D plot” tab, clicking on “Compute hulls” and “Ok” displays the convex hull associated with each layer (with at least 10 points). The convex hulls are computed using the <a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a> package.</p>
+<h3 id=2d-density-kernel>2D density kernel</h3>
+<p>In the “plan” tab, ticking the “Compute density” box and clicking on “Ok” generates a map with contour lines showing the points’ density. The 2D kernel density is computed with the <code>kde2d</code> function of the <a href=https://CRAN.R-project.org/package=MASS><code>MASS</code></a> package (through <a href=https://CRAN.R-project.org/package=ggplot2><code>ggplot2</code></a>).</p>
+<h1 id=references>References</h1>
+<ul>
+<li>Plutniak, Sébastien. 2022. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data”. v0.1, DOI: TODO.</li>
+</ul>
+  "
   
   # LIST FR ----
   fr <- list(

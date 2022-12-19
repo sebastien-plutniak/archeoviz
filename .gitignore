@@ -1,0 +1,5 @@
+inst/doc
+README.Rmd
+README.html
+R/.Rhistory
+vignettes/.gitignore

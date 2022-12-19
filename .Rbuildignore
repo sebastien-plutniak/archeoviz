@@ -1,0 +1,12 @@
+.git
+.github
+.gitignore
+app.R
+R/working.R
+R/data-preprocessing.R
+README.Rmd
+README.html
+README.md
+cran-comments.md
+LICENSE.md
+data/

@@ -1,0 +1,16 @@
+citHeader("To cite archeoViz in publications use:")
+
+citEntry(
+   entry  = "manual",
+   author = "Plutniak, Sébastien",
+   title  = "archeoViz. A shiny application for the spatial visualisation, exploration, and web communication of field archaeological data",
+   year   = "2022",
+   Note   = "R package version 0.1",
+   doi    = "TODO",
+   textVersion = "Plutniak, Sébastien (2022). archeoViz. A shiny application for the spatial visualisation, exploration, and web communication of field archaeological data. v0.1, DOI: TODO"
+)
+
+citFooter("This free open-source software implements academic research by the authors and co-workers. If you use it, please support the project by citing the appropriate journal articles.")
+
+
+ 

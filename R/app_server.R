@@ -228,12 +228,12 @@ app_server <- function(input, output, session) {
   # : coords min/max coordinates ----
   coords.min.max <- reactive({
     df <- full.dataset()
-    coords <- list("xmin" = min(df$x, na.rm = T),
-                   "xmax" = max(df$x, na.rm = T),
-                   "ymin" = min(df$y, na.rm = T),
-                   "ymax" = max(df$y, na.rm = T),
-                   "zmin" = min(df$z, na.rm = T),
-                   "zmax" = max(df$z, na.rm = T))
+    coords <- list("xmin" = floor(min(df$x,   na.rm = T) / 100) * 100,
+                   "xmax" = ceiling(max(df$x, na.rm = T) / 100) * 100,
+                   "ymin" = floor(min(df$y,   na.rm = T) / 100) * 100,
+                   "ymax" = ceiling(max(df$y, na.rm = T) / 100) * 100,
+                   "zmin" = floor(min(df$z,   na.rm = T) / 100) * 100,
+                   "zmax" = ceiling(max(df$z, na.rm = T) / 100) * 100)
   })
   
   # : ranges ----
@@ -253,13 +253,9 @@ app_server <- function(input, output, session) {
     data.frame(
     "id" = c(rbind(c(1:length(square.coords$range.x)),
                    c(1:length(square.coords$range.x)))),
-    "x"  = c(rbind(seq(min(square.coords$range.x),
-                       max(square.coords$range.x), 100),
-                   seq(min(square.coords$range.x),
-                       max(square.coords$range.x), 100))),
-    "y"  = rep(c(min(square.coords$range.y),
-                 max(square.coords$range.y)),
-               length(square.coords$range.x)),
+    "x"  = c(rbind(seq(coords$xmin, coords$xmax, 100),
+                   seq(coords$xmin, coords$xmax, 100))),
+    "y"  = rep(c(coords$ymin, coords$ymax), length(square.coords$range.x)),
     "z"  = coords$zmax)
   })
   
@@ -270,13 +266,10 @@ app_server <- function(input, output, session) {
     data.frame(
     "id" = c(rbind(c(1:length(square.coords$range.y)),
                    c(1:length(square.coords$range.y)))),
-    "x"  = rep(c(min(square.coords$range.x),
-                 max(square.coords$range.x)),
+    "x"  = rep(c(coords$xmin, coords$xmax),
                length(square.coords$range.y)),
-    "y"  =  c(rbind(seq(min(square.coords$range.y),
-                        max(square.coords$range.y), 100),
-                    seq(min(square.coords$range.y),
-                        max(square.coords$range.y), 100))),
+    "y"  =  c(rbind(seq(coords$ymin, coords$ymax, 100),
+                    seq(coords$ymin, coords$ymax, 100))),
     "z"  = coords$zmax)
   })
   
@@ -528,7 +521,7 @@ app_server <- function(input, output, session) {
                                  tickmode = "array",
                                  range =  c(coords$ymax, coords$ymin),
                                  tickvals = axis.labels$yaxis$breaks,
-                                 ticktext = axis.labels$xaxis$labels
+                                 ticktext = axis.labels$yaxis$labels
                     ),
                     zaxis = list(title = .term_switcher("depth"),
                                  tickmode = "array",
@@ -578,6 +571,9 @@ app_server <- function(input, output, session) {
     dataset <- dataset()
     min.max.X <- input.min.max.X()
     coords <- coords.min.max()
+    axis.labels <- axis.labels()
+    grid.coordy <- grid.coordy()
+    grid.coordy <- grid.coordy[! duplicated(grid.coordy$id), ]
     
     sel <- (dataset$x %in% min.max.X$coordx) & (dataset$y %in% min.max.X$coordy)
     sectionX.df <- dataset[sel, ]
@@ -602,11 +598,20 @@ app_server <- function(input, output, session) {
                          filename = "SectionX",
                          width = 600, height = 600
                        )) 
+  
+    sectionX <- add_segments(sectionX, x = ~y, xend = ~y,  y = 0, yend = ~z,
+                             data = grid.coordy,
+                     color = I("grey70"), width=I(.01),
+                     showlegend=F, hoverinfo="skip", inherit = F)
+    
     sectionX <- add_markers(sectionX)
+    
     sectionX <- layout(sectionX,
                        xaxis = list(title="Y", 
                                     zeroline = FALSE, 
-                                    range=c(coords$ymin, coords$ymax)
+                                    range=c(coords$ymin, coords$ymax),
+                                    tickvals = axis.labels$yaxis$breaks,
+                                    ticktext = axis.labels$yaxis$labels
                        ),
                        yaxis = list(title= .term_switcher("Depth"),
                                     zeroline = T,
@@ -630,6 +635,10 @@ app_server <- function(input, output, session) {
     dataset <- dataset()
     min.max.Y <- input.min.max.Y()
     coords <- coords.min.max()
+    axis.labels <- axis.labels()
+    
+    grid.coordx <- grid.coordx()
+    grid.coordx <- grid.coordx[! duplicated(grid.coordx$id), ]
     
     sel <- (dataset$y %in% min.max.Y$coordy) & (dataset$x %in% min.max.Y$coordx)
     
@@ -653,11 +662,21 @@ app_server <- function(input, output, session) {
                          format = "svg",
                          filename = "SectionY",
                          width = 600, height = 600))
+    
+    sectionY <- add_segments(sectionY, x = ~x, xend = ~x,  y = 0, yend = ~z,
+                             data = grid.coordx,
+                             color = I("grey70"), width=I(.01),
+                             showlegend=F, hoverinfo="skip", inherit = F)
+    
     sectionY <- add_markers(sectionY)
+    
     sectionY <- layout(sectionY,
                        xaxis = list(title="X", 
                                     zeroline = FALSE,
-                                    range =  c(coords$xmin, coords$xmax)),
+                                    range =  c(coords$xmin, coords$xmax),
+                                    tickvals = axis.labels$xaxis$breaks,
+                                    ticktext = axis.labels$xaxis$labels
+                                    ),
                        yaxis = list(title= .term_switcher("Depth"),
                                     zeroline = T,
                                     range=c(coords$zmax, coords$zmin),
@@ -713,18 +732,14 @@ app_server <- function(input, output, session) {
   # Mini-maps  ----
   #  : mini-map X ----
   output$site.mapX <- renderPlot({
+    req(input$sectionXy)
     coords <- coords.min.max()
-    # 
-    # rect.df <- data.frame(
-    #   "ymin" = (input$sectionXy[1] - coords$ymin), 
-    #   "ymax" = (input$sectionXy[2] - coords$ymin),
-    #   "xmin" = (input$sectionXx[1] - coords$xmin),
-    #   "xmax" = (input$sectionXx[2] - coords$xmin))    
+
     rect.df <- data.frame(
-      "ymin" = (input$sectionXy[1] ), 
-      "ymax" = (input$sectionXy[2] ),
-      "xmin" = (input$sectionXx[1]  ),
-      "xmax" = (input$sectionXx[2]  ))
+      "ymin" = input$sectionXy[1], 
+      "ymax" = input$sectionXy[2],
+      "xmin" = input$sectionXx[1],
+      "xmax" = input$sectionXx[2])
     
     site.map() +
       geom_rect(data = rect.df,
@@ -736,18 +751,14 @@ app_server <- function(input, output, session) {
   
   #  : mini-map Y ----
   output$site.mapY <- renderPlot({
+    req(input$sectionYy)
     coords <- coords.min.max()
     
-    # rect.df <- data.frame(
-    #   "ymin" = (input$sectionYy[1] - coords$ymin), 
-    #   "ymax" = (input$sectionYy[2] - coords$ymin),
-    #   "xmin" = (input$sectionYx[1] - coords$xmin),
-    #   "xmax" = (input$sectionYx[2] - coords$xmin))
     rect.df <- data.frame(
-      "ymin" = (input$sectionYy[1]), 
-      "ymax" = (input$sectionYy[2]),
-      "xmin" = (input$sectionYx[1]),
-      "xmax" = (input$sectionYx[2]))
+      "ymin" = input$sectionYy[1], 
+      "ymax" = input$sectionYy[2],
+      "xmin" = input$sectionYx[1],
+      "xmax" = input$sectionYx[2])
     
     site.map() +
       geom_rect(data = rect.df,

@@ -178,6 +178,7 @@ app_server <- function(input, output, session) {
                        type="message", duration = 3)
     }
     
+    
     # add max coordinates if absent:
     if(is.null(df$xmax)){ df$xmax <- df$xmin }
     if(is.null(df$ymax)){ df$ymax <- df$ymin }
@@ -215,15 +216,17 @@ app_server <- function(input, output, session) {
   output$locationPanel <- reactive({is.data.frame(full.dataset())})
   outputOptions(output, "locationPanel", suspendWhenHidden = FALSE)
   
-  #  squares list ----
+  # Coordinate system ----
+  
+  # : squares list ----
   squares <- reactive({
     df <- full.dataset()
     squares <- list("square_x" = levels(df$square_x),
                     "square_y" = levels(df$square_y))
   })
   
-  #  coords : get min/max coordinates ----
-  coords <- reactive({
+  # : coords min/max coordinates ----
+  coords.min.max <- reactive({
     df <- full.dataset()
     coords <- list("xmin" = min(df$x, na.rm = T),
                    "xmax" = max(df$x, na.rm = T),
@@ -233,7 +236,67 @@ app_server <- function(input, output, session) {
                    "zmax" = max(df$z, na.rm = T))
   })
   
+  # : ranges ----
+  square.coords.ranges <- reactive({
+    coords <- coords.min.max()
+    range.x <- seq(floor(coords$xmin / 100) * 100, ceiling(coords$xmax / 100) * 100, 100)
+    range.y <- seq(floor(coords$ymin / 100) * 100, ceiling(coords$ymax / 100) * 100, 100)
+    
+    list("range.x" = range.x, "range.y" = range.y)
+  })
   
+  # : grid coordinates ----
+  grid.coordx <- reactive({
+    square.coords <- square.coords.ranges()
+    coords <- coords.min.max()
+    
+    data.frame(
+    "id" = c(rbind(c(1:length(square.coords$range.x)),
+                   c(1:length(square.coords$range.x)))),
+    "x"  = c(rbind(seq(min(square.coords$range.x),
+                       max(square.coords$range.x), 100),
+                   seq(min(square.coords$range.x),
+                       max(square.coords$range.x), 100))),
+    "y"  = rep(c(min(square.coords$range.y),
+                 max(square.coords$range.y)),
+               length(square.coords$range.x)),
+    "z"  = coords$zmax)
+  })
+  
+  grid.coordy <- reactive({
+    square.coords <- square.coords.ranges()
+    coords <- coords.min.max()
+   
+    data.frame(
+    "id" = c(rbind(c(1:length(square.coords$range.y)),
+                   c(1:length(square.coords$range.y)))),
+    "x"  = rep(c(min(square.coords$range.x),
+                 max(square.coords$range.x)),
+               length(square.coords$range.y)),
+    "y"  =  c(rbind(seq(min(square.coords$range.y),
+                        max(square.coords$range.y), 100),
+                    seq(min(square.coords$range.y),
+                        max(square.coords$range.y), 100))),
+    "z"  = coords$zmax)
+  })
+  
+  # : axis labels ----
+  axis.labels <- reactive({
+    square.coords <- square.coords.ranges()
+    squares <- squares()
+    
+    list(
+      "xaxis" = list(
+        "breaks" = (square.coords$range.x + 50)[ 1:length(squares$square_x) ],
+        "labels" =  squares$square_x 
+      ),
+      "yaxis" = list(
+        "breaks" = (square.coords$range.y + 50)[ 1:length(squares$square_y) ],
+        "labels" =  squares$square_y 
+      )
+    )
+  })    
+      
   # Dynamic preprocessing ----
   dataset <- reactive({
     input$goButton 
@@ -318,21 +381,20 @@ app_server <- function(input, output, session) {
   # Site map ----
   site.map <- reactive({
     
-    coords <- coords()
+    coords <- coords.min.max()
+    square.coords <- square.coords.ranges()
     squares <- squares()
-    
-    range.x <- seq(floor(coords$xmin / 100) * 100, ceiling(coords$xmax / 100) * 100, 100)
-    range.y <- seq(floor(coords$ymin / 100) * 100, ceiling(coords$ymax / 100) * 100, 100) 
+    axis.labels <- axis.labels()
     
     ggplot() +
       theme_minimal(base_size = 11) +
-      geom_vline(xintercept =  range.x, colour = "darkgrey" ) +
-      geom_hline(yintercept =  range.y, colour = "darkgrey" ) +
+      geom_vline(xintercept =  square.coords$range.x, colour = "darkgrey" ) +
+      geom_hline(yintercept =  square.coords$range.y, colour = "darkgrey" ) +
       coord_fixed() +
-      scale_x_continuous(breaks = (range.x + 50)[ 1:length(squares$square_x) ],
-                         labels = squares$square_x ) +
-      scale_y_continuous(breaks = (range.y + 50)[ 1:length(squares$square_y) ],
-                         labels = squares$square_y ) +
+      scale_x_continuous(breaks = axis.labels$xaxis$breaks,
+                         labels = axis.labels$xaxis$labels) +
+      scale_y_continuous(breaks = axis.labels$yaxis$breaks,
+                         labels = axis.labels$yaxis$labels) +
       xlab("") + ylab("")
   }) 
   
@@ -360,8 +422,9 @@ app_server <- function(input, output, session) {
     req(input$class_values, full.dataset())
     
     dataset <- dataset()
-    coords <- coords()
+    coords <- coords.min.max()
     squares <- squares()
+    axis.labels <- axis.labels()
     dataset$point.size <- input$point.size
     size.scale <- input$point.size
     
@@ -440,30 +503,12 @@ app_server <- function(input, output, session) {
       }
     }    
     
-    range.x <- seq(floor(coords$xmin / 100) * 100, ceiling(coords$xmax / 100) * 100, 100)
-    range.y <- seq(floor(coords$ymin / 100) * 100, ceiling(coords$ymax / 100) * 100, 100)
-    
-    grid.coordx <- data.frame(
-      "id" = c(rbind(c(1:length(range.x)), c(1:length(range.x)))),
-      "x"  = c(rbind(seq(min(range.x), max(range.x), 100),
-                     seq(min(range.x), max(range.x), 100))),
-      "y"  = rep(c(min(range.y), max(range.y)), length(range.x)),
-      "z"  = coords$zmax)
-    
-    grid.coordy <- data.frame(
-      "id" = c(rbind(c(1:length(range.y)), c(1:length(range.y)))),
-      "x"  = rep(c(min(range.x), max(range.x)), length(range.y)),
-      "y"  =  c(rbind(seq(min(range.y), max(range.y), 100),
-                      seq(min(range.y), max(range.y), 100))),
-      "z"  = coords$zmax)
-    
-    
-    fig <- add_paths(fig, x = ~x,   y = ~y, z = ~z, data=grid.coordx,
+    fig <- add_paths(fig, x = ~x,   y = ~y, z = ~z, data = grid.coordx(),
                      split = ~id,
                      color = I("grey50"), showlegend=F,
                      hoverinfo="skip",
                      inherit = F)  
-    fig <- add_paths(fig, x = ~x,   y = ~y, z = ~z, data=grid.coordy,
+    fig <- add_paths(fig, x = ~x,   y = ~y, z = ~z, data = grid.coordy(),
                      split = ~id,
                      color = I("grey50"), showlegend=F,
                      hoverinfo="skip",
@@ -475,18 +520,17 @@ app_server <- function(input, output, session) {
                     xaxis = list(title = 'X',
                                  tickmode = "array",
                                  range = c(coords$xmax, coords$xmin),
-                                 tickvals = (range.x + 50)[ 1:length(squares$square_x) ],
-                                 ticktext = squares$square_x,
-                                 # autorange = "reversed",
+                                 tickvals = axis.labels$xaxis$breaks,
+                                 ticktext = axis.labels$xaxis$labels,
                                  zeroline=F, showline=F
                     ),
                     yaxis = list(title = 'Y',
                                  tickmode = "array",
                                  range =  c(coords$ymax, coords$ymin),
-                                 tickvals = (range.y + 50)[ 1:length(squares$square_y) ],
-                                 ticktext = squares$square_y
+                                 tickvals = axis.labels$yaxis$breaks,
+                                 ticktext = axis.labels$xaxis$labels
                     ),
-                    zaxis = list(title = 'Depth',
+                    zaxis = list(title = .term_switcher("depth"),
                                  tickmode = "array",
                                  range = c(coords$zmax, coords$zmin)
                     ),
@@ -524,7 +568,7 @@ app_server <- function(input, output, session) {
   
   
   # X section view ----
-  min.max.X <- eventReactive(input$goButtonX, {
+  input.min.max.X <- eventReactive(input$goButtonX, {
     list("coordx" = seq(input$sectionXx[1], input$sectionXx[2]),
          "coordy" = seq(input$sectionXy[1], input$sectionXy[2]))
   })
@@ -532,7 +576,8 @@ app_server <- function(input, output, session) {
   
   output$sectionXplot <- plotly::renderPlotly({
     dataset <- dataset()
-    min.max.X <- min.max.X()
+    min.max.X <- input.min.max.X()
+    coords <- coords.min.max()
     
     sel <- (dataset$x %in% min.max.X$coordx) & (dataset$y %in% min.max.X$coordy)
     sectionX.df <- dataset[sel, ]
@@ -561,11 +606,11 @@ app_server <- function(input, output, session) {
     sectionX <- layout(sectionX,
                        xaxis = list(title="Y", 
                                     zeroline = FALSE, 
-                                    range=c(coords()$ymin, coords()$ymax)
+                                    range=c(coords$ymin, coords$ymax)
                        ),
-                       yaxis = list(title="Depth",
+                       yaxis = list(title= .term_switcher("Depth"),
                                     zeroline = T,
-                                    range=c(coords()$zmax, coords()$zmin),
+                                    range=c(coords$zmax, coords$zmin),
                                     scaleanchor="x"
                        )
     )
@@ -576,14 +621,15 @@ app_server <- function(input, output, session) {
   
   # Y section view ----
   
-  min.max.Y <- eventReactive(input$goButtonY, {
+  input.min.max.Y <- eventReactive(input$goButtonY, {
     list("coordx" = seq(input$sectionYx[1], input$sectionYx[2]),
          "coordy" = seq(input$sectionYy[1], input$sectionYy[2]))
   })
   
   output$sectionYplot <- plotly::renderPlotly({
     dataset <- dataset()
-    min.max.Y <- min.max.Y()
+    min.max.Y <- input.min.max.Y()
+    coords <- coords.min.max()
     
     sel <- (dataset$y %in% min.max.Y$coordy) & (dataset$x %in% min.max.Y$coordx)
     
@@ -611,10 +657,10 @@ app_server <- function(input, output, session) {
     sectionY <- layout(sectionY,
                        xaxis = list(title="X", 
                                     zeroline = FALSE,
-                                    range =  c(coords()$xmin, coords()$xmax)),
-                       yaxis = list(title="Depth",
+                                    range =  c(coords$xmin, coords$xmax)),
+                       yaxis = list(title= .term_switcher("Depth"),
                                     zeroline = T,
-                                    range=c(coords()$zmax, coords()$zmin),
+                                    range=c(coords$zmax, coords$zmin),
                                     scaleanchor="x"
                        )
     )
@@ -664,15 +710,44 @@ app_server <- function(input, output, session) {
   output$map <- plotly::renderPlotly({ map() })
   
   
-  # Mini-map  ----
-  
+  # Mini-maps  ----
+  #  : mini-map X ----
   output$site.mapX <- renderPlot({
-    
+    coords <- coords.min.max()
+    # 
+    # rect.df <- data.frame(
+    #   "ymin" = (input$sectionXy[1] - coords$ymin), 
+    #   "ymax" = (input$sectionXy[2] - coords$ymin),
+    #   "xmin" = (input$sectionXx[1] - coords$xmin),
+    #   "xmax" = (input$sectionXx[2] - coords$xmin))    
     rect.df <- data.frame(
-      "ymin" = (input$sectionXy[1] - coords()$ymin), 
-      "ymax" = (input$sectionXy[2] - coords()$ymin),
-      "xmin" = (input$sectionXx[1] - coords()$xmin),
-      "xmax" = (input$sectionXx[2] - coords()$xmin))
+      "ymin" = (input$sectionXy[1] ), 
+      "ymax" = (input$sectionXy[2] ),
+      "xmin" = (input$sectionXx[1]  ),
+      "xmax" = (input$sectionXx[2]  ))
+    
+    site.map() +
+      geom_rect(data = rect.df,
+                aes_string(ymin = "ymin", ymax = "ymax",
+                           xmin = "xmin", xmax = "xmax"),
+                fill="red", alpha=.7
+      )
+  })
+  
+  #  : mini-map Y ----
+  output$site.mapY <- renderPlot({
+    coords <- coords.min.max()
+    
+    # rect.df <- data.frame(
+    #   "ymin" = (input$sectionYy[1] - coords$ymin), 
+    #   "ymax" = (input$sectionYy[2] - coords$ymin),
+    #   "xmin" = (input$sectionYx[1] - coords$xmin),
+    #   "xmax" = (input$sectionYx[2] - coords$xmin))
+    rect.df <- data.frame(
+      "ymin" = (input$sectionYy[1]), 
+      "ymax" = (input$sectionYy[2]),
+      "xmin" = (input$sectionYx[1]),
+      "xmax" = (input$sectionYx[2]))
     
     site.map() +
       geom_rect(data = rect.df,
@@ -683,59 +758,53 @@ app_server <- function(input, output, session) {
   })
   
   
-  output$site.mapY <- renderPlot({
-    rect.df <- data.frame(
-      "ymin" = (input$sectionXy[1] - coords()$ymin), 
-      "ymax" = (input$sectionXy[2] - coords()$ymin),
-      "xmin" = (input$sectionXx[1] - coords()$xmin),
-      "xmax" = (input$sectionXx[2] - coords()$xmin))
-    
-    site.map() +
-      geom_rect(data = rect.df,
-                aes_string(ymin = "ymin", ymax = "ymin",
-                           xmin = "xmin", xmax = "xmin"),
-                fill="red", alpha=.7
-      )
-  })
-  
-  
   # Conditionnal interface ----
   # : slider Map  ----
   output$sliderMap <- renderUI({
-    z.mean <- mean(coords()$zmin:coords()$zmax)
+    coords <- coords.min.max()
+    
+    z.mean <- mean(seq(coords$zmin, coords$zmax))
     sliderInput("planZ", "Z: min/max",  width="100%", sep = "",
-                min=coords()$zmin, max = coords()$zmax, round=T,
+                min=coords$zmin, max = coords$zmax, round=T,
                 value=c(z.mean - z.mean * 0.1,
                         z.mean + z.mean * 0.1)
     )
   })
   # : sliders X  ----
   output$sliderXx <- renderUI({
-    Xx.mean <- mean(coords()$xmin:coords()$xmax)
+    coords <- coords.min.max()
+    
+    Xx.mean <- mean(seq(coords$xmin, coords$xmax))
     sliderInput("sectionXx", "X: min/max", width="100%", sep = "", step=1,
-                min = coords()$xmin, max = coords()$xmax, round=T,
+                min = coords$xmin, max = coords$xmax, round=T,
                 value=c(Xx.mean - Xx.mean * 0.05,
                         Xx.mean + Xx.mean * 0.05)
     )
   })
   
   output$sliderXy <- renderUI({
+    coords <- coords.min.max()
+    
     sliderInput("sectionXy", "Y: min/max", width="100%", sep = "", step=1,
-                min = coords()$ymin, max = coords()$ymax, round=T,
-                value = c(coords()$ymin, coords()$ymax))
+                min = coords$ymin, max = coords$ymax, round=T,
+                value = c(coords$ymin, coords$ymax))
   })
   
   # : sliders Y  ----
   output$sliderYx <- renderUI({
+    coords <- coords.min.max()
+    
     sliderInput("sectionYx", "X: min/max", width="100%", sep = "", step=1,
-                min = coords()$xmin, max = coords()$xmax, round=T,
-                value = c(coords()$xmin, coords()$xmax))
+                min = coords$xmin, max = coords$xmax, round=T,
+                value = c(coords$xmin, coords$xmax))
   })
   
   output$sliderYy <- renderUI({
-    Yy.mean <- mean(coords()$ymin:coords()$ymax)
+    coords <- coords.min.max()
+    
+    Yy.mean <- mean(seq(coords$ymin, coords$ymax))
     sliderInput("sectionYy", "Y: min/max",  width="100%",  sep = "", step=1,
-                min = coords()$ymin, max = coords()$ymax, round=T,
+                min = coords$ymin, max = coords$ymax, round=T,
                 value=c(Yy.mean - Yy.mean * 0.05,
                         Yy.mean + Yy.mean * 0.05)
     )
@@ -779,8 +848,6 @@ app_server <- function(input, output, session) {
   })
   
   
-  
-  
   # : Density selector  ----
   output$density_selector <- renderUI({
     density.modes <- structure(c("no", "all.layers", "by.layer"), 
@@ -793,7 +860,7 @@ app_server <- function(input, output, session) {
                  selected = "no")
   })
   
-  # : Location choice  ----
+  # : Location selector  ----
   output$location_choice <- renderUI({
     loc.modes <- c(.term_switcher("exact"), 
                    .term_switcher("fuzzy"), 

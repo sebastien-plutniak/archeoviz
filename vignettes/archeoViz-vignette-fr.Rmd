@@ -216,7 +216,7 @@ Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 
 ### Surfaces de régression
 
-Dans l'onglet “Vue 3D”, cliquer sur “Calculer les surfaces” puis “Valider” affiche les surfaces de régression associées à chaque sous-ensemble de points  (couche), comportant au point 100 points. Les surfaces sont calculées grâce au modèle additif généralisé implémenté dans le package  [`mgcv`](https://CRAN.R-project.org/package=mgcv).
+Dans l'onglet “Vue 3D”, cliquer sur “Calculer les surfaces” puis “Valider” affiche les surfaces de régression associées à chaque sous-ensemble de points (couche), comportant au moins 100 points. Les surfaces sont calculées grâce au modèle additif généralisé implémenté dans le package  [`mgcv`](https://CRAN.R-project.org/package=mgcv).
 
 ### Enveloppes convexes
 
@@ -230,4 +230,4 @@ Dans l'onglet “Plan”, cocher la case “Calculer la densité” et cliquer s
 
 # Références
 
-* Plutniak, Sébastien. 2022. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data”. v0.1, DOI: TODO.
+* Plutniak, Sébastien. 2022. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data”. v0.1, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).

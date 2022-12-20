@@ -35,7 +35,16 @@ jobs:
         uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
         with:
           r-version: ${{ matrix.r-version }}
-      - name: Install dependencies
+      - name: Install Dependencies (Windows)
+        run: choco install pandoc
+        if: matrix.config.os == 'windows-latest'  
+      - name: Install Dependencies (Linux)
+        run: sudo apt-get install pandoc
+        if: matrix.config.os == 'ubuntu-20.04'  
+      - name: Install Dependencies (macOS)
+        run: brew install pandoc
+        if: matrix.config.os == 'macOS-latest' 
+      - name: Install R dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)

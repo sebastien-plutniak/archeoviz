@@ -156,6 +156,9 @@ ui <- shinyUI(
                             plotly::plotlyOutput("sectionYplot", width = 650, height = 500)
                      ),
                      column(3,
+                            sliderInput("sectionY.point.size", .term_switcher("point.size"),
+                                        width="100%", sep = "",
+                                        min=1, max=10, value=5, step=1),
                             imageOutput("site.mapY", width = "250px", height = "250px")
                      )
                    )#end fluidrow
@@ -175,6 +178,9 @@ ui <- shinyUI(
                             plotly::plotlyOutput("sectionXplot", width = 650, height = 500)
                      ),
                      column(3,
+                            sliderInput("sectionX.point.size", .term_switcher("point.size"),
+                                        width="100%", sep = "",
+                                        min=1, max=10, value=5, step=1),
                             imageOutput("site.mapX", width = "250px", height = "250px")
                      )
                    ) #end fluidrow

@@ -2,7 +2,8 @@
 
 app_server <- function(input, output, session) {
 
-  # Interface title ----
+  # Interface ----
+  # : title ----
   output$title.edited <- renderUI({
     archeoViz.label <- paste("<a href=https://github.com/sebastien-plutniak/archeoviz>archeoViz</a> v",
                              utils::packageVersion("archeoViz"), sep="")
@@ -18,7 +19,7 @@ app_server <- function(input, output, session) {
     div(HTML(title.edited))
   })
   
-  # Home text ----
+  # : home text ----
   output$home.text <- renderUI({
     home.text <- shiny::getShinyOption("home.text")
     
@@ -150,8 +151,7 @@ app_server <- function(input, output, session) {
                           stringsAsFactors = F)
   })
   
-  
-  #  static preprocessing ----
+  #  : static preprocessing ----
   
   full.dataset <- reactive({
     # alternative between static deployement and generic use:
@@ -212,10 +212,32 @@ app_server <- function(input, output, session) {
     df
   })
   
-  # control panel 
-  output$locationPanel <- reactive({is.data.frame(full.dataset())})
-  outputOptions(output, "locationPanel", suspendWhenHidden = FALSE)
+  # : dynamic preprocessing ----
+  dataset <- reactive({
+    input$goButton 
+    req(input$class_variable)
+    
+    df <- full.dataset()
+    
+    isolate({
+      # location mode selection:
+      if(input$location != .term_switcher("exact.fuzzy")){
+        df.sub <- df[df$location_mode %in% input$location, ]
+      }else{
+        df.sub <- df
+      }
+      
+      # class selection:
+      if( ! "All" %in% input$class_values)                        {
+        selection <- eval(parse(text = paste0("df.sub$", input$class_variable))) %in% input$class_values[input$class_values != "All"]
+        df.sub <- df.sub[selection, ]
+      }
+      
+      df.sub  # return the subset of the dataframe
+    }) #end isolate
+  }) # end dataset subset
   
+
   # Coordinate system ----
   
   # : squares list ----
@@ -290,34 +312,9 @@ app_server <- function(input, output, session) {
     )
   })    
       
-  # Dynamic preprocessing ----
-  dataset <- reactive({
-    input$goButton 
-    req(input$class_variable)
-    
-    df <- full.dataset()
-    
-    isolate({
-      # location mode selection:
-      if(input$location != .term_switcher("exact.fuzzy")){
-        df.sub <- df[df$location_mode %in% input$location, ]
-      }else{
-        df.sub <- df
-      }
-      
-      # class selection:
-      if( ! "All" %in% input$class_values)                        {
-        selection <- eval(parse(text = paste0("df.sub$", input$class_variable))) %in% input$class_values[input$class_values != "All"]
-        df.sub <- df.sub[selection, ]
-      }
-
-      df.sub  # return the subset dataframe
-    }) #end isolate
-  }) # end dataset subset
   
-  output$tmp <- renderTable({dataset()})
-  
-  # Table: by object class ----
+  # TABLES ----
+  # : by object class ----
   classLocalStats <- eventReactive(input$goButton, {
     req(input$class_variable, input$class_values)
     dataset <- dataset()
@@ -346,7 +343,7 @@ app_server <- function(input, output, session) {
   output$classLocalStats <- renderTable({classLocalStats()}, 
                                         rownames = T, digits=0)
   
-  # Table: by layers ----
+  # : by layer ----
   layersStats <- eventReactive(input$goButton, {
     req(input$class_variable, input$class_values)
     dataset <- dataset()
@@ -370,8 +367,8 @@ app_server <- function(input, output, session) {
   
   output$layersStats <- renderTable({layersStats()}, 
                                     rownames = T, digits=0)
-  
-  # Site map ----
+  # MAPS ----
+  # : site map ----
   site.map <- reactive({
     
     coords <- coords.min.max()
@@ -391,7 +388,45 @@ app_server <- function(input, output, session) {
       xlab("") + ylab("")
   }) 
   
-  # Timeline map ----
+  #  : mini-map X ----
+  output$site.mapX <- renderPlot({
+    req(input$sectionXy)
+    coords <- coords.min.max()
+    
+    rect.df <- data.frame(
+      "ymin" = input$sectionXy[1], 
+      "ymax" = input$sectionXy[2],
+      "xmin" = input$sectionXx[1],
+      "xmax" = input$sectionXx[2])
+    
+    site.map() +
+      geom_rect(data = rect.df,
+                aes_string(ymin = "ymin", ymax = "ymax",
+                           xmin = "xmin", xmax = "xmax"),
+                fill="red", alpha=.7
+      )
+  })
+  
+  #  : mini-map Y ----
+  output$site.mapY <- renderPlot({
+    req(input$sectionYy)
+    coords <- coords.min.max()
+    
+    rect.df <- data.frame(
+      "ymin" = input$sectionYy[1], 
+      "ymax" = input$sectionYy[2],
+      "xmin" = input$sectionYx[1],
+      "xmax" = input$sectionYx[2])
+    
+    site.map() +
+      geom_rect(data = rect.df,
+                aes_string(ymin = "ymin", ymax = "ymax",
+                           xmin = "xmin", xmax = "xmax"),
+                fill="red", alpha=.7
+      )
+  })
+  
+  # : timeline map ----
   timeline.map <- reactive({
     squares <- squares()
     
@@ -559,8 +594,8 @@ app_server <- function(input, output, session) {
         tableOutput('id.tab'))
   })
   
-  
-  # X section view ----
+  # PLOTS 2D ----
+  # :  X section plot ----
   input.min.max.X <- eventReactive(input$goButtonX, {
     list("coordx" = seq(input$sectionXx[1], input$sectionXx[2]),
          "coordy" = seq(input$sectionXy[1], input$sectionXy[2]))
@@ -569,6 +604,7 @@ app_server <- function(input, output, session) {
   
   output$sectionXplot <- plotly::renderPlotly({
     dataset <- dataset()
+      
     min.max.X <- input.min.max.X()
     coords <- coords.min.max()
     axis.labels <- axis.labels()
@@ -577,21 +613,10 @@ app_server <- function(input, output, session) {
     
     sel <- (dataset$x %in% min.max.X$coordx) & (dataset$y %in% min.max.X$coordy)
     sectionX.df <- dataset[sel, ]
+    sectionX.df$point.size <- input$sectionX.point.size
     
-    sectionX.df$coordx <- sectionX.df$y
+    sectionX <- plot_ly(sectionX.df)
     
-    sectionX <- plot_ly(sectionX.df, x = ~coordx, y = ~z,
-                        color = ~layer,
-                        colors = as.character(levels(sectionX.df$layer_color)),
-                        size  = 1,
-                        sizes = c(1,5),
-                        marker = list(symbol = 'square', sizemode = 'diameter'),
-                        text = ~paste('id:', id,
-                                      '<br>x:', x, ', y:', y,
-                                      '<br>Square:', square,
-                                      '<br>Location:', location_mode,
-                                      '<br>Class:', object_type)
-    )
     sectionX <- config(sectionX,
                        toImageButtonOptions = list(
                          format = "svg",
@@ -599,12 +624,23 @@ app_server <- function(input, output, session) {
                          width = 600, height = 600
                        )) 
   
-    sectionX <- add_segments(sectionX, x = ~y, xend = ~y,  y = 0, yend = ~z,
-                             data = grid.coordy,
-                     color = I("grey70"), width=I(.01),
-                     showlegend=F, hoverinfo="skip", inherit = F)
+    sectionX <- add_markers(sectionX,  x = ~y, y = ~z,
+                                          color = ~layer,
+                                          colors =  as.character(levels(full.dataset()$layer_color)),
+                            marker = list(symbol = 'square',
+                                          size  = ~point.size,
+                                          sizemode = 'diameter'),
+                            text = ~paste('id:', id,
+                                          '<br>x:', x, ', y:', y,
+                                          '<br>Square:', square,
+                                          '<br>Location:', location_mode,
+                                          '<br>Class:', object_type)
+    )
     
-    sectionX <- add_markers(sectionX)
+    sectionX <- plotly::add_segments(sectionX, x = ~y, xend = ~y,  y = 0, yend = ~z,
+                             data = grid.coordy,
+                     color = I("grey70"), alpha=.6,
+                     showlegend=F, hoverinfo="skip", inherit = F)
     
     sectionX <- layout(sectionX,
                        xaxis = list(title="Y", 
@@ -613,7 +649,7 @@ app_server <- function(input, output, session) {
                                     tickvals = axis.labels$yaxis$breaks,
                                     ticktext = axis.labels$yaxis$labels
                        ),
-                       yaxis = list(title= .term_switcher("Depth"),
+                       yaxis = list(title= .term_switcher("depth"),
                                     zeroline = T,
                                     range=c(coords$zmax, coords$zmin),
                                     scaleanchor="x"
@@ -624,7 +660,7 @@ app_server <- function(input, output, session) {
   
   
   
-  # Y section view ----
+  # : Y section plot ----
   
   input.min.max.Y <- eventReactive(input$goButtonY, {
     list("coordx" = seq(input$sectionYx[1], input$sectionYx[2]),
@@ -633,6 +669,7 @@ app_server <- function(input, output, session) {
   
   output$sectionYplot <- plotly::renderPlotly({
     dataset <- dataset()
+    
     min.max.Y <- input.min.max.Y()
     coords <- coords.min.max()
     axis.labels <- axis.labels()
@@ -643,32 +680,34 @@ app_server <- function(input, output, session) {
     sel <- (dataset$y %in% min.max.Y$coordy) & (dataset$x %in% min.max.Y$coordx)
     
     sectionY.df <- dataset[sel,  ]
-    sectionY.df$coordx <- sectionY.df$x
+    sectionY.df$point.size <- input$sectionY.point.size
     
-    sectionY <- plot_ly(sectionY.df, x = ~coordx, y = ~z,
-                        color = ~layer,
-                        colors = as.character(levels(sectionY.df$layer_color)),
-                        size  = 1,
-                        sizes = c(1,5),
-                        marker = list(symbol = 'square', sizemode = 'diameter'),
-                        text = ~paste('id:', id,
-                                      '<br>x:', x, ', y:', y,
-                                      '<br>Square:', square,
-                                      '<br>Location:', location_mode,
-                                      '<br>Class:', object_type)
-    )
+    sectionY <- plot_ly(sectionY.df)
+    
+    sectionY <- add_markers(sectionY,
+                            x = ~x, y = ~z,
+                            color = ~layer,
+                            colors = as.character(levels(sectionY.df$layer_color)),
+                            marker = list(symbol = 'square',
+                                          size  = ~point.size,
+                                          sizemode = 'diameter'),
+                            text = ~paste('id:', id,
+                                          '<br>x:', x, ', y:', y,
+                                          '<br>Square:', square,
+                                          '<br>Location:', location_mode,
+                                          '<br>Class:', object_type)
+                            )
+    
+    sectionY <- plotly::add_segments(sectionY, x = ~x, xend = ~x,  y = 0, yend = ~z,
+                             data = grid.coordx,
+                             color = I("grey70"), alpha = .6,
+                             showlegend=F, hoverinfo="skip", inherit = F)
+    
     sectionY <- config(sectionY,
                        toImageButtonOptions = list(
                          format = "svg",
                          filename = "SectionY",
                          width = 600, height = 600))
-    
-    sectionY <- add_segments(sectionY, x = ~x, xend = ~x,  y = 0, yend = ~z,
-                             data = grid.coordx,
-                             color = I("grey70"), width=I(.01),
-                             showlegend=F, hoverinfo="skip", inherit = F)
-    
-    sectionY <- add_markers(sectionY)
     
     sectionY <- layout(sectionY,
                        xaxis = list(title="X", 
@@ -677,7 +716,7 @@ app_server <- function(input, output, session) {
                                     tickvals = axis.labels$xaxis$breaks,
                                     ticktext = axis.labels$xaxis$labels
                                     ),
-                       yaxis = list(title= .term_switcher("Depth"),
+                       yaxis = list(title= .term_switcher("depth"),
                                     zeroline = T,
                                     range=c(coords$zmax, coords$zmin),
                                     scaleanchor="x"
@@ -687,7 +726,7 @@ app_server <- function(input, output, session) {
   }) #end section Y
   
   
-  # Map ####
+  # : Map plot ####
   
   planZ <- eventReactive(input$goButtonZ, {
     dataset <- dataset()
@@ -699,15 +738,15 @@ app_server <- function(input, output, session) {
     dataset <- dataset()
     planZ.df <- planZ()
     
+    col <- unique(planZ.df[, c("layer", "layer_color")])
+    col <- structure(as.character(col$layer_color),
+                     .Names = as.character(col$layer))
+    
     map <- site.map() +
       geom_point(data = planZ.df,
                  aes_string(x = "x", y = "y", color = "layer"),
                  size = input$map.point.size / 10) +
-      scale_fill_manual("Layer",
-                        values = as.character(unique(planZ.df$layer_color)) ) +
-      scale_color_manual("Layer",
-                         values = as.character(unique(planZ.df$layer_color)) ) +
-      guides(fill = guide_legend(override.aes = list(size = 3, alpha=1) ) )
+      scale_color_manual("Layer", values=col) 
     
     if(input$map.density == "by.layer"){
       map <- map + 
@@ -720,7 +759,8 @@ app_server <- function(input, output, session) {
     if(input$map.density == "all.layers"){
       map <- map + 
         geom_density2d(data=planZ.df,
-                       aes_string(x = "x", y = "y"), size = .2, color = "red" )
+                       aes_string(x = "x", y = "y"),
+                       size = .2, color = "grey30")
     }  
     
     ggplotly(map)
@@ -729,47 +769,11 @@ app_server <- function(input, output, session) {
   output$map <- plotly::renderPlotly({ map() })
   
   
-  # Mini-maps  ----
-  #  : mini-map X ----
-  output$site.mapX <- renderPlot({
-    req(input$sectionXy)
-    coords <- coords.min.max()
-
-    rect.df <- data.frame(
-      "ymin" = input$sectionXy[1], 
-      "ymax" = input$sectionXy[2],
-      "xmin" = input$sectionXx[1],
-      "xmax" = input$sectionXx[2])
-    
-    site.map() +
-      geom_rect(data = rect.df,
-                aes_string(ymin = "ymin", ymax = "ymax",
-                           xmin = "xmin", xmax = "xmax"),
-                fill="red", alpha=.7
-      )
-  })
   
-  #  : mini-map Y ----
-  output$site.mapY <- renderPlot({
-    req(input$sectionYy)
-    coords <- coords.min.max()
-    
-    rect.df <- data.frame(
-      "ymin" = input$sectionYy[1], 
-      "ymax" = input$sectionYy[2],
-      "xmin" = input$sectionYx[1],
-      "xmax" = input$sectionYx[2])
-    
-    site.map() +
-      geom_rect(data = rect.df,
-                aes_string(ymin = "ymin", ymax = "ymax",
-                           xmin = "xmin", xmax = "xmax"),
-                fill="red", alpha=.7
-      )
-  })
   
   
   # Conditionnal interface ----
+  
   # : slider Map  ----
   output$sliderMap <- renderUI({
     coords <- coords.min.max()
@@ -872,6 +876,11 @@ app_server <- function(input, output, session) {
   })
   
   # : Location selector  ----
+  
+  # conditionnal display
+  output$locationPanel <- reactive({is.data.frame(full.dataset())})
+  outputOptions(output, "locationPanel", suspendWhenHidden = FALSE)
+  
   output$location_choice <- renderUI({
     loc.modes <- c(.term_switcher("exact"), 
                    .term_switcher("fuzzy"), 

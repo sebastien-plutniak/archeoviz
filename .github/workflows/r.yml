@@ -21,7 +21,9 @@ jobs:
   build:
     runs-on: ${{ matrix.config.os }}
     strategy:
+      fail-fast: false
       matrix:
+#       r-version: ['3.6.3', '4.1.1']
         r-version: ['4.1.1']
         config:
           - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
@@ -46,7 +48,7 @@ jobs:
         if: matrix.config.os == 'macOS-latest' 
       - name: Install R dependencies
         run: |
-          install.packages(c("remotes", "rcmdcheck"))
+          install.packages(c("remotes", "rcmdcheck", "purrr"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       - name: Check

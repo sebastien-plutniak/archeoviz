@@ -22,7 +22,7 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
-        r-version: ['3.6.3', '4.1.1']
+        r-version: ['4.1.1']
         config:
           - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
           - {os: macOS-latest, r: 'release'}
@@ -36,7 +36,7 @@ jobs:
         with:
           r-version: ${{ matrix.r-version }}
       - name: Install Dependencies (Windows)
-        run: choco install pandoc
+        run: choco install pandoc rtools
         if: matrix.config.os == 'windows-latest'  
       - name: Install Dependencies (Linux)
         run: sudo apt-get install pandoc

@@ -253,7 +253,7 @@
 <h2 id=graphical-outputs>Graphical outputs</h2>
 <p>Several graphical outputs can be generated in <code>archeoViz</code>.</p>
 <ul>
-<li>All the plots generated with <code>plotly</code> include an export function in .png format.</li>
+<li>All the plots generated with <code>plotly</code> include an export function in .svg format.</li>
 <li>the excavation map (in the “Excavation timeline” tab) can be downloaded in .svg format with the button below the plot.</li>
 </ul>
 <h2 id=spatial-statistics>Spatial statistics</h2>
@@ -427,7 +427,7 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
 <h2>Sorties graphiques</h2>
 <p>Plusieurs sorties graphiques peuvent être générées dans <code>archeoViz</code>.</p>
 <ul>
-<li>Toutes les visualisations générées avec <code>plotly</code> comportent une fonction d'exportation en format .png.</li>
+<li>Toutes les visualisations générées avec <code>plotly</code> comportent une fonction d'exportation en format .svg.</li>
 <li>le plan des fouilles (dans l'onglet “Chronologie”) peut être téléchargé au format .svg en cliquant sur le bouton en dessous.</li>
 </ul>
 </div>

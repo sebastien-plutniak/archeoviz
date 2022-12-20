@@ -197,7 +197,7 @@ This feature makes it possible to choose which layers are shown.
 
 Several graphical outputs can be generated in `archeoViz`.
 
-* All the plots generated with `plotly` include an export function in .png format.
+* All the plots generated with `plotly` include an export function in .svg format.
 * the excavation map (in the “Excavation timeline” tab) can be downloaded in .svg format with the button below the plot.
 
 ## Spatial statistics

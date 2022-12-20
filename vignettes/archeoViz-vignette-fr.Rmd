@@ -207,7 +207,7 @@ Cette fonctionnalité permet de définir les couches devant être affichées.
 
 Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 
-* Toutes les visualisations générées avec  `plotly` comportent une fonction d'exportation en format .png.
+* Toutes les visualisations générées avec  `plotly` comportent une fonction d'exportation en format .svg.
 * le plan des fouilles (dans l'onglet “Chronologie”) peut être téléchargé au format .svg en cliquant sur le bouton en dessous.
 
 ## Statistiques spatiales

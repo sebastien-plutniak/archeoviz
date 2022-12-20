@@ -2,7 +2,7 @@ Package: archeoViz
 Type: Package
 Title: Visualisation, Exploration, and Web Communication of Archaeological Excavation Data
 Version: 0.1
-Date: 2022-12-19
+Date: 2022-12-20
 Authors@R: person("Sebastien", "Plutniak", email = "sebastien.plutniak@posteo.net", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6674-3806"))
 Author: Sebastien Plutniak [aut, cre] (<https://orcid.org/0000-0002-6674-3806>)
 Maintainer: Sebastien Plutniak <sebastien.plutniak@posteo.net>
@@ -12,15 +12,13 @@ Repository: CRAN
 Encoding: UTF-8
 Imports:
 	ggplot2,
-	mgcv,
 	plotly,
+	mgcv,
 	cxhull,
 	reshape2,
-	viridisLite,
 	svglite,
 	shiny,
 	shinythemes,
-	dplyr
 Suggests: 
     knitr,
     covr,

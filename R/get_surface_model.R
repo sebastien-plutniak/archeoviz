@@ -11,8 +11,6 @@
   plot.df$predict <- stats::predict(fit, newdata = plot.df) 
   
   z <- reshape2::dcast(plot.df, x ~ y, value.var="predict")
-  # plot.df <- data.table::data.table(plot.df)
-  # z <- data.table::dcast(plot.df, x ~ y, value.var="predict")
   
   # output values preparation:
   x.values <- z[, 1]

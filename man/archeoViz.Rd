@@ -43,5 +43,13 @@ Possible values for the `set.theme` parameter includes the allowed values for th
 }
 
 \examples{
-	\dontrun{archeoViz()}
+	\dontrun{
+	# running the app with no particular data and settings:
+	archeoViz()
+	
+	# running the app with a particular data set:
+	objects <- demo_objects_data(1000)
+	refits <- demo_refits_data(1000)
+	archeoViz(objects.df=objects, refits.df=refits, title="My data set")
+	}
 }

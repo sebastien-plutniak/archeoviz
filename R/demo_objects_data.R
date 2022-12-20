@@ -1,4 +1,4 @@
-.demo_objects_data <- function(n.objects){
+demo_objects_data <- function(n.objects){
   df <- data.frame(
     id = 1:n.objects,
     square_x = factor(sample(1:10, n.objects, replace = T, prob=c(5:1, 5:1))),
@@ -22,6 +22,8 @@
   df[sample.set, ]$xmax <- trunc(jitter(df[sample.set, ]$xmin))
   sample.set <- sample(1:n.objects, n.objects / 3, replace = F)
   df[sample.set, ]$ymax <- trunc(jitter(df[sample.set, ]$ymin))
+
+  df$zmin <- sapply(df$zmin, function(x) x + sample(seq(-90, 90), 1, prob=1:181))
 
   df
 }

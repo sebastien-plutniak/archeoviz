@@ -11,7 +11,7 @@ app_server <- function(input, output, session) {
     if(is.null(title)){
       title.edited <- paste("<h4>", archeoViz.label, "</h4>")
     } else if(is.character(title) & nchar(title) <= 20){
-      title.edited <- paste("<h4>", title, "</h4>feat. ", archeoViz.label, sep="")
+      title.edited <- paste("<h4>", title, "</h4>feat. ", archeoViz.label, "<br><br>", sep="")
     } else{
       stop("The title parameter must be a character string (20 characters max).")
     }
@@ -58,7 +58,8 @@ app_server <- function(input, output, session) {
   timeline.ui.df <- reactive({
     time.df <- utils::read.csv(timeline.file()$datapath,
                                header=T, #quote = "",
-                               sep=input$sep2, stringsAsFactors = F)
+                               sep=input$sep2, dec = input$dec.sep2,
+                               stringsAsFactors = F)
   })
   
   timeline.data <- reactive({
@@ -68,7 +69,7 @@ app_server <- function(input, output, session) {
       time.df <- getShinyOption("timeline.df")
     } else{
       if(input$demoData.n > 0){
-        time.df <- .demo_timeline_data()
+        time.df <- demo_timeline_data()
       } else if(! is.null(timeline.ui.df)){
         time.df <- timeline.ui.df()
       }
@@ -109,7 +110,8 @@ app_server <- function(input, output, session) {
   input.ui.refits <- reactive({
     refits.df <- utils::read.csv(refits.file()$datapath,
                                  header=T, #quote = "",
-                                 sep=input$sep3, stringsAsFactors = F)
+                                 sep=input$sep3, dec = input$dec.sep3,
+                                 stringsAsFactors = F)
   })
   
   refitting.df <- reactive({
@@ -119,7 +121,7 @@ app_server <- function(input, output, session) {
       refits <- getShinyOption("refits.df")
     } else{
       if(input$demoData.n > 0){
-        refits <- .demo_refits_data(input$demoData.n)
+        refits <- demo_refits_data(input$demoData.n)
       } else if(! is.null(input.ui.refits)){
         refits <- input.ui.refits()
       }
@@ -144,7 +146,8 @@ app_server <- function(input, output, session) {
   input.ui.table <- reactive({
     df <- utils::read.csv(objects.file()$datapath, 
                           header=T, #quote = "",
-                          sep=input$sep1, stringsAsFactors = F)
+                          sep = input$sep1, dec = input$dec.sep1,
+                          stringsAsFactors = F)
   })
   
   
@@ -157,7 +160,7 @@ app_server <- function(input, output, session) {
       df <- getShinyOption("objects.df")
     } else{
       if(input$demoData.n > 0){
-        df <- .demo_objects_data(input$demoData.n)
+        df <- demo_objects_data(input$demoData.n)
       } else if(! is.null(input.ui.table)){
         df <- input.ui.table()
       }
@@ -174,26 +177,34 @@ app_server <- function(input, output, session) {
       showNotification(.term_switcher("notif.objects.ok"),
                        type="message", duration = 3)
     }
+    
+    # add max coordinates if absent:
+    if(is.null(df$xmax)){ df$xmax <- df$xmin }
+    if(is.null(df$ymax)){ df$ymax <- df$ymin }
+    if(is.null(df$zmax)){ df$zmax <- df$zmin }
+    
+    
     # end of file validation
     #     tag location mode:
-    df$location_mode <- "exact"
+    df$location_mode <- .term_switcher("exact")
     #     generate random coordinates if needed:
-    df <- .coordinates_sampling(df, "xmin", "xmax", "x")
-    df <- .coordinates_sampling(df, "ymin", "ymax", "y")
-    df <- .coordinates_sampling(df, "zmin", "zmax", "z")
+    df <- .coordinates_sampling(df, "xmin", "xmax", "x", .term_switcher("fuzzy"))
+    df <- .coordinates_sampling(df, "ymin", "ymax", "y", .term_switcher("fuzzy"))
+    df <- .coordinates_sampling(df, "zmin", "zmax", "z", .term_switcher("fuzzy"))
     #    add square identifier:
     df$square <- paste(df$square_x, df$square_y, sep = "-")
     #     order layers by mean depth:
-    sorted.layers <- dplyr::group_by(df, .data$layer)
-    sorted.layers <- dplyr::summarize(sorted.layers, "zmean" = mean(z))
-    sorted.layers <- dplyr::arrange(sorted.layers, .data$zmean)
-
-    df$layer <- factor(df$layer, levels = sorted.layers$layer)
+    sorted.layers <- by(df, df$layer, function(x) mean(x$z)  )
+    sorted.layers <- sapply(1:length(sorted.layers),
+                            function(x) sorted.layers[x])
+    sorted.layers <- sort(sorted.layers)
+    df$layer <- factor(df$layer, levels = names(sorted.layers))
     
     #     add color:
     df$layer_color <- factor(df$layer,
                              levels = levels(df$layer),
-                             labels = viridisLite::viridis(length(levels(df$layer))))
+                             labels = grDevices::rainbow(length(levels(df$layer))))
+    
     df$square_x <- factor(df$square_x)
     df$square_y <- factor(df$square_y)
 
@@ -232,7 +243,7 @@ app_server <- function(input, output, session) {
     
     isolate({
       # location mode selection:
-      if(input$location != "exact-fuzzy"){
+      if(input$location != .term_switcher("exact.fuzzy")){
         df.sub <- df[df$location_mode %in% input$location, ]
       }else{
         df.sub <- df
@@ -641,7 +652,7 @@ app_server <- function(input, output, session) {
                        size = .2)
     }
     
-    if(input$map.density == "all"){
+    if(input$map.density == "all.layers"){
       map <- map + 
         geom_density2d(data=planZ.df,
                        aes_string(x = "x", y = "y"), size = .2, color = "red" )
@@ -665,22 +676,26 @@ app_server <- function(input, output, session) {
     
     site.map() +
       geom_rect(data = rect.df,
-                aes_string(ymin = "ymin", ymax = "ymin",
-                           xmin = "xmin", xmax = "xmin"),
+                aes_string(ymin = "ymin", ymax = "ymax",
+                           xmin = "xmin", xmax = "xmax"),
                 fill="red", alpha=.7
       )
   })
   
   
   output$site.mapY <- renderPlot({
-    k <- 1
+    rect.df <- data.frame(
+      "ymin" = (input$sectionXy[1] - coords()$ymin), 
+      "ymax" = (input$sectionXy[2] - coords()$ymin),
+      "xmin" = (input$sectionXx[1] - coords()$xmin),
+      "xmax" = (input$sectionXx[2] - coords()$xmin))
+    
     site.map() +
-      geom_rect(aes( 
-        ymin= (input$sectionYy[2] - coords()$ymin) / k + .5,
-        ymax= (input$sectionYy[1] - coords()$ymin) / k + .5,
-        xmin= (input$sectionYx[2] - coords()$xmin) / k + .5),
-        xmax= (input$sectionYx[1] - coords()$xmin) / k + .5,
-        fill="red", alpha=.7)
+      geom_rect(data = rect.df,
+                aes_string(ymin = "ymin", ymax = "ymin",
+                           xmin = "xmin", xmax = "xmin"),
+                fill="red", alpha=.7
+      )
   })
   
   
@@ -738,7 +753,7 @@ app_server <- function(input, output, session) {
   output$class_variable <- renderUI({
     req(full.dataset())
     items <- colnames(full.dataset())[grep("object*", colnames(full.dataset()))]
-    selectInput("class_variable", "Variable:", items)
+    selectInput("class_variable", "Variable", items)
   })
   
   # observeEvent(input$reset_input, {
@@ -766,28 +781,28 @@ app_server <- function(input, output, session) {
   
   
   
-  # : density selector  ----
+  # : Density selector  ----
   output$density_selector <- renderUI({
-    density.modes <- structure(c("exact", "fuzzy", "exact-fuzzy"), 
+    density.modes <- structure(c("no", "all.layers", "by.layer"), 
                            .Names = c(.term_switcher("density.no"),
                                       .term_switcher("density.all.layers"),
                                       .term_switcher("density.by.layer")))  
     radioButtons("map.density",
                  .term_switcher("density"),
                  choices = density.modes,
-                 selected = c("no"))
+                 selected = "no")
   })
   
   # : Location choice  ----
   output$location_choice <- renderUI({
-    loc.modes <- structure(c("exact", "fuzzy", "exact-fuzzy"), 
-                           .Names = c(.term_switcher("exact"),
-                                      .term_switcher("fuzzy"),
-                                      .term_switcher("exact.fuzzy")))  
+    loc.modes <- c(.term_switcher("exact"), 
+                   .term_switcher("fuzzy"), 
+                   .term_switcher("exact.fuzzy"))
+    loc.modes <- structure(loc.modes, .Names = loc.modes)  
     
     radioButtons("location", .term_switcher("location"),
                  choices = loc.modes,
-                 selected = c("exact"))
+                 selected = .term_switcher("exact"))
   })
   
   #  Timeline ----

@@ -6,11 +6,11 @@ exploration, and web communication of archaeological excavation data. It
 includes interactive 3D and 2D visualisations, can generate cross
 sections and map of the remains, can run basic spatial statistics
 methods (convex hull, regression surfaces, 2D kernel density
-estimation), and display an interactive <b>timeline</b> of an
-excavation. `archeoViz` can be used locally or deployed on a server,
-either by allowing the user to load data through the interface or by
-running the app with a specific data set. The interface is available in
-English and in French.
+estimation), and display an interactive timeline of an excavation.
+`archeoViz` can be used locally or deployed on a server, either by
+allowing the user to load data through the interface or by running the
+app with a specific data set. The interface is available in English and
+in French.
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -22,6 +22,7 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www
   - [**Installation**](#installation)
       - [Local use](#local-use)
       - [Deployed use](#deployed-use)
+      - [Demonstration](#demonstration)
   - [**Community guidelines**](#community-guidelines)
       - [Reporting bugs](#reporting-bugs)
       - [Suggesting changes](#suggesting-changes)
@@ -65,13 +66,14 @@ package:
 # set the working directory on your shiny server:
 setwd(dir = "/some/path/")
 # download the package:
-download.file(url = "https://github.com/sebastien-plutniak/archeoviz/archive/master.zip",
-              destfile = "archeoviz.zip")
-# unzip it
+download.file(
+  url = "https://github.com/sebastien-plutniak/archeoviz/archive/master.zip",
+  destfile = "archeoviz.zip")
+# unzip it:
 unzip(zipfile = "archeoviz.zip")
 ```
 
-Then, go to <https://><your-shiny-server>/archeoviz-main.
+Then, go to `https://<your-shiny-server>/archeoviz-main`.
 
 To set the app with your data and preferences, edit the app.R file,
 located at the root of the directory:
@@ -87,11 +89,24 @@ archeoViz(objects.df = NULL,   # data.frame with data about the objects
 ```
 
 The possible values for the `set.theme` parameter are illustrated on
-[this page](https://rstudio.github.io/shinythemes). The language of the
+[this page](https://rstudio.github.io/shinythemes/). The language of the
 application can be set with the `lang` parameter, either with an
-“en”/“English” or “fr”/“French” value. For a demo of the
-application, see `archeoViz` deployed on the [*Huma Num* Shiny
-server](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz).
+“en”/“English” or “fr”/“French” value.
+
+## Demonstration
+
+Demonstration instances of the application are deployed on the *Huma
+Num* Shiny server:
+
+  - [archeoViz in
+    English](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz).
+  - [archeoViz in
+    French](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz-fr).
+
+For a real case use, see the example of the prehistoric [Poeymaü
+cave](https://analytics.huma-num.fr/Sebastien.Plutniak/poeymau/) in the
+Pyrenees (note that this application is a modified version of
+`archeoViz`).
 
 # Community guidelines
 
@@ -108,7 +123,7 @@ concern additional functions, changes to documentation, additional
 examples, new features, etc. They can be made by filling an
 [issue](https://github.com/sebastien-plutniak/archeoviz/issues) and,
 even better, using pull requests and the [GitHub Fork and Pull
-model](https://help.github.com/articles/about-pull-requests).
+model](https://docs.github.com/articles/about-pull-requests).
 
 # Use
 
@@ -131,7 +146,7 @@ There are three ways to input data in `archeoViz`:
 
 1.  uploading tables in the “Input data” tab,
 2.  using randomly generated data from the “Input data” tab;
-3.  set the `archeoviz` main function’s parameters before running the
+3.  set the `archeoViz` main function’s parameters before running the
     application.
 
 ### Tables upload
@@ -153,8 +168,8 @@ required formats and columns are provided in the “Input data” tab.
 For demonstration purposes using randomly generated data is made
 possible. To activate this feature, set the slider in “Input data” to a
 value higher than 0 (setting the value back to 0 deactivates the
-feature). Both an “objects” data set and a “timeline” data set are
-generated, making it possible to test all the `archeoViz`
+feature). An “objects” data set, a “refits” data set, and a “timeline”
+data set are generated, making it possible to test all the `archeoViz`
 functionalities.
 
 ### Function parameters
@@ -174,7 +189,7 @@ excavation, respectively.
 ``` r
 archeoViz(objects.df = NULL,  # data.frame with data about the objects
           refits.df = NULL,   # data.frame for refitting objects
-          timeline.df = NULL) # optional data frame for the excavation timeline
+          timeline.df = NULL) # optional data.frame for the excavation timeline
 ```
 
 ## Dataset sub-setting
@@ -201,11 +216,6 @@ selected using the tick boxes. The selection must be validated by
 clicking on the “Validate” button. This selection determines the data
 that will be displayed in the plots and tables.
 
-### Layer selection
-
-Layer selection is made using the legend in the `plotly` plots (see
-below).
-
 ### Object selection
 
 In the “3D plot” tab, clicking on a point displays information about
@@ -219,7 +229,7 @@ generated using the
 plots are dynamic and include a menu bar above the plot with several
 options (generating an image file, zooming, moving the view, etc). See
 details on the [plotly
-website](https://plotly.com/chart-studio-help/getting-to-know-the-plotly-modebar).
+website](http://plotly.github.io/getting-to-know-the-plotly-modebar/).
 
 Clicking on a legend’s item modifies the display:
 
@@ -245,25 +255,25 @@ basic and exploratory use.
 
 ### Regression surfaces
 
-In the “3D plot” tab, clicking on “Compute surfaces” and “Ok” displays
-the regression surface associated with each layer (with at least 100
-points). The surfaces are computed using the generalized additive model
-implemented in the [`mgcv`](https://CRAN.R-project.org/package=mgcv)
-package.
+In the “3D plot” tab, clicking on “Compute surfaces” and “Validate”
+displays the regression surface associated with each layer (with at
+least 100 points). The surfaces are computed using the generalized
+additive model implemented in the
+[`mgcv`](https://CRAN.R-project.org/package=mgcv) package.
 
 ### Convex hulls
 
-In the “3D plot” tab, clicking on “Compute hulls” and “Ok” displays the
-convex hull associated with each layer (with at least 10 points). The
-convex hulls are computed using the
+In the “3D plot” tab, clicking on “Compute hulls” and “Validate”
+displays the convex hull associated with each layer (with at least 10
+points). The convex hulls are computed using the
 [`cxhull`](https://CRAN.R-project.org/package=cxhull) package.
 
 ### 2D density kernel
 
-In the “plan” tab, ticking the “Compute density” box and clicking on
-“Ok” generates a map with contour lines showing the points’ density.
-The 2D kernel density is computed with the `kde2d` function of the
-[`MASS`](https://CRAN.R-project.org/package=MASS) package (through
+In the “Map” tab, ticking the “Compute density” box and clicking on
+“Validate” generates a map with contour lines showing the points’
+density. The 2D kernel density is computed with the `kde2d` function of
+the [`MASS`](https://CRAN.R-project.org/package=MASS) package (through
 [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
 
 # References

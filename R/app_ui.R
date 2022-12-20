@@ -3,7 +3,6 @@ shiny::addResourcePath("archeoViz", system.file("R", package="archeoViz"))
 
 ui <- shinyUI(
   fluidPage(
-    # theme = bslib::bs_theme(bootswatch = set.theme),
     theme = shinythemes::shinytheme(getShinyOption("set.theme")),
     # Sidebar ----
     sidebarLayout(
@@ -12,7 +11,7 @@ ui <- shinyUI(
         conditionalPanel(condition = 'output.locationPanel',
             uiOutput("location_choice"),              
             uiOutput("class_variable"),
-            actionButton("goButton", "Ok"),
+            actionButton("goButton", .term_switcher("validate")),
             br(),br(),
             uiOutput("class_values"),
             ), # end conditionnal panel
@@ -37,9 +36,19 @@ ui <- shinyUI(
                           sliderInput("demoData.n", .term_switcher("use.demo"),
                                        value = 0, min = 0, max=10000, step=100),
                           "or",
-                          fileInput('objects.file', .term_switcher("choose.csv"), accept=c('text/csv', 'text/comma-separated-values, text/plain')),
-                          radioButtons(inputId = 'sep1', label = .term_switcher("separator"),
-                                       choices = c("," =',' , ";"=';',"tab"='\t'), inline=T, selected = ','),
+                          fluidRow(
+                            column(4, fileInput('objects.file', .term_switcher("choose.csv"),
+                                                accept=c('text/csv', 'text/comma-separated-values, text/plain'))
+                            ),
+                            column(2, radioButtons(inputId = 'sep1',
+                                                   label = .term_switcher("separator"),
+                                                   choices = c("," =',', ";"=';',"tab"='\t'),
+                                                   inline=T, selected = ',')),
+                            column(2, radioButtons(inputId = 'dec.sep1',
+                                                   label = .term_switcher("decimal"),
+                                                   choices = c("." ='.', ","),
+                                                   inline=T, selected = '.')),
+                          ), # end fluidRow
                           tags$div(
                             HTML(paste("<div style=width:80%;, align=left>",
                                        .term_switcher("input.objects"),
@@ -47,9 +56,20 @@ ui <- shinyUI(
                           ), # end div()
 
                           h2(.term_switcher("header.refits.table")),
-                          fileInput('refits.file', .term_switcher("choose.csv"), accept=c('text/csv', 'text/comma-separated-values, text/plain')),
-                          radioButtons(inputId = 'sep3', label = .term_switcher("separator"),
-                                       choices = c("," =',' , ";"=';',"tab"='\t'), inline=T, selected = ','),
+                          fluidRow(
+                            column(4, fileInput('refits.file', .term_switcher("choose.csv"),
+                                                accept=c('text/csv', 'text/comma-separated-values, text/plain')),
+                            ),
+                            column(2, radioButtons(inputId = 'sep3',
+                                                   label = .term_switcher("separator"),
+                                                   choices = c("," =',' , ";"=';',"tab"='\t'),
+                                                   inline=T, selected = ',')),
+                            column(2, radioButtons(inputId = 'dec.sep3',
+                                                   label = .term_switcher("decimal"),
+                                                   choices = c("." ='.', ","),
+                                                   inline=T, selected = '.'))
+                          ), # end fluidRow
+                          
                           tags$div(
                             HTML(paste("<div style=width:80%;, align=left>",
                                        .term_switcher("input.refits"),
@@ -57,9 +77,24 @@ ui <- shinyUI(
                           ), # end div()
 
                           h2(.term_switcher("header.timeline.table")),
-                          fileInput('timeline.file', .term_switcher("choose.csv"), accept=c('text/csv', 'text/comma-separated-values, text/plain')),
-                          radioButtons(inputId = 'sep2', label = .term_switcher("separator"),
-                                       choices = c("," =',' , ";"=';',"tab"='\t'), inline=T, selected = ','),
+                          
+                         
+                         
+                          fluidRow(
+                            column(4, fileInput('timeline.file', .term_switcher("choose.csv"),
+                                                accept=c('text/csv', 'text/comma-separated-values, text/plain')),
+                            ),
+                            column(2,  radioButtons(inputId = 'sep2',
+                                                    label = .term_switcher("separator"),
+                                                    choices = c("," =',' , ";"=';',"tab"='\t'),
+                                                    inline=T, selected = ',')),
+                            column(2, radioButtons(inputId = 'dec.sep2',
+                                                   label = .term_switcher("decimal"),
+                                                   choices = c("." ='.', ","),
+                                                   inline=T, selected = '.'))
+                            ), # end fluidRow
+                          
+                          
                           tags$div(
                             HTML(paste("<div style=width:80%;, align=left>",
                                        .term_switcher("input.timeline"),
@@ -76,9 +111,9 @@ ui <- shinyUI(
                      ),
                      column(2,
                             br(),
-                            actionButton("goButton3D", "Ok"),
+                            actionButton("goButton3D", .term_switcher("view")),
                             br(),
-                            h4("3D plot options"),
+                            h4(.term_switcher("header.3d.options")),
                             checkboxInput("surface", .term_switcher("surfaces"), value = F),
                             checkboxInput("cxhull", .term_switcher("hulls"), value = F),
                             checkboxInput("refits", .term_switcher("refits"), value = F),
@@ -97,8 +132,8 @@ ui <- shinyUI(
                             plotly::plotlyOutput("map", width = "80%"),
                      ),
                      column(2, br(),
-                            actionButton("goButtonZ", "Ok"),
-                            br(),
+                            actionButton("goButtonZ", .term_switcher("view")),
+                            br(),br(),
                             uiOutput("density_selector"),
                             sliderInput("map.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
@@ -114,7 +149,7 @@ ui <- shinyUI(
                             uiOutput("sliderYy")
                      ),
                      column(1,
-                            br(), actionButton("goButtonY", "Ok"))
+                            br(), actionButton("goButtonY", .term_switcher("view")))
                    ),
                    fluidRow(
                      column(9,
@@ -133,7 +168,7 @@ ui <- shinyUI(
                             uiOutput("sliderXy")
                      ),
                      column(1, br(),
-                            actionButton("goButtonX", "Ok"),)
+                            actionButton("goButtonX", .term_switcher("view")),)
                    ),
                    fluidRow(
                      column(9,

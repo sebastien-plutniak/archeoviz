@@ -280,4 +280,4 @@ the [`MASS`](https://CRAN.R-project.org/package=MASS) package (through
 
   - Plutniak, Sébastien. 2022. “archeoViz. Visualisation, Exploration,
     and Web Communication of Archaeological Excavation Data”. v0.1, DOI:
-    TODO.
+    [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).

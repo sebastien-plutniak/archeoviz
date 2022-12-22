@@ -48,7 +48,9 @@ jobs:
         if: matrix.config.os == 'macOS-latest' 
       - name: Install R dependencies (windows)
         run: |
-          install.packages(c("remotes", "curl", "rcmdcheck"))
+          install.packages("remotes")
+          install.packages("curl")
+          install.packages("rcmdcheck")
           remotes::install_deps(dependencies = TRUE)
         if: matrix.config.os == 'windows-latest'          
       - name: Install R dependencies (macOS)

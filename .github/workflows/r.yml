@@ -44,11 +44,11 @@ jobs:
         run: sudo apt-get install pandoc libcurl4-openssl-dev libudunits2-dev libgdal-dev
         if: matrix.config.os == 'ubuntu-20.04'  
       - name: Install Dependencies (macOS)
-        run: brew install pandoc udunits
+        run: brew install pandoc udunits gdal
         if: matrix.config.os == 'macOS-latest'
       - name: Install R dependencies (macOs)
         run: |
-          install.packages(c("remotes", "rcmdcheck"))
+          install.packages(c("remotes", "rcmdcheck", "plotly"))
           remotes::install_deps(dependencies = TRUE)
         if: matrix.config.os == 'macOS-latest'          
         shell: Rscript {0}    

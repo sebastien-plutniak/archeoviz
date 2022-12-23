@@ -51,7 +51,13 @@ jobs:
           install.packages(c("remotes", "rcmdcheck", "sf", "morpho"))
           remotes::install_deps(dependencies = TRUE)
         if: matrix.config.os == 'macOS-latest'          
-        shell: Rscript {0}       
+        shell: Rscript {0}    
+      - name: Install R dependencies (windows)
+        run: |
+          install.packages(c("remotes", "rcmdcheck", "sf", "morpho"))
+          remotes::install_deps(dependencies = TRUE)
+        if: matrix.config.os == 'windows-latest'  
+        shell: Rscript {0}            
       - name: Install R dependencies (Ubuntu)
         run: |
           install.packages(c("remotes", "curl", "rcmdcheck", "purrr", "sf", "morpho", "cxhull", "Rvcg"))

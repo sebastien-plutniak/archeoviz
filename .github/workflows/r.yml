@@ -14,8 +14,8 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# permissions:
-#  contents: read
+  permissions:
+   contents: read
 
 jobs:
   build:
@@ -23,12 +23,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-#        r-version: ['3.6.3', '4.1.1']
-        r-version: ['4.1.1']
+        r-version: ['3.6.3', '4.1.1']
+#        r-version: ['4.1.1']
         config:
-          - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
-#          - {os: macOS-latest, r: 'release'}
-#          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+#          - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
+          - {os: macOS-latest, r: 'release'}
+          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
     env:
        RGL_USE_NULL: true
     steps:
@@ -45,11 +45,12 @@ jobs:
         if: matrix.config.os == 'ubuntu-20.04'  
       - name: Install Dependencies (macOS)
         run: brew install pandoc
-        if: matrix.config.os == 'macOS-latest' 
-      - name: Install R dependencies (windows and macOs)
+        if: matrix.config.os == 'macOS-latest'
+      - name: Install R dependencies (macOs)
         run: |
-          install.packages(c("remotes", "rcmdcheck"), INSTALL_opts = c("--no-multiarch"))
+          install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)
+        if: matrix.config.os == 'macOS-latest'          
         shell: Rscript {0}       
       - name: Install R dependencies (Ubuntu)
         run: |

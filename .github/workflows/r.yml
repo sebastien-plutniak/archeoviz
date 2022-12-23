@@ -26,7 +26,7 @@ jobs:
         r-version: ['3.6.3', '4.1.1']
 #        r-version: ['4.1.1']
         config:
-#          - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
+          - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
           - {os: macOS-latest, r: 'release'}
           - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
     env:
@@ -48,7 +48,7 @@ jobs:
         if: matrix.config.os == 'macOS-latest'
       - name: Install R dependencies (macOs)
         run: |
-          install.packages(c("remotes", "rcmdcheck"))
+          install.packages(c("remotes", "rcmdcheck", "sf", "morpho"))
           remotes::install_deps(dependencies = TRUE)
         if: matrix.config.os == 'macOS-latest'          
         shell: Rscript {0}       

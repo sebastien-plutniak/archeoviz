@@ -14,8 +14,8 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
+# permissions:
+#  contents: read
 
 jobs:
   build:
@@ -51,6 +51,7 @@ jobs:
           install.packages("remotes", "rcmdcheck")
           remotes::install_deps(dependencies = TRUE)
         if: matrix.config.os == 'windows-latest'
+        shell: Rscript {0} 
       - name: Install R dependencies (macOS)
         run: |
           install.packages(c("remotes", "rcmdcheck"))

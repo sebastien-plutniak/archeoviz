@@ -34,11 +34,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Set up R ${{ matrix.r-version }}
-        uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
+       # uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.r-version }}
       - name: Install Dependencies (Windows)
-        run: choco install pandoc rtools
+        run: choco install pandoc
         if: matrix.config.os == 'windows-latest'  
       - name: Install Dependencies (Linux)
         run: sudo apt-get install pandoc libcurl4-openssl-dev libudunits2-dev libgdal-dev

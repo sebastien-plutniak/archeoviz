@@ -1,0 +1,78 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+#
+# See https://github.com/r-lib/actions/tree/master/examples#readme for
+# additional example workflows available for the R community.
+
+name: R
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+   contents: read
+
+jobs:
+  build:
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        r-version: ['3.6.3', '4.1.1']
+#        r-version: ['4.1.1']
+        config:
+          - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
+          - {os: macOS-latest, r: 'release'}
+          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+    env:
+       RGL_USE_NULL: true
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up R ${{ matrix.r-version }}
+        uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
+        with:
+          r-version: ${{ matrix.r-version }}
+      - name: Install Dependencies (Windows)
+        run: choco install pandoc
+        if: matrix.config.os == 'windows-latest'  
+      - name: Install Dependencies (Linux)
+        run: sudo apt-get install pandoc libcurl4-openssl-dev libudunits2-dev libgdal-dev
+        if: matrix.config.os == 'ubuntu-20.04'  
+      - name: Install Dependencies (macOS)
+        run: brew install pandoc udunits gdal
+        if: matrix.config.os == 'macOS-latest'
+      - name: Install R dependencies (macOs)
+        run: |
+          install.packages(c("remotes", "rcmdcheck", "plotly"))
+          remotes::install_deps(dependencies = TRUE)
+        if: matrix.config.os == 'macOS-latest'          
+        shell: Rscript {0}    
+      - name: Install R dependencies (windows)
+        run: |
+          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho", "plotly"),  INSTALL_opts = c("--no-multiarch"))
+          remotes::install_deps(dependencies = TRUE)
+        if: matrix.config.os == 'windows-latest'  
+        shell: Rscript {0}            
+      - name: Install R dependencies (Ubuntu)
+        run: |
+          install.packages(c("remotes", "curl", "rcmdcheck", "purrr", "sf", "Morpho", "cxhull", "Rvcg"))
+          remotes::install_deps(dependencies = TRUE)
+        if: matrix.config.os == 'ubuntu-20.04'  
+        shell: Rscript {0}
+      - name: Check
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
+        shell: Rscript {0}
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: covr
+      - name: Test coverage
+        run: covr::codecov()
+        shell: Rscript {0}    

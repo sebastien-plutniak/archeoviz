@@ -61,7 +61,7 @@ jobs:
         shell: Rscript {0}      
       - name: Install R dependencies (windows, R '3.6.3')
         run: |
-          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho", "tidyr", "plotly", "testthat", "cxhull", "plyr", "shiny"))
+          install.packages(c("remotes", "rcmdcheck", "sf", "purrr", "Morpho", "plyr", "tidyr", "plotly", "testthat", "cxhull", "shiny"), INSTALL_opts = c("--no-multiarch"))
           remotes::install_deps(dependencies = TRUE)
         if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '3.6.3') }}
         shell: Rscript {0}              

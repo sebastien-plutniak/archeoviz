@@ -54,14 +54,14 @@ jobs:
         shell: Rscript {0}    
       - name: Install R dependencies (windows, R '4.1.1')
         run: |
-          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho"), INSTALL_opts = c("--no-multiarch"))
+          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho", "stringi"), INSTALL_opts = c("--no-multiarch"))
           install.packages("xfun", type="binary", INSTALL_opts = c("--no-multiarch"))
           remotes::install_deps(dependencies = TRUE)
         if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '4.1.1') }}
         shell: Rscript {0}      
       - name: Install R dependencies (windows, R '3.6.3')
         run: |
-          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho", "plotly", "testthat", "cxhull", "plyr", "shiny"))
+          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho", "tidyr", "plotly", "testthat", "cxhull", "plyr", "shiny"))
           remotes::install_deps(dependencies = TRUE)
         if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '3.6.3') }}
         shell: Rscript {0}              

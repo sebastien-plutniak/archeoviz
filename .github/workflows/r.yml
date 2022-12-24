@@ -27,8 +27,8 @@ jobs:
 #        r-version: ['4.1.1']
         config:
           - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
-          - {os: macOS-latest, r: 'release'}
-          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+#          #~ - {os: macOS-latest, r: 'release'}
+#          #~ - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
     env:
        RGL_USE_NULL: true
     steps:
@@ -54,7 +54,7 @@ jobs:
         shell: Rscript {0}    
       - name: Install R dependencies (windows)
         run: |
-          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho", "plotly"),  INSTALL_opts = c("--no-multiarch"))
+          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho", "plotly", "cxhull", "shiny"),  INSTALL_opts = c("--no-multiarch"))
           remotes::install_deps(dependencies = TRUE)
         if: matrix.config.os == 'windows-latest'  
         shell: Rscript {0}            

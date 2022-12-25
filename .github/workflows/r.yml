@@ -24,11 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         r-version: ['3.6.3', '4.1.1']
-#        r-version: ['4.1.1']
         config:
-          - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
-#          #~ - {os: macOS-latest, r: 'release'}
-#          #~ - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+#          - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
+           - {os: macOS-latest, r: 'release'}
+           - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
     env:
        RGL_USE_NULL: true
     steps:
@@ -54,15 +53,15 @@ jobs:
         shell: Rscript {0}    
       - name: Install R dependencies (windows, R '4.1.1')
         run: |
-          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho"), INSTALL_opts = c("--no-multiarch"))
+          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho", "stringi"), INSTALL_opts = c("--no-multiarch"))
           install.packages(c("xfun", "stringi"), type="binary", INSTALL_opts = c("--no-multiarch"))
           remotes::install_deps(dependencies = TRUE, INSTALL_opts = c("--no-multiarch"))
         if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '4.1.1') }}
         shell: Rscript {0}      
       - name: Install R dependencies (windows, R '3.6.3')
         run: |
-          install.packages(c("remotes", "rcmdcheck", "sf", "purrr", "Morpho", "Rcpp", "plyr", "tidyr", "plotly", "testthat", "cxhull", "shiny"), INSTALL_opts = c("--no-multiarch"))
-          install.packages(c("rlang", "htmltools", "digest"), type="binary", INSTALL_opts = c("--no-multiarch"))
+          install.packages(c("remotes", "rcmdcheck", "sf", "purrr", "Morpho", "plyr", "tidyr", "plotly", "testthat", "cxhull", "shiny"), INSTALL_opts = c("--no-multiarch"))
+          install.packages(c("rlang", "Rcpp", "htmltools", "digest"), type="binary", INSTALL_opts = c("--no-multiarch"))
           remotes::install_deps(dependencies = TRUE)
         if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '3.6.3') }}
         shell: Rscript {0}              

@@ -64,41 +64,17 @@ app_server <- function(input, output, session) {
   })
   
   timeline.data <- reactive({
+    objects.dataset <- objects.dataset()
+    from.func.time.df <- getShinyOption("timeline.df")
     
-    time.df <- getShinyOption("timeline.df")
-    if (! is.null(time.df)){
-      time.df <- getShinyOption("timeline.df")
-    } else{
-      if(input$demoData.n > 0){
-        time.df <- demo_timeline_data()
-      } else if(! is.null(timeline.ui.df)){
-        time.df <- timeline.ui.df()
-      }
-    }
-    
-    time.df <- data.frame(time.df)
-    # file validation:
-    colnames(time.df) <- tolower(colnames(time.df))
-    if( sum(c("year", "square_x", "square_y") %in% colnames(time.df)) != 3 ){
-      showNotification("Error. Some of the mandatory fields are absent. Please check the file.",
-                       type = "error", duration = 10)
-    } else{
-      showNotification("Timeline file ok!", type="message", duration = 4)
-    }
-    # end of file validation
-    time.df$excavation <- T
-    time.df$year <- as.integer(time.df$year)
-    
-    time.grid <- expand.grid("square_x" = sort(unique(time.df$square_x)),
-                             "square_y" = sort(unique(time.df$square_y)),
-                             "year" = unique(time.df$year))
-    
-    time.df <- merge(time.grid,
-                     time.df[c("square_x", "square_y", "year", "excavation")],
-                     by = c("square_x", "square_y", "year"), all.x = T)
-    
-    time.df[ is.na(time.df$excavation), ]$"excavation" <- F
-    time.df
+    # sources priority: 
+    #   function parameter > objects table > timeline table
+    result <- .do_timelinedata(from.func.time.df, 
+                               objects.dataset, 
+                               timeline.ui.df)
+    showNotification(.term_switcher(result$notif.text),
+                     type = result$notif.type)
+    result$data
   })
   
   # Refits preprocessing: ----
@@ -115,25 +91,20 @@ app_server <- function(input, output, session) {
                                  stringsAsFactors = F)
   })
   
+  
   refitting.df <- reactive({
-    req(dataset)
+    req(objects.subdataset)
     refits <- getShinyOption("refits.df")
-    if (! is.null(refits)){
-      refits <- getShinyOption("refits.df")
-    } else{
+    
+    if (is.null(refits)){
       if(input$demoData.n > 0){
         refits <- demo_refits_data(input$demoData.n)
-      } else if(! is.null(input.ui.refits)){
+      } else if( ! is.null(input.ui.refits)){
         refits <- input.ui.refits()
       }
     }
-    
-    refits <- c(t(refits))
-    refits <- merge(data.frame("id" = refits),
-                    dataset()[, c("id", "x", "y", "z")],
-                    by="id", sort=F, all.x=T)
-    refits$id <- rep(seq(1, nrow(refits) / 2), each=2)
-    refits
+
+    .do_refits_preprocessing(refits, objects.subdataset())
   })  
   
   
@@ -144,7 +115,7 @@ app_server <- function(input, output, session) {
     input$objects.file
   })
   
-  input.ui.table <- reactive({
+  objects.ui.input <- reactive({
     df <- utils::read.csv(objects.file()$datapath, 
                           header=T, #quote = "",
                           sep = input$sep1, dec = input$dec.sep1,
@@ -152,89 +123,37 @@ app_server <- function(input, output, session) {
   })
   
   #  : static preprocessing ----
-  
-  full.dataset <- reactive({
-    # alternative between static deployement and generic use:
-    objects.df <- getShinyOption("objects.df")
-    if (! is.null(objects.df)){
-      df <- getShinyOption("objects.df")
-    } else{
-      if(input$demoData.n > 0){
-        df <- demo_objects_data(input$demoData.n)
-      } else if(! is.null(input.ui.table)){
-        df <- input.ui.table()
-      }
-    }
-    # file validation:
-    colnames(df) <- tolower(colnames(df))
+  objects.dataset <- reactive({
+    result <- .do_objects_dataset(
+                    from.func.objects.df = getShinyOption("objects.df"),
+                    demoData.n           = input$demoData.n, 
+                    input.ui.table       = objects.ui.input)
     
-    required.fields <- c("id", "square_x", "square_y", "xmin", "ymin", "zmin", "layer", "object_type")
-    
-    if( sum(required.fields %in% colnames(df)) != 8 ){
-      showNotification(.term_switcher("notif.objects.not.ok"),
-                       type = "error", duration = 10)
-    } else{
-      showNotification(.term_switcher("notif.objects.ok"),
-                       type="message", duration = 3)
-    }
-    
-    
-    # add max coordinates if absent:
-    if(is.null(df$xmax)){ df$xmax <- df$xmin }
-    if(is.null(df$ymax)){ df$ymax <- df$ymin }
-    if(is.null(df$zmax)){ df$zmax <- df$zmin }
-    
-    
-    # end of file validation
-    #     tag location mode:
-    df$location_mode <- .term_switcher("exact")
-    #     generate random coordinates if needed:
-    df <- .coordinates_sampling(df, "xmin", "xmax", "x", .term_switcher("fuzzy"))
-    df <- .coordinates_sampling(df, "ymin", "ymax", "y", .term_switcher("fuzzy"))
-    df <- .coordinates_sampling(df, "zmin", "zmax", "z", .term_switcher("fuzzy"))
-    #    add square identifier:
-    df$square <- paste(df$square_x, df$square_y, sep = "-")
-    #     order layers by mean depth:
-    sorted.layers <- by(df, df$layer, function(x) mean(x$z)  )
-    sorted.layers <- sapply(1:length(sorted.layers),
-                            function(x) sorted.layers[x])
-    sorted.layers <- sort(sorted.layers)
-    df$layer <- factor(df$layer, levels = names(sorted.layers))
-    
-    #     add color:
-    df$layer_color <- factor(df$layer,
-                             levels = levels(df$layer),
-                             labels = grDevices::rainbow(length(levels(df$layer))))
-    
-    df$square_x <- factor(df$square_x)
-    df$square_y <- factor(df$square_y)
-
-    df
+    showNotification(.term_switcher(result$notif.text),
+                     type = result$notif.type)
+    result$data
   })
   
   # : dynamic preprocessing ----
-  dataset <- reactive({
-    input$goButton 
+  objects.subdataset <- reactive({
     req(input$class_variable)
     
-    df <- full.dataset()
+    df <- objects.dataset()
     
-    isolate({
-      # location mode selection:
-      if(input$location != .term_switcher("exact.fuzzy")){
-        df.sub <- df[df$location_mode %in% input$location, ]
-      }else{
-        df.sub <- df
-      }
+    # location mode selection:
+    if(input$location != .term_switcher("exact.fuzzy")){
+      df.sub <- df[df$location_mode %in% input$location, ]
+    }else{
+      df.sub <- df
+    }
+    
+    # class selection:
+    if( ! "All" %in% input$class_values){
+      selection <- eval(parse(text = paste0("df.sub$", input$class_variable))) %in% input$class_values[input$class_values != "All"]
+      df.sub <- df.sub[selection, ]
+    }
       
-      # class selection:
-      if( ! "All" %in% input$class_values)                        {
-        selection <- eval(parse(text = paste0("df.sub$", input$class_variable))) %in% input$class_values[input$class_values != "All"]
-        df.sub <- df.sub[selection, ]
-      }
-      
-      df.sub  # return the subset of the dataframe
-    }) #end isolate
+    df.sub  # return the subset of the dataframe
   }) # end dataset subset
   
 
@@ -242,20 +161,15 @@ app_server <- function(input, output, session) {
   
   # : squares list ----
   squares <- reactive({
-    df <- full.dataset()
+    df <- objects.dataset()
     squares <- list("square_x" = levels(df$square_x),
                     "square_y" = levels(df$square_y))
   })
   
   # : coords min/max coordinates ----
   coords.min.max <- reactive({
-    df <- full.dataset()
-    coords <- list("xmin" = floor(min(df$x,   na.rm = T) / 100) * 100,
-                   "xmax" = ceiling(max(df$x, na.rm = T) / 100) * 100,
-                   "ymin" = floor(min(df$y,   na.rm = T) / 100) * 100,
-                   "ymax" = ceiling(max(df$y, na.rm = T) / 100) * 100,
-                   "zmin" = floor(min(df$z,   na.rm = T) / 100) * 100,
-                   "zmax" = ceiling(max(df$z, na.rm = T) / 100) * 100)
+    df <- objects.dataset()
+    .do_coords_minmax(df)
   })
   
   # : ranges ----
@@ -290,9 +204,14 @@ app_server <- function(input, output, session) {
                    c(1:length(square.coords$range.y)))),
     "x"  = rep(c(coords$xmin, coords$xmax),
                length(square.coords$range.y)),
-    "y"  =  c(rbind(seq(coords$ymin, coords$ymax, 100),
-                    seq(coords$ymin, coords$ymax, 100))),
+    "y"  = c(rbind(seq(coords$ymin, coords$ymax, 100),
+                   seq(coords$ymin, coords$ymax, 100))),
     "z"  = coords$zmax)
+  })
+  
+  # : colors ----
+  colors.list <- reactive({
+    as.character(levels(objects.dataset()$layer_color))
   })
   
   # : axis labels ----
@@ -314,59 +233,28 @@ app_server <- function(input, output, session) {
       
   
   # TABLES ----
-  # : by object class ----
-  classLocalStats <- eventReactive(input$goButton, {
+  # : by variable ----
+  by.variable.table <- eventReactive(input$goButton, {
     req(input$class_variable, input$class_values)
-    dataset <- dataset()
+    dataset <- objects.subdataset()
     
-    stats.df <- table(eval(parse(text = paste0("dataset$", input$class_variable))),
-                      dataset$location_mode)
-    
-    if(nrow(stats.df) > 1 & ncol(stats.df) > 1){
-      stats.df <- as.matrix(stats.df)
-      stats.df <- stats.df[order(stats.df[,1], decreasing = T), ]
-      stats.df <- rbind(stats.df, "Total" = apply(stats.df, 2, sum))
-      stats.df <- cbind(stats.df, "Total" = apply(stats.df, 1, sum))
-    }
-    
-    if(ncol(stats.df) == 1 & nrow(stats.df) > 1){
-      stats.df <- stats.df[order(stats.df[,1], decreasing = T), ]
-      stats.df <- c(stats.df, "Total" = sum(stats.df))
-      stats.df <- as.data.frame(stats.df)
-      colnames(stats.df) <- input$location
-    } else {
-      stats.df <- as.data.frame.matrix(stats.df)
-    }
-    stats.df
+    .do_by_variable_table(dataset, input$class_variable, input$location)
   })
-  
-  output$classLocalStats <- renderTable({classLocalStats()}, 
+  # render:
+  output$by.variable.table <- renderTable({by.variable.table()}, 
                                         rownames = T, digits=0)
   
   # : by layer ----
-  layersStats <- eventReactive(input$goButton, {
+  by.layer.table <- eventReactive(input$goButton, {
     req(input$class_variable, input$class_values)
-    dataset <- dataset()
+    dataset <- objects.subdataset()
     
-    stats.df <- table(dataset$layer, dataset$location_mode)
-    
-    if(nrow(stats.df) > 1 & ncol(stats.df) > 1){
-      stats.df <- as.matrix(stats.df)
-      stats.df <- stats.df[order(stats.df[,1], decreasing = T), ]
-      stats.df <- rbind(stats.df, "Total" = apply(stats.df, 2, sum))
-      stats.df <- cbind(stats.df, "Total" = apply(stats.df, 1, sum))
-    }
-    if(ncol(stats.df) == 1 & nrow(stats.df) > 1){
-      stats.df <- stats.df[order(stats.df[,1], decreasing = T), ]
-      stats.df <- c(stats.df, "Total" = sum(stats.df))
-      stats.df <- as.data.frame(stats.df)
-      colnames(stats.df) <- input$location
-    }
-    stats.df
+    .do_by_layer_table(dataset, input$location)
   })
-  
-  output$layersStats <- renderTable({layersStats()}, 
+  # render:
+  output$by.layer.table <- renderTable({by.layer.table()}, 
                                     rownames = T, digits=0)
+  
   # MAPS ----
   # : site map ----
   site.map <- reactive({
@@ -378,8 +266,8 @@ app_server <- function(input, output, session) {
     
     ggplot() +
       theme_minimal(base_size = 11) +
-      geom_vline(xintercept =  square.coords$range.x, colour = "darkgrey" ) +
-      geom_hline(yintercept =  square.coords$range.y, colour = "darkgrey" ) +
+      geom_vline(xintercept = square.coords$range.x, colour = "darkgrey" ) +
+      geom_hline(yintercept = square.coords$range.y, colour = "darkgrey" ) +
       coord_fixed() +
       scale_x_continuous(breaks = axis.labels$xaxis$breaks,
                          labels = axis.labels$xaxis$labels) +
@@ -446,10 +334,10 @@ app_server <- function(input, output, session) {
   
   # PLOT  3D ----
   plot3d <- eventReactive(input$goButton3D, {
-    validate(need(input$class_values, 'Check at least one value (in the left side menu)'))
-    req(input$class_values, full.dataset())
+    validate(need(input$class_values, .term_switcher("notif.tick.value")))
+    req(input$class_values, objects.dataset())
     
-    dataset <- dataset()
+    dataset <- objects.subdataset()
     coords <- coords.min.max()
     squares <- squares()
     axis.labels <- axis.labels()
@@ -459,7 +347,7 @@ app_server <- function(input, output, session) {
     # : plot initial ----
     fig <- plot_ly(dataset, x = ~x, y = ~y, z = ~z,
                    color = ~layer,
-                   colors =  as.character(levels(full.dataset()$layer_color)),
+                   colors =  colors.list(),
                    size  = ~point.size,
                    sizes = size.scale,
                    marker = list(symbol = 'square', sizemode = 'diameter'),
@@ -579,7 +467,7 @@ app_server <- function(input, output, session) {
     req(input$class_values)
     if (input$goButton == 0) return()
     
-    dataset <- dataset()
+    dataset <- objects.subdataset()
     x <- click.selection()$x 
     y <- click.selection()$y 
     z <- click.selection()$z 
@@ -596,147 +484,61 @@ app_server <- function(input, output, session) {
   
   # PLOTS 2D ----
   # :  X section plot ----
-  input.min.max.X <- eventReactive(input$goButtonX, {
-    list("coordx" = seq(input$sectionXx[1], input$sectionXx[2]),
-         "coordy" = seq(input$sectionXy[1], input$sectionXy[2]))
-  })
   
-  
-  output$sectionXplot <- plotly::renderPlotly({
-    dataset <- dataset()
-      
-    min.max.X <- input.min.max.X()
-    coords <- coords.min.max()
-    axis.labels <- axis.labels()
-    grid.coordy <- grid.coordy()
-    grid.coordy <- grid.coordy[! duplicated(grid.coordy$id), ]
+  sectionXplot <- shiny::eventReactive(input$goButtonX, {
+    req(input$class_variable, input$class_values)
+    dataset <- objects.subdataset()
     
-    sel <- (dataset$x %in% min.max.X$coordx) & (dataset$y %in% min.max.X$coordy)
-    sectionX.df <- dataset[sel, ]
-    sectionX.df$point.size <- input$sectionX.point.size
+    sel <- (dataset$y >= input$sectionXy[1] & dataset$y <= input$sectionXy[2]) &
+           (dataset$x >= input$sectionXx[1] & dataset$x <= input$sectionXx[2])
     
-    sectionX <- plot_ly(sectionX.df)
-    
-    sectionX <- config(sectionX,
-                       toImageButtonOptions = list(
-                         format = "svg",
-                         filename = "SectionX",
-                         width = 600, height = 600
-                       )) 
-  
-    sectionX <- add_markers(sectionX,  x = ~y, y = ~z,
-                                          color = ~layer,
-                                          colors =  as.character(levels(full.dataset()$layer_color)),
-                            marker = list(symbol = 'square',
-                                          size  = ~point.size,
-                                          sizemode = 'diameter'),
-                            text = ~paste('id:', id,
-                                          '<br>x:', x, ', y:', y,
-                                          '<br>Square:', square,
-                                          '<br>Location:', location_mode,
-                                          '<br>Class:', object_type)
-    )
-    
-    sectionX <- plotly::add_segments(sectionX, x = ~y, xend = ~y,  y = 0, yend = ~z,
-                             data = grid.coordy,
-                     color = I("grey70"), alpha=.6,
-                     showlegend=F, hoverinfo="skip", inherit = F)
-    
-    sectionX <- layout(sectionX,
-                       xaxis = list(title="Y", 
-                                    zeroline = FALSE, 
-                                    range=c(coords$ymin, coords$ymax),
-                                    tickvals = axis.labels$yaxis$breaks,
-                                    ticktext = axis.labels$yaxis$labels
-                       ),
-                       yaxis = list(title= .term_switcher("depth"),
-                                    zeroline = T,
-                                    range=c(coords$zmax, coords$zmin),
-                                    scaleanchor="x"
-                       )
-    )
-    sectionX
+    .do_section_plot(selection = sel,
+                     dataset = dataset, 
+                     section.point.size = input$sectionX.point.size,
+                     refitting.df = refitting.df(), 
+                     show.refits = input$refits.sectionX, 
+                     colors = colors.list(), 
+                     grid.coord = grid.coordy(),
+                     coords = coords.min.max(),
+                     axis.labels = axis.labels(), 
+                     xaxis = "y")
   })# end sectionX
   
+  output$sectionXplot <- plotly::renderPlotly({sectionXplot()})
   
   
   # : Y section plot ----
-  
-  input.min.max.Y <- eventReactive(input$goButtonY, {
-    list("coordx" = seq(input$sectionYx[1], input$sectionYx[2]),
-         "coordy" = seq(input$sectionYy[1], input$sectionYy[2]))
-  })
-  
-  output$sectionYplot <- plotly::renderPlotly({
-    dataset <- dataset()
+  sectionYplot <- shiny::eventReactive(input$goButtonY, {
+    req(input$class_variable, input$class_values)
+    dataset <- objects.subdataset()
     
-    min.max.Y <- input.min.max.Y()
-    coords <- coords.min.max()
-    axis.labels <- axis.labels()
+    sel <- (dataset$y >= input$sectionYy[1] & dataset$y <= input$sectionYy[2]) &
+           (dataset$x >= input$sectionYx[1] & dataset$x <= input$sectionYx[2])
     
-    grid.coordx <- grid.coordx()
-    grid.coordx <- grid.coordx[! duplicated(grid.coordx$id), ]
-    
-    sel <- (dataset$y %in% min.max.Y$coordy) & (dataset$x %in% min.max.Y$coordx)
-    
-    sectionY.df <- dataset[sel,  ]
-    sectionY.df$point.size <- input$sectionY.point.size
-    
-    sectionY <- plot_ly(sectionY.df)
-    
-    sectionY <- add_markers(sectionY,
-                            x = ~x, y = ~z,
-                            color = ~layer,
-                            colors = as.character(levels(sectionY.df$layer_color)),
-                            marker = list(symbol = 'square',
-                                          size  = ~point.size,
-                                          sizemode = 'diameter'),
-                            text = ~paste('id:', id,
-                                          '<br>x:', x, ', y:', y,
-                                          '<br>Square:', square,
-                                          '<br>Location:', location_mode,
-                                          '<br>Class:', object_type)
-                            )
-    
-    sectionY <- plotly::add_segments(sectionY, x = ~x, xend = ~x,  y = 0, yend = ~z,
-                             data = grid.coordx,
-                             color = I("grey70"), alpha = .6,
-                             showlegend=F, hoverinfo="skip", inherit = F)
-    
-    sectionY <- config(sectionY,
-                       toImageButtonOptions = list(
-                         format = "svg",
-                         filename = "SectionY",
-                         width = 600, height = 600))
-    
-    sectionY <- layout(sectionY,
-                       xaxis = list(title="X", 
-                                    zeroline = FALSE,
-                                    range =  c(coords$xmin, coords$xmax),
-                                    tickvals = axis.labels$xaxis$breaks,
-                                    ticktext = axis.labels$xaxis$labels
-                                    ),
-                       yaxis = list(title= .term_switcher("depth"),
-                                    zeroline = T,
-                                    range=c(coords$zmax, coords$zmin),
-                                    scaleanchor="x"
-                       )
-    )
-    sectionY
+    .do_section_plot(selection = sel,
+                     dataset = dataset, 
+                     section.point.size = input$sectionY.point.size,
+                     refitting.df = refitting.df(), 
+                     show.refits = input$refits.sectionY, 
+                     colors = colors.list(), 
+                     grid.coord = grid.coordx(),
+                     coords = coords.min.max(),
+                     axis.labels = axis.labels(), 
+                     xaxis = "x")
   }) #end section Y
   
+  output$sectionYplot <- plotly::renderPlotly({sectionYplot()})
   
   # : Map plot ####
   
-  planZ <- eventReactive(input$goButtonZ, {
-    dataset <- dataset()
-    min.max.Z <- seq(input$planZ[1], input$planZ[2])
-    dataset[dataset$z %in% min.max.Z, ]
-  })
-  
   map <- eventReactive(input$goButtonZ, {
-    dataset <- dataset()
-    planZ.df <- planZ()
+    req(input$class_variable, input$class_values)
+    dataset <- objects.subdataset()
+    refitting.df <- refitting.df()
+    
+    sel <- dataset$z >= input$planZ[1] & dataset$z <= input$planZ[2]
+      
+    planZ.df <- dataset[sel, ]
     
     col <- unique(planZ.df[, c("layer", "layer_color")])
     col <- structure(as.character(col$layer_color),
@@ -762,6 +564,23 @@ app_server <- function(input, output, session) {
                        aes_string(x = "x", y = "y"),
                        size = .2, color = "grey30")
     }  
+    
+    # add refits:
+    if(input$refits.map & nrow(refitting.df) > 0){
+      # subset refitting data set:
+      sel <- (refitting.df[, 1] %in% planZ.df$id) | (refitting.df[, 2] %in% planZ.df$id)
+      refitting.df <- refitting.df[which(sel), ]
+      
+      refitting.df <- cbind(
+        refitting.df[seq(1, nrow(refitting.df)-1, by=2), c(2, 3)],
+        refitting.df[seq(2, nrow(refitting.df),   by=2), c(2, 3)])
+      colnames(refitting.df) <- c("x", "y", "xend", "yend")
+      
+      map <- map +
+        geom_segment(data = refitting.df,
+                     aes_string(x="x", xend="xend", y="y", yend="yend"),
+                     color = "red", linewidth=.3)
+    }
     
     ggplotly(map)
   })
@@ -835,8 +654,8 @@ app_server <- function(input, output, session) {
   
   # : Object variable/values  ----
   output$class_variable <- renderUI({
-    req(full.dataset())
-    items <- colnames(full.dataset())[grep("object*", colnames(full.dataset()))]
+    req(objects.dataset())
+    items <- colnames(objects.dataset())[grep("object*", colnames(objects.dataset()))]
     selectInput("class_variable", "Variable", items)
   })
   
@@ -846,9 +665,9 @@ app_server <- function(input, output, session) {
   # })
   
   output$class_values <- renderUI({
-    req(full.dataset(), input$class_variable)
+    req(objects.dataset(), input$class_variable)
     
-    data <- full.dataset()
+    data <- objects.dataset()
     
     values <- unique(eval(parse(text = paste0("data$", input$class_variable))))
     
@@ -878,7 +697,7 @@ app_server <- function(input, output, session) {
   # : Location selector  ----
   
   # conditionnal display
-  output$locationPanel <- reactive({is.data.frame(full.dataset())})
+  output$locationPanel <- reactive({is.data.frame(objects.dataset())})
   outputOptions(output, "locationPanel", suspendWhenHidden = FALSE)
   
   output$location_choice <- renderUI({
@@ -909,8 +728,8 @@ app_server <- function(input, output, session) {
     timeline.map() +
       geom_tile(data = time.sub.df,
                 aes_string(x = "square_x", y = "square_y", fill = "excavation"),
-                show.legend = F) +
-      scale_fill_manual("State:", values = c(rgb(1,1,1,0), rgb(.4, .7, 0, .5)) ) 
+                show.legend = F, alpha=.8) +
+      scale_fill_manual("State:", values = c("white", "darkolivegreen4") ) 
   })
   
   
@@ -929,7 +748,7 @@ app_server <- function(input, output, session) {
       geom_tile(data = time.df,
                 aes_string(x = "square_x", y = "square_y", fill = "excavation"),
                 show.legend = F)  +
-      scale_fill_manual("State:", values = c(rgb(1,1,1,0), rgb(.4, .7, 0, .5)) ) +
+      scale_fill_manual("State:", values = c("white", "darkolivegreen4") ) +
       facet_wrap(~year) +
       theme(axis.text.x = element_text(size=.1),
             axis.text.y = element_text(size=.1))
@@ -937,3 +756,7 @@ app_server <- function(input, output, session) {
   
   
 } # end of server.R
+
+
+
+

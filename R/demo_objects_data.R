@@ -1,11 +1,12 @@
+
 demo_objects_data <- function(n.objects){
   df <- data.frame(
-    id = 1:n.objects,
+    id = seq_len(n.objects),
     square_x = factor(sample(1:10, n.objects, replace = T, prob=c(5:1, 5:1))),
     square_y = factor(sample(1:8,  n.objects, replace = T, prob=8:1)),
-    xmin = sample(1:1000, n.objects, replace = T),
+    xmin = sample(1:999, n.objects, replace = T),
     xmax = NA,
-    ymin = sample(1:800, n.objects, replace = T),
+    ymin = sample(1:799, n.objects, replace = T),
     ymax = NA,
     zmin = sample(seq(200, 1000, 200), n.objects, replace = T, prob = c(1, 2, 3, 2, 2)),
     zmax = NA,
@@ -13,7 +14,8 @@ demo_objects_data <- function(n.objects){
     object_type = sample(c("bone", "flint", "stone", "pottery"),
                          n.objects, replace = T, prob=c(1, 4, 2, 3)),
     object_class_size = sample(c("tiny", "small", "medium", "large", "huge"),
-                               n.objects, replace = T, prob=c(1, 4, 2, 3, 1))
+                               n.objects, replace = T, prob=c(1, 4, 2, 3, 1)),
+    year = sample(seq.int(1980, 2000), n.objects, replace = T)
   )
 
   df$layer <- factor(df$zmin, labels = LETTERS[1:length(unique(df$zmin)) ]  )
@@ -23,7 +25,7 @@ demo_objects_data <- function(n.objects){
   sample.set <- sample(1:n.objects, n.objects / 3, replace = F)
   df[sample.set, ]$ymax <- trunc(jitter(df[sample.set, ]$ymin))
 
-  df$zmin <- sapply(df$zmin, function(x) x + sample(seq(-90, 90), 1, prob=1:181))
+  df$zmin <- sapply(df$zmin, function(x) x + sample(seq.int(-90, 90), 1, prob=1:181))
 
   df
 }

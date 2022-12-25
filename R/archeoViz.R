@@ -1,4 +1,3 @@
-
 archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
                       title=NULL, home.text=NULL, lang="en", set.theme="cosmo"){
   
@@ -10,7 +9,7 @@ archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
                "title"       = title,
                "home.text"   = home.text,
                "set.theme"   = set.theme,
-               "ui.terms"    =  ui.terms)
+               "ui.terms"    = ui.terms)
   
   shinyApp(ui = app_ui, server = app_server)
 }

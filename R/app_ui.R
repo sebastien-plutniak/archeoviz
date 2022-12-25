@@ -138,6 +138,7 @@ ui <- shinyUI(
                             sliderInput("map.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=2, step=1),
+                            checkboxInput("refits.map", .term_switcher("refits"), value = F),
                             )#end column
                    ) #end fluid row
           ), # end tabPanel
@@ -159,6 +160,7 @@ ui <- shinyUI(
                             sliderInput("sectionY.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
+                            checkboxInput("refits.sectionY", .term_switcher("refits"), value = F),
                             imageOutput("site.mapY", width = "250px", height = "250px")
                      )
                    )#end fluidrow
@@ -181,21 +183,21 @@ ui <- shinyUI(
                             sliderInput("sectionX.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
+                            checkboxInput("refits.sectionX", .term_switcher("refits"), value = F),
                             imageOutput("site.mapX", width = "250px", height = "250px")
                      )
                    ) #end fluidrow
           ), # end tabPanel
 
-          tabPanel(.term_switcher("tab.tables"),  # summary tables ----
+          tabPanel(.term_switcher("tab.tables"),  #  tables ----
                    fluidRow(
-                     column(2),
-                     column(5,
+                     column(6,
                             h4(.term_switcher("tab.variable.loc")),
-                            tableOutput("classLocalStats")
+                            tableOutput("by.variable.table")
                      ),
-                     column(5,
+                     column(6,
                             h4(.term_switcher("tab.layer.loc")),
-                            tableOutput("layersStats")
+                            tableOutput("by.layer.table")
                      ),
                    ) #end fluidrow
           ), #end tabPanel

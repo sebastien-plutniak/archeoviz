@@ -11,6 +11,7 @@
   }
   
   colnames(df) <- tolower(colnames(df))
+  
   #  file validation ----
   
   required.fields <- c("id", "square_x", "square_y", "xmin", "ymin", "zmin", "layer", "object_type")
@@ -23,6 +24,18 @@
     notif.text <- "notif.objects.ok"
     notif.type <- "message"
   }
+  
+  # check coords format ----
+  coords.type.check <- function(x){
+    typeof(x) %in% c("integer", "double")
+    }
+  
+  if(sum(apply(df[1, c("xmin", "ymin", "zmin")], 2, coords.type.check)) != 3){
+    return(list(data = df,
+                notif.text = "coords.type.error",
+                notif.type = "error"))
+  }
+  
   
   # add max coordinates if absent: ----
   if(is.null(df$xmax)){ df$xmax <- df$xmin }
@@ -56,5 +69,5 @@
   df$square_x <- factor(df$square_x)
   df$square_y <- factor(df$square_y)
   
-  list(data = df, notif.text = notif.text, notif.type = notif.type)
+  list("data" = df, "notif.text" = notif.text, "notif.type" = notif.type)
 }

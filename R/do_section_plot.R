@@ -1,6 +1,7 @@
-.do_section_plot <- function(selection, dataset, section.point.size, refitting.df, show.refits, 
-                 colors, grid.coord, coords, axis.labels, xaxis){
-  # check if there are data:
+.do_section_plot <- function(selection, dataset, section.point.size,
+                             refitting.df, show.refits, 
+                             colors, grid.coord, coords, axis.labels, xaxis){
+  # data check: ----
   section.df <- dataset[selection, ]
 
   if(nrow(dataset[selection, ]) == 0){
@@ -11,23 +12,24 @@
     section.df <- dataset[selection, ]
   }
 
-  # adapt values:
+  # adapt values ----
   section.df$x <- eval(parse(text = paste0("section.df$", xaxis)))
   section.df$point.size <- section.point.size
-  
+
   grid.coord <- grid.coord[! duplicated(grid.coord$id), ]
   grid.coord$x <- eval(parse(text = paste0("grid.coord$", xaxis)))
   
-  # begin plot
+  # begin plot ----
   section <- plotly::plot_ly(section.df)
 
+  # add config ----
   section <- plotly::config(section,
                             toImageButtonOptions = list(
                               format = "svg",
                               filename = "section",
                               width = 600, height = 600
                               ))
-
+  # add points ----
   section <- plotly::add_markers(section, x = ~x, y = ~z,
                           color = ~layer,
                           colors =  colors,
@@ -41,29 +43,34 @@
                                         '<br>Class:', object_type)
   )
 
+  # add grid ----
   section <- plotly::add_segments(section, x = ~x, xend = ~x,  y = 0, yend = ~z,
                                    data = grid.coord,
                                    color = I("grey70"), alpha=.6,
                                    showlegend=F, hoverinfo="skip", inherit = F)
 
-  # add refits:
-  if(show.refits & nrow(refitting.df) > 0){
-    # subset refitting data set:
-    sel <- (refitting.df[, 1] %in% section.df$id) | (refitting.df[, 2] %in% section.df$id)
-    refitting.df <- refitting.df[which(sel), ]
-
-    # define values for the x axis:
-    refitting.df$x  <- eval(parse(text = paste0("refitting.df$", xaxis)))
-
-    section <- plotly::add_paths(section, x = ~x, y = ~z,
-                          split = ~id,
-                          data = refitting.df,
-                          color = I("red"), showlegend=F,
-                          line = list(width=1),
-                          hoverinfo = "skip",
-                          inherit = F)
+  # add refits ----
+  if(show.refits){
+    if(nrow(refitting.df()) > 0){
+      refitting.df <- refitting.df()
+      # subset refitting data set:
+      sel <- (refitting.df[, 1] %in% section.df$id) | (refitting.df[, 2] %in% section.df$id)
+      refitting.df <- refitting.df[which(sel), ]
+  
+      # define values for the x axis:
+      refitting.df$x  <- eval(parse(text = paste0("refitting.df$", xaxis)))
+  
+      section <- plotly::add_paths(section, x = ~x, y = ~z,
+                            split = ~id,
+                            data = refitting.df,
+                            color = I("red"), showlegend=F,
+                            line = list(width=1),
+                            hoverinfo = "skip",
+                            inherit = F)
+    }
   }
 
+  # add layout ----
   section <- plotly::layout(section,
                      xaxis = list(title = toupper(xaxis),
                                   zeroline = FALSE,

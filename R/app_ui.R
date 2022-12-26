@@ -19,8 +19,6 @@ ui <- shinyUI(
 
       mainPanel(
         tabsetPanel(id="tabs",
-
-                    
         tabPanel(.term_switcher("tab.home"), # Home ----                   
                    column(12, align="center",
                           br(),
@@ -47,8 +45,9 @@ ui <- shinyUI(
                             column(2, radioButtons(inputId = 'dec.sep1',
                                                    label = .term_switcher("decimal"),
                                                    choices = c("." ='.', ","),
-                                                   inline=T, selected = '.')),
+                                                   inline=T, selected = '.'))
                           ), # end fluidRow
+                          uiOutput("objects.preview.table"),
                           tags$div(
                             HTML(paste("<div style=width:80%;, align=left>",
                                        .term_switcher("input.objects"),
@@ -75,11 +74,10 @@ ui <- shinyUI(
                                        .term_switcher("input.refits"),
                                  "</div>"))
                           ), # end div()
+                          uiOutput("refits.preview.table"),
 
                           h2(.term_switcher("header.timeline.table")),
                           
-                         
-                         
                           fluidRow(
                             column(4, fileInput('timeline.file', .term_switcher("choose.csv"),
                                                 accept=c('text/csv', 'text/comma-separated-values, text/plain')),

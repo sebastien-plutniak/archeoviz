@@ -85,10 +85,11 @@ app_server <- function(input, output, session) {
   })
   
   input.ui.refits <- reactive({
-    refits.df <- utils::read.csv(refits.file()$datapath,
-                                 header=T, #quote = "",
-                                 sep=input$sep3, dec = input$dec.sep3,
-                                 stringsAsFactors = F)
+    utils::read.csv(refits.file()$datapath,
+                    header = TRUE, #quote = "",
+                    sep = input$sep3,
+                    dec = input$dec.sep3,
+                    stringsAsFactors = FALSE)
   })
   
   
@@ -96,14 +97,13 @@ app_server <- function(input, output, session) {
     req(objects.subdataset)
     refits <- getShinyOption("refits.df")
     
-    if (is.null(refits)){
+    if(is.null(refits)){
       if(input$demoData.n > 0){
         refits <- demo_refits_data(input$demoData.n)
       } else if( ! is.null(input.ui.refits)){
         refits <- input.ui.refits()
-      }
+      } 
     }
-
     .do_refits_preprocessing(refits, objects.subdataset())
   })  
   
@@ -233,6 +233,46 @@ app_server <- function(input, output, session) {
       
   
   # TABLES ----
+  # : preview objects tab  ----
+  output$objects.preview.tab <- renderTable({
+    objects.ui.input()[1:2, ]
+  }, rownames = T, digits=0)
+  
+  output$objects.preview.table <- renderUI({
+    div(style = 'overflow-x: scroll; overflow: auto',
+        tableOutput('objects.preview.tab'))
+  })
+  
+  # : preview refits tab  ----
+  output$refits.preview.tab <- renderTable({
+    input.ui.refits()[1:2, ]
+  }, rownames = T, digits=0)
+  
+  output$refitss.preview.table <- renderUI({
+    div(style = 'overflow-x: scroll; overflow: auto',
+        tableOutput('refits.preview.tab'))
+  })
+  
+  # : selected item ----
+  output$id.tab <- renderTable({
+    req(input$class_values)
+    if (input$goButton == 0) return()
+    
+    dataset <- objects.subdataset()
+    x <- click.selection()$x 
+    y <- click.selection()$y 
+    z <- click.selection()$z 
+    id <- dataset[dataset$x == x & dataset$y == y &  dataset$z == z,]$id
+    df.tab <- dataset[dataset$id == id, ]
+    df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "layer_color"))]
+  }, digits=0)
+  
+  output$id.table <- renderUI({
+    div(style = 'overflow-x: scroll; overflow: auto',
+        p(.term_switcher("click.on.point")),
+        tableOutput('id.tab'))
+  })
+  
   # : by variable ----
   by.variable.table <- eventReactive(input$goButton, {
     req(input$class_variable, input$class_values)
@@ -369,12 +409,15 @@ app_server <- function(input, output, session) {
     fig <- add_markers(fig)
     
     # : add refits lines  ----
-    if(input$refits & nrow(refitting.df()) > 0){
-      fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
-                       split = ~id, data = refitting.df(),
-                       color = I("red"), showlegend=F,
-                       hoverinfo = "skip",
-                       inherit = F)
+    if(input$refits){
+      refitting.df <- refitting.df()
+      if(nrow(refitting.df) > 0){
+        fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
+                         split = ~id, data = refitting.df,
+                         color = I("red"), showlegend = FALSE,
+                         hoverinfo = "skip",
+                         inherit = F)
+      } # else{ showNotification("No refitting data!", type="warning") }
     }
     
     # : add surfaces ####
@@ -403,19 +446,19 @@ app_server <- function(input, output, session) {
     if(input$cxhull){
       # filter the layers for which a convex hull must be computed:
       layers <- table(dataset$layer) 
-      layers <- names(layers[layers > 9])
+      layers <- names(layers[layers > 19])
       
       # compute hulls:
       mesh.list <- lapply(layers, .get_cxhull_model, df=dataset)
       # add mesh:
-      for(i in 1:length(mesh.list)){
+      for(i in seq_len(length(mesh.list)) ){
         fig <-  add_mesh(fig,
                          x = mesh.list[[i]][[1]][,1] * -1,
                          y = mesh.list[[i]][[1]][,2] * -1,
                          z = mesh.list[[i]][[1]][,3] * -1,
                          facecolor = rep(mesh.list[[i]]$color, mesh.list[[i]]$nfaces),
-                         hoverinfo="skip",  showscale=F,
-                         opacity = 0.4, alphahull=0, inherit = F)
+                         hoverinfo="skip",  showscale = FALSE,
+                         opacity = 0.4, alphahull = 0, inherit = FALSE)
       }
     }    
     
@@ -457,30 +500,10 @@ app_server <- function(input, output, session) {
                   ))  #end layout
   }) # end plot3d
   
-  
   output$plot3d <- plotly::renderPlotly(plot3d())
   
   click.selection <- reactive(plotly::event_data("plotly_click"))
   
-  # Table: selected item ----
-  output$id.tab <- renderTable({
-    req(input$class_values)
-    if (input$goButton == 0) return()
-    
-    dataset <- objects.subdataset()
-    x <- click.selection()$x 
-    y <- click.selection()$y 
-    z <- click.selection()$z 
-    id <- dataset[dataset$x == x & dataset$y == y &  dataset$z == z,]$id
-    df.tab <- dataset[dataset$id == id, ]
-    df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "layer_color"))]
-  }, digits=0)
-  
-  output$id.table <- renderUI({
-    div(style = 'overflow-x: scroll; overflow: auto',
-        p(.term_switcher("click.on.point")),
-        tableOutput('id.tab'))
-  })
   
   # PLOTS 2D ----
   # :  X section plot ----
@@ -493,14 +516,14 @@ app_server <- function(input, output, session) {
            (dataset$x >= input$sectionXx[1] & dataset$x <= input$sectionXx[2])
     
     .do_section_plot(selection = sel,
-                     dataset = dataset, 
+                     dataset = dataset,
                      section.point.size = input$sectionX.point.size,
-                     refitting.df = refitting.df(), 
-                     show.refits = input$refits.sectionX, 
-                     colors = colors.list(), 
+                     refitting.df = refitting.df, # this is the reactive output
+                     show.refits = input$refits.sectionX,
+                     colors = colors.list(),
                      grid.coord = grid.coordy(),
                      coords = coords.min.max(),
-                     axis.labels = axis.labels(), 
+                     axis.labels = axis.labels(),
                      xaxis = "y")
   })# end sectionX
   
@@ -518,7 +541,7 @@ app_server <- function(input, output, session) {
     .do_section_plot(selection = sel,
                      dataset = dataset, 
                      section.point.size = input$sectionY.point.size,
-                     refitting.df = refitting.df(), 
+                     refitting.df = refitting.df, # this is the reactive output
                      show.refits = input$refits.sectionY, 
                      colors = colors.list(), 
                      grid.coord = grid.coordx(),
@@ -534,7 +557,7 @@ app_server <- function(input, output, session) {
   map <- eventReactive(input$goButtonZ, {
     req(input$class_variable, input$class_values)
     dataset <- objects.subdataset()
-    refitting.df <- refitting.df()
+    
     
     sel <- dataset$z >= input$planZ[1] & dataset$z <= input$planZ[2]
       
@@ -566,28 +589,30 @@ app_server <- function(input, output, session) {
     }  
     
     # add refits:
-    if(input$refits.map & nrow(refitting.df) > 0){
-      # subset refitting data set:
-      sel <- (refitting.df[, 1] %in% planZ.df$id) | (refitting.df[, 2] %in% planZ.df$id)
-      refitting.df <- refitting.df[which(sel), ]
+    if(input$refits.map){
+      refitting.df <- refitting.df()
       
-      refitting.df <- cbind(
-        refitting.df[seq(1, nrow(refitting.df)-1, by=2), c(2, 3)],
-        refitting.df[seq(2, nrow(refitting.df),   by=2), c(2, 3)])
-      colnames(refitting.df) <- c("x", "y", "xend", "yend")
-      
-      map <- map +
-        geom_segment(data = refitting.df,
-                     aes_string(x="x", xend="xend", y="y", yend="yend"),
-                     color = "red", linewidth=.3)
+      if(nrow(refitting.df) > 0){
+        # subset refitting data set:
+        sel <- (refitting.df[, 1] %in% planZ.df$id) | (refitting.df[, 2] %in% planZ.df$id)
+        refitting.df <- refitting.df[which(sel), ]
+
+        refitting.df <- cbind(
+          refitting.df[seq(1, nrow(refitting.df)-1, by=2), c(2, 3)],
+          refitting.df[seq(2, nrow(refitting.df),   by=2), c(2, 3)])
+        colnames(refitting.df) <- c("x", "y", "xend", "yend")
+
+        map <- map +
+          geom_segment(data = refitting.df,
+                       aes_string(x="x", xend="xend", y="y", yend="yend"),
+                       color = "red", linewidth=.3)
+      }
     }
     
     ggplotly(map)
   })
   
   output$map <- plotly::renderPlotly({ map() })
-  
-  
   
   
   

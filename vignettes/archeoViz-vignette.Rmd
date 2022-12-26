@@ -27,11 +27,20 @@ knitr::opts_chunk$set(
   - [Reporting bugs](#reporting-bugs)
   - [Suggesting changes](#suggesting-changes)
 - [**Use**](#use)
-  - [Input data](#input-data)
+  - [Data input](#data-input)
+    - [Tables upload](#tables-upload)
+    - [Random data](#random-data)
+    - [Function parameters](#function-parameters)
   - [Data set sub-setting](#dataset-sub-setting)
+    - [Location mode](#location-mode)
+    - [Objects category](#objects-category)
+    - [Objects selection](#objects-selection)
   - [Interactive visualisation](#interactive-visualisation)
   - [Graphical outputs](#graphical-outputs)
   - [Spatial statistics](#spatial-statistics)  
+    - [Regression surfaces](#regression-surfaces)
+    - [Convex hulls](#convex-hulls)
+    - [2D kernel density](#2d-kernel-density)
 - [**References**](#references)
  
  
@@ -120,7 +129,7 @@ Having archaeological remains from a given site, `archeoViz` is designed to lowe
 
 N.B.: consequently, `archeoViz` is not intended to replace more sophisticated analysis tools (e.g., GIS, statistical packages, etc.)
 
-## Input data
+## Data input
 
 There are three ways to input data in `archeoViz`:
 
@@ -177,7 +186,7 @@ The selection must be validated by clicking on the “Validate” button.
 This selection determines the data that will be displayed in the plots and tables.
 
 
-### Object selection
+### Objects selection
 
 In the “3D plot” tab, clicking on a point displays information about that point in the table below the plot.
 
@@ -189,9 +198,10 @@ The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” 
 Clicking on a legend's item modifies the display:
 
 * a simple click on an item activates/deactivates its display;
-* a double click on an item  displays this item only (another double click cancels it)
+* a double click on an item  displays this item only (another double click cancels it).
 
 This feature makes it possible to choose which layers are shown.
+In addition, the size of the points can be set and whether the refitting relationships must be represented or not.
 
 ## Graphical outputs
 
@@ -212,9 +222,10 @@ In the “3D plot” tab, clicking on “Compute surfaces” and “Validate” 
 
 In the “3D plot” tab, clicking on “Compute hulls” and “Validate” displays the convex hull associated with each layer (with at least 10 points). The convex hulls are computed using the  [`cxhull`](https://CRAN.R-project.org/package=cxhull) package.
 
-### 2D density kernel
+### 2D kernel density
 
 In the “Map” tab, ticking the “Compute density” box and clicking on “Validate” generates a map with contour lines showing the points' density.
+Density can be computed for all the points together or by layer.
 The 2D kernel density is computed with the `kde2d` function of the [`MASS`](https://CRAN.R-project.org/package=MASS) package (through [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
 
 

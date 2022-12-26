@@ -17,7 +17,10 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
+[![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/master/graph/badge.svg)](https://app.codecov.io/gh/sebastien-plutniak/archeoviz)
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
 
   - [**Installation**](#installation)
       - [Local use](#local-use)
@@ -27,11 +30,20 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www
       - [Reporting bugs](#reporting-bugs)
       - [Suggesting changes](#suggesting-changes)
   - [**Use**](#use)
-      - [Input data](#input-data)
+      - [Data input](#data-input)
+          - [Tables upload](#tables-upload)
+          - [Random data](#random-data)
+          - [Function parameters](#function-parameters)
       - [Data set sub-setting](#dataset-sub-setting)
+          - [Location mode](#location-mode)
+          - [Objects category](#objects-category)
+          - [Objects selection](#objects-selection)
       - [Interactive visualisation](#interactive-visualisation)
       - [Graphical outputs](#graphical-outputs)
-      - [Spatial statistics](#spatial-statistics)  
+      - [Spatial statistics](#spatial-statistics)
+          - [Regression surfaces](#regression-surfaces)
+          - [Convex hulls](#convex-hulls)
+          - [2D kernel density](#2d-kernel-density)
   - [**References**](#references)
 
 # Installation
@@ -140,7 +152,7 @@ to lower the technical barriers to fulfil three objectives:
 N.B.: consequently, `archeoViz` is not intended to replace more
 sophisticated analysis tools (e.g., GIS, statistical packages, etc.)
 
-## Input data
+## Data input
 
 There are three ways to input data in `archeoViz`:
 
@@ -216,7 +228,7 @@ selected using the tick boxes. The selection must be validated by
 clicking on the “Validate” button. This selection determines the data
 that will be displayed in the plots and tables.
 
-### Object selection
+### Objects selection
 
 In the “3D plot” tab, clicking on a point displays information about
 that point in the table below the plot.
@@ -235,9 +247,11 @@ Clicking on a legend’s item modifies the display:
 
   - a simple click on an item activates/deactivates its display;
   - a double click on an item displays this item only (another double
-    click cancels it)
+    click cancels it).
 
-This feature makes it possible to choose which layers are shown.
+This feature makes it possible to choose which layers are shown. In
+addition, the size of the points can be set and whether the refitting
+relationships must be represented or not.
 
 ## Graphical outputs
 
@@ -268,11 +282,12 @@ displays the convex hull associated with each layer (with at least 10
 points). The convex hulls are computed using the
 [`cxhull`](https://CRAN.R-project.org/package=cxhull) package.
 
-### 2D density kernel
+### 2D kernel density
 
 In the “Map” tab, ticking the “Compute density” box and clicking on
 “Validate” generates a map with contour lines showing the points’
-density. The 2D kernel density is computed with the `kde2d` function of
+density. Density can be computed for all the points together or by
+layer. The 2D kernel density is computed with the `kde2d` function of
 the [`MASS`](https://CRAN.R-project.org/package=MASS) package (through
 [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
 

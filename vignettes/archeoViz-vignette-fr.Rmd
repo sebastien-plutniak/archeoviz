@@ -15,13 +15,11 @@ knitr::opts_chunk$set(
 ```
 
  
-
-
 `archeoViz` est une application dédiée à l'archéologie.
 Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques de terrain.
 Elle propose des *visualisations* en 3D et 2D,
 génère des *coupes* et des *cartes* des restes archéologiques, permet de réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une *chronologie* interactive des fouilles d'un site.
-`archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en laissant la possibilité de charger des données via l'interface ou en exécutant l'application avec un jeu de donnée spécifique. L'interface est disponible en anglais et en français.
+`archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en anglais et en français.
 
 
 
@@ -34,10 +32,19 @@ génère des *coupes* et des *cartes* des restes archéologiques, permet de réa
   - [Soumettre une modification](#soumettre-une-modification)
 - [**Utilisation**](#utilisation)
   - [Données](#données)
+     - [Par chargement de tableaux](#par-chargement-de-tableaux)
+     - [Par génération de données aléatoires](#par-génération-de-données-aléatoires)
+     - [Par paramétrage de la fonction](#par-paramétrage-de-la-fonction)
   - [Sous-sélection de données](#sous-sélection-de-données)
+     - [Par mode de localisation](#par-mode-de-localisation)
+     - [Par catégorie d'objet](#par-catégorie-dobjet)
+     - [Par objet ](#par-objet)
   - [Visualisations interactives](#visualisations-interactives)
   - [Sorties graphiques](#sorties-graphiques)
   - [Statistiques spatiales](#statistiques-spatiales)  
+     - [Surfaces de régression](#surfaces-de-régression)
+     - [Enveloppes convexes](#enveloppes-convexes)
+     - [Estimation 2D de densité par noyau](#estimation-2d-de-densité-par-noyau)
 - [**Références**](#références)
  
  
@@ -199,9 +206,10 @@ Davantage de détails sont disponibles sur le [site de plotly](http://plotly.git
 Cliquer sur un item de la légende modifie l'affichage:
 
 * un simple click sur un item active/désactive son affichage;
-* un double click sur un item limite l'affichage à cet item seul  (un autre double click annule cette sélection)
+* un double click sur un item limite l'affichage à cet item seul  (un autre double click annule cette sélection).
 
 Cette fonctionnalité permet de définir les couches devant être affichées.
+De plus, la taille des points peut être ajustée, ainsi que l'affichage ou non des relations de remontage.
 
 ## Sorties graphiques
 
@@ -216,7 +224,7 @@ Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 
 ### Surfaces de régression
 
-Dans l'onglet “Vue 3D”, cliquer sur “Calculer les surfaces” puis “Valider” affiche les surfaces de régression associées à chaque sous-ensemble de points (couche), comportant au moins 100 points. Les surfaces sont calculées grâce au modèle additif généralisé implémenté dans le package  [`mgcv`](https://CRAN.R-project.org/package=mgcv).
+Dans l'onglet “Vue 3D”, cliquer sur “Calculer les surfaces” puis “Valider” affiche les surfaces de régression associées à chaque sous-ensemble de points  (couche), comportant au moins 100 points. Les surfaces sont calculées grâce au modèle additif généralisé implémenté dans le package  [`mgcv`](https://CRAN.R-project.org/package=mgcv).
 
 ### Enveloppes convexes
 
@@ -225,7 +233,9 @@ Cliquer sur “Calculer les enveloppes” puis “Valider”, dans l'onglet “V
 
 ### Estimation 2D de densité par noyau
 
-Dans l'onglet “Plan”, cocher la case “Calculer la densité” et cliquer sur “Valider” génère un plan comportant des lignes de contour représentant la densité des points. L'estimation bidimensionnelle de densité par noyau est calculée avec la fonction   `kde2d` du package [`MASS`](https://CRAN.R-project.org/package=MASS) (à travers le package  [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
+Dans l'onglet “Plan”, cocher la case “Calculer la densité” et cliquer sur “Valider” génère un plan comportant des lignes de contour représentant la densité des points. 
+La densité peut être calculée pour l'ensemble des points ou par couche.
+L'estimation bidimensionnelle de densité par noyau est calculée avec la fonction   `kde2d` du package [`MASS`](https://CRAN.R-project.org/package=MASS) (à travers le package  [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
 
 
 # Références

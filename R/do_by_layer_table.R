@@ -13,5 +13,5 @@
     df <- as.data.frame(df)
     colnames(df) <- input.location
   }
-  df
+  data.frame(df)
 }

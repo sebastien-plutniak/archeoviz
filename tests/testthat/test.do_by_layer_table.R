@@ -15,8 +15,7 @@ test_that(".do_by_layer_table: 2 location modes", {
   res$location_mode <- sample(c("exact", "fuzzy"), nrow(res), replace = T)
   res <- .do_by_layer_table(res, c("exact", "fuzzy"))
   
-  expect_equal(class(res), c("matrix", "array"))
+  expect_equal(class(res), "data.frame")
   expect_equal(colnames(res),  c("exact", "fuzzy", "Total"))
-  expect_equal(typeof(res), "integer")
-  expect_true(is.integer(res[, 3]))
+  expect_equal(c(sapply(res[1,], typeof), use.names=F), c("integer", "integer", "integer"))
 })

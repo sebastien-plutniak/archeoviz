@@ -127,11 +127,12 @@ ui <- shinyUI(
                    fluidRow(
                      column(10,
                             uiOutput("sliderMap"),
-                            plotly::plotlyOutput("map", width = "80%"),
+                            plotly::plotlyOutput("map", width = "100%", height = 500),
                      ),
-                     column(2, br(),
+                     column(2,
+                            br(),
                             actionButton("goButtonZ", .term_switcher("view")),
-                            br(),br(),
+                            br(), br(),
                             uiOutput("density_selector"),
                             sliderInput("map.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
@@ -152,7 +153,7 @@ ui <- shinyUI(
                    ),
                    fluidRow(
                      column(9,
-                            plotly::plotlyOutput("sectionYplot", width = 650, height = 500)
+                            plotly::plotlyOutput("sectionYplot", width = "100%", height = 500)
                      ),
                      column(3,
                             sliderInput("sectionY.point.size", .term_switcher("point.size"),
@@ -175,7 +176,7 @@ ui <- shinyUI(
                    ),
                    fluidRow(
                      column(9,
-                            plotly::plotlyOutput("sectionXplot", width = 650, height = 500)
+                            plotly::plotlyOutput("sectionXplot", width = "100%", height = 500)
                      ),
                      column(3,
                             sliderInput("sectionX.point.size", .term_switcher("point.size"),

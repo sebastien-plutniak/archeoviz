@@ -11,7 +11,7 @@ demo_objects_data <- function(n.objects){
     zmin = sample(seq(200, 1000, 200), n.objects, replace = TRUE, prob = c(1, 2, 3, 2, 2)),
     zmax = NA,
     layer = NA,
-    object_type = sample(c("bone", "flint", "stone", "pottery"),
+    object_type = sample(c("bone", "lithic", "shell", "pottery"),
                          n.objects, replace = TRUE, prob=c(1, 4, 2, 3)),
     object_class_size = sample(c("tiny", "small", "medium", "large", "huge"),
                                n.objects, replace = TRUE, prob=c(1, 4, 2, 3, 1)),
@@ -28,5 +28,10 @@ demo_objects_data <- function(n.objects){
 
   df$zmin <- sapply(df$zmin, function(x) x + sample(seq.int(-90, 90), 1, prob=1:181))
 
+  df$object_lithic_type <- NA
+  df[df$object_type == "lithic", ]$object_lithic_type <- 
+    sample(c("blade", "scraper", "point", "biface"),
+           nrow(df[df$object_type == "lithic", ]),
+           replace = TRUE)
   df
 }

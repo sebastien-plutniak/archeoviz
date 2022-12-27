@@ -25,17 +25,23 @@
     notif.type <- "message"
   }
   
-  # check coords format ----
+  # test coords format ----
   coords.type.check <- function(x){
     typeof(x) %in% c("integer", "double")
     }
   
   if(sum(apply(df[1, c("xmin", "ymin", "zmin")], 2, coords.type.check)) != 3){
     return(list(data = df,
-                notif.text = "coords.type.error",
+                notif.text = "notif.error.coords.type",
                 notif.type = "error"))
   }
   
+  # test unique identifiers ----
+  if(sum(duplicated(df$id)) > 0){
+    return(list(data = df,
+                notif.text = "notif.error.identifier",
+                notif.type = "error"))
+  }
   
   # add max coordinates if absent: ----
   if(is.null(df$xmax)){ df$xmax <- df$xmin }

@@ -162,8 +162,12 @@ app_server <- function(input, output, session) {
   # : squares list ----
   squares <- reactive({
     df <- objects.dataset()
-    squares <- list("square_x" = levels(df$square_x),
-                    "square_y" = levels(df$square_y))
+    square_x <- c()
+    square_y <- c()
+    if( ! length(table(df$square_x)) == 0){square_x <- levels(df$square_x)}
+    if( ! length(table(df$square_y)) == 0){square_y <- levels(df$square_y)}
+    
+    list("square_x" = square_x, "square_y" = square_y)
   })
   
   # : coords min/max coordinates ----

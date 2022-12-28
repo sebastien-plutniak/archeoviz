@@ -9,7 +9,7 @@
     df <- cbind(df, "Total" = apply(df, 1, sum))
   }
   
-  if(ncol(df) == 1 & nrow(df) > 1){
+  if(nrow(df) > 1 & ncol(df) == 1){
     df <- df[order(df[,1], decreasing = T), ]
     df <- c(df, "Total" = sum(df))
     df <- as.data.frame(df)

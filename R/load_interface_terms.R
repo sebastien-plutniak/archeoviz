@@ -77,6 +77,7 @@
     A data table is required (csv format). A row describes a single object with the following mandatory fields:
     <ul>
       <li> <b>id</b>: <i>alphanumerical value</i>, unique identifier of the object </li>
+      <li> <b>xmin</b>: <i>numerical value</i>, coordinate of the object on the X axis</li>
       <li> <b>ymin</b>: <i>numerical value</i>, coordinate of the object on the Y axis</li>
       <li> <b>zmin</b>: <i>numerical value</i>, coordinate of the object on the Z axis (depth)</li>
       <li> <b>layer</b>: <i>alphanumerical value</i>, identifier of the object's layer</li>
@@ -86,7 +87,6 @@
     <ul>
       <li> <b>square_x</b>: <i>alphanumerical value</i>, identifier of the square on the X axis</li>
       <li> <b>square_y</b>: <i>alphanumerical value</i>, identifier of the square on the Y axis</li>
-      <li> <b>xmin</b>: <i>numerical value</i>, coordinate of the object on the X axis</li>
       <li> <b>year</b> : <i>numerical value</i>, year when the object was excavated</li>
       <li> <b>xmax</b>: <i>numerical value</i>, when the X location of the object is included in a range of X coordinates</li>
       <li> <b>ymax</b>: <i>numerical value</i>, when the Y location of the object is included in a range of Y coordinates</li>
@@ -527,7 +527,7 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     exact = "Exacte",
     fuzzy = "Vague",
     depth = "Profondeur",
-    through = "avec : ",
+    through = "avec",
     exact.fuzzy = "Exacte ou vague",
     click.on.point = "Cliquez sur un point pour afficher ses information.",
     notif.objects.ok = "Fichier des objets ok!",
@@ -579,7 +579,7 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     exact = "Exact",
     fuzzy = "Fuzzy",
     depth = "Depth",
-    through = "with: ",
+    through = "with",
     exact.fuzzy = "Exact or fuzzy",
     click.on.point = "Click on a point to get more information.",
     notif.objects.ok = "Objects file ok!",

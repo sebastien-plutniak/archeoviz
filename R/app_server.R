@@ -5,7 +5,7 @@ app_server <- function(input, output, session) {
   # Interface ----
   # : title ----
   output$title.edited <- renderUI({
-    archeoViz.label <- paste("<a href=https://github.com/sebastien-plutniak/archeoviz>archeoViz</a> v",
+    archeoViz.label <- paste(" <a href=https://github.com/sebastien-plutniak/archeoviz>archeoViz</a> v",
                              utils::packageVersion("archeoViz"), sep="")
     title <- shiny::getShinyOption("title")
     
@@ -562,8 +562,6 @@ app_server <- function(input, output, session) {
     req(input$class_variable, input$class_values)
     dataset <- objects.subdataset()
     
-    browser()
-    
     sel <- dataset$z >= input$planZ[1] & dataset$z <= input$planZ[2]
       
     planZ.df <- dataset[sel, ]
@@ -579,8 +577,13 @@ app_server <- function(input, output, session) {
       scale_color_manual("Layer", values=col) 
     
     if(input$map.density == "by.layer"){
+      # only layers with > 30 points
+      layers.sel <- table(planZ.df$layer)
+      layers.sel <- names(layers.sel[layers.sel >= 30])
+      planZ.df.sub <- planZ.df[planZ.df$layer %in% layers.sel, ]
+      
       map <- map + 
-        geom_density2d(data=planZ.df,
+        geom_density2d(data=planZ.df.sub,
                        aes_string(x = "x", y = "y",
                                   group = "layer", color = "layer"),
                        size = .2)

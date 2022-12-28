@@ -12,7 +12,7 @@ app_server <- function(input, output, session) {
     if(is.null(title)){
       title.edited <- paste("<h4>", archeoViz.label, "</h4>")
     } else if(is.character(title) & nchar(title) <= 20){
-      title.edited <- paste("<h4>", title, "</h4>feat. ", archeoViz.label, "<br><br>", sep="")
+      title.edited <- paste("<h4>", title, "</h4>", .term_switcher("through"), archeoViz.label, "<br><br>", sep="")
     } else{
       stop("The title parameter must be a character string (20 characters max).")
     }
@@ -45,7 +45,7 @@ app_server <- function(input, output, session) {
   
   # hide instructions tab when using the package on a server
   if(! is.null(getShinyOption("objects.df"))){
-    hideTab(inputId = "tabs", target = "Input data")
+    hideTab(inputId = "tabs", target =  .term_switcher("tab.input"))
   }
   
   # Timeline preprocessing ----
@@ -562,6 +562,7 @@ app_server <- function(input, output, session) {
     req(input$class_variable, input$class_values)
     dataset <- objects.subdataset()
     
+    browser()
     
     sel <- dataset$z >= input$planZ[1] & dataset$z <= input$planZ[2]
       

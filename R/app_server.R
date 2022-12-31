@@ -1,7 +1,7 @@
 
 
 app_server <- function(input, output, session) {
-
+  
   # Interface ----
   # : title ----
   output$title.edited <- renderUI({
@@ -28,8 +28,8 @@ app_server <- function(input, output, session) {
         "<div style=width:40%;, align=left>",
         .term_switcher("welcome")),
         "</div>"
-        ) #end paste
-        ) #end div
+      ) #end paste
+      ) #end div
     } else if(is.character(home.text)){
       home.text <- div(HTML(paste(
         "<div style=width:50%;, align=left>",
@@ -125,9 +125,9 @@ app_server <- function(input, output, session) {
   #  : static preprocessing ----
   objects.dataset <- reactive({
     result <- .do_objects_dataset(
-                    from.func.objects.df = getShinyOption("objects.df"),
-                    demoData.n           = input$demoData.n, 
-                    input.ui.table       = objects.ui.input)
+      from.func.objects.df = getShinyOption("objects.df"),
+      demoData.n           = input$demoData.n, 
+      input.ui.table       = objects.ui.input)
     
     showNotification(.term_switcher(result$notif.text),
                      type = result$notif.type)
@@ -152,11 +152,11 @@ app_server <- function(input, output, session) {
       selection <- eval(parse(text = paste0("df.sub$", input$class_variable))) %in% input$class_values[input$class_values != "All"]
       df.sub <- df.sub[selection, ]
     }
-      
+    
     df.sub  # return the subset of the dataframe
   }) # end dataset subset
   
-
+  
   # Coordinate system ----
   
   # : squares list ----
@@ -191,26 +191,26 @@ app_server <- function(input, output, session) {
     coords <- coords.min.max()
     
     data.frame(
-    "id" = c(rbind(c(1:length(square.coords$range.x)),
-                   c(1:length(square.coords$range.x)))),
-    "x"  = c(rbind(seq(coords$xmin, coords$xmax, 100),
-                   seq(coords$xmin, coords$xmax, 100))),
-    "y"  = rep(c(coords$ymin, coords$ymax), length(square.coords$range.x)),
-    "z"  = coords$zmax)
+      "id" = c(rbind(seq_len(length(square.coords$range.x)),
+                     seq_len(length(square.coords$range.x)))),
+      "x"  = c(rbind(seq(coords$xmin, coords$xmax, 100),
+                     seq(coords$xmin, coords$xmax, 100))),
+      "y"  = rep(c(coords$ymin, coords$ymax), length(square.coords$range.x)),
+      "z"  = coords$zmax)
   })
   
   grid.coordy <- reactive({
     square.coords <- square.coords.ranges()
     coords <- coords.min.max()
-   
+    
     data.frame(
-    "id" = c(rbind(c(1:length(square.coords$range.y)),
-                   c(1:length(square.coords$range.y)))),
-    "x"  = rep(c(coords$xmin, coords$xmax),
-               length(square.coords$range.y)),
-    "y"  = c(rbind(seq(coords$ymin, coords$ymax, 100),
-                   seq(coords$ymin, coords$ymax, 100))),
-    "z"  = coords$zmax)
+      "id" = c(rbind(seq_len(length(square.coords$range.y)),
+                     seq_len(length(square.coords$range.y)))),
+      "x"  = rep(c(coords$xmin, coords$xmax),
+                 length(square.coords$range.y)),
+      "y"  = c(rbind(seq(coords$ymin, coords$ymax, 100),
+                     seq(coords$ymin, coords$ymax, 100))),
+      "z"  = coords$zmax)
   })
   
   # : colors ----
@@ -234,7 +234,7 @@ app_server <- function(input, output, session) {
       )
     )
   })    
-      
+  
   
   # TABLES ----
   # : preview objects tab  ----
@@ -286,7 +286,7 @@ app_server <- function(input, output, session) {
   })
   # render:
   output$by.variable.table <- renderTable({by.variable.table()}, 
-                                        rownames = T, digits=0)
+                                          rownames = T, digits=0)
   
   # : by layer ----
   by.layer.table <- eventReactive(input$goButton, {
@@ -297,7 +297,7 @@ app_server <- function(input, output, session) {
   })
   # render:
   output$by.layer.table <- renderTable({by.layer.table()}, 
-                                    rownames = T, digits=0)
+                                       rownames = T, digits=0)
   
   # MAPS ----
   # : site map ----
@@ -517,7 +517,7 @@ app_server <- function(input, output, session) {
     dataset <- objects.subdataset()
     
     sel <- (dataset$y >= input$sectionXy[1] & dataset$y <= input$sectionXy[2]) &
-           (dataset$x >= input$sectionXx[1] & dataset$x <= input$sectionXx[2])
+      (dataset$x >= input$sectionXx[1] & dataset$x <= input$sectionXx[2])
     
     .do_section_plot(selection = sel,
                      dataset = dataset,
@@ -540,7 +540,7 @@ app_server <- function(input, output, session) {
     dataset <- objects.subdataset()
     
     sel <- (dataset$y >= input$sectionYy[1] & dataset$y <= input$sectionYy[2]) &
-           (dataset$x >= input$sectionYx[1] & dataset$x <= input$sectionYx[2])
+      (dataset$x >= input$sectionYx[1] & dataset$x <= input$sectionYx[2])
     
     .do_section_plot(selection = sel,
                      dataset = dataset, 
@@ -563,7 +563,7 @@ app_server <- function(input, output, session) {
     dataset <- objects.subdataset()
     
     sel <- dataset$z >= input$planZ[1] & dataset$z <= input$planZ[2]
-      
+    
     planZ.df <- dataset[sel, ]
     
     col <- unique(planZ.df[, c("layer", "layer_color")])
@@ -604,12 +604,12 @@ app_server <- function(input, output, session) {
         # subset refitting data set:
         sel <- (refitting.df[, 1] %in% planZ.df$id) | (refitting.df[, 2] %in% planZ.df$id)
         refitting.df <- refitting.df[which(sel), ]
-
+        
         refitting.df <- cbind(
           refitting.df[seq(1, nrow(refitting.df)-1, by=2), c(2, 3)],
           refitting.df[seq(2, nrow(refitting.df),   by=2), c(2, 3)])
         colnames(refitting.df) <- c("x", "y", "xend", "yend")
-
+        
         map <- map +
           geom_segment(data = refitting.df,
                        aes_string(x="x", xend="xend", y="y", yend="yend"),
@@ -718,9 +718,9 @@ app_server <- function(input, output, session) {
   # : Density selector  ----
   output$density_selector <- renderUI({
     density.modes <- structure(c("no", "all.layers", "by.layer"), 
-                           .Names = c(.term_switcher("density.no"),
-                                      .term_switcher("density.all.layers"),
-                                      .term_switcher("density.by.layer")))  
+                               .Names = c(.term_switcher("density.no"),
+                                          .term_switcher("density.all.layers"),
+                                          .term_switcher("density.by.layer")))  
     radioButtons("map.density",
                  .term_switcher("density"),
                  choices = density.modes,

@@ -9,5 +9,3 @@ archeoViz::archeoViz(objects.df = NULL,    # data.frame with data about the obje
                      lang = "en",          # language of the app interface
                      set.theme = "cosmo")  # graphic theme for the Shiny interface
                                            # see https://rstudio.github.io/shinythemes for possible values
- 
-

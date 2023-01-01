@@ -1,6 +1,4 @@
 test_that(".do_section_plot", {
-  
-
   ui.terms <- .load_interface_terms("fr")
   shinyOptions("objects.df"  = df,
                "ui.terms"    = ui.terms)
@@ -39,12 +37,16 @@ test_that(".do_section_plot", {
     )
   )
   
+  
+  refits <- demo_refits_data(100)
+  refits.res <- function(){.do_refits_preprocessing(refits, df$data)}
+  
   # make plot ----
   fig <- .do_section_plot(selection = df$data$x %in% seq(100, 300),
                    dataset = df$data,
                    section.point.size = 1,
-                   refitting.df = NULL,
-                   show.refits = FALSE,
+                   refitting.df = refits.res,
+                   show.refits = TRUE,
                    colors = as.character(unique(df$data$layer_color)),
                    grid.coord = grid.coords.res,
                    coords = coords,

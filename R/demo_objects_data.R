@@ -1,4 +1,3 @@
-
 demo_objects_data <- function(n.objects){
   df <- data.frame(
     id = seq_len(n.objects),

@@ -1,11 +1,11 @@
-demo_objects_data <- function(n.objects){
+demo_objects_data <- function(n.objects=NULL){
   df <- data.frame(
     id = seq_len(n.objects),
-    square_x = factor(sample(1:10, n.objects, replace = TRUE, prob=c(5:1, 5:1))),
-    square_y = factor(sample(1:8,  n.objects, replace = TRUE, prob=8:1)),
-    xmin = sample(1:999, n.objects, replace = TRUE),
+    square_x = factor(sample(seq_len(10), n.objects, replace = TRUE, prob=c(5:1, 5:1))),
+    square_y = factor(sample(seq_len(8),  n.objects, replace = TRUE, prob=8:1)),
+    xmin = sample(seq_len(999), n.objects, replace = TRUE),
     xmax = NA,
-    ymin = sample(1:799, n.objects, replace = TRUE),
+    ymin = sample(seq_len(799), n.objects, replace = TRUE),
     ymax = NA,
     zmin = sample(seq(200, 1000, 200), n.objects, replace = TRUE, prob = c(1, 2, 3, 2, 2)),
     zmax = NA,
@@ -18,14 +18,14 @@ demo_objects_data <- function(n.objects){
     stringsAsFactors = FALSE
   )
 
-  df$layer <- factor(df$zmin, labels = LETTERS[1:length(unique(df$zmin)) ]  )
+  df$layer <- factor(df$zmin, labels = LETTERS[seq_len(length(unique(df$zmin)))] )
 
-  sample.set <- sample(1:n.objects, n.objects / 3, replace = FALSE)
+  sample.set <- sample(seq_len(n.objects), n.objects / 3, replace = FALSE)
   df[sample.set, ]$xmax <- trunc(jitter(df[sample.set, ]$xmin))
-  sample.set <- sample(1:n.objects, n.objects / 3, replace = FALSE)
+  sample.set <- sample(seq_len(n.objects), n.objects / 3, replace = FALSE)
   df[sample.set, ]$ymax <- trunc(jitter(df[sample.set, ]$ymin))
 
-  df$zmin <- sapply(df$zmin, function(x) x + sample(seq.int(-90, 90), 1, prob=1:181))
+  df$zmin <- sapply(df$zmin, function(x) { x + sample(seq.int(-90, 90), 1, prob=seq_len(181))} )
 
   df$object_lithic_type <- NA
   df[df$object_type == "lithic", ]$object_lithic_type <- 

@@ -69,12 +69,12 @@ app_server <- function(input, output, session) {
     
     # sources priority: 
     #   function parameter > objects table > timeline table
-    result <- .do_timelinedata(from.func.time.df, 
+    timeline <- .do_timelinedata(from.func.time.df, 
                                objects.dataset, 
                                timeline.ui.df)
-    showNotification(.term_switcher(result$notif.text),
-                     type = result$notif.type)
-    result$data
+    showNotification(.term_switcher(timeline$notif.text),
+                     type = timeline$notif.type)
+    timeline$data
   })
   
   # Refits preprocessing: ----
@@ -93,20 +93,23 @@ app_server <- function(input, output, session) {
   })
   
   
-  refitting.df <- reactive({
+  refitting.df <- eventReactive(input$goButton, {
     req(objects.subdataset)
-    refits <- getShinyOption("refits.df")
+    refits <- data.frame()
+
+    if(! is.null(getShinyOption("refits.df")) ){
+     refits <- data.frame(getShinyOption("refits.df"))
+    } else if(input$demoData.n > 0){
+      refits <- demo_refits_data(input$demoData.n)
+    } else if( ! is.null(input$refits.file)){
+      refits <- input.ui.refits()
+    } 
     
-    if(is.null(refits)){
-      if(input$demoData.n > 0){
-        refits <- demo_refits_data(input$demoData.n)
-      } else if( ! is.null(input.ui.refits)){
-        refits <- input.ui.refits()
-      } 
+    if(nrow(refits) > 0){
+      refits <- .do_refits_preprocessing(refits, objects.subdataset())
     }
-    .do_refits_preprocessing(refits, objects.subdataset())
+    refits
   })  
-  
   
   # Objects preprocessing: ----
   objects.file <- reactive({
@@ -415,13 +418,16 @@ app_server <- function(input, output, session) {
     # : add refits lines  ----
     if(input$refits){
       refitting.df <- refitting.df()
-      if(nrow(refitting.df) > 0){
-        fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
-                         split = ~id, data = refitting.df,
-                         color = I("red"), showlegend = FALSE,
-                         hoverinfo = "skip",
-                         inherit = F)
-      } # else{ showNotification("No refitting data!", type="warning") }
+        if(nrow(refitting.df) > 0){
+          fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
+                           split = ~id, data = refitting.df,
+                           color = I("red"), showlegend = FALSE,
+                           hoverinfo = "skip",
+                           inherit = F)
+        } else{
+          showNotification(.term_switcher("notif.no.refitting.data"),
+                           type="warning")
+          }
     }
     
     # : add surfaces ####
@@ -598,6 +604,7 @@ app_server <- function(input, output, session) {
     
     # add refits:
     if(input$refits.map){
+      
       refitting.df <- refitting.df()
       
       if(nrow(refitting.df) > 0){
@@ -614,6 +621,9 @@ app_server <- function(input, output, session) {
           geom_segment(data = refitting.df,
                        aes_string(x="x", xend="xend", y="y", yend="yend"),
                        color = "red", linewidth=.3)
+      } else {
+        showNotification(.term_switcher("notif.no.refitting.data"),
+                         type="warning")
       }
     }
     
@@ -728,8 +738,6 @@ app_server <- function(input, output, session) {
   })
   
   # : Location selector  ----
-  
-  # conditionnal display
   output$locationPanel <- reactive({is.data.frame(objects.dataset())})
   outputOptions(output, "locationPanel", suspendWhenHidden = FALSE)
   
@@ -744,16 +752,17 @@ app_server <- function(input, output, session) {
                  selected = .term_switcher("exact"))
   })
   
+  # output$show.refits <- renderUI({
+  #   if(){
+  #     checkboxInput("refits", .term_switcher("refits"), value = F),
+  #   }
+  # })
+  
   #  Timeline ----
   
   output$timeline.map <- renderPlot({
-    # 
-    # if(is.null(timeline.data)){
-    #   showNotification("Select a file in the “Input data” tab to use this function",
-    #                    type = "message", duration = 10)
-    # }
+    req(timeline.data)
     
-    req(timeline.data())
     time.df <- timeline.data()
     
     time.sub.df <- time.df[time.df$year == input$history.date, ]

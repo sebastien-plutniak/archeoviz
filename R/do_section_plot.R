@@ -51,8 +51,8 @@
 
   # add refits ----
   if(show.refits){
-    if(nrow(refitting.df()) > 0){
-      refitting.df <- refitting.df()
+    refitting.df <- refitting.df()
+    if(nrow(refitting.df > 0)){
       # subset refitting data set:
       sel <- (refitting.df[, 1] %in% section.df$id) | (refitting.df[, 2] %in% section.df$id)
       refitting.df <- refitting.df[which(sel), ]
@@ -67,6 +67,9 @@
                             line = list(width=1),
                             hoverinfo = "skip",
                             inherit = F)
+    }  else {
+      showNotification(.term_switcher("notif.no.refitting.data"),
+                       type="warning")
     }
   }
 

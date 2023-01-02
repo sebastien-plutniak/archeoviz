@@ -29,7 +29,6 @@ ui <- shinyUI(
           tabPanel(.term_switcher("tab.input"), # Input data ----
                    column(12, align="left",
                           br(),
-
                           h2(.term_switcher("header.objects.table")),
                           sliderInput("demoData.n", .term_switcher("use.demo"),
                                        value = 0, min = 0, max=10000, step=100),

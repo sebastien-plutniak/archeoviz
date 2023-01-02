@@ -535,7 +535,8 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     notif.no.data = "Pas de données dans ces intervalles.",
     notif.tick.value = "Cochez au moins une valeur (dans le menu latéral gauche).",
     notif.error.coords.type = "Le format de xmin, ymin, et/ou zmin n'est pas un nombre.",
-    notif.error.identifier = "Les identifiants uniques des objets ne sont pas uniques."
+    notif.error.identifier = "Les identifiants uniques des objets ne sont pas uniques.",
+    notif.no.refitting.data = "Aucune données de remontage n'a été chargée."
     
   )
   
@@ -587,7 +588,8 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     notif.no.data = "No data in these ranges.",
     notif.tick.value = "Tick at least one value (in the left side menu)",
     notif.error.coords.type = "The format of some of xmin, ymin, and/or zmin is not number.",
-    notif.error.identifier = "Some of the objects' unique identifier are duplicated."
+    notif.error.identifier = "Some of the objects' unique identifier are duplicated.",
+    notif.no.refitting.data = "No refitting data loaded."
   )
   # switch
   if(length(grep("en", lang, ignore.case = T)) == 1){

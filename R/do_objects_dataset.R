@@ -14,9 +14,9 @@
   
   #  Tests file ----
   
-  required.fields <- c("id", "square_x", "square_y", "xmin", "ymin", "zmin", "layer", "object_type")
+  required.fields <- c("id", "xmin", "ymin", "zmin", "layer", "object_type")
   
-  if( sum(required.fields %in% colnames(df)) != 8 ){
+  if( sum(required.fields %in% colnames(df)) != 6 ){
     return(list(data = df,
                 notif.text = "notif.objects.not.ok",
                 notif.type = "error"))
@@ -62,23 +62,26 @@
   df <- .coordinates_sampling(df, "ymin", "ymax", "y", location.term)
   df <- .coordinates_sampling(df, "zmin", "zmax", "z", location.term)
   
-  # add square identifier ----
+  # Squares ----
+  # : add square identifier ----
   df$square <- paste(df$square_x, df$square_y, sep = "-")
+  # : as factors ----
+  df$square_x <- factor(df$square_x)
+  df$square_y <- factor(df$square_y)
   
-  # order layers by mean depth ----
+  # Layers ----
+  # : order by mean depth ----
   sorted.layers <- by(df, df$layer, function(x) mean(x$z, na.rm = TRUE)  )
   sorted.layers <- sapply(1:length(sorted.layers),
                           function(x) sorted.layers[x])
   sorted.layers <- sort(sorted.layers)
   df$layer <- factor(df$layer, levels = names(sorted.layers))
   
-  # add color ----
+  # : add color by layer ----
   df$layer_color <- factor(df$layer,
                            levels = levels(df$layer),
                            labels = grDevices::rainbow(length(levels(df$layer))))
   
-  df$square_x <- factor(df$square_x)
-  df$square_y <- factor(df$square_y)
   
   list("data" = df, "notif.text" = notif.text, "notif.type" = notif.type)
 }

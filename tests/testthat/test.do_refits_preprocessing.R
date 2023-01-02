@@ -9,7 +9,7 @@ test_that(".do_refits_preprocessing", {
   
   res <- .do_refits_preprocessing(refits, objects)
   
-  expect_equal(dim(res), c(4, 4))
+  expect_equal(dim(res), c(6, 4))
   expect_equal(colnames(res), c("id", "x", "y", "z"))
   expect_true(res[1,1] == res[2,1])
 })

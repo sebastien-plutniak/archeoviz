@@ -1,4 +1,7 @@
-export(archeoViz, demo_objects_data, demo_refits_data, demo_timeline_data)
+export(archeoViz)
+export(demo_objects_data)
+export(demo_refits_data)
+export(demo_timeline_data)
 import(shiny)
 importFrom(shinythemes, shinytheme)
 importFrom(cxhull, cxhull, hullMesh)

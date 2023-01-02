@@ -1,6 +1,13 @@
+.Rbuildignore
 .gitignore
 inst/doc
 README.Rmd
 README.html
+README-fr.md
+README-fr.Rmd
+README-fr.html
 R/.Rhistory
+datasets/
+R/utf8-to-ascii.sh
+R/load_interface_terms_save.R
 vignettes/.gitignore

@@ -22,7 +22,7 @@
                 L'interface est disponible en anglais et en français.
                 </p>
                 Le code source est libre et publié sur le 
-                <a href=https://github.com/sebastien-plutniak/archeoviz>dépôt github</a>."
+                <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>dépôt github</a>."
   # welcome.en ----
   welcome.en <- "
                 <h1>Welcome to <i>archeoViz</i>!</h1>
@@ -45,7 +45,7 @@
                 The interface is available in English and in French.
                 </p>
                 The code source is openly published on the 
-                dedicated <a href=https://github.com/sebastien-plutniak/archeoviz>github repository</a>."
+                dedicated <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github repository</a>."
   
   # Input objects ----
   
@@ -497,6 +497,7 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     tab.tables = "Tableaux",
     tab.timeline = "Chronologie",
     tab.guidelines = "Aide",
+    all = "TOUTES",
     location = "Mode de localisation",
     values = "Valeurs",
     validate = "Valider",
@@ -535,9 +536,7 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     notif.no.data = "Pas de données dans ces intervalles.",
     notif.tick.value = "Cochez au moins une valeur (dans le menu latéral gauche).",
     notif.error.coords.type = "Le format de xmin, ymin, et/ou zmin n'est pas un nombre.",
-    notif.error.identifier = "Les identifiants uniques des objets ne sont pas uniques.",
-    notif.no.refitting.data = "Aucune données de remontage n'a été chargée."
-    
+    notif.error.identifier = "Les identifiants uniques des objets ne sont pas uniques."
   )
   
   # LIST EN ----
@@ -550,6 +549,7 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     tab.tables = "Tables",
     tab.timeline = "Timeline",
     tab.guidelines = "Guidelines",
+    all = "ALL",
     location = "Location method",
     values = "Values",
     validate = "Validate",
@@ -588,8 +588,7 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     notif.no.data = "No data in these ranges.",
     notif.tick.value = "Tick at least one value (in the left side menu)",
     notif.error.coords.type = "The format of some of xmin, ymin, and/or zmin is not number.",
-    notif.error.identifier = "Some of the objects' unique identifier are duplicated.",
-    notif.no.refitting.data = "No refitting data loaded."
+    notif.error.identifier = "Some of the objects' unique identifier are duplicated."
   )
   # switch
   if(length(grep("en", lang, ignore.case = T)) == 1){

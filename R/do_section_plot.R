@@ -52,25 +52,20 @@
   # add refits ----
   if(show.refits){
     refitting.df <- refitting.df()
-    if(nrow(refitting.df > 0)){
-      # subset refitting data set:
-      sel <- (refitting.df[, 1] %in% section.df$id) | (refitting.df[, 2] %in% section.df$id)
-      refitting.df <- refitting.df[which(sel), ]
-  
-      # define values for the x axis:
-      refitting.df$x  <- eval(parse(text = paste0("refitting.df$", xaxis)))
-  
-      section <- plotly::add_paths(section, x = ~x, y = ~z,
-                            split = ~id,
-                            data = refitting.df,
-                            color = I("red"), showlegend=F,
-                            line = list(width=1),
-                            hoverinfo = "skip",
-                            inherit = F)
-    }  else {
-      showNotification(.term_switcher("notif.no.refitting.data"),
-                       type="warning")
-    }
+    # subset refitting data set:
+    sel <- (refitting.df[, 1] %in% section.df$id) | (refitting.df[, 2] %in% section.df$id)
+    refitting.df <- refitting.df[which(sel), ]
+
+    # define values for the x axis:
+    refitting.df$x  <- eval(parse(text = paste0("refitting.df$", xaxis)))
+
+    section <- plotly::add_paths(section, x = ~x, y = ~z,
+                          split = ~id,
+                          data = refitting.df,
+                          color = I("red"), showlegend=F,
+                          line = list(width=1),
+                          hoverinfo = "skip",
+                          inherit = F)
   }
 
   # add layout ----

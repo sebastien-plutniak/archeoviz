@@ -5,7 +5,7 @@ app_server <- function(input, output, session) {
   # Interface ----
   # : title ----
   output$title.edited <- renderUI({
-    archeoViz.label <- paste(" <a href=https://github.com/sebastien-plutniak/archeoviz>archeoViz</a> v",
+    archeoViz.label <- paste(" <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>archeoViz</a> v",
                              utils::packageVersion("archeoViz"), sep="")
     title <- shiny::getShinyOption("title")
     
@@ -151,8 +151,8 @@ app_server <- function(input, output, session) {
     }
     
     # class selection:
-    if( ! "All" %in% input$class_values){
-      selection <- eval(parse(text = paste0("df.sub$", input$class_variable))) %in% input$class_values[input$class_values != "All"]
+    if( ! .term_switcher("all") %in% input$class_values){
+      selection <- eval(parse(text = paste0("df.sub$", input$class_variable))) %in% input$class_values[input$class_values != .term_switcher("all")]
       df.sub <- df.sub[selection, ]
     }
     
@@ -418,16 +418,12 @@ app_server <- function(input, output, session) {
     # : add refits lines  ----
     if(input$refits){
       refitting.df <- refitting.df()
-        if(nrow(refitting.df) > 0){
+        # if(nrow(refitting.df) > 0){
           fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
                            split = ~id, data = refitting.df,
                            color = I("red"), showlegend = FALSE,
                            hoverinfo = "skip",
                            inherit = F)
-        } else{
-          showNotification(.term_switcher("notif.no.refitting.data"),
-                           type="warning")
-          }
     }
     
     # : add surfaces ####
@@ -607,7 +603,7 @@ app_server <- function(input, output, session) {
       
       refitting.df <- refitting.df()
       
-      if(nrow(refitting.df) > 0){
+      # if(nrow(refitting.df) > 0){
         # subset refitting data set:
         sel <- (refitting.df[, 1] %in% planZ.df$id) | (refitting.df[, 2] %in% planZ.df$id)
         refitting.df <- refitting.df[which(sel), ]
@@ -621,11 +617,7 @@ app_server <- function(input, output, session) {
           geom_segment(data = refitting.df,
                        aes_string(x="x", xend="xend", y="y", yend="yend"),
                        color = "red", linewidth=.3)
-      } else {
-        showNotification(.term_switcher("notif.no.refitting.data"),
-                         type="warning")
-      }
-    }
+  } 
     
     ggplotly(map)
   })
@@ -719,7 +711,7 @@ app_server <- function(input, output, session) {
       # actionButton("reset_input", "Reset values"),
       # br(), br(),
       checkboxGroupInput("class_values", .term_switcher("values"),
-                         c("All", sort(values)),
+                         c(.term_switcher("all"), sort(values)),
                          selected = input$class_values)
     )
   })
@@ -752,11 +744,30 @@ app_server <- function(input, output, session) {
                  selected = .term_switcher("exact"))
   })
   
-  # output$show.refits <- renderUI({
-  #   if(){
-  #     checkboxInput("refits", .term_switcher("refits"), value = F),
-  #   }
-  # })
+  # : Refitting display selectors  ----
+  output$show.refits <- renderUI({
+    if(nrow(refitting.df() ) > 0){
+      checkboxInput("refits", .term_switcher("refits"))
+    }
+  })
+  
+  output$show.refits.map <- renderUI({
+    if(nrow(refitting.df() ) > 0){
+      checkboxInput("refits.map", .term_switcher("refits"))
+    }
+  })
+  
+  output$show.refits.sectionX <- renderUI({
+    if(nrow(refitting.df() ) > 0){
+      checkboxInput("refits.sectionX", .term_switcher("refits"))
+    }
+  })
+  
+  output$show.refits.sectionY <- renderUI({
+    if(nrow(refitting.df() ) > 0){
+      checkboxInput("refits.sectionY", .term_switcher("refits"))
+    }
+  })
   
   #  Timeline ----
   

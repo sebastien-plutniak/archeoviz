@@ -3,12 +3,12 @@
   
   if(ncol(df) > 1 & nrow(df) > 1){
     df <- as.matrix(df)
-    df <- df[order(df[, 1], decreasing = T), ]
+    df <- df[order(rownames(df), decreasing = FALSE), ]
     df <- rbind(df, "Total" = apply(df, 2, sum))
     df <- cbind(df, "Total" = apply(df, 1, sum))
   }
   if(ncol(df) == 1 & nrow(df) > 1){
-    df <- df[order(df[, 1], decreasing = T), ]
+    df <- df[order(rownames(df), decreasing = FALSE), ]
     df <- c(df, "Total" = sum(df))
     df <- as.data.frame(df)
     colnames(df) <- input.location

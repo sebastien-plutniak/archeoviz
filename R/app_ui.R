@@ -113,7 +113,7 @@ ui <- shinyUI(
                             h4(.term_switcher("header.3d.options")),
                             checkboxInput("surface", .term_switcher("surfaces"), value = F),
                             checkboxInput("cxhull", .term_switcher("hulls"), value = F),
-                            checkboxInput("refits", .term_switcher("refits"), value = F),
+                            uiOutput("show.refits"),
                             sliderInput("point.size", .term_switcher("point.size"), width="100%", sep = "",
                                         min=1, max=5, value=2, step=1),
                             sliderInput("ratio", .term_switcher("ratio"), width="100%", sep = "",
@@ -136,7 +136,7 @@ ui <- shinyUI(
                             sliderInput("map.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=2, step=1),
-                            checkboxInput("refits.map", .term_switcher("refits"), value = F),
+                            uiOutput("show.refits.map"),
                             )#end column
                    ) #end fluid row
           ), # end tabPanel
@@ -158,7 +158,7 @@ ui <- shinyUI(
                             sliderInput("sectionY.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
-                            checkboxInput("refits.sectionY", .term_switcher("refits"), value = F),
+                            uiOutput("show.refits.sectionY"),
                             imageOutput("site.mapY", width = "250px", height = "250px")
                      )
                    )#end fluidrow
@@ -181,7 +181,7 @@ ui <- shinyUI(
                             sliderInput("sectionX.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
-                            checkboxInput("refits.sectionX", .term_switcher("refits"), value = F),
+                            uiOutput("show.refits.sectionX"),
                             imageOutput("site.mapX", width = "250px", height = "250px")
                      )
                    ) #end fluidrow

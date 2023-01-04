@@ -21,6 +21,8 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www
 [![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://codecov.io/gh/sebastien-plutniak/archeoviz)
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
+[![CRAN
+Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
 
   - [**Installation**](#installation)
       - [Local use](#local-use)
@@ -110,10 +112,8 @@ application can be set with the `lang` parameter, either with an
 Demonstration instances of the application are deployed on the *Huma
 Num* Shiny server:
 
-  - [archeoViz in
-    English](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz).
-  - [archeoViz in
-    French](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz-fr).
+  - [archeoViz in English](https://analytics.huma-num.fr/archeoviz/en).
+  - [archeoViz in French](https://analytics.huma-num.fr/archeoviz/fr).
 
 For a real case use, see the example of the prehistoric [Poeymaü
 cave](https://analytics.huma-num.fr/Sebastien.Plutniak/poeymau/) in the
@@ -278,7 +278,7 @@ additive model implemented in the
 ### Convex hulls
 
 In the “3D plot” tab, clicking on “Compute hulls” and “Validate”
-displays the convex hull associated with each layer (with at least 10
+displays the convex hull associated with each layer (with at least 20
 points). The convex hulls are computed using the
 [`cxhull`](https://CRAN.R-project.org/package=cxhull) package.
 
@@ -286,9 +286,10 @@ points). The convex hulls are computed using the
 
 In the “Map” tab, ticking the “Compute density” box and clicking on
 “Validate” generates a map with contour lines showing the points’
-density. Density can be computed for all the points together or by
-layer. The 2D kernel density is computed with the `kde2d` function of
-the [`MASS`](https://CRAN.R-project.org/package=MASS) package (through
+density. Density can be computed for all the points together or by layer
+(with at least 30 points). The 2D kernel density is computed with the
+`kde2d` function of the
+[`MASS`](https://CRAN.R-project.org/package=MASS) package (through
 [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
 
 # References

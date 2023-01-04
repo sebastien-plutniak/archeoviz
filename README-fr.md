@@ -14,6 +14,18 @@ des données via l’interface, soit en lançant l’application avec un jeu
 de donnée spécifique. L’interface est disponible en anglais et en
 français.
 
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
+[![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://codecov.io/gh/sebastien-plutniak/archeoviz)
+[![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
+[![CRAN
+Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
+
   - [**Installation**](#installation)
       - [Locale](#locale)
       - [Déployée](#déployée)
@@ -106,9 +118,9 @@ Des instances de démonstration de l’application sont déployées sur le
 Shiny server d’*Huma Num*:
 
   - [`archeoViz` en
-    Français](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz-fr).
+    Français](https://analytics.huma-num.fr/archeoviz/fr).
   - [`archeoViz` en
-    Anglais](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz).
+    Anglais](https://analytics.huma-num.fr/archeoviz/en).
 
 Pour un cas d’emploi réel, voir l’exemple de la grotte préhistorique du
 [Poeymaü](https://analytics.huma-num.fr/Sebastien.Plutniak/poeymau/)

@@ -1,7 +1,7 @@
 .do_section_plot <- function(selection, dataset, section.point.size,
                              refitting.df, show.refits, 
                              colors, grid.coord, coords, axis.labels, xaxis){
-  # data check: ----
+   # data check: ----
   section.df <- dataset[selection, ]
 
   if(nrow(dataset[selection, ]) == 0){
@@ -50,6 +50,7 @@
                                    showlegend=F, hoverinfo="skip", inherit = F)
 
   # add refits ----
+  if(! is.null(show.refits)){
   if(show.refits){
     refitting.df <- refitting.df()
     # subset refitting data set:
@@ -67,7 +68,7 @@
                           hoverinfo = "skip",
                           inherit = F)
   }
-
+}
   # add layout ----
   section <- plotly::layout(section,
                      xaxis = list(title = toupper(xaxis),

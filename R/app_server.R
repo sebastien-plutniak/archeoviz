@@ -1,7 +1,6 @@
 
 
 app_server <- function(input, output, session) {
-  
   # Interface ----
   # : title ----
   output$title.edited <- renderUI({
@@ -416,14 +415,16 @@ app_server <- function(input, output, session) {
     fig <- add_markers(fig)
     
     # : add refits lines  ----
-    if(input$refits){
-      refitting.df <- refitting.df()
-        # if(nrow(refitting.df) > 0){
-          fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
-                           split = ~id, data = refitting.df,
-                           color = I("red"), showlegend = FALSE,
-                           hoverinfo = "skip",
-                           inherit = F)
+    if(! is.null(input$refits)){
+      if(input$refits){
+        refitting.df <- refitting.df()
+          # if(nrow(refitting.df) > 0){
+            fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
+                             split = ~id, data = refitting.df,
+                             color = I("red"), showlegend = FALSE,
+                             hoverinfo = "skip",
+                             inherit = F)
+      }
     }
     
     # : add surfaces ####
@@ -599,12 +600,11 @@ app_server <- function(input, output, session) {
     }  
     
     # add refits:
-    if(input$refits.map){
-      
-      refitting.df <- refitting.df()
-      
-      # if(nrow(refitting.df) > 0){
-        # subset refitting data set:
+    if(! is.null(input$refits.map)){
+      if(input$refits.map){
+        
+        refitting.df <- refitting.df()
+        
         sel <- (refitting.df[, 1] %in% planZ.df$id) | (refitting.df[, 2] %in% planZ.df$id)
         refitting.df <- refitting.df[which(sel), ]
         
@@ -617,7 +617,8 @@ app_server <- function(input, output, session) {
           geom_segment(data = refitting.df,
                        aes_string(x="x", xend="xend", y="y", yend="yend"),
                        color = "red", linewidth=.3)
-  } 
+      } 
+  }
     
     ggplotly(map)
   })
@@ -734,9 +735,17 @@ app_server <- function(input, output, session) {
   outputOptions(output, "locationPanel", suspendWhenHidden = FALSE)
   
   output$location_choice <- renderUI({
-    loc.modes <- c(.term_switcher("exact"), 
-                   .term_switcher("fuzzy"), 
-                   .term_switcher("exact.fuzzy"))
+    
+    df <- objects.dataset()
+    n.location.modes <- length(unique(df$location_mode))
+    if(n.location.modes == 1){
+      loc.modes <- c(.term_switcher("exact"))
+    } else if( n.location.modes == 2) {
+      loc.modes <- c(.term_switcher("exact"), 
+                     .term_switcher("fuzzy"), 
+                     .term_switcher("exact.fuzzy"))
+    }
+    
     loc.modes <- structure(loc.modes, .Names = loc.modes)  
     
     radioButtons("location", .term_switcher("location"),
@@ -754,7 +763,7 @@ app_server <- function(input, output, session) {
   output$show.refits.map <- renderUI({
     if(nrow(refitting.df() ) > 0){
       checkboxInput("refits.map", .term_switcher("refits"))
-    }
+    } 
   })
   
   output$show.refits.sectionX <- renderUI({

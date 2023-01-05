@@ -126,14 +126,18 @@ app_server <- function(input, output, session) {
   
   #  : static preprocessing ----
   objects.dataset <- reactive({
+    
     result <- .do_objects_dataset(
       from.func.objects.df = getShinyOption("objects.df"),
       demoData.n           = input$demoData.n, 
       input.ui.table       = objects.ui.input)
     
     showNotification(.term_switcher(result$notif.text),
-                     type = result$notif.type)
-    result$data
+                     type = result$notif.type, duration = 10)
+    
+    if(result$notif.type != "error"){
+     result$data
+    }
   })
   
   # : dynamic preprocessing ----
@@ -429,6 +433,7 @@ app_server <- function(input, output, session) {
     
     # : add surfaces ####
     if(input$surface){
+      
       # filter the layers for which a regression surfaces must be computed:
       layers <- table(dataset$layer) 
       layers <- names(layers[layers > 100])
@@ -437,7 +442,7 @@ app_server <- function(input, output, session) {
       surf.list <- lapply(layers, .get_surface_model, df=dataset)
       
       # add traces:
-      for(i in 1:length(surf.list)){
+      for(i in seq_len(length(surf.list)) ){
         fig <- add_surface(fig,
                            z = surf.list[[i]]$z.matrix,
                            x = surf.list[[i]]$x,
@@ -735,6 +740,7 @@ app_server <- function(input, output, session) {
   outputOptions(output, "locationPanel", suspendWhenHidden = FALSE)
   
   output$location_choice <- renderUI({
+    req(objects.dataset)
     
     df <- objects.dataset()
     n.location.modes <- length(unique(df$location_mode))
@@ -775,6 +781,16 @@ app_server <- function(input, output, session) {
   output$show.refits.sectionY <- renderUI({
     if(nrow(refitting.df() ) > 0){
       checkboxInput("refits.sectionY", .term_switcher("refits"))
+    }
+  })
+  
+  # : Surfaces tick box  ----
+  output$show.surfaces <- renderUI({
+    df <- objects.subdataset()
+    layers <- table(df$layer)
+    layers <- names(layers[layers > 100])
+    if(length(layers) > 0){
+      checkboxInput("surface", .term_switcher("surfaces"), value = F)
     }
   })
   

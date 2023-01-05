@@ -536,7 +536,8 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     notif.no.data = "Pas de données dans ces intervalles.",
     notif.tick.value = "Cochez au moins une valeur (dans le menu latéral gauche).",
     notif.error.coords.type = "Le format de xmin, ymin, et/ou zmin n'est pas un nombre.",
-    notif.error.identifier = "Les identifiants uniques des objets ne sont pas uniques."
+    notif.error.identifier = "Les identifiants uniques des objets ne sont pas uniques.",
+    notif.warn.obj.removed = "Les objets aux coordonnées incomplètes ont été supprimés."
   )
   
   # LIST EN ----
@@ -588,7 +589,8 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     notif.no.data = "No data in these ranges.",
     notif.tick.value = "Tick at least one value (in the left side menu)",
     notif.error.coords.type = "The format of some of xmin, ymin, and/or zmin is not number.",
-    notif.error.identifier = "Some of the objects' unique identifier are duplicated."
+    notif.error.identifier = "Some of the objects' unique identifier are duplicated.",
+    notif.warn.obj.removed = "Objects with incomplete coordinates have been removed."
   )
   # switch
   if(length(grep("en", lang, ignore.case = T)) == 1){

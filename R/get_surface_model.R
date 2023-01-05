@@ -5,9 +5,9 @@
   # add predicted altitudes:
   layer.df$pred <- stats::predict(fit)
   # generating a table for sampling:
-  x <- seq(min(layer.df$x), max(layer.df$x), len = 100)
-  y <- seq(min(layer.df$y), max(layer.df$y), len = 100)
-  plot.df <- expand.grid("x"=x, "y"=y)
+  x <- seq.int(from = min(layer.df$x), to = max(layer.df$x), length.out = 100)
+  y <- seq.int(from = min(layer.df$y), to = max(layer.df$y), length.out = 100)
+  plot.df <- expand.grid("x" = x, "y" = y)
   plot.df$predict <- stats::predict(fit, newdata = plot.df) 
   
   z <- reshape2::dcast(plot.df, x ~ y, value.var="predict")

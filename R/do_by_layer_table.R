@@ -1,7 +1,7 @@
 .do_by_layer_table <- function(dataset, input.location){
   df <- table(dataset$layer, dataset$location_mode)
   
-  if(ncol(df) > 1 & nrow(df) > 1){
+  if(ncol(df) > 1 & nrow(df) > 0){
     df <- as.matrix(df)
     df <- df[order(rownames(df), decreasing = FALSE), ]
     df <- rbind(df, "Total" = apply(df, 2, sum))

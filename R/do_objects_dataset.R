@@ -11,7 +11,7 @@
   }
   
   colnames(df) <- tolower(colnames(df))
-  
+  # browser()
   #  Tests file ----
   
   required.fields <- c("id", "xmin", "ymin", "zmin", "layer", "object_type")
@@ -42,11 +42,20 @@
                 notif.text = "notif.error.identifier",
                 notif.type = "error"))
   }
+
   # Coordinates ----
   # : clean empty coordinates values
-  df[which(df$xmin == "" | df$xmin == " "), "xmin"] <- NA
-  df[which(df$ymin == "" | df$ymin == " "), "ymin"] <- NA
-  df[which(df$zmin == "" | df$zmin == " "), "zmin"] <- NA
+  df[which(df$xmin %in% c("", " ")), "xmin"] <- NA
+  df[which(df$ymin %in% c("", " ")), "ymin"] <- NA
+  df[which(df$zmin %in% c("", " ")), "zmin"] <- NA
+  
+  n.removed <- which( ! stats::complete.cases(df[, c("xmin", "ymin", "zmin")]))
+  
+  if(length(n.removed) > 0){
+    notif.text <- "notif.warn.obj.removed"
+    notif.type <- "warning"
+    df <- df[ - n.removed, ]
+  }
   
   # : add max coordinates if absent: ----
   if(is.null(df$xmax)){ df$xmax <- df$xmin }
@@ -54,7 +63,7 @@
   if(is.null(df$zmax)){ df$zmax <- df$zmin }
   
   # : location mode ----
-  df$location_mode <- .term_switcher("exact")
+  df[, "location_mode"] <- .term_switcher("exact")
   
   # : generate random coordinates if needed ----
   location.term <- .term_switcher("fuzzy")
@@ -63,11 +72,17 @@
   df <- .coordinates_sampling(df, "zmin", "zmax", "z", location.term)
   
   # Squares ----
-  # : add square identifier ----
-  df$square <- paste(df$square_x, df$square_y, sep = "-")
-  # : as factors ----
-  df$square_x <- factor(df$square_x)
-  df$square_y <- factor(df$square_y)
+  if( ! (is.null(df$square_x) & is.null(df$square_y)) ){
+    # : add square identifier ----
+    # : as factors ----
+    df$square_x <- factor(df$square_x)
+    df$square_y <- factor(df$square_y)
+    df$square <- paste(df$square_x, df$square_y, sep = "-")
+  } else{
+    df$square_x <- NULL
+    df$square_y <- NULL
+    df$square <- ""
+  }
   
   # Layers ----
   # : order by mean depth ----

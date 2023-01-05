@@ -111,7 +111,7 @@ ui <- shinyUI(
                             actionButton("goButton3D", .term_switcher("view")),
                             br(),
                             h4(.term_switcher("header.3d.options")),
-                            checkboxInput("surface", .term_switcher("surfaces"), value = F),
+                            uiOutput("show.surfaces"),
                             checkboxInput("cxhull", .term_switcher("hulls"), value = F),
                             uiOutput("show.refits"),
                             sliderInput("point.size", .term_switcher("point.size"), width="100%", sep = "",

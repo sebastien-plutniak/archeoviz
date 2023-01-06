@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
 ```
 
  
-
 `archeoViz` est une application dédiée à l'archéologie. Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques de terrain. Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *cartes* des restes archéologiques, permet de réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une *chronologie* interactive des fouilles d'un site. `archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en anglais et en français.
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -182,7 +181,7 @@ archeoViz(objects.df = NULL,  # data.frame pour les objets
 ## Sous-sélection de données
 
 Après que les données soient chargées, des sous-sélection peuvent être réalisées en employant les options du menu gauche de l'interface.
-Plusieurs paramètres sont possibles:  le mode de localisation et les catégories des objets. 
+Plusieurs paramètres sont possibles:  le mode de localisation, les catégories des objets, et la définition de sous-groupes de données. 
 
 ### Par mode de localisation
 La localisation des objets archéologiques peut avoir été enregistrée de différentes manières, plus ou moins précises: comme des points (coordonnées xyz), sur des lignes, des plans, ou au sein de volumes (intervalles de valeurs x, y et/ou z).
@@ -196,11 +195,16 @@ Des sous-ensembles de données peuvent être définis à partir des catégories 
 Après que l'une des variables ait été sélectionnée (“object_type” ou une autre “object_” variable possible), ses valeurs apparaissent en dessous et peuvent être sélectionnées en cochant les items.
 La sélection doit être validée en cliquant sur le bouton “Valider”.
 Cette sélection détermine les données qui seront présentées dans les graphiques et tableaux.
+
+### Sous-groupes de données
 Il est, de plus, possible de préciser si les couleurs doivent être définies en fonction des couches ou en fonction de la variable objet sélectionnée.
+
+Des sous-groupes de données peuvent être définies de deux manières: soit par couche ou en fonction de la variable  “object_” sélectionnée.
+Cette option détermine l'application des couleurs dans les graphiques 3D et 2D et les sous-groupes de données auxquels sont appliqués les calculs de surface de régression et d'enveloppes convexes.
 
 ### Par objet 
 
-Dans l'onglet “Vue 3D”, cliquer sur un point active l'affichage d'information à son sujet dans le tableau présente sous la visualisation.
+Enfin, dans l'onglet “Vue 3D”, cliquer sur un point active l'affichage d'information à son sujet dans le tableau présent sous la visualisation.
 
 ## Visualisations interactives
 

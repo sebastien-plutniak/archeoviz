@@ -220,8 +220,8 @@ archeoViz(objects.df = NULL,  # data.frame pour les objets
 
 Après que les données soient chargées, des sous-sélection peuvent être
 réalisées en employant les options du menu gauche de l’interface.
-Plusieurs paramètres sont possibles: le mode de localisation et les
-catégories des objets.
+Plusieurs paramètres sont possibles: le mode de localisation, les
+catégories des objets, et la définition de sous-groupes de données.
 
 ### Par mode de localisation
 
@@ -243,14 +243,24 @@ une autre “object\_” variable possible), ses valeurs apparaissent en
 dessous et peuvent être sélectionnées en cochant les items. La sélection
 doit être validée en cliquant sur le bouton “Valider”. Cette sélection
 détermine les données qui seront présentées dans les graphiques et
-tableaux. Il est, de plus, possible de préciser si les couleurs doivent
-être définies en fonction des couches ou en fonction de la variable
-objet sélectionnée.
+tableaux.
+
+### Sous-groupes de données
+
+Il est, de plus, possible de préciser si les couleurs doivent être
+définies en fonction des couches ou en fonction de la variable objet
+sélectionnée.
+
+Des sous-groupes de données peuvent être définies de deux manières: soit
+par couche ou en fonction de la variable “object\_” sélectionnée. Cette
+option détermine l’application des couleurs dans les graphiques 3D et 2D
+et les sous-groupes de données auxquels sont appliqués les calculs de
+surface de régression et d’enveloppes convexes.
 
 ### Par objet
 
-Dans l’onglet “Vue 3D”, cliquer sur un point active l’affichage
-d’information à son sujet dans le tableau présente sous la
+Enfin, dans l’onglet “Vue 3D”, cliquer sur un point active l’affichage
+d’information à son sujet dans le tableau présent sous la
 visualisation.
 
 ## Visualisations interactives

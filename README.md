@@ -208,7 +208,7 @@ archeoViz(objects.df = NULL,  # data.frame with data about the objects
 
 Once data are loaded, a sub-selection of the data set can be done in the
 left side menu. Several parameters are possible: the type of location
-recording and the category of the objects.
+recording, the category of the objects, and the way to group the data.
 
 ### Location mode
 
@@ -226,9 +226,14 @@ Sub-sets can be defined by object categories, using the “variable” and
 “object\_” variables) is selected, its values appear below and can be
 selected using the tick boxes. The selection must be validated by
 clicking on the “Validate” button. This selection determines the data
-that will be displayed in the plots and tables. In addition, it is
-possible to set whether the colours in 3D and 2D plots are determined by
-the layers or by the selected “object\_” variable.
+that will be displayed in the plots and tables.
+
+### Data subgroups
+
+The data can be grouped in two ways: either by layer or by the selected
+“object\_” variable. This option determines the colours of the points
+in the 3D and 2D plots and the subsets when computing surfaces and
+convex hulls.
 
 ### Objects selection
 

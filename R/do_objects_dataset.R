@@ -92,10 +92,5 @@
   sorted.layers <- sort(sorted.layers)
   df$layer <- factor(df$layer, levels = names(sorted.layers))
   
-  # : add color by layer ----
-  df$layer_color <- factor(df$layer,
-                           levels = levels(df$layer),
-                           labels = grDevices::rainbow(length(levels(df$layer))))
-  
   list("data" = df, "notif.text" = notif.text, "notif.type" = notif.type)
 }

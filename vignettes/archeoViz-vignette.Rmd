@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 ```
  
 
+
 `archeoViz` is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial statistics methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive timeline of an excavation. `archeoViz` can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The interface is available in English and in French.
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -177,7 +178,7 @@ archeoViz(objects.df = NULL,  # data.frame with data about the objects
 
 ## Dataset sub-setting
 
-Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording and the category of the objects. 
+Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording, the category of the objects, and the way to group the data. 
 
 ### Location mode
 
@@ -190,7 +191,11 @@ Sub-sets can be defined by object categories, using the “variable” and “va
 Once one of the “object_type” (or other possible “object_” variables) is selected, its values appear below and can be selected using the tick boxes.
 The selection must be validated by clicking on the “Validate” button.
 This selection determines the data that will be displayed in the plots and tables.
-In addition, it is possible to set whether the colours in 3D and 2D plots are determined by the layers or by the selected “object_” variable.
+
+### Data subgroups
+
+The data can be grouped in two ways: either by layer or by the selected “object_” variable.
+This option determines the colours of the points in the 3D and 2D plots and the subsets when computing surfaces and convex hulls.
 
 ### Objects selection
 

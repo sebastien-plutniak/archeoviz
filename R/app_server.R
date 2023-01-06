@@ -141,28 +141,27 @@ app_server <- function(input, output, session) {
     }
   })
   
-  # : set color variable ----
-  color.variable <- reactive({
+  # : group variable ----
+  group.variable <- reactive({
     
-    if(input$color.selection == "by.layer"){
+    if(input$group.selection == "by.layer"){
       value <- "layer"
-    } else if (input$color.selection == "by.variable"){
+    } else if (input$group.selection == "by.variable"){
       value <- as.character(input$class_variable)
     }
     value
   })
   
-  # : dynamic preprocessing ----
+  # : Dataset subsetting  ----
   objects.subdataset <- reactive({
     req(input$class_variable)
     
     df <- objects.dataset()
     
-    # Colors :
-    df$color.variable <- factor(eval(parse(text = paste0("df$", color.variable() ))))
-    df$layer_color <- factor(df$color.variable,
-                             levels = levels(df$color.variable),
-                             labels = grDevices::rainbow(length(levels(df$color.variable))))
+    df$group.variable <- factor(eval(parse(text = paste0("df$", group.variable() ))))
+    df$layer_color <- factor(df$group.variable,
+                             levels = levels(df$group.variable),
+                             labels = grDevices::rainbow(length(levels(df$group.variable))))
     # location mode selection:
     if(input$location != .term_switcher("exact.fuzzy")){
       df.sub <- df[df$location_mode %in% input$location, ]
@@ -238,7 +237,8 @@ app_server <- function(input, output, session) {
   
   # : colors ----
   colors.list <- reactive({
-    as.character(levels(objects.dataset()$layer_color))
+    req(objects.subdataset)
+    as.character(levels(objects.subdataset()$layer_color))
   })
   
   # : axis labels ----
@@ -291,7 +291,7 @@ app_server <- function(input, output, session) {
     z <- click.selection()$z 
     id <- dataset[dataset$x == x & dataset$y == y &  dataset$z == z,]$id
     df.tab <- dataset[dataset$id == id, ]
-    df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "layer_color"))]
+    df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "group.variable", "color.values"))]
   }, digits=0)
   
   output$id.table <- renderUI({
@@ -413,7 +413,7 @@ app_server <- function(input, output, session) {
     
     # : plot initial ----
     fig <- plot_ly(dataset, x = ~x, y = ~y, z = ~z,
-                   color = ~color.variable,
+                   color = ~group.variable,
                    colors =  colors.list(),
                    size  = ~point.size,
                    sizes = size.scale,
@@ -453,11 +453,16 @@ app_server <- function(input, output, session) {
       if(input$surface){
         
         # filter the layers for which a regression surfaces must be computed:
-        layers <- table(dataset$layer) 
-        layers <- names(layers[layers > 100])
+        subsets <- table(dataset$group.variable) 
+        subsets <- names(subsets[subsets > 100])
         
         # compute regression surfaces:
-        surf.list <- lapply(layers, .get_surface_model, df=dataset)
+        # surf.list <- lapply(subsets, .get_surface_model, df=dataset)
+        
+        surf.list <- lapply(subsets, function(x) 
+          .get_surface_model(df=dataset,
+                            var=group.variable(), 
+                            value = x))
         
         # add traces:
         for(i in seq_len(length(surf.list)) ){
@@ -476,11 +481,14 @@ app_server <- function(input, output, session) {
     # :  add convex hull ####
     if(input$cxhull){
       # filter the layers for which a convex hull must be computed:
-      layers <- table(dataset$layer) 
-      layers <- names(layers[layers > 19])
+      subsets <- table(dataset$group.variable) 
+      subsets <- names(subsets[subsets > 19])
       
       # compute hulls:
-      mesh.list <- lapply(layers, .get_cxhull_model, df=dataset)
+      mesh.list <- lapply(subsets, function(x) 
+            .get_cxhull_model(df=dataset,
+                              var=group.variable(), 
+                              value = x))
       # add mesh:
       for(i in seq_len(length(mesh.list)) ){
         fig <-  add_mesh(fig,
@@ -593,14 +601,14 @@ app_server <- function(input, output, session) {
     
     planZ.df <- dataset[sel, ]
     
-    color.var <- color.variable()
+    color.var <- group.variable()
     col <- unique(planZ.df[, c("layer_color", color.var)])
     col <- structure(as.character(col$layer_color),
                      .Names = eval(parse(text = paste0("col$", color.var ))))
     
     map <- site.map() +
       geom_point(data = planZ.df,
-                 aes_string(x = "x", y = "y", color = "color.variable"), 
+                 aes_string(x = "x", y = "y", color = "group.variable"), 
                  size = input$map.point.size / 10) +
       scale_color_manual(color.var, values = col)
     
@@ -613,8 +621,8 @@ app_server <- function(input, output, session) {
       map <- map + 
         geom_density2d(data=planZ.df.sub,
                        aes_string(x = "x", y = "y",
-                                  group = "color.variable",
-                                  color = "color.variable"),
+                                  group = "group.variable",
+                                  color = "group.variable"),
                        size = .2)
     }
     
@@ -742,14 +750,14 @@ app_server <- function(input, output, session) {
                          selected = input$class_values)
     )
   })
-  # : Color selector ----
-  output$color.selector <- renderUI({
-    color.sel.modes <- structure(c("by.layer", "by.variable"), 
-                                 .Names = c("By layer",
-                                            "By variable"))  
-    radioButtons("color.selection",
-                 .term_switcher("color"),
-                 choices = color.sel.modes,
+  # : Group  selector ----
+  output$group.selector <- renderUI({
+    group.sel.modes <- structure(c("by.layer", "by.variable"), 
+                                 .Names = c(.term_switcher("by.layer"),
+                                            .term_switcher("by.variable")))  
+    radioButtons("group.selection",
+                 .term_switcher("group"),
+                 choices = group.sel.modes,
                  selected = "by.layer")
   })
   
@@ -818,9 +826,9 @@ app_server <- function(input, output, session) {
   # : Surfaces tick box  ----
   output$show.surfaces <- renderUI({
     df <- objects.subdataset()
-    layers <- table(df$layer)
-    layers <- names(layers[layers > 100])
-    if(length(layers) > 0){
+    subsets <- table(df$group.variable)
+    subsets <- names(subsets[subsets > 100])
+    if(length(subsets) > 0){
       checkboxInput("surface", .term_switcher("surfaces"), value = F)
     }
   })

@@ -69,8 +69,8 @@ app_server <- function(input, output, session) {
     # sources priority: 
     #   function parameter > objects table > timeline table
     timeline <- .do_timelinedata(from.func.time.df, 
-                               objects.dataset, 
-                               timeline.ui.df)
+                                 objects.dataset, 
+                                 timeline.ui.df)
     showNotification(.term_switcher(timeline$notif.text),
                      type = timeline$notif.type)
     timeline$data
@@ -95,9 +95,9 @@ app_server <- function(input, output, session) {
   refitting.df <- eventReactive(input$goButton, {
     req(objects.subdataset)
     refits <- data.frame()
-
+    
     if(! is.null(getShinyOption("refits.df")) ){
-     refits <- data.frame(getShinyOption("refits.df"))
+      refits <- data.frame(getShinyOption("refits.df"))
     } else if(input$demoData.n > 0){
       refits <- demo_refits_data(input$demoData.n)
     } else if( ! is.null(input$refits.file)){
@@ -130,14 +130,26 @@ app_server <- function(input, output, session) {
     result <- .do_objects_dataset(
       from.func.objects.df = getShinyOption("objects.df"),
       demoData.n           = input$demoData.n, 
-      input.ui.table       = objects.ui.input)
+      input.ui.table       = objects.ui.input
+    )
     
     showNotification(.term_switcher(result$notif.text),
                      type = result$notif.type, duration = 10)
     
     if(result$notif.type != "error"){
-     result$data
+      result$data
     }
+  })
+  
+  # : set color variable ----
+  color.variable <- reactive({
+    
+    if(input$color.selection == "by.layer"){
+      value <- "layer"
+    } else if (input$color.selection == "by.variable"){
+      value <- as.character(input$class_variable)
+    }
+    value
   })
   
   # : dynamic preprocessing ----
@@ -146,6 +158,11 @@ app_server <- function(input, output, session) {
     
     df <- objects.dataset()
     
+    # Colors :
+    df$color.variable <- factor(eval(parse(text = paste0("df$", color.variable() ))))
+    df$layer_color <- factor(df$color.variable,
+                             levels = levels(df$color.variable),
+                             labels = grDevices::rainbow(length(levels(df$color.variable))))
     # location mode selection:
     if(input$location != .term_switcher("exact.fuzzy")){
       df.sub <- df[df$location_mode %in% input$location, ]
@@ -396,7 +413,7 @@ app_server <- function(input, output, session) {
     
     # : plot initial ----
     fig <- plot_ly(dataset, x = ~x, y = ~y, z = ~z,
-                   color = ~layer,
+                   color = ~color.variable,
                    colors =  colors.list(),
                    size  = ~point.size,
                    sizes = size.scale,
@@ -422,35 +439,37 @@ app_server <- function(input, output, session) {
     if(! is.null(input$refits)){
       if(input$refits){
         refitting.df <- refitting.df()
-          # if(nrow(refitting.df) > 0){
-            fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
-                             split = ~id, data = refitting.df,
-                             color = I("red"), showlegend = FALSE,
-                             hoverinfo = "skip",
-                             inherit = F)
+        # if(nrow(refitting.df) > 0){
+        fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
+                         split = ~id, data = refitting.df,
+                         color = I("red"), showlegend = FALSE,
+                         hoverinfo = "skip",
+                         inherit = F)
       }
     }
     
     # : add surfaces ####
-    if(input$surface){
-      
-      # filter the layers for which a regression surfaces must be computed:
-      layers <- table(dataset$layer) 
-      layers <- names(layers[layers > 100])
-      
-      # compute regression surfaces:
-      surf.list <- lapply(layers, .get_surface_model, df=dataset)
-      
-      # add traces:
-      for(i in seq_len(length(surf.list)) ){
-        fig <- add_surface(fig,
-                           z = surf.list[[i]]$z.matrix,
-                           x = surf.list[[i]]$x,
-                           y = surf.list[[i]]$y,
-                           inherit = F,
-                           colorscale = list(c(0, 1), c("black", surf.list[[i]]$color)),
-                           hoverinfo="skip",
-                           opacity = .7, showscale=F)
+    if(! is.null(input$surface)){
+      if(input$surface){
+        
+        # filter the layers for which a regression surfaces must be computed:
+        layers <- table(dataset$layer) 
+        layers <- names(layers[layers > 100])
+        
+        # compute regression surfaces:
+        surf.list <- lapply(layers, .get_surface_model, df=dataset)
+        
+        # add traces:
+        for(i in seq_len(length(surf.list)) ){
+          fig <- add_surface(fig,
+                             z = surf.list[[i]]$z.matrix,
+                             x = surf.list[[i]]$x,
+                             y = surf.list[[i]]$y,
+                             inherit = F,
+                             colorscale = list(c(0, 1), c("black", surf.list[[i]]$color)),
+                             hoverinfo="skip",
+                             opacity = .7, showscale=F)
+        }
       }
     }
     
@@ -574,15 +593,16 @@ app_server <- function(input, output, session) {
     
     planZ.df <- dataset[sel, ]
     
-    col <- unique(planZ.df[, c("layer", "layer_color")])
+    color.var <- color.variable()
+    col <- unique(planZ.df[, c("layer_color", color.var)])
     col <- structure(as.character(col$layer_color),
-                     .Names = as.character(col$layer))
+                     .Names = eval(parse(text = paste0("col$", color.var ))))
     
     map <- site.map() +
       geom_point(data = planZ.df,
-                 aes_string(x = "x", y = "y", color = "layer"),
+                 aes_string(x = "x", y = "y", color = "color.variable"), 
                  size = input$map.point.size / 10) +
-      scale_color_manual("Layer", values=col) 
+      scale_color_manual(color.var, values = col)
     
     if(input$map.density == "by.layer"){
       # only layers with > 30 points
@@ -593,7 +613,8 @@ app_server <- function(input, output, session) {
       map <- map + 
         geom_density2d(data=planZ.df.sub,
                        aes_string(x = "x", y = "y",
-                                  group = "layer", color = "layer"),
+                                  group = "color.variable",
+                                  color = "color.variable"),
                        size = .2)
     }
     
@@ -623,7 +644,7 @@ app_server <- function(input, output, session) {
                        aes_string(x="x", xend="xend", y="y", yend="yend"),
                        color = "red", linewidth=.3)
       } 
-  }
+    }
     
     ggplotly(map)
   })
@@ -721,6 +742,16 @@ app_server <- function(input, output, session) {
                          selected = input$class_values)
     )
   })
+  # : Color selector ----
+  output$color.selector <- renderUI({
+    color.sel.modes <- structure(c("by.layer", "by.variable"), 
+                                 .Names = c("By layer",
+                                            "By variable"))  
+    radioButtons("color.selection",
+                 .term_switcher("color"),
+                 choices = color.sel.modes,
+                 selected = "by.layer")
+  })
   
   
   # : Density selector  ----
@@ -728,7 +759,7 @@ app_server <- function(input, output, session) {
     density.modes <- structure(c("no", "all.layers", "by.layer"), 
                                .Names = c(.term_switcher("density.no"),
                                           .term_switcher("density.all.layers"),
-                                          .term_switcher("density.by.layer")))  
+                                          .term_switcher("by.layer")))  
     radioButtons("map.density",
                  .term_switcher("density"),
                  choices = density.modes,

@@ -15,12 +15,16 @@ knitr::opts_chunk$set(
 ```
 
  
-`archeoViz` est une application dédiée à l'archéologie.
-Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques de terrain.
-Elle propose des *visualisations* en 3D et 2D,
-génère des *coupes* et des *cartes* des restes archéologiques, permet de réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une *chronologie* interactive des fouilles d'un site.
-`archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en anglais et en français.
 
+`archeoViz` est une application dédiée à l'archéologie. Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques de terrain. Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *cartes* des restes archéologiques, permet de réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une *chronologie* interactive des fouilles d'un site. `archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en anglais et en français.
+
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
+[![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://codecov.io/gh/sebastien-plutniak/archeoviz)
+[![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
+[![CRAN Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
 
 
 - [**Installation**](#installation)
@@ -106,8 +110,8 @@ La langue de l'application peut être définie avec le paramètre `lang`, qui ac
 
 Des instances de démonstration de l'application sont déployées sur le Shiny server d'*Huma Num*:
 
-* [`archeoViz` en Français](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz-fr).
-* [`archeoViz` en Anglais](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz).
+* [`archeoViz` en Français](https://analytics.huma-num.fr/archeoviz/fr).
+* [`archeoViz` en Anglais](https://analytics.huma-num.fr/archeoviz/en).
 
 Pour un cas d'emploi réel, voir l'exemple de la grotte préhistorique du [Poeymaü](https://analytics.huma-num.fr/Sebastien.Plutniak/poeymau/) dans les Pyrénées (N.B. il s'agit dans ce cas d'une version modifiée de l'application `archeoViz`).
 
@@ -178,7 +182,7 @@ archeoViz(objects.df = NULL,  # data.frame pour les objets
 ## Sous-sélection de données
 
 Après que les données soient chargées, des sous-sélection peuvent être réalisées en employant les options du menu gauche de l'interface.
-Plusieurs paramètres sont possibles:  le mode de localisation et les catégories des objets.
+Plusieurs paramètres sont possibles:  le mode de localisation et les catégories des objets. 
 
 ### Par mode de localisation
 La localisation des objets archéologiques peut avoir été enregistrée de différentes manières, plus ou moins précises: comme des points (coordonnées xyz), sur des lignes, des plans, ou au sein de volumes (intervalles de valeurs x, y et/ou z).
@@ -188,10 +192,11 @@ Les boutons permettent de sélectionner le sous-ensemble de données corresponda
 
 ### Par catégorie d'objet
 
-Des sous-ensembles de données peuvent être définis à partir des catégories des objets, en employant les champs “Variable” et “valeurs”.
+Des sous-ensembles de données peuvent être définis à partir des catégories des objets, en employant les champs “Variable” et “Valeurs”.
 Après que l'une des variables ait été sélectionnée (“object_type” ou une autre “object_” variable possible), ses valeurs apparaissent en dessous et peuvent être sélectionnées en cochant les items.
 La sélection doit être validée en cliquant sur le bouton “Valider”.
 Cette sélection détermine les données qui seront présentées dans les graphiques et tableaux.
+Il est, de plus, possible de préciser si les couleurs doivent être définies en fonction des couches ou en fonction de la variable objet sélectionnée.
 
 ### Par objet 
 
@@ -229,13 +234,13 @@ Dans l'onglet “Vue 3D”, cliquer sur “Calculer les surfaces” puis “Vali
 ### Enveloppes convexes
 
 
-Cliquer sur “Calculer les enveloppes” puis “Valider”, dans l'onglet “Vue 3D”,  affiche les enveloppes convexes associées à chaque sous-ensemble de points  (couches), comportant au moins 10 points. Les enveloppes sont calculées en employant le package [`cxhull`](https://CRAN.R-project.org/package=cxhull).
+Cliquer sur “Calculer les enveloppes” puis “Valider”, dans l'onglet “Vue 3D”,  affiche les enveloppes convexes associées à chaque sous-ensemble de points  (couches), comportant au moins 20 points. Les enveloppes sont calculées en employant le package [`cxhull`](https://CRAN.R-project.org/package=cxhull).
 
 ### Estimation 2D de densité par noyau
 
 Dans l'onglet “Plan”, cocher la case “Calculer la densité” et cliquer sur “Valider” génère un plan comportant des lignes de contour représentant la densité des points. 
-La densité peut être calculée pour l'ensemble des points ou par couche.
-L'estimation bidimensionnelle de densité par noyau est calculée avec la fonction   `kde2d` du package [`MASS`](https://CRAN.R-project.org/package=MASS) (à travers le package  [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
+La densité peut être calculée pour l'ensemble des points ou par couche (comportant au moins 30 points).
+L'estimation bidimensionnelle de densité par noyau est calculée avec la fonction `kde2d` du package [`MASS`](https://CRAN.R-project.org/package=MASS) (à travers le package  [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
 
 
 # Références

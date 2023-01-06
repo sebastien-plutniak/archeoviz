@@ -237,13 +237,15 @@ l’un, l’autre, ou les deux modes de localisation.
 ### Par catégorie d’objet
 
 Des sous-ensembles de données peuvent être définis à partir des
-catégories des objets, en employant les champs “Variable” et “valeurs”.
+catégories des objets, en employant les champs “Variable” et “Valeurs”.
 Après que l’une des variables ait été sélectionnée (“object\_type” ou
 une autre “object\_” variable possible), ses valeurs apparaissent en
 dessous et peuvent être sélectionnées en cochant les items. La sélection
 doit être validée en cliquant sur le bouton “Valider”. Cette sélection
 détermine les données qui seront présentées dans les graphiques et
-tableaux.
+tableaux. Il est, de plus, possible de préciser si les couleurs doivent
+être définies en fonction des couches ou en fonction de la variable
+objet sélectionnée.
 
 ### Par objet
 

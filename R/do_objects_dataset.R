@@ -11,7 +11,7 @@
   }
   
   colnames(df) <- tolower(colnames(df))
-  # browser()
+  
   #  Tests file ----
   
   required.fields <- c("id", "xmin", "ymin", "zmin", "layer", "object_type")
@@ -87,7 +87,7 @@
   # Layers ----
   # : order by mean depth ----
   sorted.layers <- by(df, df$layer, function(x) mean(x$z, na.rm = TRUE)  )
-  sorted.layers <- sapply(1:length(sorted.layers),
+  sorted.layers <- sapply(seq_len(length(sorted.layers)),
                           function(x) sorted.layers[x])
   sorted.layers <- sort(sorted.layers)
   df$layer <- factor(df$layer, levels = names(sorted.layers))
@@ -96,7 +96,6 @@
   df$layer_color <- factor(df$layer,
                            levels = levels(df$layer),
                            labels = grDevices::rainbow(length(levels(df$layer))))
-  
   
   list("data" = df, "notif.text" = notif.text, "notif.type" = notif.type)
 }

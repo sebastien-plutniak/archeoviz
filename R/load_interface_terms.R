@@ -1,6 +1,7 @@
 
 .load_interface_terms <- function(lang){
-  # welcome.fr ----
+  # welcome ----
+  # : fr ----
   welcome.fr <- "<h1>Bienvenue dans <i>archeoViz</i> !</h1>
                 <p><i>archeoViz</i> est une application dédiée à l'archéologie.
                 Elle permet de <b>visualiser</b>, d'<b>explorer</b> interactivement, et  
@@ -23,7 +24,7 @@
                 </p>
                 Le code source est libre et publié sur le 
                 <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>dépôt github</a>."
-  # welcome.en ----
+  # : en ----
   welcome.en <- "
                 <h1>Welcome to <i>archeoViz</i>!</h1>
                 <p><i>archeoViz</i> is an application designed for archaeology.
@@ -47,8 +48,8 @@
                 The code source is openly published on the 
                 dedicated <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github repository</a>."
   
-  # Input objects ----
-  
+  # Input objects  fr ----
+  # :  fr ----
   input.objects.fr <- 
     "<p>
     Un tableau au format csv est requis. Chaque ligne décrit un objet, comportant les champs obligatoires suivants :
@@ -72,6 +73,7 @@
     </ul>
     </p>"
   
+  # :  en ----
   input.objects.en <- 
     "<p>
     A data table is required (csv format). A row describes a single object with the following mandatory fields:
@@ -132,7 +134,8 @@
     </ul>
     </p>"
   
-  # guidelines.en ----
+  # guidelines ----
+  # : en ----
   guidelines.en <- "
 <h1 id=archeoviz>archeoViz</h1>
 <p><code>archeoViz</code> is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial statistics methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive timeline of an excavation. <code>archeoViz</code> can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The interface is available in English and in French.</p>
@@ -287,7 +290,7 @@
 "
   
   
-  # guidelines.fr ----
+  #  : fr ----
   guidelines.fr <- "
 <h1 class=title toc-ignore>archeoViz</h1>
 <p><code>archeoViz</code> est une application dédiée à l’archéologie. Elle permet de <em>visualiser</em>, d’<em>explorer</em> interactivement, et d’exposer et <em>communiquer</em> rapidement sur le web des données archéologiques de terrain. Elle propose des <em>visualisations</em> en 3D et 2D, génère des <em>coupes</em> et des <em>cartes</em> des restes archéologiques, permet de réaliser des <em>statistiques spatiales</em> simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une <em>chronologie</em> interactive des fouilles d’un site. <code>archeoViz</code> peut être utilisée localement ou déployée sur un serveur, soit en chargeant des données via l’interface, soit en lançant l’application avec un jeu de donnée spécifique. L’interface est disponible en anglais et en français.</p>
@@ -522,12 +525,14 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     density = "Calculer la densité",
     density.no = "Aucune",
     density.all.layers = "Toutes les couches",
-    density.by.layer = "Par couche",
+    by.layer = "Par couche",
+    by.variable = "Par variable",
     tab.variable.loc = "Nombre d'objets par variable et mode de localisation",
     tab.layer.loc = "Nombre d'objets par couche et mode de localisation",
     exact = "Exacte",
     fuzzy = "Vague",
     depth = "Profondeur",
+    color = "Couleur",
     through = "avec",
     exact.fuzzy = "Exacte ou vague",
     click.on.point = "Cliquez sur un point pour afficher ses information.",
@@ -575,12 +580,14 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     density = "Compute density",
     density.no = "No",
     density.all.layers = "All layers",
-    density.by.layer = "By layer",
+    by.layer = "By layer",
+    by.variable = "By variable",
     tab.variable.loc = "Remains by variable and location method",
     tab.layer.loc = "Remains by layer and location method",
     exact = "Exact",
     fuzzy = "Fuzzy",
     depth = "Depth",
+    color = "Color",
     through = "with",
     exact.fuzzy = "Exact or fuzzy",
     click.on.point = "Click on a point to get more information.",

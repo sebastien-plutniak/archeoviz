@@ -226,7 +226,9 @@ Sub-sets can be defined by object categories, using the “variable” and
 “object\_” variables) is selected, its values appear below and can be
 selected using the tick boxes. The selection must be validated by
 clicking on the “Validate” button. This selection determines the data
-that will be displayed in the plots and tables.
+that will be displayed in the plots and tables. In addition, it is
+possible to set whether the colours in 3D and 2D plots are determined by
+the layers or by the selected “object\_” variable.
 
 ### Objects selection
 

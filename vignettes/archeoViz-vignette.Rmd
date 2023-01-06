@@ -13,11 +13,17 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
  
 
 `archeoViz` is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial statistics methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive timeline of an excavation. `archeoViz` can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The interface is available in English and in French.
 
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
+[![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://codecov.io/gh/sebastien-plutniak/archeoviz)
+[![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
+[![CRAN Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
 
 - [**Installation**](#installation)
   - [Local use](#local-use)
@@ -103,8 +109,8 @@ The language of the application can be set with the `lang` parameter, either wit
 
 Demonstration instances of the application are deployed on the *Huma Num* Shiny server:
 
-* [archeoViz in English](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz).
-* [archeoViz in French](https://analytics.huma-num.fr/Sebastien.Plutniak/archeoviz-fr).
+* [archeoViz in English](https://analytics.huma-num.fr/archeoviz/en).
+* [archeoViz in French](https://analytics.huma-num.fr/archeoviz/fr).
 
 For a real case use, see the example of the prehistoric [Poeymaü cave](https://analytics.huma-num.fr/Sebastien.Plutniak/poeymau/) in the Pyrenees (note that this application is a modified version of `archeoViz`).
 
@@ -171,7 +177,7 @@ archeoViz(objects.df = NULL,  # data.frame with data about the objects
 
 ## Dataset sub-setting
 
-Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording and the category of the objects.
+Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording and the category of the objects. 
 
 ### Location mode
 
@@ -184,7 +190,7 @@ Sub-sets can be defined by object categories, using the “variable” and “va
 Once one of the “object_type” (or other possible “object_” variables) is selected, its values appear below and can be selected using the tick boxes.
 The selection must be validated by clicking on the “Validate” button.
 This selection determines the data that will be displayed in the plots and tables.
-
+In addition, it is possible to set whether the colours in 3D and 2D plots are determined by the layers or by the selected “object_” variable.
 
 ### Objects selection
 
@@ -220,12 +226,12 @@ In the “3D plot” tab, clicking on “Compute surfaces” and “Validate” 
 
 ### Convex hulls
 
-In the “3D plot” tab, clicking on “Compute hulls” and “Validate” displays the convex hull associated with each layer (with at least 10 points). The convex hulls are computed using the  [`cxhull`](https://CRAN.R-project.org/package=cxhull) package.
+In the “3D plot” tab, clicking on “Compute hulls” and “Validate” displays the convex hull associated with each layer (with at least 20 points). The convex hulls are computed using the  [`cxhull`](https://CRAN.R-project.org/package=cxhull) package.
 
 ### 2D kernel density
 
 In the “Map” tab, ticking the “Compute density” box and clicking on “Validate” generates a map with contour lines showing the points' density.
-Density can be computed for all the points together or by layer.
+Density can be computed for all the points together or by layer (with at least 30 points).
 The 2D kernel density is computed with the `kde2d` function of the [`MASS`](https://CRAN.R-project.org/package=MASS) package (through [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
 
 

@@ -31,7 +31,7 @@
                               ))
   # add points ----
   section <- plotly::add_markers(section, x = ~x, y = ~z,
-                          color = ~layer,
+                          color = ~color.variable,
                           colors =  colors,
                           marker = list(symbol = 'square',
                                         size  = ~point.size,

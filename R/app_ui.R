@@ -9,7 +9,8 @@ ui <- shinyUI(
       sidebarPanel(
         uiOutput("title.edited"),
         conditionalPanel(condition = 'output.locationPanel',
-            uiOutput("location_choice"),              
+            uiOutput("location_choice"),
+            uiOutput("color.selector"),
             uiOutput("class_variable"),
             actionButton("goButton", .term_switcher("validate")),
             br(),br(),

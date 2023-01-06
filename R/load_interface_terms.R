@@ -540,7 +540,7 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     notif.objects.not.ok = "Erreur. Certains champs requis sont absents, vérifiez le fichier s.v.p.",
     notif.no.data = "Pas de données dans ces intervalles.",
     notif.tick.value = "Cochez au moins une valeur (dans le menu latéral gauche).",
-    notif.error.coords.type = "Le format de xmin, ymin, et/ou zmin n'est pas un nombre.",
+    notif.error.coords.type = "Des valeurs xmin, ymin, ou zmin ne sont pas numériques.",
     notif.error.identifier = "Les identifiants uniques des objets ne sont pas uniques.",
     notif.warn.obj.removed = "Les objets aux coordonnées incomplètes ont été supprimés."
   )
@@ -595,7 +595,7 @@ unzip(zipfile = &quot;archeoviz.zip&quot;)</code></pre>
     notif.objects.not.ok = "Error. Some of the mandatory fields are absent. Please check the file.",
     notif.no.data = "No data in these ranges.",
     notif.tick.value = "Tick at least one value (in the left side menu)",
-    notif.error.coords.type = "The format of some of xmin, ymin, and/or zmin is not number.",
+    notif.error.coords.type = "xmin, ymin, or zmin value(s) are not numerical.",
     notif.error.identifier = "Some of the objects' unique identifier are duplicated.",
     notif.warn.obj.removed = "Objects with incomplete coordinates have been removed."
   )

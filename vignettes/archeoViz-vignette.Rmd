@@ -16,15 +16,9 @@ knitr::opts_chunk$set(
  
 
 
+
 `archeoViz` is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial statistics methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive timeline of an excavation. `archeoViz` can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The interface is available in English and in French.
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
-[![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://codecov.io/gh/sebastien-plutniak/archeoviz)
-[![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
-[![CRAN Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
 
 - [**Installation**](#installation)
   - [Local use](#local-use)
@@ -41,6 +35,7 @@ knitr::opts_chunk$set(
   - [Data set sub-setting](#dataset-sub-setting)
     - [Location mode](#location-mode)
     - [Objects category](#objects-category)
+    - [Data subgroups](#data-subgroups)    
     - [Objects selection](#objects-selection)
   - [Interactive visualisation](#interactive-visualisation)
   - [Graphical outputs](#graphical-outputs)

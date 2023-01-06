@@ -750,11 +750,12 @@ app_server <- function(input, output, session) {
                          selected = input$class_values)
     )
   })
+  
   # : Group  selector ----
   output$group.selector <- renderUI({
-    group.sel.modes <- structure(c("by.layer", "by.variable"), 
+    group.sel.modes <- structure(c("by.layer", "by.variable"),
                                  .Names = c(.term_switcher("by.layer"),
-                                            .term_switcher("by.variable")))  
+                                            .term_switcher("by.variable")))
     radioButtons("group.selection",
                  .term_switcher("group"),
                  choices = group.sel.modes,

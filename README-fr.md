@@ -18,9 +18,9 @@ français.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
 [![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
-[![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://codecov.io/gh/sebastien-plutniak/archeoviz)
+[![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://app.codecov.io/gh/sebastien-plutniak/archeoviz)
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
 [![CRAN
@@ -44,6 +44,7 @@ Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.
       - [Sous-sélection de données](#sous-sélection-de-données)
           - [Par mode de localisation](#par-mode-de-localisation)
           - [Par catégorie d’objet](#par-catégorie-dobjet)
+          - [Sous-groupes de données](#sous-groupes-de-données)
           - [Par objet](#par-objet)
       - [Visualisations interactives](#visualisations-interactives)
       - [Sorties graphiques](#sorties-graphiques)

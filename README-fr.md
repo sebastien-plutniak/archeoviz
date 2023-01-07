@@ -328,6 +328,7 @@ la fonction `kde2d` du package
 
 # Références
 
-  - Plutniak, Sébastien. 2022. “archeoViz. Visualisation, Exploration,
-    and Web Communication of Archaeological Excavation Data”. v0.1, DOI:
-    [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
+  - Plutniak, Sébastien. 2023. “archeoViz. Visualisation, Exploration,
+    and Web Communication of Archaeological Excavation Data”. v0.2.1,
+    DOI:
+    [10.5281/zenodo.7512526](https://doi.org/10.5281/zenodo.7512526).

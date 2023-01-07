@@ -9,9 +9,9 @@ app_server <- function(input, output, session) {
     title <- shiny::getShinyOption("title")
     
     if(is.null(title)){
-      title.edited <- paste("<h4>", archeoViz.label, "</h4>")
+      title.edited <- paste("<h5>", archeoViz.label, "</h5>")
     } else if(is.character(title) & nchar(title) <= 20){
-      title.edited <- paste("<h4>", title, "</h4>", .term_switcher("through"), archeoViz.label, "<br><br>", sep="")
+      title.edited <- paste("<h5>", title, "</h5>", .term_switcher("through"), archeoViz.label, "<br><br>", sep="")
     } else{
       stop("The title parameter must be a character string (20 characters max).")
     }

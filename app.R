@@ -10,3 +10,5 @@ archeoViz::archeoViz(objects.df = NULL,    # data.frame with data about the obje
                      set.theme = "cosmo")  # graphic theme for the Shiny interface
                                            # see https://rstudio.github.io/shinythemes for possible values
 
+
+

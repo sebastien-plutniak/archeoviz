@@ -1,12 +1,12 @@
 Package: archeoViz
 Type: Package
 Title: Visualisation, Exploration, and Web Communication of Archaeological Excavation Data
-Version: 0.2.1
-Date: 2023-01-07
+Version: 0.2.2
+Date: 2023-01-09
 Authors@R: person("Sebastien", "Plutniak", email = "sebastien.plutniak@posteo.net", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6674-3806"))
 Author: Sebastien Plutniak [aut, cre] (<https://orcid.org/0000-0002-6674-3806>)
 Maintainer: Sebastien Plutniak <sebastien.plutniak@posteo.net>
-Description: An 'R Shiny' application for the visualisation, interactive exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, generation of cross sections and map of the remains, basic spatial analysis methods (convex hull, regression surfaces, 2D kernel density estimation), and excavation timeline visualisation. archeoViz can be used locally or deployed on a server, either with interactive input of data or with a static data set.
+Description: An R 'Shiny' application for the visualisation, interactive exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, generation of cross sections and map of the remains, basic spatial analysis methods (convex hull, regression surfaces, 2D kernel density estimation), and excavation timeline visualisation. 'archeoViz' can be used locally or deployed on a server, either with interactive input of data or with a static data set.
 License: GPL-3
 Repository: CRAN
 Encoding: UTF-8

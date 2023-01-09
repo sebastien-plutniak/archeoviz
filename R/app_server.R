@@ -613,7 +613,7 @@ app_server <- function(input, output, session) {
                  size = input$map.point.size / 10) +
       scale_color_manual(color.var, values = col)
     
-    if(input$map.density == "by.layer"){
+    if(input$map.density == "by.variable"){
       # only layers with > 30 points
       var.sel1 <- eval(parse(text = paste0("planZ.df$", color.var)))
       var.sel2 <- table(var.sel1)
@@ -629,7 +629,7 @@ app_server <- function(input, output, session) {
                        size = .2)
     }
     
-    if(input$map.density == "all.layers"){
+    if(input$map.density == "overall"){
       map <- map + 
         geom_density2d(data=planZ.df,
                        aes_string(x = "x", y = "y"),
@@ -640,7 +640,7 @@ app_server <- function(input, output, session) {
     if(! is.null(input$refits.map)){
         refitting.df <- refitting.df()
       if(input$refits.map){
-        # browser()
+        
         sel <- (refitting.df[, 1] %in% planZ.df$id) | (refitting.df[, 2] %in% planZ.df$id)
         refitting.df <- refitting.df[which(sel), ]
         
@@ -769,10 +769,10 @@ app_server <- function(input, output, session) {
   
   # : Density selector  ----
   output$density_selector <- renderUI({
-    density.modes <- structure(c("no", "all.layers", "by.layer"), 
+    density.modes <- structure(c("no", "overall", "by.variable"), 
                                .Names = c(.term_switcher("density.no"),
-                                          .term_switcher("density.all.layers"),
-                                          .term_switcher("by.layer")))  
+                                          .term_switcher("overall"),
+                                          .term_switcher("by.variable")))  
     radioButtons("map.density",
                  .term_switcher("density"),
                  choices = density.modes,

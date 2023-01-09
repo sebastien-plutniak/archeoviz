@@ -1,6 +1,6 @@
 .do_refits_preprocessing <- function(refits, dataset){
   # remove duplicated refits if any:
-  refits <- refits[! duplicated(t(apply(refits[c(1, 2)], 1, sort))), ]
+  refits <- refits[! duplicated(t(apply(refits[c(1, 2), ], 1, sort))), ]
 	refits <- c(t(refits))
 	refits <- merge(data.frame("id" = refits),
 	                dataset[, c("id", "x", "y", "z")],

@@ -638,22 +638,23 @@ app_server <- function(input, output, session) {
     
     # add refits:
     if(! is.null(input$refits.map)){
-      if(input$refits.map){
-        
         refitting.df <- refitting.df()
-        
+      if(input$refits.map){
+        # browser()
         sel <- (refitting.df[, 1] %in% planZ.df$id) | (refitting.df[, 2] %in% planZ.df$id)
         refitting.df <- refitting.df[which(sel), ]
         
-        refitting.df <- cbind(
-          refitting.df[seq(1, nrow(refitting.df)-1, by=2), c(2, 3)],
-          refitting.df[seq(2, nrow(refitting.df),   by=2), c(2, 3)])
-        colnames(refitting.df) <- c("x", "y", "xend", "yend")
-        
-        map <- map +
-          geom_segment(data = refitting.df,
-                       aes_string(x="x", xend="xend", y="y", yend="yend"),
-                       color = "red", linewidth=.3)
+        if(nrow(refitting.df) > 1){
+          refitting.df <- cbind(
+            refitting.df[seq(1, nrow(refitting.df)-1, by=2), c("x", "y")],
+            refitting.df[seq(2, nrow(refitting.df),   by=2), c("x", "y")])
+          colnames(refitting.df) <- c("x", "y", "xend", "yend")
+          
+          map <- map +
+            geom_segment(data = refitting.df,
+                         aes_string(x="x", xend="xend", y="y", yend="yend"),
+                         color = "red", linewidth=.3)
+        }
       } 
     }
     

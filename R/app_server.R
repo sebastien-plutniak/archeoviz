@@ -598,31 +598,34 @@ app_server <- function(input, output, session) {
     dataset <- objects.subdataset()
     
     sel <- dataset$z >= input$planZ[1] & dataset$z <= input$planZ[2]
-    
     planZ.df <- dataset[sel, ]
-    
+
     color.var <- group.variable()
     col <- unique(planZ.df[, c("layer_color", color.var)])
-    col <- structure(as.character(col$layer_color),
-                     .Names = eval(parse(text = paste0("col$", color.var ))))
+    col <- col[order(col[, 2]), ]
+    # col <- structure(as.character(col$layer_color),
+    #                  .Names = eval(parse(text = paste0("col$", color.var)))  )
+    col <- as.character(col$layer_color)
     
     map <- site.map() +
       geom_point(data = planZ.df,
-                 aes_string(x = "x", y = "y", color = "group.variable"), 
+                 aes_string(x = "x", y = "y", color = color.var),
                  size = input$map.point.size / 10) +
       scale_color_manual(color.var, values = col)
     
     if(input$map.density == "by.layer"){
       # only layers with > 30 points
-      layers.sel <- table(planZ.df$layer)
-      layers.sel <- names(layers.sel[layers.sel >= 30])
-      planZ.df.sub <- planZ.df[planZ.df$layer %in% layers.sel, ]
+      var.sel1 <- eval(parse(text = paste0("planZ.df$", color.var)))
+      var.sel2 <- table(var.sel1)
+      var.sel2 <- names(var.sel2[var.sel2 >= 30])
+      ids <- var.sel1  %in% var.sel2
+      planZ.df.sub <- planZ.df[ids, ]
       
       map <- map + 
         geom_density2d(data=planZ.df.sub,
                        aes_string(x = "x", y = "y",
-                                  group = "group.variable",
-                                  color = "group.variable"),
+                                  group = color.var,
+                                  color = color.var),
                        size = .2)
     }
     

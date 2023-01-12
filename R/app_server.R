@@ -610,12 +610,11 @@ app_server <- function(input, output, session) {
     
     map <- site.map() +
       geom_point(data = planZ.df,
-                 aes_string(x = "x", y = "y", color = color.var),
-                 size = input$map.point.size / 10,
-                 text = paste('id:', planZ.df$id,
-                               '<br>Square:', planZ.df$square,
-                               '<br>Location:', planZ.df$location_mode,
-                               '<br>Class:', planZ.df$object_type)) +
+                 aes_string(x = "x", y = "y", color = color.var,
+                            square="square", object_type="object_type",
+                            location_mode="location_mode", id="id"),
+                 size = input$map.point.size / 10
+                 ) +
       scale_color_manual(color.var, values = col)
     
     if(input$map.density == "by.variable"){
@@ -663,7 +662,7 @@ app_server <- function(input, output, session) {
       } 
     }
     
-    ggplotly(map)
+    ggplotly(map, tooltip = c("id", "square", "location_mode", "object_type"))
   })
   
   output$map <- plotly::renderPlotly({ map() })

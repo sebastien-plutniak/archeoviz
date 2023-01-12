@@ -1,4 +1,4 @@
-archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
+archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL, default.group="by.layer",
                       title=NULL, home.text=NULL, lang="en", set.theme="cosmo"){
   
   ui.terms <- .load_interface_terms(lang)
@@ -6,6 +6,7 @@ archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   shinyOptions("objects.df"  = objects.df,
                "refits.df"   = refits.df,
                "timeline.df" = timeline.df,
+               "default.group" = default.group,
                "title"       = title,
                "home.text"   = home.text,
                "set.theme"   = set.theme,

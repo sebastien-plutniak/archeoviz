@@ -11,7 +11,7 @@ app_server <- function(input, output, session) {
     if(is.null(title)){
       title.edited <- paste("<h5>", archeoViz.label, "</h5>")
     } else if(is.character(title) & nchar(title) <= 20){
-      title.edited <- paste("<h5>", title, "</h5>", .term_switcher("through"), archeoViz.label, "<br><br>", sep="")
+      title.edited <- paste("<h4>", title, "</h4>", .term_switcher("through"), archeoViz.label, "<br><br>", sep="")
     } else{
       stop("The title parameter must be a character string (20 characters max).")
     }
@@ -301,7 +301,7 @@ app_server <- function(input, output, session) {
   })
   
   # : by variable ----
-  by.variable.table <- eventReactive(input$goButton, {
+  by.variable.table <- reactive({
     req(input$class_variable, input$class_values)
     dataset <- objects.subdataset()
     
@@ -312,7 +312,8 @@ app_server <- function(input, output, session) {
                                           rownames = T, digits=0)
   
   # : by layer ----
-  by.layer.table <- eventReactive(input$goButton, {
+  # by.layer.table <- eventReactive(input$goButton, {
+  by.layer.table <- reactive({
     req(input$class_variable, input$class_values)
     dataset <- objects.subdataset()
     
@@ -610,7 +611,11 @@ app_server <- function(input, output, session) {
     map <- site.map() +
       geom_point(data = planZ.df,
                  aes_string(x = "x", y = "y", color = color.var),
-                 size = input$map.point.size / 10) +
+                 size = input$map.point.size / 10,
+                 text = paste('id:', planZ.df$id,
+                               '<br>Square:', planZ.df$square,
+                               '<br>Location:', planZ.df$location_mode,
+                               '<br>Class:', planZ.df$object_type)) +
       scale_color_manual(color.var, values = col)
     
     if(input$map.density == "by.variable"){
@@ -653,7 +658,7 @@ app_server <- function(input, output, session) {
           map <- map +
             geom_segment(data = refitting.df,
                          aes_string(x="x", xend="xend", y="y", yend="yend"),
-                         color = "red", linewidth=.3)
+                         color = "red", linewidth=.3 )
         }
       } 
     }
@@ -737,33 +742,45 @@ app_server <- function(input, output, session) {
   #   # class_values.saved <- input$class_values
   #   updateTextInput(session, "class_values")
   # })
-  
+    
   output$class_values <- renderUI({
-    req(objects.dataset(), input$class_variable)
+      # times <- input$reset_input # reset selection
+      # actionButton("reset_input", "Reset values"),
+      # br(), br(),
+    req(objects.dataset, input$class_variable)
     
     data <- objects.dataset()
     
     values <- unique(eval(parse(text = paste0("data$", input$class_variable))))
     
-    # times <- input$reset_input # reset selection
+    if(is.null(input$class_values)) {
+      selected.value <- .term_switcher("all")
+    } else {
+      selected.value <- input$class_values
+    }
+      
     div( 
-      # actionButton("reset_input", "Reset values"),
-      # br(), br(),
       checkboxGroupInput("class_values", .term_switcher("values"),
                          c(.term_switcher("all"), sort(values)),
-                         selected = input$class_values)
+                         selected = selected.value )
     )
   })
   
   # : Group  selector ----
   output$group.selector <- renderUI({
+    req(objects.dataset)
+    default.group <- getShinyOption("default.group")
+    if( ! default.group %in% c("by.layer", "by.variable")){
+      stop("The default.group parameter must be one of 'by.layer' or 'by.variable'.")
+    }
+    
     group.sel.modes <- structure(c("by.layer", "by.variable"),
                                  .Names = c(.term_switcher("by.layer"),
                                             .term_switcher("by.variable")))
     radioButtons("group.selection",
                  .term_switcher("group"),
                  choices = group.sel.modes,
-                 selected = "by.layer")
+                 selected = default.group)
   })
   
   

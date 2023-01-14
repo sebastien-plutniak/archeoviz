@@ -3,6 +3,9 @@
        "xmax" = ceiling(max(df$x, na.rm = T) / 100) * 100,
        "ymin" = floor(min(df$y,   na.rm = T) / 100) * 100,
        "ymax" = ceiling(max(df$y, na.rm = T) / 100) * 100,
-       "zmin" = floor(min(df$z,   na.rm = T) / 100) * 100, 
-       "zmax" = ceiling(max(df$z, na.rm = T) / 100) * 100)
+       # "zmin" = floor(min(df$z,   na.rm = T) / 100) * 100, 
+       # "zmax" = ceiling(max(df$z, na.rm = T) / 100) * 100
+       "zmin" = min(df$z,   na.rm = T), 
+       "zmax" = max(df$z, na.rm = T) 
+       )
 }

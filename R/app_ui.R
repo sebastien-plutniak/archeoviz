@@ -30,10 +30,10 @@ ui <- shinyUI(
           tabPanel(.term_switcher("tab.input"), # Input data ----
                    column(12, align="left",
                           br(),
-                          h2(.term_switcher("header.objects.table")),
+                          h2(.term_switcher("header.simul.data")),
                           sliderInput("demoData.n", .term_switcher("use.demo"),
                                        value = 0, min = 0, max=10000, step=100),
-                          "or",
+                          h2(.term_switcher("header.objects.table")),
                           fluidRow(
                             column(4, fileInput('objects.file', .term_switcher("choose.csv"),
                                                 accept=c('text/csv', 'text/comma-separated-values, text/plain'))
@@ -104,12 +104,13 @@ ui <- shinyUI(
           tabPanel(.term_switcher("tab.plot3d"), # 3D plot ----
                    fluidRow(
                      column(10,
-                            plotly::plotlyOutput("plot3d",  width = 800, height = 650),
+                            # plotly::plotlyOutput("plot3d",  width = 800, height = 650),
+                            plotly::plotlyOutput("plot3d",  width = "100%", height = 650),
                             uiOutput("id.table")
                      ),
                      column(2,
                             br(),
-                            actionButton("goButton3D", .term_switcher("view")),
+                            actionButton("goButton3D", .term_switcher("refresh")),
                             br(),
                             h4(.term_switcher("header.3d.options")),
                             uiOutput("show.surfaces"),
@@ -131,13 +132,13 @@ ui <- shinyUI(
                      ),
                      column(2,
                             br(),
-                            actionButton("goButtonZ", .term_switcher("view")),
+                            actionButton("goButtonZ", .term_switcher("refresh")),
                             br(), br(),
                             uiOutput("density_selector"),
+                            uiOutput("show.refits.map"),
                             sliderInput("map.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=2, step=1),
-                            uiOutput("show.refits.map"),
                             )#end column
                    ) #end fluid row
           ), # end tabPanel
@@ -149,17 +150,17 @@ ui <- shinyUI(
                             uiOutput("sliderYy")
                      ),
                      column(1,
-                            br(), actionButton("goButtonY", .term_switcher("view")))
+                            br(), actionButton("goButtonY", .term_switcher("refresh")))
                    ),
                    fluidRow(
                      column(9,
                             plotly::plotlyOutput("sectionYplot", width = "100%", height = 500)
                      ),
                      column(3,
+                            uiOutput("show.refits.sectionY"),
                             sliderInput("sectionY.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
-                            uiOutput("show.refits.sectionY"),
                             imageOutput("site.mapY", width = "250px", height = "250px")
                      )
                    )#end fluidrow
@@ -172,17 +173,17 @@ ui <- shinyUI(
                             uiOutput("sliderXy")
                      ),
                      column(1, br(),
-                            actionButton("goButtonX", .term_switcher("view")),)
+                            actionButton("goButtonX", .term_switcher("refresh")),)
                    ),
                    fluidRow(
                      column(9,
                             plotly::plotlyOutput("sectionXplot", width = "100%", height = 500)
                      ),
                      column(3,
-                            sliderInput("sectionX.point.size", .term_switcher("point.size"),
-                                        width="100%", sep = "",
-                                        min=1, max=10, value=5, step=1),
                             uiOutput("show.refits.sectionX"),
+                            sliderInput("sectionX.point.size", .term_switcher("point.size"),
+                                        width="80%", sep = "",
+                                        min=1, max=10, value=5, step=1),
                             imageOutput("site.mapX", width = "250px", height = "250px")
                      )
                    ) #end fluidrow

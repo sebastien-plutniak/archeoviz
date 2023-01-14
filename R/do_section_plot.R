@@ -52,21 +52,35 @@
   # add refits ----
   if(! is.null(show.refits)){
   if(show.refits){
+    
     refitting.df <- refitting.df()
+    refitting.df <- refitting.df$refits.2d
+    
     # subset refitting data set:
-    sel <- (refitting.df[, 1] %in% section.df$id) | (refitting.df[, 2] %in% section.df$id)
+    sel <- (refitting.df[, 1] %in% section.df$id) & (refitting.df[, 2] %in% section.df$id)
+    # sel <- (refitting.df[, 1] %in% section.df$id) | (refitting.df[, 2] %in% section.df$id)
     refitting.df <- refitting.df[which(sel), ]
 
     # define values for the x axis:
     refitting.df$x  <- eval(parse(text = paste0("refitting.df$", xaxis)))
+    refitting.df$xend  <- eval(parse(text = paste0("refitting.df$", xaxis, "end")))
 
-    section <- plotly::add_paths(section, x = ~x, y = ~z,
-                          split = ~id,
-                          data = refitting.df,
-                          color = I("red"), showlegend=F,
-                          line = list(width=1),
-                          hoverinfo = "skip",
-                          inherit = F)
+    section <- plotly::add_segments(section,
+                                    x = ~x, xend = ~xend,
+                                    y = ~z, yend = ~zend,
+                                 data = refitting.df,
+                                 color = I("red"), showlegend=F,
+                                 line = list(width=1),
+                                 hoverinfo = "skip",
+                                 inherit = F)
+    
+    # section <- plotly::add_paths(section, x = ~x, y = ~z,
+    #                       split = ~id,
+    #                       data = refitting.df,
+    #                       color = I("red"), showlegend=F,
+    #                       line = list(width=1),
+    #                       hoverinfo = "skip",
+    #                       inherit = F)
   }
 }
   # add layout ----

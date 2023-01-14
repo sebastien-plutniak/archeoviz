@@ -92,10 +92,10 @@ app_server <- function(input, output, session) {
   })
   
   
-  refitting.df <- eventReactive(input$goButton, {
+  refitting.df <- reactive({
     req(objects.subdataset)
-    refits <- data.frame()
-    
+
+    refits <- list("refits.2d"=data.frame(), "refits.3d"=data.frame())
     if(! is.null(getShinyOption("refits.df")) ){
       refits <- data.frame(getShinyOption("refits.df"))
     } else if(input$demoData.n > 0){
@@ -104,10 +104,11 @@ app_server <- function(input, output, session) {
       refits <- input.ui.refits()
     } 
     
-    if(nrow(refits) > 0){
+    if(class(refits)[1] != "list"){
       refits <- .do_refits_preprocessing(refits, objects.subdataset())
     }
-    refits
+    
+    refits # an empty data.frame or a list with two dataframes
   })  
   
   # Objects preprocessing: ----
@@ -440,9 +441,10 @@ app_server <- function(input, output, session) {
     if(! is.null(input$refits)){
       if(input$refits){
         refitting.df <- refitting.df()
-        # if(nrow(refitting.df) > 0){
-        fig <- add_paths(fig, x= ~x, y= ~y, z= ~z, 
-                         split = ~id, data = refitting.df,
+
+        fig <- add_paths(fig, x= ~x, y= ~y, z= ~z,
+                         split = ~id.internal,
+                         data = refitting.df$refits.3d,
                          color = I("red"), showlegend = FALSE,
                          hoverinfo = "skip",
                          inherit = F)
@@ -538,6 +540,7 @@ app_server <- function(input, output, session) {
                                        y = (coords$ymax - coords$ymin) / (coords$xmax - coords$xmin), 
                                        z = input$ratio * ((coords$zmax - coords$zmin) / (coords$xmax - coords$xmin)))
                   ))  #end layout
+    # fig <- plotly::event_register(fig, 'plotly_click')
   }) # end plot3d
   
   output$plot3d <- plotly::renderPlotly(plot3d())
@@ -611,8 +614,10 @@ app_server <- function(input, output, session) {
     map <- site.map() +
       geom_point(data = planZ.df,
                  aes_string(x = "x", y = "y", color = color.var,
-                            square="square", object_type="object_type",
-                            location_mode="location_mode", id="id"),
+                            square="square", 
+                            object_type="object_type",
+                            location_mode="location_mode", id="id"
+                            ),
                  size = input$map.point.size / 10
                  ) +
       scale_color_manual(color.var, values = col)
@@ -642,17 +647,18 @@ app_server <- function(input, output, session) {
     
     # add refits:
     if(! is.null(input$refits.map)){
-        refitting.df <- refitting.df()
+      refitting.df <- refitting.df()
+      refitting.df <- refitting.df$refits.2d
+      
       if(input$refits.map){
-        
         sel <- (refitting.df[, 1] %in% planZ.df$id) | (refitting.df[, 2] %in% planZ.df$id)
         refitting.df <- refitting.df[which(sel), ]
         
         if(nrow(refitting.df) > 1){
-          refitting.df <- cbind(
-            refitting.df[seq(1, nrow(refitting.df)-1, by=2), c("x", "y")],
-            refitting.df[seq(2, nrow(refitting.df),   by=2), c("x", "y")])
-          colnames(refitting.df) <- c("x", "y", "xend", "yend")
+          # refitting.df <- cbind(
+          #   refitting.df[seq(1, nrow(refitting.df)-1, by=2), c("x", "y")],
+          #   refitting.df[seq(2, nrow(refitting.df),   by=2), c("x", "y")])
+          # colnames(refitting.df) <- c("x", "y", "xend", "yend")
           
           map <- map +
             geom_segment(data = refitting.df,
@@ -804,8 +810,9 @@ app_server <- function(input, output, session) {
     
     df <- objects.dataset()
     n.location.modes <- length(unique(df$location_mode))
+    
     if(n.location.modes == 1){
-      loc.modes <- c(.term_switcher("exact"))
+      loc.modes <- c(.term_switcher(tolower(unique(df$location_mode))))
     } else if( n.location.modes == 2) {
       loc.modes <- c(.term_switcher("exact"), 
                      .term_switcher("fuzzy"), 
@@ -816,30 +823,34 @@ app_server <- function(input, output, session) {
     
     radioButtons("location", .term_switcher("location"),
                  choices = loc.modes,
-                 selected = .term_switcher("exact"))
+                 selected = .term_switcher(tolower(unique(df$location_mode)[1])))
   })
   
   # : Refitting display selectors  ----
   output$show.refits <- renderUI({
-    if(nrow(refitting.df() ) > 0){
+    refitting.df <- refitting.df()
+    if(nrow(refitting.df$refits.2d) > 0){
       checkboxInput("refits", .term_switcher("refits"))
     }
   })
   
   output$show.refits.map <- renderUI({
-    if(nrow(refitting.df() ) > 0){
+    refitting.df <- refitting.df()
+    if(nrow(refitting.df$refits.2d) > 0){
       checkboxInput("refits.map", .term_switcher("refits"))
     } 
   })
   
   output$show.refits.sectionX <- renderUI({
-    if(nrow(refitting.df() ) > 0){
+    refitting.df <- refitting.df()
+    if(nrow(refitting.df$refits.2d) > 0){
       checkboxInput("refits.sectionX", .term_switcher("refits"))
     }
   })
   
   output$show.refits.sectionY <- renderUI({
-    if(nrow(refitting.df() ) > 0){
+    refitting.df <- refitting.df()
+    if(nrow(refitting.df$refits.2d) > 0){
       checkboxInput("refits.sectionY", .term_switcher("refits"))
     }
   })

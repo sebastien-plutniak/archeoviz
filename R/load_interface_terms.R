@@ -45,7 +45,7 @@
                 or by running the app with a specific data set.
                 The interface is available in English and in French.
                 </p>
-                The code source is openly published on the 
+                The source code is openly published on the 
                 dedicated <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github repository</a>."
   
   # Input objects  fr ----
@@ -466,12 +466,13 @@
     all = "TOUTES",
     location = "Mode de localisation",
     values = "Valeurs",
-    validate = "Valider",
-    view = "Afficher",
+    validate = "Valider la sélection",
+    refresh = "Rafraîchir",
     header.3d.options = "Options vue 3D",
-    header.objects.table = "Tableau des objets",
-    header.refits.table = "Tableau des remontages",
-    header.timeline.table = "Tableau de chronologie des fouilles",
+    header.objects.table = "Chargement du tableau des objets",
+    header.simul.data = "Générer des données de démonstration simulées",
+    header.refits.table = "Chargement du tableau des remontages",
+    header.timeline.table = "Chargement du tableau de chronologie des fouilles",
     choose.csv = "Sélectionnez un fichier csv",
     input.objects = input.objects.fr,
     input.refits = input.refits.fr,
@@ -479,7 +480,7 @@
     guidelines = guidelines.fr,
     separator = "Séparateur",
     decimal = "Décimales",
-    use.demo = "Simuler des données pour n objets",
+    use.demo = "Simuler n objets",
     surfaces = "Calculer les surfaces",
     hulls = "Calculer les enveloppes",
     refits = "Montrer les remontages",
@@ -501,7 +502,7 @@
     exact.fuzzy = "Exacte ou vague",
     click.on.point = "Cliquez sur un point pour afficher ses information.",
     notif.objects.ok = "Fichier des objets ok!",
-    notif.objects.not.ok = "Erreur. Certains champs requis sont absents, vérifiez le fichier s.v.p.",
+    notif.objects.not.ok = "Erreur. Certains champs requis sont absents, vérifiez le fichier.",
     notif.no.data = "Pas de données dans ces intervalles.",
     notif.tick.value = "Cochez au moins une valeur (dans le menu latéral gauche).",
     notif.error.coords.type = "Des valeurs xmin, ymin, ou zmin ne sont pas numériques.",
@@ -522,12 +523,13 @@
     all = "ALL",
     location = "Location method",
     values = "Values",
-    validate = "Validate",
-    view = "View",
+    validate = "Validate selection",
+    refresh = "Refresh",
     header.3d.options = "3D plot options",
-    header.objects.table = "Objects table",
-    header.refits.table = "Refits table",
-    header.timeline.table = "Excavation timeline table",
+    header.objects.table = "Load objects table",
+    header.simul.data = "Use simulated data for demonstration",
+    header.refits.table = "Load refits table",
+    header.timeline.table = "Load excavation timeline table",
     choose.csv = "Choose a csv file",
     input.objects = input.objects.en,
     input.refits = input.refits.en,
@@ -535,7 +537,7 @@
     guidelines = guidelines.en,
     separator = "Separator",
     decimal = "Decimal",
-    use.demo = "Use demonstration data with n objects:",
+    use.demo = "Generate n objects:",
     surfaces = "Compute surfaces",
     hulls = "Compute hulls",
     refits = "Show refits",

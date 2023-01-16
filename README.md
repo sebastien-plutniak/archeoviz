@@ -58,7 +58,14 @@ Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.
 
 ## Local use
 
-The package can be installed from GitHub with:
+The package can be installed from CRAN with:
+
+``` r
+install.packages("archeoViz")
+```
+
+The development version is available on GitHub and can be installed
+with:
 
 ``` r
 # install.packages("devtools")
@@ -97,6 +104,7 @@ located at the root of the directory:
 archeoViz(objects.df = NULL,   # data.frame with data about the objects
           refits.df = NULL,    # optional data.frame for refitting data
           timeline.df = NULL,  # optional data.frame for the excavation timeline
+          default.group =NULL, # Whether to group data 'by.layer' or 'by.variable'
           title = NULL,        # title of the site / data set
           home.text = NULL,    # html content to display on the home page
           lang = "en"          # interface language (English or French)

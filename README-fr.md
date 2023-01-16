@@ -64,14 +64,20 @@ Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.
 
 ## Locale
 
-Le package peut être installé depuis GitHub avec:
+Le package peut être installé depuis le CRAN:
+
+``` r
+install.packages("archeoViz")
+```
+
+La version de développement peut être télécharée depuis GitHub:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("sebastien-plutniak/archeoviz")
 ```
 
-Puis, chargez le package et lancez l’application avec:
+Après quoi, chargez le package et lancez l’application avec:
 
 ``` r
 library(archeoViz)
@@ -102,6 +108,8 @@ fichier app.R situé à la racine du répertoire de l’application:
 archeoViz(objects.df = NULL,   # data.frame pour les objets
           refits.df = NULL,    # data.frame optionnel pour les remontages
           timeline.df = NULL,  # data.frame optionnel pour la chronologie des fouilles
+          default.group =NULL, # méthode de groupement des données,
+                               # par couche ("by.layer") ou "by.variable"
           title = NULL,        # titre du site / du jeu de données
           home.text = NULL,    # contenu html à afficher sur la page d'accueil
           lang = "fr"          # langue de l'interface ("English" ou "French")

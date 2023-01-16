@@ -9,9 +9,11 @@ app_server <- function(input, output, session) {
     title <- shiny::getShinyOption("title")
     
     if(is.null(title)){
-      title.edited <- paste("<h5>", archeoViz.label, "</h5>")
+      title.edited <- paste("<h4>", archeoViz.label, "</h4>")
     } else if(is.character(title) & nchar(title) <= 20){
-      title.edited <- paste("<h4>", title, "</h4>", .term_switcher("through"), archeoViz.label, "<br><br>", sep="")
+      title.edited <- paste("<h4>", title, "</h4>",
+                            .term_switcher("through"), archeoViz.label,
+                            "<br><br>", sep="")
     } else{
       stop("The title parameter must be a character string (20 characters max).")
     }
@@ -812,7 +814,8 @@ app_server <- function(input, output, session) {
     n.location.modes <- length(unique(df$location_mode))
     
     if(n.location.modes == 1){
-      loc.modes <- c(.term_switcher(tolower(unique(df$location_mode))))
+      # loc.modes <- c(.term_switcher(tolower(unique(df$location_mode))))
+      loc.modes <- unique(df$location_mode)
     } else if( n.location.modes == 2) {
       loc.modes <- c(.term_switcher("exact"), 
                      .term_switcher("fuzzy"), 

@@ -1,6 +1,11 @@
 
+
+# archeoviz 0.2.2
+* add 'default.group' parameter in the 'archeoViz' function
+* fix bugs in the display of the map
+
 # archeoviz 0.2
-Released: 2023-01-
+Released: 2023-01-07
 
 * Refits can be displayed in the X section, Y section, and Map plots.
 * The 'objects' table can include an optional 'year' column, that is used to determine the timeline.

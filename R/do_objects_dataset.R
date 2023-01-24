@@ -1,4 +1,4 @@
-.do_objects_dataset <- function(from.func.objects.df=NULL, demoData.n=NULL, input.ui.table=NULL){
+.do_objects_dataset <- function(from.func.objects.df=NULL, demoData.n=NULL, input.ui.table=NULL, reverse.square.names=NULL){
   # source selection ----
   if (! is.null(from.func.objects.df)){
     df <- from.func.objects.df
@@ -42,7 +42,20 @@
                 notif.text = "notif.error.identifier",
                 notif.type = "error"))
   }
-
+  
+  # : test reverse.square.names ----
+  if(is.null(reverse.square.names)){
+    reverse.square.names <- " "
+  } else if( ! reverse.square.names %in% c("x", "y", "xy")){
+    stop("The value of the 'reverse.square.names' parameter must be 'x', 'y', or 'xy'.")
+  }
+  
+  # Objects ----
+  df$object_type <- as.character(df$object_type)
+  # sanitize column names:
+  idx <- grep("object_", colnames(df))
+  colnames(df)[idx] <- gsub("[\\*\\/\\-\\+]", ".", colnames(df)[idx], perl=TRUE)
+  
   # Coordinates ----
   # : clean empty coordinates values
   df[which(df$xmin %in% c("", " ")), "xmin"] <- NA
@@ -71,18 +84,31 @@
   df <- .coordinates_sampling(df, "ymin", "ymax", "y", location.term)
   df <- .coordinates_sampling(df, "zmin", "zmax", "z", location.term)
   
+  # : add a string summary of the coordinates: ----
+  df$xyz <- paste0(round(df$x, 1), ", ", round(df$y, 1), ", ", round(df$z, 1))
+  
   # Squares ----
   if( ! (is.null(df$square_x) & is.null(df$square_y)) ){
     # : add square identifier ----
     # : as factors ----
-    df$square_x <- factor(df$square_x)
-    df$square_y <- factor(df$square_y)
+    df$square_x <- factor(df$square_x, exclude = c(NA, "", " "))
+    df$square_y <- factor(df$square_y, exclude = c(NA, "", " "))
+    
+    if(grepl("x", reverse.square.names)){
+     levels(df$square_x) <- rev(levels(df$square_x))
+    }
+    if(grepl("y", reverse.square.names)){
+      levels(df$square_y) <- rev(levels(df$square_y))
+    }
+    
     df$square <- paste(df$square_x, df$square_y, sep = "-")
   } else{
     df$square_x <- NULL
     df$square_y <- NULL
     df$square <- ""
   }
+  
+  
   
   # Layers ----
   # : order by mean depth ----

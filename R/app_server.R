@@ -43,12 +43,6 @@ app_server <- function(input, output, session) {
     
   })
   
-  
-  # hide instructions tab when using the package on a server
-  if(! is.null(getShinyOption("objects.df"))){
-    hideTab(inputId = "tabs", target =  .term_switcher("tab.input"))
-  }
-  
   # Timeline preprocessing ----
   timeline.file <- reactive({
     # attente du fichier de l'utilisateur
@@ -72,7 +66,7 @@ app_server <- function(input, output, session) {
     #   function parameter > objects table > timeline table
     timeline <- .do_timelinedata(from.func.time.df, 
                                  objects.dataset, 
-                                 timeline.ui.df)
+                                 timeline.ui.df) # this is the reactive object
     showNotification(.term_switcher(timeline$notif.text),
                      type = timeline$notif.type)
     timeline$data
@@ -133,7 +127,8 @@ app_server <- function(input, output, session) {
     result <- .do_objects_dataset(
       from.func.objects.df = getShinyOption("objects.df"),
       demoData.n           = input$demoData.n, 
-      input.ui.table       = objects.ui.input
+      input.ui.table       = objects.ui.input,
+      reverse.square.names = getShinyOption("reverse.square.names")
     )
     
     showNotification(.term_switcher(result$notif.text),
@@ -283,18 +278,18 @@ app_server <- function(input, output, session) {
         tableOutput('refits.preview.tab'))
   })
   
-  # : selected item ----
+  # : 3D selection ----
   output$id.tab <- renderTable({
-    req(input$class_values)
-    if (input$goButton == 0) return()
+    # req(input$class_values)
+    # if (input$goButton == 0) return()
     
     dataset <- objects.subdataset()
     x <- click.selection()$x 
     y <- click.selection()$y 
     z <- click.selection()$z 
     id <- dataset[dataset$x == x & dataset$y == y &  dataset$z == z,]$id
-    df.tab <- dataset[dataset$id == id, ]
-    df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "group.variable", "color.values"))]
+    df.tab <- dataset[which(dataset$id == id), ]
+    df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "group.variable", "color.values", "xyz"))]
   }, digits=0)
   
   output$id.table <- renderUI({
@@ -605,7 +600,6 @@ app_server <- function(input, output, session) {
     
     sel <- dataset$z >= input$planZ[1] & dataset$z <= input$planZ[2]
     planZ.df <- dataset[sel, ]
-
     color.var <- group.variable()
     col <- unique(planZ.df[, c("layer_color", color.var)])
     col <- col[order(col[, 2]), ]
@@ -617,6 +611,7 @@ app_server <- function(input, output, session) {
       geom_point(data = planZ.df,
                  aes_string(x = "x", y = "y", color = color.var,
                             square="square", 
+                            xyz= "xyz",
                             object_type="object_type",
                             location_mode="location_mode", id="id"
                             ),
@@ -670,7 +665,7 @@ app_server <- function(input, output, session) {
       } 
     }
     
-    ggplotly(map, tooltip = c("id", "square", "location_mode", "object_type"))
+    ggplotly(map, tooltip = c("id", "xyz", "square", "location_mode", "object_type"))
   })
   
   output$map <- plotly::renderPlotly({ map() })
@@ -678,6 +673,19 @@ app_server <- function(input, output, session) {
   
   
   # Conditionnal interface ----
+  
+  # : guidelines ----
+  # hide input tab when using the function's dataset parameter
+  if(! is.null(getShinyOption("objects.df"))){
+    hideTab(inputId = "tabs", target =  .term_switcher("tab.input"))
+  }
+  
+  # reactive({
+  #   if(now(timeline.data())==0){
+  #     hideTab(inputId = "tabs", target =  .term_switcher("tab.timeline"))
+  #   }
+  # })
+  
   
   # : slider Map  ----
   output$sliderMap <- renderUI({
@@ -738,7 +746,7 @@ app_server <- function(input, output, session) {
                 value = min(time.df$year), step=1)
   })
   
-  # : Object variable/values  ----
+  # : Object variable  ----
   output$class_variable <- renderUI({
     req(objects.dataset())
     items <- colnames(objects.dataset())[grep("object*", colnames(objects.dataset()))]
@@ -750,6 +758,7 @@ app_server <- function(input, output, session) {
   #   updateTextInput(session, "class_values")
   # })
     
+  # : Object values  ----
   output$class_values <- renderUI({
       # times <- input$reset_input # reset selection
       # actionButton("reset_input", "Reset values"),

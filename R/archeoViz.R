@@ -1,5 +1,5 @@
 archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL, default.group="by.layer",
-                      title=NULL, home.text=NULL, lang="en", set.theme="cosmo"){
+                      reverse.square.names=NULL, title=NULL, home.text=NULL, lang="en", set.theme="cosmo"){
   
   ui.terms <- .load_interface_terms(lang)
   
@@ -7,6 +7,7 @@ archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL, default
                "refits.df"   = refits.df,
                "timeline.df" = timeline.df,
                "default.group" = default.group,
+               "reverse.square.names" = reverse.square.names,
                "title"       = title,
                "home.text"   = home.text,
                "set.theme"   = set.theme,

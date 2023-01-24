@@ -3,7 +3,13 @@
   subset.df <- subset.df[, c("x", "y", "z")]
   
   subset.df <- unique(subset.df)
-  hull.df <- cxhull::cxhull(as.matrix(subset.df), triangulate = TRUE) # compute convex hull
+  
+  # compute convex hull:
+  hull.df <- try(cxhull::cxhull(as.matrix(subset.df), triangulate = TRUE),
+                 silent=T)
+  
+  if(! is.list(hull.df)){return()}
+  
   hull.df <- cxhull::hullMesh(hull.df)                                # extract mesh
   nfaces <- nrow(hull.df$faces)
   hull.df <- - hull.df$vertices                                   # convert to negative coordinates

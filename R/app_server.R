@@ -179,21 +179,34 @@ app_server <- function(input, output, session) {
   
   # Coordinate system ----
   
-  # : squares list ----
-  squares <- reactive({
-    df <- objects.dataset()
-    square_x <- c()
-    square_y <- c()
-    if( ! length(table(df$square_x)) == 0){square_x <- levels(df$square_x)}
-    if( ! length(table(df$square_y)) == 0){square_y <- levels(df$square_y)}
-    
-    list("square_x" = square_x, "square_y" = square_y)
-  })
-  
   # : coords min/max coordinates ----
   coords.min.max <- reactive({
     df <- objects.dataset()
-    .do_coords_minmax(df)
+    .do_coords_minmax(df, reverse = getShinyOption("reverse.axis.values"))
+  })
+  
+  # : squares list ----
+  squares <- reactive({
+    req(coords.min.max)
+    coords.min.max  <- coords.min.max()
+    df <- objects.dataset()
+    # if the nr of square labels is insufficient, do not display the labels:
+    square_x <- ""
+    square_y <- ""
+    
+    nr.of.documented.Xsquares <- length(unique(trunc(seq(coords.min.max$xmin, coords.min.max$xmax) /100) * 100)) - 1
+    nr.of.square.Xlabels <- length(unique(df$square_x))
+    if(nr.of.documented.Xsquares == nr.of.square.Xlabels){
+      square_x <- levels(df$square_x)
+    }  
+    
+    nr.of.documented.Ysquares <- length(unique(trunc(seq(coords.min.max$ymin, coords.min.max$ymax) /100) * 100)) - 1
+    nr.of.square.Ylabels <- length(unique(df$square_y))
+    if(nr.of.documented.Ysquares == nr.of.square.Ylabels){
+      square_y <- levels(df$square_y)
+    }  
+    
+    list("square_x" = square_x, "square_y" = square_y)
   })
   
   # : ranges ----
@@ -693,7 +706,9 @@ app_server <- function(input, output, session) {
     
     z.mean <- mean(seq(coords$zmin, coords$zmax))
     sliderInput("planZ", "Z: min/max",  width="100%", sep = "",
-                min=coords$zmin, max = coords$zmax, round=T,
+                min = min(coords$zmin, coords$zmax), 
+                max = max(coords$zmin, coords$zmax),
+                round=T,
                 value=c(z.mean - z.mean * 0.1,
                         z.mean + z.mean * 0.1)
     )
@@ -786,9 +801,6 @@ app_server <- function(input, output, session) {
   output$group.selector <- renderUI({
     req(objects.dataset)
     default.group <- getShinyOption("default.group")
-    if( ! default.group %in% c("by.layer", "by.variable")){
-      stop("The default.group parameter must be one of 'by.layer' or 'by.variable'.")
-    }
     
     group.sel.modes <- structure(c("by.layer", "by.variable"),
                                  .Names = c(.term_switcher("by.layer"),
@@ -825,6 +837,7 @@ app_server <- function(input, output, session) {
     if(n.location.modes == 1){
       # loc.modes <- c(.term_switcher(tolower(unique(df$location_mode))))
       loc.modes <- unique(df$location_mode)
+      # loc.modes <- unique(df$location_mode)
     } else if( n.location.modes == 2) {
       loc.modes <- c(.term_switcher("exact"), 
                      .term_switcher("fuzzy"), 

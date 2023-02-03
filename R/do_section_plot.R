@@ -1,6 +1,7 @@
 .do_section_plot <- function(selection, dataset, section.point.size,
                              refitting.df, show.refits, 
-                             colors, grid.coord, coords, axis.labels, xaxis){
+                             colors, grid.coord, coords, axis.labels, xaxis,
+                             reverse.xaxis){
    # data check: ----
   section.df <- dataset[selection, ]
 
@@ -84,11 +85,23 @@
   }
 }
   # add layout ----
+  
+  xrange <- c(eval(parse(text = paste0("coords$", xaxis, "min"))),
+              eval(parse(text = paste0("coords$", xaxis, "max"))))
+  
+  if( grepl("x", reverse.xaxis) & xaxis == "x" ){
+    xrange <- c(eval(parse(text = paste0("coords$", xaxis, "max"))),
+                eval(parse(text = paste0("coords$", xaxis, "min"))))
+  }
+  if( grepl("y", reverse.xaxis) & xaxis == "y" ){
+    xrange <- c(eval(parse(text = paste0("coords$", xaxis, "max"))),
+                eval(parse(text = paste0("coords$", xaxis, "min"))))
+  }
+  
   section <- plotly::layout(section,
                      xaxis = list(title = toupper(xaxis),
                                   zeroline = FALSE,
-                                  range= c(eval(parse(text = paste0("coords$", xaxis, "min"))),
-                                           eval(parse(text = paste0("coords$", xaxis, "max")))),
+                                  range = xrange,
                                   tickvals = eval(parse(text = paste0("axis.labels$", xaxis, "axis$breaks"))),
                                   ticktext = eval(parse(text = paste0("axis.labels$", xaxis, "axis$labels")))
                      ),

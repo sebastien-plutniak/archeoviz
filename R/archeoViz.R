@@ -1,5 +1,7 @@
 archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL, default.group="by.layer",
-                      reverse.axis.values=NULL, reverse.square.names=NULL, title=NULL, home.text=NULL, lang="en", set.theme="cosmo"){
+                      reverse.axis.values=NULL, reverse.square.names=NULL,
+                      add.x.square.labels = NULL, add.y.square.labels = NULL,
+                      title=NULL, home.text=NULL, lang="en", set.theme="cosmo"){
   
   
   # tests parameters----
@@ -37,6 +39,8 @@ archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL, default
                "default.group" = default.group,
                "reverse.axis.values" = reverse.axis.values,
                "reverse.square.names" = reverse.square.names,
+               "add.x.square.labels" = add.x.square.labels,
+               "add.y.square.labels" = add.y.square.labels,
                "title"       = title,
                "home.text"   = home.text,
                "set.theme"   = set.theme,

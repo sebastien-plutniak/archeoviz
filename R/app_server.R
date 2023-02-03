@@ -181,8 +181,8 @@ app_server <- function(input, output, session) {
   
   # : coords min/max coordinates ----
   coords.min.max <- reactive({
-    df <- objects.dataset()
-    .do_coords_minmax(df, reverse = getShinyOption("reverse.axis.values"))
+    .do_coords_minmax(objects.dataset(),
+                      reverse = getShinyOption("reverse.axis.values"))
   })
   
   # : squares list ----
@@ -194,16 +194,16 @@ app_server <- function(input, output, session) {
     square_x <- ""
     square_y <- ""
     
-    nr.of.documented.Xsquares <- length(unique(trunc(seq(coords.min.max$xmin, coords.min.max$xmax) /100) * 100)) - 1
-    nr.of.square.Xlabels <- length(unique(df$square_x))
-    if(nr.of.documented.Xsquares == nr.of.square.Xlabels){
-      square_x <- levels(df$square_x)
+    max.nr.of.Xsquares <- length(unique(trunc(seq(coords.min.max$xmin, coords.min.max$xmax) /100) * 100)) - 1
+    square.Xlabels <- c(unique(as.character(df$square_x)), getShinyOption("add.x.square.labels"))  
+    if(max.nr.of.Xsquares == length(square.Xlabels) ){
+      square_x <- sort(square.Xlabels)
     }  
     
-    nr.of.documented.Ysquares <- length(unique(trunc(seq(coords.min.max$ymin, coords.min.max$ymax) /100) * 100)) - 1
-    nr.of.square.Ylabels <- length(unique(df$square_y))
-    if(nr.of.documented.Ysquares == nr.of.square.Ylabels){
-      square_y <- levels(df$square_y)
+    max.nr.of.Ysquares <- length(unique(trunc(seq(coords.min.max$ymin, coords.min.max$ymax) /100) * 100)) - 1
+    square.Ylabels <- c(unique(as.character(df$square_y)), getShinyOption("add.y.square.labels"))  
+    if(max.nr.of.Ysquares == length(square.Ylabels) ){
+      square_y <- sort(square.Ylabels)
     }  
     
     list("square_x" = square_x, "square_y" = square_y)
@@ -343,7 +343,7 @@ app_server <- function(input, output, session) {
     squares <- squares()
     axis.labels <- axis.labels()
     
-    ggplot() +
+    map <- ggplot() +
       theme_minimal(base_size = 11) +
       geom_vline(xintercept = square.coords$range.x, colour = "darkgrey" ) +
       geom_hline(yintercept = square.coords$range.y, colour = "darkgrey" ) +
@@ -353,6 +353,19 @@ app_server <- function(input, output, session) {
       scale_y_continuous(breaks = axis.labels$yaxis$breaks,
                          labels = axis.labels$yaxis$labels) +
       xlab("") + ylab("")
+    
+    # reverse axes if needed:
+    reverse <- getShinyOption("reverse.axis.values")
+    if(grepl("x", reverse)){ 
+      map <- map + scale_x_reverse(breaks = axis.labels$xaxis$breaks,
+                                   labels = axis.labels$xaxis$labels)
+      }
+    if(grepl("y", reverse)){ 
+      map <- map + scale_y_reverse(breaks = axis.labels$yaxis$breaks,
+                                   labels = axis.labels$yaxis$labels)
+      }
+    
+    map
   }) 
   
   #  : mini-map X ----
@@ -526,18 +539,29 @@ app_server <- function(input, output, session) {
                      inherit = F)
     
     # : layout setting ----
+    
+    range.x <- c(coords$xmax, coords$xmin)
+    range.y <- c(coords$ymax, coords$ymin)
+    
+    if( grepl("x", getShinyOption("reverse.axis.values")) ){
+      range.x <- c(coords$xmin, coords$xmax)
+    }
+    if( grepl("y", getShinyOption("reverse.axis.values")) ){
+      range.y <- c(coords$ymin, coords$ymax)
+    }
+    
     fig <- layout(fig,
                   scene = list(
                     xaxis = list(title = 'X',
                                  tickmode = "array",
-                                 range = c(coords$xmax, coords$xmin),
+                                 range = range.x,
                                  tickvals = axis.labels$xaxis$breaks,
                                  ticktext = axis.labels$xaxis$labels,
-                                 zeroline=F, showline=F
+                                 zeroline = F, showline = F
                     ),
                     yaxis = list(title = 'Y',
                                  tickmode = "array",
-                                 range =  c(coords$ymax, coords$ymin),
+                                 range =  range.y,
                                  tickvals = axis.labels$yaxis$breaks,
                                  ticktext = axis.labels$yaxis$labels
                     ),
@@ -577,7 +601,8 @@ app_server <- function(input, output, session) {
                      grid.coord = grid.coordy(),
                      coords = coords.min.max(),
                      axis.labels = axis.labels(),
-                     xaxis = "y")
+                     xaxis = "y",
+                     reverse.xaxis = getShinyOption("reverse.axis.values"))
   })# end sectionX
   
   output$sectionXplot <- plotly::renderPlotly({sectionXplot()})
@@ -600,7 +625,8 @@ app_server <- function(input, output, session) {
                      grid.coord = grid.coordx(),
                      coords = coords.min.max(),
                      axis.labels = axis.labels(), 
-                     xaxis = "x")
+                     xaxis = "x",
+                     reverse.xaxis = getShinyOption("reverse.axis.values"))
   }) #end section Y
   
   output$sectionYplot <- plotly::renderPlotly({sectionYplot()})

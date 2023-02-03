@@ -7,8 +7,7 @@
               "zmax" = max(df$z, na.rm = T)
        )
   
-  if(grepl("z", reverse)){
-    names(res)[5:6] <- c("zmax", "zmin")
-  }
+  if(grepl("z", reverse)){ names(res)[5:6] <- c("zmax", "zmin") }
+  
   res
 }

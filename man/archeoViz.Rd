@@ -12,6 +12,7 @@ archeoViz(objects.df=NULL, refits.df, timeline.df=NULL,
   \item{objects.df}{data frame, with data documenting the location and type of archaeological remains.}
   \item{refits.df}{data frame, with two columns containin the ids of refitting objects.}
   \item{timeline.df}{data frame, with data documenting the year of excavation of the site's squares.}
+  \item{reverse.axis.values}{character. Whether to reverse the values of one or several axes ('x', 'y', 'z').}
   \item{reverse.square.names}{character. Whether to reverse the square names on the 'x', 'y' axes, or both ('xy').}
   \item{default.group}{character. Whether to group data  'by.layer' or 'by.variable' (the selected variable).}
   \item{title}{character. Title to display on the application.}

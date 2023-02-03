@@ -1,4 +1,4 @@
-.do_objects_dataset <- function(from.func.objects.df=NULL, demoData.n=NULL, input.ui.table=NULL, reverse.square.names=NULL){
+.do_objects_dataset <- function(from.func.objects.df=NULL, demoData.n=NULL, input.ui.table=NULL, reverse.square.names=""){
   # source selection ----
   if (! is.null(from.func.objects.df)){
     df <- from.func.objects.df
@@ -43,12 +43,6 @@
                 notif.type = "error"))
   }
   
-  # : test reverse.square.names ----
-  if(is.null(reverse.square.names)){
-    reverse.square.names <- " "
-  } else if( ! reverse.square.names %in% c("x", "y", "xy")){
-    stop("The value of the 'reverse.square.names' parameter must be 'x', 'y', or 'xy'.")
-  }
   
   # Objects ----
   df$object_type <- as.character(df$object_type)

@@ -5,10 +5,10 @@ test_that(".do_objects_dataset: simulated data", {
   res <- .do_objects_dataset(demoData.n = 100)
   
   expect_equal(res$notif.text, "notif.objects.ok")
-  expect_equal(dim(res$data), c(100, 19))
-  expect_equal(colnames(res$data), c("id", "square_x", "square_y", "xmin", "xmax", "ymin", "ymax", "zmin", "zmax", "layer", "object_type", "object_class_size", "year", "object_lithic_type", "location_mode", "x", "y", "z", "square"))
+  expect_equal(dim(res$data), c(100, 20))
+  expect_equal(colnames(res$data), c("id", "square_x", "square_y", "xmin", "xmax", "ymin", "ymax", "zmin", "zmax", "layer", "object_type", "object_class_size", "year", "object_lithic_type", "location_mode", "x", "y", "z", "xyz", "square"))
   expect_equal(c(sapply(res$data[1, ], typeof), use.names=F),
-               c("integer", "integer", "integer", "integer", "double", "integer", "double", "double", "logical", "integer", "character", "character", "integer", "character", "character", "integer", "integer", "double", "character"))
+               c("integer", "integer", "integer", "integer", "double", "integer", "double", "double", "logical", "integer", "character", "character", "integer", "character", "character", "integer", "integer", "double", "character", "character"))
 })
 
 
@@ -22,10 +22,10 @@ test_that(".do_objects_dataset: no max coordinates", {
   res <- .do_objects_dataset(from.func.objects.df = df)
   
   expect_equal(res$notif.text, "notif.objects.ok")
-  expect_equal(dim(res$data), c(100, 19))
-  expect_equal(colnames(res$data), c("id", "square_x", "square_y", "xmin", "ymin",  "zmin", "layer", "object_type", "object_class_size", "year", "object_lithic_type", "xmax", "ymax","zmax", "location_mode", "x", "y", "z", "square"))
+  expect_equal(dim(res$data), c(100, 20))
+  expect_equal(colnames(res$data), c("id", "square_x", "square_y", "xmin", "ymin",  "zmin", "layer", "object_type", "object_class_size", "year", "object_lithic_type", "xmax", "ymax","zmax", "location_mode", "x", "y", "z", "xyz", "square"))
   expect_equal(c(sapply(res$data[1, ], typeof), use.names=F),
-               c("integer", "integer", "integer", "integer", "integer", "double", "integer", "character", "character","integer", "character","integer", "integer", "double", "character", "integer", "integer", "double", "character"))
+               c("integer", "integer", "integer", "integer", "integer", "double", "integer", "character", "character","integer", "character","integer", "integer", "double", "character", "integer", "integer", "double", "character", "character"))
 })
 
 

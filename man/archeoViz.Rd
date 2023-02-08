@@ -14,9 +14,9 @@ archeoViz(objects.df=NULL, refits.df, timeline.df=NULL,
   \item{timeline.df}{data frame, with data documenting the year of excavation of the site's squares.}
   \item{reverse.axis.values}{character. Whether to reverse the values of one or several axes ('x', 'y', 'z').}
   \item{reverse.square.names}{character. Whether to reverse the square names on the 'x', 'y' axes, or both ('xy').}
-  \item{default.group}{character. Whether to group data  'by.layer' or 'by.variable' (the selected variable).}
   \item{add.x.square.labels}{character. Additional square labels on the x axis.}
   \item{add.y.square.labels}{character. Additional square labels on the y axis.}
+  \item{params}{list. List of parameters to use to initialise the application.}
   \item{title}{character. Title to display on the application.}
   \item{home.text}{character. Html content to display on the home page of the application.}
   \item{lang}{character. Inteface language, either "en" (English) or "fr" (French).}

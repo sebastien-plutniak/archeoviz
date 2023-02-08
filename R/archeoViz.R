@@ -1,14 +1,22 @@
-archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL, default.group="by.layer",
+archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
                       reverse.axis.values=NULL, reverse.square.names=NULL,
                       add.x.square.labels = NULL, add.y.square.labels = NULL,
+                      params = list("class_variable" = NULL, "class_values" = NULL,
+                                    "default.group" = "by.layer", "location" = NULL,
+                                    "map.density" = "no", "planZ" = NULL,
+                                    "point.size" = NULL, "cxhull" = NULL, "surface" = NULL,
+                                    "refits.map" = NULL, "refits" = NULL,
+                                    "refits.sectionX" = NULL, "refits.sectionY" = NULL,
+                                    "sectionXx" = NULL, "sectionXy" = NULL, "sectionYx" = NULL, "sectionYy" = NULL,
+                                    "camera.center" = NULL, "camera.eye" = NULL, "run.plots" = FALSE),
                       title=NULL, home.text=NULL, lang="en", set.theme="cosmo"){
   
   
   # tests parameters----
   # : test default.group ----
-  if( ! default.group %in% c("by.layer", "by.variable")){
-    stop("The 'default.group' parameter must be one of 'by.layer' or 'by.variable'.")
-  }
+  # if( ! default.group %in% c("by.layer", "by.variable")){
+  #   stop("The 'default.group' parameter must be one of 'by.layer' or 'by.variable'.")
+  # }
   
   # : test lang ----
   if( ! lang %in% c("en", "fr")){
@@ -36,11 +44,12 @@ archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL, default
   shinyOptions("objects.df"  = objects.df,
                "refits.df"   = refits.df,
                "timeline.df" = timeline.df,
-               "default.group" = default.group,
+               # "default.group" = default.group,
                "reverse.axis.values" = reverse.axis.values,
                "reverse.square.names" = reverse.square.names,
                "add.x.square.labels" = add.x.square.labels,
                "add.y.square.labels" = add.y.square.labels,
+               "params" = params,
                "title"       = title,
                "home.text"   = home.text,
                "set.theme"   = set.theme,

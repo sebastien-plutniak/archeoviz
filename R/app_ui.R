@@ -114,12 +114,12 @@ ui <- shinyUI(
                             br(),
                             h4(.term_switcher("header.3d.options")),
                             uiOutput("show.surfaces"),
-                            checkboxInput("cxhull", .term_switcher("hulls"), value = F),
+                            checkboxInput("cxhull", .term_switcher("hulls"),
+                                          value = getShinyOption("params")$cxhull ),
                             uiOutput("show.refits"),
                             sliderInput("point.size", .term_switcher("point.size"), width="100%", sep = "",
                                         min=1, max=5, value=2, step=1),
-                            sliderInput("ratio", .term_switcher("ratio"), width="100%", sep = "",
-                                        min=.5, max=2, value=1, step=.1)
+                            uiOutput("ratio3D")
                      )  # end column
                    )  # end fluid row
           ),      #end tabPanel

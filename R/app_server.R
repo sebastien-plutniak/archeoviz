@@ -128,7 +128,9 @@ app_server <- function(input, output, session) {
       from.func.objects.df = getShinyOption("objects.df"),
       demoData.n           = input$demoData.n, 
       input.ui.table       = objects.ui.input,
-      reverse.square.names = getShinyOption("reverse.square.names")
+      reverse.square.names = getShinyOption("reverse.square.names"),
+      add.x.square.labels = getShinyOption("add.x.square.labels"),
+      add.y.square.labels = getShinyOption("add.y.square.labels")
     )
     
     showNotification(.term_switcher(result$notif.text),
@@ -195,16 +197,24 @@ app_server <- function(input, output, session) {
     square_y <- ""
     
     max.nr.of.Xsquares <- length(unique(trunc(seq(coords.min.max$xmin, coords.min.max$xmax) /100) * 100)) - 1
-    square.Xlabels <- c(unique(as.character(df$square_x)), getShinyOption("add.x.square.labels"))  
+    square.Xlabels <- levels(df$square_x)
     if(max.nr.of.Xsquares == length(square.Xlabels) ){
-      square_x <- sort(square.Xlabels)
-    }  
+      square_x <- square.Xlabels
+    }  else {
+      message(paste0(max.nr.of.Xsquares, " X squares, but ",
+                     length(square.Xlabels), " X labels provided: ", 
+                     paste0(square.Xlabels, collapse = ", "), ".\n"))
+    }
     
     max.nr.of.Ysquares <- length(unique(trunc(seq(coords.min.max$ymin, coords.min.max$ymax) /100) * 100)) - 1
-    square.Ylabels <- c(unique(as.character(df$square_y)), getShinyOption("add.y.square.labels"))  
+    square.Ylabels <- levels(df$square_y)
     if(max.nr.of.Ysquares == length(square.Ylabels) ){
-      square_y <- sort(square.Ylabels)
-    }  
+      square_y <- square.Ylabels
+    } else {
+      message(paste0(max.nr.of.Ysquares, " Y squares, but ",
+                    length(square.Ylabels), " Y labels provided: ", 
+                    paste0(square.Ylabels, collapse = ", "), ".\n"))
+    }
     
     list("square_x" = square_x, "square_y" = square_y)
   })
@@ -424,10 +434,16 @@ app_server <- function(input, output, session) {
       xlab("") + ylab("")
   })   
   
-  # PLOT  3D ----
-  plot3d <- eventReactive(input$goButton3D, {
-    validate(need(input$class_values, .term_switcher("notif.tick.value")))
+  goButton3D <- reactive({
     req(input$class_values, objects.dataset())
+    if( (input$goButton3D > 0) | getShinyOption("params")$run.plots  ){
+      TRUE
+    } else { return() }
+  })
+  
+  # PLOT  3D ----
+  plot3d <- eventReactive(goButton3D(), {
+    validate(need(input$class_values, .term_switcher("notif.tick.value")))
     
     dataset <- objects.subdataset()
     coords <- coords.min.max()
@@ -461,6 +477,7 @@ app_server <- function(input, output, session) {
     fig <- add_markers(fig)
     
     # : add refits lines  ----
+    
     if(! is.null(input$refits)){
       if(input$refits){
         refitting.df <- refitting.df()
@@ -550,6 +567,16 @@ app_server <- function(input, output, session) {
       range.y <- c(coords$ymin, coords$ymax)
     }
     
+    camera.values <- list("center" = list (x = 0, y = 0, z = 0),
+                          "eye" = list(x = 1.25, y = 1.25, z = 1.25) )
+    
+    if( ! is.null(getShinyOption("params")$camera.center) ){
+      camera.values$center <- getShinyOption("params")$camera.center
+    }
+    if( ! is.null(getShinyOption("params")$camera.eye) ){
+      camera.values$center <- getShinyOption("params")$camera.eye
+    }
+    
     fig <- layout(fig,
                   scene = list(
                     xaxis = list(title = 'X',
@@ -569,6 +596,7 @@ app_server <- function(input, output, session) {
                                  tickmode = "array",
                                  range = c(coords$zmax, coords$zmin)
                     ),
+                    camera  = camera.values,
                     aspectmode = "manual", 
                     aspectratio = list(x = 1, 
                                        y = (coords$ymax - coords$ymin) / (coords$xmax - coords$xmin), 
@@ -584,9 +612,14 @@ app_server <- function(input, output, session) {
   
   # PLOTS 2D ----
   # :  X section plot ----
+  goButtonX <- reactive({
+    req(input$class_variable, input$class_values, input$sectionXy)
+    if( (input$goButtonX > 0) | getShinyOption("params")$run.plots  ){
+      TRUE
+    } else { return() }
+  })
   
-  sectionXplot <- shiny::eventReactive(input$goButtonX, {
-    req(input$class_variable, input$class_values)
+  sectionXplot <- shiny::eventReactive(goButtonX(), {
     dataset <- objects.subdataset()
     
     sel <- (dataset$y >= input$sectionXy[1] & dataset$y <= input$sectionXy[2]) &
@@ -609,8 +642,14 @@ app_server <- function(input, output, session) {
   
   
   # : Y section plot ----
-  sectionYplot <- shiny::eventReactive(input$goButtonY, {
-    req(input$class_variable, input$class_values)
+  goButtonY <- reactive({
+    req(input$class_variable, input$class_values, input$sectionYx)
+    if( (input$goButtonY > 0) | getShinyOption("params")$run.plots  ){
+      TRUE
+    } else { return() }
+  })
+  
+  sectionYplot <- shiny::eventReactive(goButtonY(), {
     dataset <- objects.subdataset()
     
     sel <- (dataset$y >= input$sectionYy[1] & dataset$y <= input$sectionYy[2]) &
@@ -632,11 +671,15 @@ app_server <- function(input, output, session) {
   output$sectionYplot <- plotly::renderPlotly({sectionYplot()})
   
   # : Map plot ####
+  goButtonZ <- reactive({
+    req(input$class_variable, input$class_values, input$map.density)
+    if( (input$goButtonZ > 0) | getShinyOption("params")$run.plots  ){
+      TRUE
+    } else { return() }
+  })
   
-  map <- eventReactive(input$goButtonZ, {
-    req(input$class_variable, input$class_values)
+  map <- eventReactive(goButtonZ(), {
     dataset <- objects.subdataset()
-    
     sel <- dataset$z >= input$planZ[1] & dataset$z <= input$planZ[2]
     planZ.df <- dataset[sel, ]
     color.var <- group.variable()
@@ -657,7 +700,7 @@ app_server <- function(input, output, session) {
                  size = input$map.point.size / 10
                  ) +
       scale_color_manual(color.var, values = col)
-    
+
     if(input$map.density == "by.variable"){
       # only layers with > 30 points
       var.sel1 <- eval(parse(text = paste0("planZ.df$", color.var)))
@@ -665,22 +708,22 @@ app_server <- function(input, output, session) {
       var.sel2 <- names(var.sel2[var.sel2 >= 30])
       ids <- var.sel1  %in% var.sel2
       planZ.df.sub <- planZ.df[ids, ]
-      
-      map <- map + 
+
+      map <- map +
         geom_density2d(data=planZ.df.sub,
                        aes_string(x = "x", y = "y",
                                   group = color.var,
                                   color = color.var),
                        size = .2)
     }
-    
+  
     if(input$map.density == "overall"){
-      map <- map + 
+      map <- map +
         geom_density2d(data=planZ.df,
                        aes_string(x = "x", y = "y"),
                        size = .2, color = "grey30")
-    }  
-    
+    }
+      
     # add refits:
     if(! is.null(input$refits.map)){
       refitting.df <- refitting.df()
@@ -709,8 +752,6 @@ app_server <- function(input, output, session) {
   
   output$map <- plotly::renderPlotly({ map() })
   
-  
-  
   # Conditionnal interface ----
   
   # : guidelines ----
@@ -725,18 +766,36 @@ app_server <- function(input, output, session) {
   #   }
   # })
   
+  # : slider ratio 3D
+  output$ratio3D <- renderUI({
+    init.ratio.value <- 1
+    if( ! is.null(getShinyOption("params")$ratio)){
+      init.ratio.value <- getShinyOption("params")$ratio
+    }
+    
+    sliderInput("ratio", .term_switcher("ratio"), width="100%", sep = "",
+                min=.5, max=2,
+                value = init.ratio.value,
+                step=.1)
+  })
   
   # : slider Map  ----
   output$sliderMap <- renderUI({
     coords <- coords.min.max()
     
     z.mean <- mean(seq(coords$zmin, coords$zmax))
+    init.valuesZ <- c(z.mean - z.mean * 0.1,
+                      z.mean + z.mean * 0.1)
+    
+    if( ! is.null(getShinyOption("params")$planZ) ){
+      init.valuesZ <- getShinyOption("params")$planZ
+    }
+    
     sliderInput("planZ", "Z: min/max",  width="100%", sep = "",
                 min = min(coords$zmin, coords$zmax), 
                 max = max(coords$zmin, coords$zmax),
-                round=T,
-                value=c(z.mean - z.mean * 0.1,
-                        z.mean + z.mean * 0.1)
+                round = T,
+                value = init.valuesZ
     )
   })
   # : sliders X  ----
@@ -744,38 +803,64 @@ app_server <- function(input, output, session) {
     coords <- coords.min.max()
     
     Xx.mean <- mean(seq(coords$xmin, coords$xmax))
+    init.valuesX <- c(Xx.mean - Xx.mean * 0.05,
+                      Xx.mean + Xx.mean * 0.05)
+    
+    if( ! is.null(getShinyOption("params")$sectionXx) ){
+      init.valuesX <- getShinyOption("params")$sectionXx
+    }
+    
     sliderInput("sectionXx", "X: min/max", width="100%", sep = "", step=1,
                 min = coords$xmin, max = coords$xmax, round=T,
-                value=c(Xx.mean - Xx.mean * 0.05,
-                        Xx.mean + Xx.mean * 0.05)
+                value = init.valuesX
     )
   })
   
   output$sliderXy <- renderUI({
     coords <- coords.min.max()
     
+    init.valueXy <- c(coords$ymin, coords$ymax)
+    
+    # if( ! is.null(getShinyOption("params")$sectionXy) ){
+    #   init.valueXy <- getShinyOption("params")$sectionXy
+    # }
+    
     sliderInput("sectionXy", "Y: min/max", width="100%", sep = "", step=1,
                 min = coords$ymin, max = coords$ymax, round=T,
-                value = c(coords$ymin, coords$ymax))
+                value = init.valueXy
+    )
   })
   
   # : sliders Y  ----
   output$sliderYx <- renderUI({
     coords <- coords.min.max()
     
+    init.valuesYx <- c(coords$xmin, coords$xmax)
+    
+    if( ! is.null(getShinyOption("params")$sectionYx) ){
+      init.valuesYx <- getShinyOption("params")$sectionYx
+    }
+    
     sliderInput("sectionYx", "X: min/max", width="100%", sep = "", step=1,
                 min = coords$xmin, max = coords$xmax, round=T,
-                value = c(coords$xmin, coords$xmax))
+                value = init.valuesYx
+    )
   })
   
   output$sliderYy <- renderUI({
     coords <- coords.min.max()
     
     Yy.mean <- mean(seq(coords$ymin, coords$ymax))
+    init.valuesYy <- c(Yy.mean - Yy.mean * 0.05,
+                       Yy.mean + Yy.mean * 0.05)
+    
+    if( ! is.null(getShinyOption("params")$sectionYy) ){
+      init.valuesYy <- getShinyOption("params")$sectionYy
+    }
+    
     sliderInput("sectionYy", "Y: min/max",  width="100%",  sep = "", step=1,
                 min = coords$ymin, max = coords$ymax, round=T,
-                value=c(Yy.mean - Yy.mean * 0.05,
-                        Yy.mean + Yy.mean * 0.05)
+                value = init.valuesYy
     )
   })
   
@@ -791,19 +876,19 @@ app_server <- function(input, output, session) {
   output$class_variable <- renderUI({
     req(objects.dataset())
     items <- colnames(objects.dataset())[grep("object*", colnames(objects.dataset()))]
-    selectInput("class_variable", "Variable", items)
+    selectInput("class_variable", "Variable", choices = items,
+                selected = getShinyOption("params")$class_variable)
   })
   
   # observeEvent(input$reset_input, {
   #   # class_values.saved <- input$class_values
   #   updateTextInput(session, "class_values")
   # })
-    
+  
   # : Object values  ----
   output$class_values <- renderUI({
-      # times <- input$reset_input # reset selection
-      # actionButton("reset_input", "Reset values"),
-      # br(), br(),
+    # times <- input$reset_input # reset selection
+    # actionButton("reset_input", "Reset values"),
     req(objects.dataset, input$class_variable)
     
     data <- objects.dataset()
@@ -812,10 +897,12 @@ app_server <- function(input, output, session) {
     
     if(is.null(input$class_values)) {
       selected.value <- .term_switcher("all")
+    } else if( ! is.null(getShinyOption("params")$class_values)){
+      selected.value <- getShinyOption("params")$class_values
     } else {
       selected.value <- input$class_values
     }
-      
+    
     div( 
       checkboxGroupInput("class_values", .term_switcher("values"),
                          c(.term_switcher("all"), sort(values)),
@@ -826,7 +913,6 @@ app_server <- function(input, output, session) {
   # : Group  selector ----
   output$group.selector <- renderUI({
     req(objects.dataset)
-    default.group <- getShinyOption("default.group")
     
     group.sel.modes <- structure(c("by.layer", "by.variable"),
                                  .Names = c(.term_switcher("by.layer"),
@@ -834,7 +920,7 @@ app_server <- function(input, output, session) {
     radioButtons("group.selection",
                  .term_switcher("group"),
                  choices = group.sel.modes,
-                 selected = default.group)
+                 selected = getShinyOption("params")$default.group)
   })
   
   
@@ -844,10 +930,15 @@ app_server <- function(input, output, session) {
                                .Names = c(.term_switcher("density.no"),
                                           .term_switcher("overall"),
                                           .term_switcher("by.variable")))  
+    map.density.sel <- "no"
+    if( ! is.null(getShinyOption("params")$map.density) ){
+      map.density.sel <- getShinyOption("params")$map.density
+    }
+    
     radioButtons("map.density",
                  .term_switcher("density"),
                  choices = density.modes,
-                 selected = "no")
+                 selected = map.density.sel)
   })
   
   # : Location selector  ----
@@ -872,37 +963,46 @@ app_server <- function(input, output, session) {
     
     loc.modes <- structure(loc.modes, .Names = loc.modes)  
     
+    loc.mode.selection <- .term_switcher(tolower(unique(df$location_mode)[1]))
+    if( ! is.null(getShinyOption("params")$location)){
+      loc.mode.selection <- getShinyOption("params")$location
+    }
+    
     radioButtons("location", .term_switcher("location"),
                  choices = loc.modes,
-                 selected = .term_switcher(tolower(unique(df$location_mode)[1])))
+                 selected = loc.mode.selection)
   })
   
   # : Refitting display selectors  ----
   output$show.refits <- renderUI({
     refitting.df <- refitting.df()
     if(nrow(refitting.df$refits.2d) > 0){
-      checkboxInput("refits", .term_switcher("refits"))
+      checkboxInput("refits", .term_switcher("refits"),
+                    value = getShinyOption("params")$refits)
     }
   })
   
   output$show.refits.map <- renderUI({
     refitting.df <- refitting.df()
     if(nrow(refitting.df$refits.2d) > 0){
-      checkboxInput("refits.map", .term_switcher("refits"))
+      checkboxInput("refits.map", .term_switcher("refits"),
+                    value = getShinyOption("params")$refits.map)
     } 
   })
   
   output$show.refits.sectionX <- renderUI({
     refitting.df <- refitting.df()
     if(nrow(refitting.df$refits.2d) > 0){
-      checkboxInput("refits.sectionX", .term_switcher("refits"))
+      checkboxInput("refits.sectionX", .term_switcher("refits"),
+                    value = getShinyOption("params")$refits.sectionX)
     }
   })
   
   output$show.refits.sectionY <- renderUI({
     refitting.df <- refitting.df()
     if(nrow(refitting.df$refits.2d) > 0){
-      checkboxInput("refits.sectionY", .term_switcher("refits"))
+      checkboxInput("refits.sectionY", .term_switcher("refits"),
+                    value = getShinyOption("params")$refits.sectionY)
     }
   })
   
@@ -912,9 +1012,11 @@ app_server <- function(input, output, session) {
     subsets <- table(df$group.variable)
     subsets <- names(subsets[subsets > 100])
     if(length(subsets) > 0){
-      checkboxInput("surface", .term_switcher("surfaces"), value = F)
+      checkboxInput("surface", .term_switcher("surfaces"),
+                    value = getShinyOption("params")$surface)
     }
   })
+  
   
   #  Timeline ----
   

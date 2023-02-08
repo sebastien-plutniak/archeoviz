@@ -1,9 +1,0 @@
-
-Listening on http://127.0.0.1:35605
-
-
-Erreur dans setwd(oldwd) : impossible de changer de répertoire de travail
-Appels : runApp -> <Anonymous> -> setwd
-Exécution arrêtée
-shell-init : erreur de détermination du répertoire actuel : getcwd : ne peut accéder aux répertoires parents : Aucun fichier ou dossier de ce type
-

@@ -1,0 +1,54 @@
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : 'rgl.init' failed, running with 'rgl.useNULL = TRUE'.
+
+Listening on http://127.0.0.1:35647
+Avis : The 'plotly_click' event tied a source ID of 'A' is not registered. In order to obtain this event data, please add `event_register(p, 'plotly_click')` to the plot (`p`) that you wish to obtain event data from.
+Avis : Error in $<-.data.frame: le tableau de remplacement a 1 lignes, le tableau remplacé en a 0
+  118: stop
+  117: $<-.data.frame
+  115: .do_timelinedata [/data/user/a/archeoviz/zPublish/shiny/combe-capelle-a2/R/do_timelinedata.R#45]
+  114: <reactive:timeline.data> [/data/user/a/archeoviz/zPublish/shiny/combe-capelle-a2/R/app_server.R#67]
+   98: timeline.data
+   97: renderUI [/data/user/a/archeoviz/zPublish/shiny/combe-capelle-a2/R/app_server.R#745]
+   96: func
+   83: renderFunc
+   82: output$sliderTimeline
+    1: runApp
+Avis : Error in $<-.data.frame: le tableau de remplacement a 1 lignes, le tableau remplacé en a 0
+  171: <Anonymous>
+  170: stop
+  169: timeline.data
+  168: renderPlot [/data/user/a/archeoviz/zPublish/shiny/combe-capelle-a2/R/app_server.R#885]
+  166: func
+  126: drawPlot
+  112: <reactive:plotObj>
+   96: drawReactive
+   83: renderFunc
+   82: output$timeline.map
+    1: runApp
+Avis : Error in $<-.data.frame: le tableau de remplacement a 1 lignes, le tableau remplacé en a 0
+  177: <Anonymous>
+  176: stop
+  175: timeline.data
+  168: renderPlot [/data/user/a/archeoviz/zPublish/shiny/combe-capelle-a2/R/app_server.R#905]
+  166: func
+  126: drawPlot
+  112: <reactive:plotObj>
+   96: drawReactive
+   83: renderFunc
+   82: output$timeline.map.grid
+    1: runApp
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, xyz, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, xyz, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, xyz, object_type, location_mode, and id
+Avis : Ignoring 11293 observations
+Avis : Ignoring 11293 observations
+
+
+Exécution arrêtée
+

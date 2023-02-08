@@ -1,4 +1,6 @@
-.do_objects_dataset <- function(from.func.objects.df=NULL, demoData.n=NULL, input.ui.table=NULL, reverse.square.names=""){
+.do_objects_dataset <- function(from.func.objects.df=NULL, demoData.n=NULL,
+                                input.ui.table=NULL, reverse.square.names="",
+                                add.x.square.labels=NULL, add.y.square.labels=NULL){
   # source selection ----
   if (! is.null(from.func.objects.df)){
     df <- from.func.objects.df
@@ -87,6 +89,8 @@
     # : as factors ----
     df$square_x <- factor(df$square_x, exclude = c(NA, "", " "))
     df$square_y <- factor(df$square_y, exclude = c(NA, "", " "))
+    levels(df$square_x) <- sort(c(levels(df$square_x), add.x.square.labels))
+    levels(df$square_y) <- sort(c(levels(df$square_y), add.y.square.labels))
     
     if(grepl("x", reverse.square.names)){
      levels(df$square_x) <- rev(levels(df$square_x))

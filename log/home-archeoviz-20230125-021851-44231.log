@@ -1,0 +1,15 @@
+
+Attachement du package : ‘DT’
+
+Les objets suivants sont masqués depuis ‘package:shiny’:
+
+    dataTableOutput, renderDataTable
+
+
+Listening on http://127.0.0.1:44231
+Avis : Error in setwd: argument de type caractère attendu
+  1: runApp
+
+
+Exécution arrêtée
+

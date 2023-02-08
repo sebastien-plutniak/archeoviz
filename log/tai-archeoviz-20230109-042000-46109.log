@@ -1,0 +1,22 @@
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : 'rgl.init' failed, running with 'rgl.useNULL = TRUE'.
+
+Listening on http://127.0.0.1:46109
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : `stat_contour()`: Zero contours were generated
+Avis dans min(x) : aucun argument trouvé pour min ; Inf est renvoyé
+Avis dans max(x) : aucun argument pour max ; -Inf est renvoyé
+Avis : `stat_contour()`: Zero contours were generated
+Avis dans min(x) : aucun argument trouvé pour min ; Inf est renvoyé
+Avis dans max(x) : aucun argument pour max ; -Inf est renvoyé
+Avis : `stat_contour()`: Zero contours were generated
+Avis dans min(x) : aucun argument trouvé pour min ; Inf est renvoyé
+Avis dans max(x) : aucun argument pour max ; -Inf est renvoyé
+
+
+Exécution arrêtée
+

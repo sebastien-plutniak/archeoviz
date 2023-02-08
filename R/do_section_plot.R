@@ -1,7 +1,7 @@
 .do_section_plot <- function(selection, dataset, section.point.size,
                              refitting.df, show.refits, 
                              colors, grid.coord, coords, axis.labels, xaxis,
-                             reverse.xaxis){
+                             reverse.xaxis=NULL){
    # data check: ----
   section.df <- dataset[selection, ]
 

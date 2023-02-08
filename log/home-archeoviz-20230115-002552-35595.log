@@ -1,0 +1,15 @@
+
+Attachement du package : ‘DT’
+
+Les objets suivants sont masqués depuis ‘package:shiny’:
+
+    dataTableOutput, renderDataTable
+
+
+Listening on http://127.0.0.1:35595
+Avis dans validateCoords(lng, lat, funcName) :
+  Data contains 5 rows with either missing or invalid lat/lon values and will be ignored
+
+
+Exécution arrêtée
+

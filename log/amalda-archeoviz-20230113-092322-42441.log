@@ -1,0 +1,139 @@
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : 'rgl.init' failed, running with 'rgl.useNULL = TRUE'.
+
+Listening on http://127.0.0.1:42441
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis : Error in $<-.data.frame: le tableau de remplacement a 1 lignes, le tableau remplacé en a 0
+  155: stop
+  154: $<-.data.frame
+  152: to_basic.GeomDensity2d
+  150: layers2traces
+  149: gg2list
+  148: ggplotly.ggplot
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/amalda/R/app_server.R#665]
+  102: map
+  101: ::
+plotly
+renderPlotly [/data/user/a/archeoviz/zPublish/shiny/amalda/R/app_server.R#668]
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$map
+    1: runApp
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis : Error in $<-.data.frame: le tableau de remplacement a 1 lignes, le tableau remplacé en a 0
+  155: stop
+  154: $<-.data.frame
+  152: to_basic.GeomDensity2d
+  150: layers2traces
+  149: gg2list
+  148: ggplotly.ggplot
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/amalda/R/app_server.R#665]
+  102: map
+  101: ::
+plotly
+renderPlotly [/data/user/a/archeoviz/zPublish/shiny/amalda/R/app_server.R#668]
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$map
+    1: runApp
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis : Computation failed in `stat_density2d()`
+Caused by error in `if (any(h <= 0)) ...`:
+! valeur manquante là où TRUE / FALSE est requis
+Avis dans min(x, na.rm = na.rm) :
+  aucun argument trouvé pour min ; Inf est renvoyé
+Avis dans max(x, na.rm = na.rm) :
+  aucun argument pour max ; -Inf est renvoyé
+Avis dans max(f) : aucun argument pour max ; -Inf est renvoyé
+Avis : Error in seq_len: l'argument doit être convertible automatiquement en un entier non négatif
+  158: split_with_index
+  157: dapply
+  156: compute_layer
+  155: self$stat$compute_layer
+  154: compute_statistic
+  153: l$compute_statistic
+  152: f
+  151: by_layer
+  150: ggplotly_build
+  149: gg2list
+  148: ggplotly.ggplot
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/amalda/R/app_server.R#665]
+  102: map
+  101: ::
+plotly
+renderPlotly [/data/user/a/archeoviz/zPublish/shiny/amalda/R/app_server.R#668]
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$map
+    1: runApp
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis dans geom_point(data = planZ.df, aes_string(x = "x", y = "y", color = color.var,  :
+  Ignoring unknown aesthetics: square, object_type, location_mode, and id
+Avis : Error in $<-.data.frame: le tableau de remplacement a 1 lignes, le tableau remplacé en a 0
+  155: stop
+  154: $<-.data.frame
+  152: to_basic.GeomDensity2d
+  150: layers2traces
+  149: gg2list
+  148: ggplotly.ggplot
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/amalda/R/app_server.R#665]
+  102: map
+  101: ::
+plotly
+renderPlotly [/data/user/a/archeoviz/zPublish/shiny/amalda/R/app_server.R#668]
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$map
+    1: runApp
+
+
+Exécution arrêtée
+

@@ -1,0 +1,11 @@
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : 'rgl.init' failed, running with 'rgl.useNULL = TRUE'.
+
+Listening on http://127.0.0.1:38925
+Avis : The 'plotly_click' event tied a source ID of 'A' is not registered. In order to obtain this event data, please add `event_register(p, 'plotly_click')` to the plot (`p`) that you wish to obtain event data from.
+
+
+Exécution arrêtée
+

@@ -1,0 +1,43 @@
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : 'rgl.init' failed, running with 'rgl.useNULL = TRUE'.
+
+Listening on http://127.0.0.1:45023
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+Error in parse(file, keep.source = FALSE, srcfile = src, encoding = enc) : 
+  /data/user/a/archeoviz/zPublish/shiny/mask/app.R:8:31: constante numérique inattendue
+7:   <h2>Mask site</h2>
+8:   <p><img src=mask.jpg width="50
+                                 ^
+Avis : Error in sourceUTF8: Error sourcing /data/user/a/archeoviz/zPublish/shiny/mask/app.R
+  1: runApp
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+Error in parse(file, keep.source = FALSE, srcfile = src, encoding = enc) : 
+  /data/user/a/archeoviz/zPublish/shiny/mask/app.R:8:31: constante numérique inattendue
+7:   <h2>Mask site</h2>
+8:   <p><img src=mask.jpg width="50
+                                 ^
+Avis : Error in sourceUTF8: Error sourcing /data/user/a/archeoviz/zPublish/shiny/mask/app.R
+  1: runApp
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+
+
+Exécution arrêtée
+

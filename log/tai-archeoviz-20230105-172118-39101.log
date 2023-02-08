@@ -1,0 +1,113 @@
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : 'rgl.init' failed, running with 'rgl.useNULL = TRUE'.
+
+Listening on http://127.0.0.1:39101
+Avis : The 'plotly_click' event tied a source ID of 'A' is not registered. In order to obtain this event data, please add `event_register(p, 'plotly_click')` to the plot (`p`) that you wish to obtain event data from.
+Avis : Error in if: l'argument est de longueur nulle
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#419]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+Avis : Error in if: l'argument est de longueur nulle
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#419]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+Avis : Error in if: l'argument est de longueur nulle
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#602]
+  102: map
+  101: ::
+plotly
+renderPlotly [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#625]
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$map
+    1: runApp
+Avis : Error in if: l'argument est de longueur nulle
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#419]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+Avis : The 'plotly_click' event tied a source ID of 'A' is not registered. In order to obtain this event data, please add `event_register(p, 'plotly_click')` to the plot (`p`) that you wish to obtain event data from.
+Avis : Error in if: l'argument est de longueur nulle
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#419]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+Avis : Error in if: l'argument est de longueur nulle
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#419]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+Avis : The 'plotly_click' event tied a source ID of 'A' is not registered. In order to obtain this event data, please add `event_register(p, 'plotly_click')` to the plot (`p`) that you wish to obtain event data from.
+Avis : Error in if: l'argument est de longueur nulle
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#419]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+Avis : Error in if: l'argument est de longueur nulle
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#602]
+  102: map
+  101: ::
+plotly
+renderPlotly [/data/user/a/archeoviz/zPublish/shiny/tai/R/app_server.R#625]
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$map
+    1: runApp
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : The 'plotly_click' event tied a source ID of 'A' is not registered. In order to obtain this event data, please add `event_register(p, 'plotly_click')` to the plot (`p`) that you wish to obtain event data from.
+
+
+Exécution arrêtée
+

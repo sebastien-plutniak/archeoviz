@@ -1,0 +1,99 @@
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : 'rgl.init' failed, running with 'rgl.useNULL = TRUE'.
+
+Listening on http://127.0.0.1:44739
+Avis : The 'plotly_click' event tied a source ID of 'A' is not registered. In order to obtain this event data, please add `event_register(p, 'plotly_click')` to the plot (`p`) that you wish to obtain event data from.
+Avis : Error in doTryCatch: Received error code 2 from qhull.
+  156: <Anonymous>
+  155: stop
+  154: value[[3L]]
+  153: tryCatchOne
+  152: tryCatchList
+  151: tryCatch
+  150: cxhull::cxhull
+  149: .get_cxhull_model [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/get_cxhull_model.R#6]
+  148: FUN [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/app_server.R#487]
+  147: lapply
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/app_server.R#487]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+Avis : Error in doTryCatch: Received error code 2 from qhull.
+  156: <Anonymous>
+  155: stop
+  154: value[[3L]]
+  153: tryCatchOne
+  152: tryCatchList
+  151: tryCatch
+  150: cxhull::cxhull
+  149: .get_cxhull_model [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/get_cxhull_model.R#6]
+  148: FUN [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/app_server.R#487]
+  147: lapply
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/app_server.R#487]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+Avis : Error in doTryCatch: Received error code 2 from qhull.
+  156: <Anonymous>
+  155: stop
+  154: value[[3L]]
+  153: tryCatchOne
+  152: tryCatchList
+  151: tryCatch
+  150: cxhull::cxhull
+  149: .get_cxhull_model [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/get_cxhull_model.R#6]
+  148: FUN [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/app_server.R#487]
+  147: lapply
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/app_server.R#487]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+Avis : Error in doTryCatch: Received error code 2 from qhull.
+  156: <Anonymous>
+  155: stop
+  154: value[[3L]]
+  153: tryCatchOne
+  152: tryCatchList
+  151: tryCatch
+  150: cxhull::cxhull
+  149: .get_cxhull_model [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/get_cxhull_model.R#6]
+  148: FUN [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/app_server.R#487]
+  147: lapply
+  146: eventReactiveValueFunc [/data/user/a/archeoviz/zPublish/shiny/poeymau/R/app_server.R#487]
+  102: plot3d
+  101: ::
+plotly
+renderPlotly
+  100: func
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$plot3d
+    1: runApp
+
+
+Exécution arrêtée
+

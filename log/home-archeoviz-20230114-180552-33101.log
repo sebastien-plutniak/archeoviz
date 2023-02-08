@@ -1,0 +1,30 @@
+
+Listening on http://127.0.0.1:33101
+Avis : Error in order: l'argument 1 n'est pas un vecteur
+  100: order
+   97: renderTable [/data/user/a/archeoviz/zPublish/shiny/home/app.R#99]
+   96: func
+   83: renderFunc
+   82: output$table
+    1: runApp
+Avis dans validateCoords(lng, lat, funcName) :
+  Data contains 5 rows with either missing or invalid lat/lon values and will be ignored
+
+Attachement du package : ‘DT’
+
+Les objets suivants sont masqués depuis ‘package:shiny’:
+
+    dataTableOutput, renderDataTable
+
+Avis : Error in setwd: argument de type caractère attendu
+  1: runApp
+Avis dans validateCoords(lng, lat, funcName) :
+  Data contains 5 rows with either missing or invalid lat/lon values and will be ignored
+Avis dans validateCoords(lng, lat, funcName) :
+  Data contains 5 rows with either missing or invalid lat/lon values and will be ignored
+Avis dans validateCoords(lng, lat, funcName) :
+  Data contains 5 rows with either missing or invalid lat/lon values and will be ignored
+
+
+Exécution arrêtée
+

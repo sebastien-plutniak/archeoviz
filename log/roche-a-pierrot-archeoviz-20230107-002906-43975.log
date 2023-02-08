@@ -1,0 +1,79 @@
+Avis dans loadSupport(appDir, renv = sharedEnv, globalrenv = NULL) :
+  Loading R/ subdirectory for Shiny application, but this directory appears to contain an R package. Sourcing files in R/ may cause unexpected behavior.
+ℹ Loading archeoViz
+Avis : 'rgl.init' failed, running with 'rgl.useNULL = TRUE'.
+
+Listening on http://127.0.0.1:43975
+Avis : The 'plotly_click' event tied a source ID of 'A' is not registered. In order to obtain this event data, please add `event_register(p, 'plotly_click')` to the plot (`p`) that you wish to obtain event data from.
+Avis : Error in eval: objet 'color.variable' introuvable
+  112: eval
+  111: eval
+  110: eval_expr
+  109: lazyeval::f_eval
+  108: <Anonymous>
+  107: rapply
+  105: <Anonymous>
+  104: mapply
+  103: Map
+  102: plotly_build.plotly
+   98: getFromNamespace("prepareWidget", "plotly")
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$sectionXplot
+    1: runApp
+Avis : Error in eval: objet 'color.variable' introuvable
+  112: eval
+  111: eval
+  110: eval_expr
+  109: lazyeval::f_eval
+  108: <Anonymous>
+  107: rapply
+  105: <Anonymous>
+  104: mapply
+  103: Map
+  102: plotly_build.plotly
+   98: getFromNamespace("prepareWidget", "plotly")
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$sectionXplot
+    1: runApp
+Avis : Error in eval: objet 'color.variable' introuvable
+  112: eval
+  111: eval
+  110: eval_expr
+  109: lazyeval::f_eval
+  108: <Anonymous>
+  107: rapply
+  105: <Anonymous>
+  104: mapply
+  103: Map
+  102: plotly_build.plotly
+   98: getFromNamespace("prepareWidget", "plotly")
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$sectionYplot
+    1: runApp
+Avis : Error in eval: objet 'color.variable' introuvable
+  112: eval
+  111: eval
+  110: eval_expr
+  109: lazyeval::f_eval
+  108: <Anonymous>
+  107: rapply
+  105: <Anonymous>
+  104: mapply
+  103: Map
+  102: plotly_build.plotly
+   98: getFromNamespace("prepareWidget", "plotly")
+   97: shinyRenderWidget
+   96: func
+   83: renderFunc
+   82: output$sectionYplot
+    1: runApp
+
+
+Exécution arrêtée
+

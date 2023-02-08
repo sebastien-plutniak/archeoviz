@@ -1,7 +1,7 @@
 .do_section_plot <- function(selection, dataset, section.point.size,
                              refitting.df, show.refits, 
                              colors, grid.coord, coords, axis.labels, xaxis,
-                             reverse.xaxis=NULL){
+                             reverse.axis.values=""){
    # data check: ----
   section.df <- dataset[selection, ]
 
@@ -89,11 +89,11 @@
   xrange <- c(eval(parse(text = paste0("coords$", xaxis, "min"))),
               eval(parse(text = paste0("coords$", xaxis, "max"))))
   
-  if( grepl("x", reverse.xaxis) & xaxis == "x" ){
+  if( grepl("x", reverse.axis.values) & xaxis == "x" ){
     xrange <- c(eval(parse(text = paste0("coords$", xaxis, "max"))),
                 eval(parse(text = paste0("coords$", xaxis, "min"))))
   }
-  if( grepl("y", reverse.xaxis) & xaxis == "y" ){
+  if( grepl("y", reverse.axis.values) & xaxis == "y" ){
     xrange <- c(eval(parse(text = paste0("coords$", xaxis, "max"))),
                 eval(parse(text = paste0("coords$", xaxis, "min"))))
   }

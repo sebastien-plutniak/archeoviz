@@ -184,7 +184,7 @@ app_server <- function(input, output, session) {
   # : coords min/max coordinates ----
   coords.min.max <- reactive({
     .do_coords_minmax(objects.dataset(),
-                      reverse = getShinyOption("reverse.axis.values"))
+                      reverse.axis.values = getShinyOption("reverse.axis.values"))
   })
   
   # : squares list ----
@@ -635,7 +635,7 @@ app_server <- function(input, output, session) {
                      coords = coords.min.max(),
                      axis.labels = axis.labels(),
                      xaxis = "y",
-                     reverse.xaxis = getShinyOption("reverse.axis.values"))
+                     reverse.axis.values = getShinyOption("reverse.axis.values"))
   })# end sectionX
   
   output$sectionXplot <- plotly::renderPlotly({sectionXplot()})
@@ -665,7 +665,7 @@ app_server <- function(input, output, session) {
                      coords = coords.min.max(),
                      axis.labels = axis.labels(), 
                      xaxis = "x",
-                     reverse.xaxis = getShinyOption("reverse.axis.values"))
+                     reverse.axis.values = getShinyOption("reverse.axis.values"))
   }) #end section Y
   
   output$sectionYplot <- plotly::renderPlotly({sectionYplot()})

@@ -5,24 +5,55 @@
 \description{Launch the archeoViz application to visualise, interactive explore, and expose on the web archaeological data from excavation}
 
 \usage{
-archeoViz(objects.df=NULL, refits.df, timeline.df=NULL,
-          title=NULL, home.text=NULL, lang="en", set.theme="cosmo")
+archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
+          title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
+		  reverse.axis.values=NULL, reverse.square.names=NULL,
+		  add.x.square.labels = NULL, add.y.square.labels = NULL,
+		  class.variable = NULL, class.values = NULL,
+		  default.group = "by.layer", location.mode = NULL,
+		  map.z.val = NULL, map.density = "no", map.refits = NULL,
+		  plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+		  sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+		  sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+		  camera.center = NULL, camera.eye = NULL, run.plots = FALSE
+          )
 }
 \arguments{
   \item{objects.df}{data frame, with data documenting the location and type of archaeological remains.}
   \item{refits.df}{data frame, with two columns containin the ids of refitting objects.}
   \item{timeline.df}{data frame, with data documenting the year of excavation of the site's squares.}
-  \item{reverse.axis.values}{character. Whether to reverse the values of one or several axes ('x', 'y', 'z').}
-  \item{reverse.square.names}{character. Whether to reverse the square names on the 'x', 'y' axes, or both ('xy').}
-  \item{add.x.square.labels}{character. Additional square labels on the x axis.}
-  \item{add.y.square.labels}{character. Additional square labels on the y axis.}
-  \item{params}{list. List of parameters to use to initialise the application.}
   \item{title}{character. Title to display on the application.}
   \item{home.text}{character. Html content to display on the home page of the application.}
   \item{lang}{character. Inteface language, either "en" (English) or "fr" (French).}
   \item{set.theme}{character. Name of the shinytheme to use.}
+  \item{reverse.axis.values}{character. Whether to reverse the values of one or several axes ('x', 'y', 'z').}
+  \item{reverse.square.names}{character. Whether to reverse the square names on the 'x', 'y' axes, or both ('xy').}
+  \item{add.x.square.labels}{character. Additional square labels on the x axis.}
+  \item{add.y.square.labels}{character. Additional square labels on the y axis.}
+  \item{class.variable}{character. At the launch of the app, name of the variable to preselect.}
+  \item{class.values}{character vector. At the launch of the app, names of the values to preselect.}
+  \item{default.group}{character. At the launch of the app, preselection of the method to group data (one of 'by.layer' or 'by.variable').}
+  \item{location.mode}{character. At the launch of the app, preselection of the location method (one of 'exact', 'fuzzy', 'exact.fuzzy'.}
+  \item{map.z.val}{double. Minimal and maximal Z coordinates values to display in the map plot.}
+  \item{map.density}{character. At the launch of the app, whether to compute and show density contours in the map plot (one of 'no', 'overall', 'by.variable').}
+  \item{map.refits}{logical. Whether to show refits in the map plot.}
+  \item{plot3d.hulls}{logical. At the launch of the app, whether to compute and show convex hulls in the 3D plot.}
+  \item{plot3d.surfaces}{logical. At the launch of the app, whether to compute and show regression in the 3D plot.}
+  \item{plot3d.refits}{logical. At the launch of the app, whether to show refits on the 3D section plot.}
+  \item{sectionX.x.val}{double. At the launch of the app, minimal and maximal X coordinates values to display in the X section plot.}
+  \item{sectionX.y.val}{double. At the launch of the app, minimal and maximal Y coordinates values to display in the X section plot.}
+  \item{sectionX.refits}{logical. At the launch of the app, whether to show refits in the X section plot.}
+  \item{sectionY.x.val}{double. At the launch of the app, minimal and maximal X coordinates values to display in the Y section plot.}
+  \item{sectionY.y.val}{double. At the launch of the app, minimal and maximal Y coordinates values to display in the Y section plot.}
+  \item{sectionY.refits}{logical. At the launch of the app, whether to show refits in the Y section plot.}
+  \item{camera.center}{double.}
+  \item{camera.eye}{double.}
+  \item{run.plots}{logical. At the launch of the app, whether to directly compute and show plots.}
 }
 \details{
+
+
+
 
 This function launches the `archeoViz` application.
 It can be used without parameter, allowing the user to input data through the "Input data" tab.

@@ -3,8 +3,8 @@
 # archeoViz 0.2.X
 * square labels are not displayed if they do not correspond to the number of documented squares
 * add 'add.x.square.labels' and 'add.y.square.labels' parameters in the 'archeoViz()' function
-* add 'reverse.square.names' parameter in the 'archeoViz()' function
 * add 'reverse.axis.values' parameter in the 'archeoViz()' function
+* add 'params' parameter in the 'archeoViz()' function
 
 # archeoViz 0.2.2
 Released: 2023-01-10 (on CRAN)

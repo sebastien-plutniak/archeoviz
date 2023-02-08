@@ -1,15 +1,15 @@
 archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
+                      title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
                       reverse.axis.values=NULL, reverse.square.names=NULL,
                       add.x.square.labels = NULL, add.y.square.labels = NULL,
-                      params = list("class_variable" = NULL, "class_values" = NULL,
-                                    "default.group" = "by.layer", "location" = NULL,
-                                    "map.density" = "no", "planZ" = NULL,
-                                    "point.size" = NULL, "cxhull" = NULL, "surface" = NULL,
-                                    "refits.map" = NULL, "refits" = NULL,
-                                    "refits.sectionX" = NULL, "refits.sectionY" = NULL,
-                                    "sectionXx" = NULL, "sectionXy" = NULL, "sectionYx" = NULL, "sectionYy" = NULL,
-                                    "camera.center" = NULL, "camera.eye" = NULL, "run.plots" = FALSE),
-                      title=NULL, home.text=NULL, lang="en", set.theme="cosmo"){
+                      class.variable = NULL, class.values = NULL,
+                      default.group = "by.layer", location.mode = NULL,
+                      map.z.val = NULL, map.density = "no", map.refits = NULL,
+                      plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+                      sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+                      sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+                      camera.center = NULL, camera.eye = NULL, run.plots = FALSE
+                      ){
   
   
   # tests parameters----
@@ -39,6 +39,15 @@ archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   
   #  load terms interface ----
   ui.terms <- .load_interface_terms(lang)
+  
+  params <- list("class_variable" = class.variable, "class_values" = class.values,
+                 "default.group" = default.group, "location" = location.mode,
+                 "planZ" = map.z.val, "map.density" = map.density, "refits.map" = map.refits, 
+                 "cxhull" = plot3d.hulls, "surface" = plot3d.surfaces, "refits" = plot3d.refits,
+                 "sectionXx" = sectionX.x.val, "sectionXy" = sectionX.y.val, "refits.sectionX" = sectionX.refits,
+                 "sectionYx" = sectionY.x.val, "sectionYy" = sectionY.y.val, "refits.sectionY" = sectionY.refits,
+                 "camera.center" = camera.center, "camera.eye" = camera.eye, "run.plots" = run.plots)
+  
   
   # define shiny options ----
   shinyOptions("objects.df"  = objects.df,

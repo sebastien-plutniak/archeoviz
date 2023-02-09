@@ -779,13 +779,11 @@ app_server <- function(input, output, session) {
                 step=.1)
   })
   
-  # : slider Map  ----
+  # : slider Z  ----
   output$sliderMap <- renderUI({
     coords <- coords.min.max()
     
-    z.mean <- mean(seq(coords$zmin, coords$zmax))
-    init.valuesZ <- c(z.mean - z.mean * 0.1,
-                      z.mean + z.mean * 0.1)
+    init.valuesZ <- summary(seq(coords$zmin, coords$zmax))[c(2, 3)]
     
     if( ! is.null(getShinyOption("params")$planZ) ){
       init.valuesZ <- getShinyOption("params")$planZ
@@ -802,9 +800,7 @@ app_server <- function(input, output, session) {
   output$sliderXx <- renderUI({
     coords <- coords.min.max()
     
-    Xx.mean <- mean(seq(coords$xmin, coords$xmax))
-    init.valuesX <- c(Xx.mean - Xx.mean * 0.05,
-                      Xx.mean + Xx.mean * 0.05)
+    init.valuesX <- summary(seq(coords$xmin, coords$xmax))[c(2, 3)]
     
     if( ! is.null(getShinyOption("params")$sectionXx) ){
       init.valuesX <- getShinyOption("params")$sectionXx
@@ -833,6 +829,7 @@ app_server <- function(input, output, session) {
   
   # : sliders Y  ----
   output$sliderYx <- renderUI({
+    req(coords.min.max)
     coords <- coords.min.max()
     
     init.valuesYx <- c(coords$xmin, coords$xmax)
@@ -850,9 +847,7 @@ app_server <- function(input, output, session) {
   output$sliderYy <- renderUI({
     coords <- coords.min.max()
     
-    Yy.mean <- mean(seq(coords$ymin, coords$ymax))
-    init.valuesYy <- c(Yy.mean - Yy.mean * 0.05,
-                       Yy.mean + Yy.mean * 0.05)
+    init.valuesYy <- summary(seq(coords$ymin, coords$ymax))[c(2, 3)]
     
     if( ! is.null(getShinyOption("params")$sectionYy) ){
       init.valuesYy <- getShinyOption("params")$sectionYy

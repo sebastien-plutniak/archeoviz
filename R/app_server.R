@@ -89,9 +89,10 @@ app_server <- function(input, output, session) {
   
   
   refitting.df <- reactive({
-    req(objects.subdataset)
+    req(objects.dataset)
 
-    refits <- list("refits.2d"=data.frame(), "refits.3d"=data.frame())
+    refits <- list("refits.2d" = data.frame(), "refits.3d" = data.frame())
+    
     if(! is.null(getShinyOption("refits.df")) ){
       refits <- data.frame(getShinyOption("refits.df"))
     } else if(input$demoData.n > 0){
@@ -101,7 +102,8 @@ app_server <- function(input, output, session) {
     } 
     
     if(class(refits)[1] != "list"){
-      refits <- .do_refits_preprocessing(refits, objects.subdataset())
+      refits <- .do_refits_preprocessing(refits, objects.dataset())
+      # refits <- .do_refits_preprocessing(refits, objects.subdataset())
     }
     
     refits # an empty data.frame or a list with two dataframes
@@ -152,9 +154,9 @@ app_server <- function(input, output, session) {
     value
   })
   
-  # : Dataset subsetting  ----
-  objects.subdataset <- reactive({
-    req(input$class_variable)
+  # : subset data  ----
+  objects.subdataset <- eventReactive(input$goButton, {
+    req(input$class_variable, coords.min.max)
     
     df <- objects.dataset()
     
@@ -176,7 +178,7 @@ app_server <- function(input, output, session) {
     }
     
     df.sub  # return the subset of the dataframe
-  }) # end dataset subset
+  }, ignoreNULL = F) # end dataset subset
   
   
   # Coordinate system ----
@@ -671,16 +673,24 @@ app_server <- function(input, output, session) {
   output$sectionYplot <- plotly::renderPlotly({sectionYplot()})
   
   # : Map plot ####
-  goButtonZ <- reactive({
-    req(input$class_variable, input$class_values, input$map.density)
-    if( (input$goButtonZ > 0) | getShinyOption("params")$run.plots  ){
-      TRUE
-    } else { return() }
-  })
+  # goButtonZ <- reactive({
+  #   req(input$class_variable, input$class_values, input$map.density)
+  #   if( (input$goButtonZ > 0) | getShinyOption("params")$run.plots  ){
+  #     TRUE
+  #   } else { return() }
+  # })
   
-  map <- eventReactive(goButtonZ(), {
+  
+  map <- eventReactive(input$goButtonZ, {
+    req(init.valuesZ)   
     dataset <- objects.subdataset()
-    sel <- dataset$z >= input$planZ[1] & dataset$z <= input$planZ[2]
+    if(is.null(input$planZ)){
+      valuesZ <- init.valuesZ()
+    } else{
+      valuesZ <- input$planZ
+    }
+    sel <- dataset$z >= valuesZ[1] & dataset$z <= valuesZ[2]
+    
     planZ.df <- dataset[sel, ]
     color.var <- group.variable()
     col <- unique(planZ.df[, c("layer_color", color.var)])
@@ -701,29 +711,31 @@ app_server <- function(input, output, session) {
                  ) +
       scale_color_manual(color.var, values = col)
 
-    if(input$map.density == "by.variable"){
-      # only layers with > 30 points
-      var.sel1 <- eval(parse(text = paste0("planZ.df$", color.var)))
-      var.sel2 <- table(var.sel1)
-      var.sel2 <- names(var.sel2[var.sel2 >= 30])
-      ids <- var.sel1  %in% var.sel2
-      planZ.df.sub <- planZ.df[ids, ]
-
-      map <- map +
-        geom_density2d(data=planZ.df.sub,
-                       aes_string(x = "x", y = "y",
-                                  group = color.var,
-                                  color = color.var),
-                       size = .2)
-    }
+    if(! is.null(input$map.density)){
+      if(input$map.density == "by.variable"){
+        # only layers with > 30 points
+        var.sel1 <- eval(parse(text = paste0("planZ.df$", color.var)))
+        var.sel2 <- table(var.sel1)
+        var.sel2 <- names(var.sel2[var.sel2 >= 30])
+        ids <- var.sel1  %in% var.sel2
+        planZ.df.sub <- planZ.df[ids, ]
   
-    if(input$map.density == "overall"){
-      map <- map +
-        geom_density2d(data=planZ.df,
-                       aes_string(x = "x", y = "y"),
-                       size = .2, color = "grey30")
+        map <- map +
+          geom_density2d(data=planZ.df.sub,
+                         aes_string(x = "x", y = "y",
+                                    group = color.var,
+                                    color = color.var),
+                         size = .2)
+      }
+    
+      if(input$map.density == "overall"){
+        map <- map +
+          geom_density2d(data=planZ.df,
+                         aes_string(x = "x", y = "y"),
+                         size = .2, color = "grey30")
+      }
     }
-      
+    
     # add refits:
     if(! is.null(input$refits.map)){
       refitting.df <- refitting.df()
@@ -748,7 +760,7 @@ app_server <- function(input, output, session) {
     }
     
     ggplotly(map, tooltip = c("id", "xyz", "square", "location_mode", "object_type"))
-  })
+  },  ignoreNULL = ( ! getShinyOption("params")$run.plots) )
   
   output$map <- plotly::renderPlotly({ map() })
   
@@ -780,10 +792,15 @@ app_server <- function(input, output, session) {
   })
   
   # : slider Z  ----
+  
+  init.valuesZ <- reactive({
+    coords <- coords.min.max()
+    summary(seq(coords$zmin, coords$zmax))[c(2, 3)]
+    })
+  
   output$sliderMap <- renderUI({
     coords <- coords.min.max()
-    
-    init.valuesZ <- summary(seq(coords$zmin, coords$zmax))[c(2, 3)]
+    init.valuesZ <- init.valuesZ()
     
     if( ! is.null(getShinyOption("params")$planZ) ){
       init.valuesZ <- getShinyOption("params")$planZ
@@ -797,18 +814,22 @@ app_server <- function(input, output, session) {
     )
   })
   # : sliders X  ----
+  init.valuesXx <- reactive({
+    coords <- coords.min.max()
+    summary(seq(coords$xmin, coords$xmax))[c(2, 3)]
+  })
+  
   output$sliderXx <- renderUI({
     coords <- coords.min.max()
-    
-    init.valuesX <- summary(seq(coords$xmin, coords$xmax))[c(2, 3)]
+    init.valuesXx <- init.valuesXx()
     
     if( ! is.null(getShinyOption("params")$sectionXx) ){
-      init.valuesX <- getShinyOption("params")$sectionXx
+      init.valuesXx <- getShinyOption("params")$sectionXx
     }
     
     sliderInput("sectionXx", "X: min/max", width="100%", sep = "", step=1,
                 min = coords$xmin, max = coords$xmax, round=T,
-                value = init.valuesX
+                value = init.valuesXx
     )
   })
   
@@ -844,8 +865,14 @@ app_server <- function(input, output, session) {
     )
   })
   
+  init.valuesYy <- reactive({
+    coords <- coords.min.max()
+    summary(seq(coords$xmin, coords$xmax))[c(2, 3)]
+  })
+  
   output$sliderYy <- renderUI({
     coords <- coords.min.max()
+    init.valuesYy <- init.valuesYy()
     
     init.valuesYy <- summary(seq(coords$ymin, coords$ymax))[c(2, 3)]
     

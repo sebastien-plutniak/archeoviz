@@ -130,7 +130,6 @@ app_server <- function(input, output, session) {
       from.func.objects.df = getShinyOption("objects.df"),
       demoData.n           = input$demoData.n, 
       input.ui.table       = objects.ui.input,
-      reverse.square.names = getShinyOption("reverse.square.names"),
       add.x.square.labels = getShinyOption("add.x.square.labels"),
       add.y.square.labels = getShinyOption("add.y.square.labels")
     )
@@ -269,14 +268,23 @@ app_server <- function(input, output, session) {
     square.coords <- square.coords.ranges()
     squares <- squares()
     
+    if(grepl("x", getShinyOption("reverse.square.names"))){
+      squares$square_x <-factor(squares$square_x)
+      levels(squares$square_x) <- rev(levels(squares$square_x))
+    }
+    if(grepl("y", getShinyOption("reverse.square.names"))){
+      squares$square_y <-factor(squares$square_y)
+      levels(squares$square_y) <- rev(levels(squares$square_y))
+    }
+    
     list(
       "xaxis" = list(
         "breaks" = (square.coords$range.x + 50)[ 1:length(squares$square_x) ],
-        "labels" =  squares$square_x 
+        "labels" =  squares$square_x
       ),
       "yaxis" = list(
         "breaks" = (square.coords$range.y + 50)[ 1:length(squares$square_y) ],
-        "labels" =  squares$square_y 
+        "labels" =  squares$square_y
       )
     )
   })    

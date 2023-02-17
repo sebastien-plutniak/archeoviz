@@ -19,8 +19,8 @@ archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   # }
   
   # : test lang ----
-  if( ! lang %in% c("en", "fr")){
-    stop("The 'lang' parameter must be one of 'en' or 'fr'.")
+  if( ! lang %in% c("en", "fr", "pt")){
+    stop("The 'lang' parameter must be one of 'en', 'fr', 'pt.")
   }
   
   # : test reverse.axis.values ----

@@ -47,6 +47,22 @@
                 </p>
                 The source code is openly published on the 
                 dedicated <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github repository</a>."
+  # : pt ----
+  
+  
+  welcome.pt <- "<h1>Bem-vindo ao <i>archeoViz</i>!</h1>
+                <p><i>archeoViz</i> é um aplicativo dedicado à arqueologia. Ele permite <b>visualizar</b>, <b>explorar</b> interativamente, e   
+                expor e <b>comunicar</b> rapidamente na web dados de campo arqueológicos.
+                </p>
+                <p>
+                Ele oferece <b>visualizações</b> 3D e 2D, gera <b>perfis estratigráficos</b> e <b>mapas<b/> de vestígios arqueológicos, possibilita a realização de estatísticas espaciais simples (envoltórias convexas, superfícies de regressão, estimativa de densidade de kernel 2D) e a visualização de uma cronologia interativa da escavação de um sítio.
+                </p>
+                <p>
+                Distribuído como um pacote R, 
+                o <i>archeoViz</i> ppode ser usado localmente ou implantado em um servidor, seja carregando dados por meio da interface, seja iniciando o aplicativo com um conjunto de dados específico. A interface está disponível em inglês, em francês, e em português.
+                </p>
+                O código-fonte é livre e publicado no 
+                <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>repositório github</a>."
   
   # Input objects  fr ----
   # :  fr ----
@@ -65,7 +81,7 @@
     <ul>
       <li> <b>square_x</b> : <i>valeur alphanumérique</i>, identifiant du carré de l'objet en axe X</li>
       <li> <b>square_y</b> : <i>valeur alphanumérique</i>, identifiant du carré de l'objet en axe Y</li>
-      <li> <b>year</b> : <i>valeur numérique</i>, année de fouille de l'object</li>
+      <li> <b>year</b> : <i>valeur numérique</i>, année de fouille de l'objet</li>
       <li> <b>xmax</b> : <i>valeur numérique</i>, lorsque la localisation de l'objet en X est comprise dans un intervalle de coordonnées</li>
       <li> <b>ymax</b> : <i>valeur numérique</i>, lorsque la localisation de l'objet en Y est comprise dans un intervalle de coordonnées</li>
       <li> <b>zmax</b> : <i>valeur numérique</i>, lorsque la localisation de l'objet en Z est comprise dans un intervalle de coordonnées</li>
@@ -97,6 +113,29 @@
     </ul>
     </p>"  
   
+  # :  pt ----
+  input.objects.pt <- 
+    "<p>
+    É necessária uma tabela no formato csv. Cada linha descreve um objeto, incluindo os seguintes campos obrigatórios:
+    <ul>
+      <li> <b>id</b> : <i>valor alfanumérico</i>, identificador único do objeto </li>
+      <li> <b>xmin</b> : <i>valor numérico</i>, coordenada do objeto no eixo X</li>
+      <li> <b>ymin</b> : <i>valor numérico</i>, coordenada do objeto no eixo Y</li>
+      <li> <b>zmin</b> : <i>valor numérico</i>, coordenada do objeto no eixo Z (profundidade)</li>
+      <li> <b>layer</b> : <i>valor alfanumérico</i>, identificador da camada do objeto</li>
+      <li> <b>object_type</b> : <i>valor alfanumérico</i>, categoria do objeto</li>
+    </ul>
+    Ademais, campos opcionais são possíveis, incluindo:
+    <ul>
+      <li> <b>square_x</b> : <i>valor alfanumérico</i>, identificador da quadra do objeto no eixo X</li>
+      <li> <b>square_y</b> : <i>valor alfanumérico</i>, identificador da quadra do objeto no eixo Y</li>
+      <li> <b>year</b> : <i>valor numérico</i>, ano de escavação do objeto</li>
+      <li> <b>xmax</b> : <i>valor numérico</i>, quando a localização do objeto em X está compreendida em um intervalo de coordenadas</li>
+      <li> <b>ymax</b> : <i>valor numérico</i>, quando a localização do objeto em Y está compreendida em um intervalo de coordenadas</li>
+      <li> <b>zmax</b> : <i>valor numérico</i>, quando a localização do objeto em Z está compreendida em um intervalo de coordenadas</li>
+      <li> <b>object<i>_edit</i></b>: número ilimitado de variáveis adicionais que descrevem o objeto (os nomes das colunas devem começar com `objeto_` e ter sufixos diferentes)</li>
+    </ul>
+    </p>"
   
   # Input refits ----
   input.refits.fr <- 
@@ -110,6 +149,12 @@
     A data table with two columns can be uploaded for refitting data (csv format).
   Each row must contain the unique identifiers of two refitting objects (corresponding to the values of the `id` column in the objects table).
   </p>"
+  
+  input.refits.pt <- 
+    "<p>
+    Uma tabela de duas colunas pode ser carregada para as remontagens entre objetos (formato csv). Cada linha deve conter os identificadores únicos dos dois objetos vinculados a uma relação de remontagem (em correspondência com os valores da coluna `id` da tabela de objetos).
+  </p>"
+  
   
   # Input timeline ----
   
@@ -133,6 +178,17 @@
     <li> <b>square_y</b>: <i>alphanumerical value</i>, identifier of the excavated square on the Y axis</li>
     </ul>
     </p>"
+  
+  input.timeline.pt <- 
+    "<p>
+      Opcionalmente, pode ser carregada uma tabela (csv) referente ao desenvolvimento da escavação. Cada linha refere-se a uma quadra de escavação e contém as seguintes informações:
+    <ul>
+    <li> <b>year</b>: <i>valor numérico</i>, ano de escavação </li>
+    <li> <b>square_x</b>: <i>valor alfanumérico</i>, identificador da quadra no eixo X</li>
+    <li> <b>square_y</b>: <i>valor alfanumérico</i>, identificador da quadra no eixo Y</li>
+    </ul>
+    </p>"
+  
   
   # guidelines ----
   # : en ----
@@ -471,8 +527,8 @@
     all = "TOUTES",
     location = "Mode de localisation",
     values = "Valeurs",
-    validate = "Valider la sélection",
-    refresh = "Rafraîchir",
+    validate = "1) Valider la sélection",
+    refresh = "2) Rafraîchir",
     header.3d.options = "Options vue 3D",
     header.objects.table = "Chargement du tableau des objets",
     header.simul.data = "Générer des données de démonstration simulées",
@@ -528,8 +584,8 @@
     all = "ALL",
     location = "Location method",
     values = "Values",
-    validate = "Validate selection",
-    refresh = "Refresh",
+    validate = "(1) Validate selection",
+    refresh = "(2) Refresh",
     header.3d.options = "3D plot options",
     header.objects.table = "Load objects table",
     header.simul.data = "Use simulated data for demonstration",
@@ -570,6 +626,66 @@
     notif.error.identifier = "Some of the objects' unique identifier are duplicated.",
     notif.warn.obj.removed = "Objects with incomplete coordinates have been removed."
   )
+  
+  
+  # LIST PT ----
+  pt <- list(  
+    welcome = "Bem-vindo",
+    tab.home = "Início",
+    tab.input = "Dados",
+    tab.plot3d ="Visualização 3D",
+    tab.map = "Mapa",
+    tab.tables = "Tabelas",
+    tab.timeline = "Cronologia",
+    tab.guidelines = "Ajuda",
+    all = "TUDO",
+    location = "Modo de localização",
+    values = "Valores",
+    validate = "Validar a seleção",
+    refresh = "Atualizar",
+    header.3d.options = "Opções de visualização 3D",
+    header.objects.table = "Carregar tabela de objetos",
+    header.simul.data = "Gerar dados de demonstração simulados ",
+    header.refits.table = "Carregar tabela de remontagens",
+    header.timeline.table = "Carregar tabela de cronologia de escavações",
+    choose.csv = "Selecione um arquivo csv",
+    input.objects = input.objects.pt,
+    input.refits = input.refits.pt,
+    input.timeline = input.timeline.pt,
+    guidelines = guidelines.en,
+    separator = "Separador",
+    decimal = "Decimais",
+    use.demo = "Simular n objetos",
+    surfaces = "Calcular superfícies",
+    hulls = "Calcular envoltórias",
+    refits = "Mostrar remontagens",
+    point.size = "Tamanho dos pontos",
+    ratio = "Ratio vertical",
+    density = "Calcular densidade",
+    density.no = "Nenhuma",
+    density.all.layers = "Todas as camadas",
+    overall = "Geral",
+    by.layer = "Por camada",
+    by.variable = "Por variável",
+    tab.variable.loc = "Número de objetos por variável e modo de localização",
+    tab.layer.loc = "Número de objetos por camada e modo de localização",
+    exact = "Exato",
+    fuzzy = "Vago",
+    depth = "Profundidade",
+    group = "Agrupar dados",
+    through = "com",
+    exact.fuzzy = "Exato ou vago",
+    click.on.point = "Clique sobre um ponto para obter mais informações",
+    notif.objects.ok = "Arquivo de objetos ok!",
+    notif.objects.not.ok = "Erro. Certos campos exigidos estão ausentes. Por favor, verifique o arquivo.",
+    notif.no.data = "Sem dados nesses intervalos.",
+    notif.tick.value = "Marque pelo menos um valor (no menu lateral esquerdo).",
+    notif.error.coords.type = "Os valores xmin, ymin, ou zmin não são numéricos.",
+    notif.error.identifier = "Alguns dos identificadores únicos dos objetos estão duplicados.",
+    notif.warn.obj.removed = "Objetos com coordenadas incompletas foram removidos."
+  )
+  
+  
   # switch
   if(length(grep("en", lang, ignore.case = T)) == 1){
     ui.terms <- en
@@ -577,6 +693,10 @@
   if(length(grep("fr", lang, ignore.case = T)) == 1){
     ui.terms <- fr
   }
+  if(length(grep("pt", lang, ignore.case = T)) == 1){
+    ui.terms <- pt
+  }
+  
   
   ui.terms
 }

@@ -1,13 +1,17 @@
 
 
-# archeoViz 0.2.X
-* square labels are not displayed if they do not correspond to the number of documented squares
-* add 'add.x.square.labels' and 'add.y.square.labels' parameters in the 'archeoViz()' function
-* add 'reverse.axis.values' parameter in the 'archeoViz()' function
-* add 'params' parameter in the 'archeoViz()' function
+# archeoViz 0.2.3
+Released: 2023-02-19
+
+* add 'Portuguese'/'pt' as an option for the 'lang' parameter in the 'archeoViz()' function.
+* square labels are not displayed if they do not correspond to the number of documented squares.
+* add 'add.x.square.labels' and 'add.y.square.labels' parameters in the 'archeoViz()' function.
+* add 'reverse.axis.values' parameter in the 'archeoViz()' function.
+* add several parameters in the 'archeoViz()' function: square.size, reverse.axis.values, reverse.square.names, add.x.square.labels, add.y.square.labels, class.variable, class.values, location.mode, map.z.val, map.density, map.refits, plot3d.hulls, plot3d.surfaces, plot3d.refits, sectionX.x.val, sectionX.y.val, sectionX.refits, sectionY.x.val, sectionY.y.val, sectionY.refits, camera.center, camera.eye, run.plots.
 
 # archeoViz 0.2.2
 Released: 2023-01-10 (on CRAN)
+
 * add 'default.group' parameter in the 'archeoViz()' function
 * fix bugs in the display of the map
 

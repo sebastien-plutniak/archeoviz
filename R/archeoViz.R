@@ -1,5 +1,6 @@
 archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
                       title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
+                      square.size = 100,
                       reverse.axis.values=NULL, reverse.square.names=NULL,
                       add.x.square.labels = NULL, add.y.square.labels = NULL,
                       class.variable = NULL, class.values = NULL,
@@ -14,13 +15,18 @@ archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   
   # tests parameters----
   # : test default.group ----
-  # if( ! default.group %in% c("by.layer", "by.variable")){
-  #   stop("The 'default.group' parameter must be one of 'by.layer' or 'by.variable'.")
-  # }
+  if( ! default.group %in% c("by.layer", "by.variable")){
+    stop("The 'default.group' parameter must be one of 'by.layer' or 'by.variable'.")
+  }
   
   # : test lang ----
   if( ! lang %in% c("en", "fr", "pt")){
-    stop("The 'lang' parameter must be one of 'en', 'fr', 'pt.")
+    stop("The 'lang' parameter must be one of 'en', 'fr', 'pt'.")
+  }
+  
+  # : test square.size ----
+  if( ! is.numeric(square.size)){
+    stop("The 'square.size' parameter must be a positive numerical value.")
   }
   
   # : test reverse.axis.values ----
@@ -53,7 +59,7 @@ archeoViz <- function(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   shinyOptions("objects.df"  = objects.df,
                "refits.df"   = refits.df,
                "timeline.df" = timeline.df,
-               # "default.group" = default.group,
+               "square.size" = square.size,
                "reverse.axis.values" = reverse.axis.values,
                "reverse.square.names" = reverse.square.names,
                "add.x.square.labels" = add.x.square.labels,

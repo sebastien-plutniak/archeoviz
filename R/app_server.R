@@ -185,6 +185,7 @@ app_server <- function(input, output, session) {
   # : coords min/max coordinates ----
   coords.min.max <- reactive({
     .do_coords_minmax(objects.dataset(),
+                      square.size = getShinyOption("square.size"),
                       reverse.axis.values = getShinyOption("reverse.axis.values"))
   })
   
@@ -193,11 +194,12 @@ app_server <- function(input, output, session) {
     req(coords.min.max)
     coords.min.max  <- coords.min.max()
     df <- objects.dataset()
+    square.size <- getShinyOption("square.size")
     # if the nr of square labels is insufficient, do not display the labels:
     square_x <- ""
     square_y <- ""
     
-    max.nr.of.Xsquares <- length(unique(trunc(seq(coords.min.max$xmin, coords.min.max$xmax) /100) * 100)) - 1
+    max.nr.of.Xsquares <- length(unique(trunc(seq(coords.min.max$xmin, coords.min.max$xmax) / square.size) * square.size)) - 1
     square.Xlabels <- levels(df$square_x)
     if(max.nr.of.Xsquares == length(square.Xlabels) ){
       square_x <- square.Xlabels
@@ -207,7 +209,7 @@ app_server <- function(input, output, session) {
                      paste0(square.Xlabels, collapse = ", "), ".\n"))
     }
     
-    max.nr.of.Ysquares <- length(unique(trunc(seq(coords.min.max$ymin, coords.min.max$ymax) /100) * 100)) - 1
+    max.nr.of.Ysquares <- length(unique(trunc(seq(coords.min.max$ymin, coords.min.max$ymax) / square.size) * square.size)) - 1
     square.Ylabels <- levels(df$square_y)
     if(max.nr.of.Ysquares == length(square.Ylabels) ){
       square_y <- square.Ylabels
@@ -223,8 +225,10 @@ app_server <- function(input, output, session) {
   # : ranges ----
   square.coords.ranges <- reactive({
     coords <- coords.min.max()
-    range.x <- seq(floor(coords$xmin / 100) * 100, ceiling(coords$xmax / 100) * 100, 100)
-    range.y <- seq(floor(coords$ymin / 100) * 100, ceiling(coords$ymax / 100) * 100, 100)
+    square.size <- getShinyOption("square.size")
+    
+    range.x <- seq(floor(coords$xmin / square.size) * square.size, ceiling(coords$xmax / square.size) * square.size, square.size)
+    range.y <- seq(floor(coords$ymin / square.size) * square.size, ceiling(coords$ymax / square.size) * square.size, square.size)
     
     list("range.x" = range.x, "range.y" = range.y)
   })
@@ -232,19 +236,21 @@ app_server <- function(input, output, session) {
   # : grid coordinates ----
   grid.coordx <- reactive({
     square.coords <- square.coords.ranges()
+    square.size <- getShinyOption("square.size")
     coords <- coords.min.max()
     
     data.frame(
       "id" = c(rbind(seq_len(length(square.coords$range.x)),
                      seq_len(length(square.coords$range.x)))),
-      "x"  = c(rbind(seq(coords$xmin, coords$xmax, 100),
-                     seq(coords$xmin, coords$xmax, 100))),
+      "x"  = c(rbind(seq(coords$xmin, coords$xmax, square.size),
+                     seq(coords$xmin, coords$xmax, square.size))),
       "y"  = rep(c(coords$ymin, coords$ymax), length(square.coords$range.x)),
       "z"  = coords$zmax)
   })
   
   grid.coordy <- reactive({
     square.coords <- square.coords.ranges()
+    square.size <- getShinyOption("square.size")
     coords <- coords.min.max()
     
     data.frame(
@@ -252,8 +258,8 @@ app_server <- function(input, output, session) {
                      seq_len(length(square.coords$range.y)))),
       "x"  = rep(c(coords$xmin, coords$xmax),
                  length(square.coords$range.y)),
-      "y"  = c(rbind(seq(coords$ymin, coords$ymax, 100),
-                     seq(coords$ymin, coords$ymax, 100))),
+      "y"  = c(rbind(seq(coords$ymin, coords$ymax, square.size),
+                     seq(coords$ymin, coords$ymax, square.size))),
       "z"  = coords$zmax)
   })
   
@@ -266,6 +272,7 @@ app_server <- function(input, output, session) {
   # : axis labels ----
   axis.labels <- reactive({
     square.coords <- square.coords.ranges()
+    square.size <- getShinyOption("square.size")
     squares <- squares()
     
     if(grepl("x", getShinyOption("reverse.square.names"))){
@@ -279,11 +286,11 @@ app_server <- function(input, output, session) {
     
     list(
       "xaxis" = list(
-        "breaks" = (square.coords$range.x + 50)[ 1:length(squares$square_x) ],
+        "breaks" = (square.coords$range.x + square.size / 2)[ seq_len(length(squares$square_x)) ],
         "labels" =  squares$square_x
       ),
       "yaxis" = list(
-        "breaks" = (square.coords$range.y + 50)[ 1:length(squares$square_y) ],
+        "breaks" = (square.coords$range.y + square.size / 2)[ seq_len(length(squares$square_y)) ],
         "labels" =  squares$square_y
       )
     )

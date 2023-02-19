@@ -7,7 +7,7 @@ test_that(".do_section_plot", {
   
   df <- .do_objects_dataset(demoData.n = 100)
   
-  coords <- .do_coords_minmax(df$data)
+  coords <- .do_coords_minmax(df$data, square.size = 100)
   
   range.x <- seq(floor(coords$xmin / 100) * 100, ceiling(coords$xmax / 100) * 100, 100)
   range.y <- seq(floor(coords$ymin / 100) * 100, ceiling(coords$ymax / 100) * 100, 100)

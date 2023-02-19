@@ -46,6 +46,7 @@ Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.
           - [Par catégorie d’objet](#par-catégorie-dobjet)
           - [Sous-groupes de données](#sous-groupes-de-données)
           - [Par objet](#par-objet)
+      - [Remontages](#remontages)
       - [Visualisations interactives](#visualisations-interactives)
       - [Sorties graphiques](#sorties-graphiques)
       - [Statistiques spatiales](#statistiques-spatiales)
@@ -53,6 +54,12 @@ Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.
           - [Enveloppes convexes](#enveloppes-convexes)
           - [Estimation 2D de densité par
             noyau](#estimation-2d-de-densité-par-noyau)
+      - [**Paramètres avancés**](#paramètres-avancés)
+          - [Carroyage](#carroyage)
+          - [Pré-sélection des
+            paramètres](#pré-sélection-des-paramètres)
+          - [Affichage réactif des
+            visualisations](#affichage-réactif-des-visualisations)
   - [**Références**](#références)
 
 # Installation
@@ -112,14 +119,13 @@ archeoViz(objects.df = NULL,   # data.frame pour les objets
                                # par couche ("by.layer") ou "by.variable"
           title = NULL,        # titre du site / du jeu de données
           home.text = NULL,    # contenu html à afficher sur la page d'accueil
-          lang = "fr"          # langue de l'interface ("English" ou "French")
+          lang = "fr"          # langue de l'interface ("en": Anglais, "fr": Français, "pt": Portugais)
           set.theme = "cosmo") # thème graphique de l'interface Shiny
 ```
 
 Les valeurs possibles pour le paramètre `set.theme` sont illustrées sur
 [cette page](https://rstudio.github.io/shinythemes/). La langue de
-l’application peut être définie avec le paramètre `lang`, qui accepte
-les valeurs “en”/“English” ou “fr”/“French”.
+l’application peut être définie avec le paramètre `lang`.
 
 ## Démonstration
 
@@ -130,6 +136,8 @@ Shiny server d’*Huma Num*:
     Français](https://analytics.huma-num.fr/archeoviz/fr).
   - [`archeoViz` en
     Anglais](https://analytics.huma-num.fr/archeoviz/en).
+  - [`archeoViz` en
+    Portugais](https://analytics.huma-num.fr/archeoviz/pt).
 
 Pour un cas d’emploi réel, voir l’exemple de la grotte préhistorique du
 [Poeymaü](https://analytics.huma-num.fr/Sebastien.Plutniak/poeymau/)
@@ -272,6 +280,35 @@ Enfin, dans l’onglet “Vue 3D”, cliquer sur un point active l’affichage
 d’information à son sujet dans le tableau présent sous la
 visualisation.
 
+## Remontages
+
+Les remontages sont généralement enregistrés de deux manières par les
+archéologues:
+
+1.  par ensemble d’objets remontant entre eux: en employant alors un
+    tableau à deux colonnes où une ligne correspond à un **objet**. La
+    première colonne contient l’identifiant unique de l’objet et la
+    deuxième colonne contient l’identifiant unique de l’ensemble
+    d’objets remontant entre eux auquel l’objet considéré appartient.
+2.  par relation de remontage: en employant alors un tableau à deux
+    colonnes où une ligne correspond à un **relation de remontage**. La
+    première colonne contient l’identifiant unique du premier objet et
+    la deuxième colonne contient l’identifiant unique du deuxième objet.
+
+Bien que la seconde structure de donnée soit plus précise, c’est la
+pemière qui est le plus fréquemment employée.
+
+Ces deux structures de données sont traitées différement dans
+`archeoViz`:
+
+  - les ensembles d’objets remontant entre eux doivent être décrits dans
+    une colonne spécifique dans le tableau `objects.df` table (nommée
+    par ex. `object_refits`) et sont représentés par la couleur des
+    points dans les visualisations (comme pour tout autre variable);
+  - les relations de remontage doivent être décrits dans un tableau
+    `refits.df` et sont visualisés par des segments reliant les objets
+    liés par des relations de remontage.
+
 ## Visualisations interactives
 
 Les visualisations dans les onglets “Vue 3D”, “Carte”, “Section X” et
@@ -333,6 +370,129 @@ L’estimation bidimensionnelle de densité par noyau est calculée avec
 la fonction `kde2d` du package
 [`MASS`](https://CRAN.R-project.org/package=MASS) (à travers le package
 [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
+
+## Paramètres avancés
+
+La fonction `archeoViz()` admet de nombreux paramètres optionels,
+relatifs à:
+
+  - les données à charger (traité
+    [ci-dessus](#par-paramétrage-de-la-fonction)),
+  - le contenu de la page d’accueil (traité [ci-dessus](#déployée)),
+  - le carroyage,
+  - le pré-paramètrage des paramètres pouvant être définis dans
+    l’interface graphique,
+  - le comportement réactif de l’application à propos du calcul et de
+    l’affichage des viausalisations.
+
+<!-- end list -->
+
+``` r
+archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
+          title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
+          square.size = 100, reverse.axis.values = NULL, reverse.square.names = NULL,
+          add.x.square.labels = NULL, add.y.square.labels = NULL,
+          class.variable = NULL, class.values = NULL,
+          default.group = "by.layer", location.mode = NULL,
+          map.z.val = NULL, map.density = "no", map.refits = NULL,
+          plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+          sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+          camera.center = NULL, camera.eye = NULL, run.plots = FALSE
+          )
+```
+
+### Carroyage
+
+``` r
+archeoViz(square.size = 100,
+          reverse.axis.values = NULL, reverse.square.names = NULL,
+          add.x.square.labels = NULL, add.y.square.labels = NULL
+          )
+```
+
+  - *square.size*: numérique. Size (width and height) in centimeter of
+    the squares in the grid system. Default value is 100 cm.
+  - *reverse.axis.values*: caractères. Whether to reverse the values of
+    one or several axes (‘x’, ‘y’, ‘z’).
+  - *reverse.square.names*: caractères. Whether to reverse the square
+    names on the ‘x’, ‘y’ axes, or both (‘xy’).
+  - *add.x.square.labels*: caractères. Additional square labels on the
+    ‘x’ axis.
+  - *add.y.square.labels*: caractères. Additional square labels on the
+    ‘y’ axis.
+
+### Pré-sélection des paramètres
+
+``` r
+archeoViz(class.variable = NULL, class.values = NULL,
+          default.group = "by.layer", location.mode = NULL,
+          map.z.val = NULL, map.density = "no", map.refits = NULL,
+          plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+          sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+          camera.center = NULL, camera.eye = NULL
+          )
+```
+
+  - *class.variable*: caractères. Au lancement de l’application, nom de
+    la variable à pré-sélectionner.
+  - *class.values*: caractères. Au lancement de l’application, nom des
+    valeurs à pré-sélectionner.
+  - *default.group*: caractères. Au lancement de l’application,
+    pré-sélection de la variable à employer pour grouper les données
+    (soit ‘by.layer’ ou ‘by.variable’).
+  - *location.mode*: caractères. Au lancement de l’application,
+    pré-sélection du ou des modes de localisation à afficher (soit
+    ‘exact’, ‘fuzzy’, ou ‘exact.fuzzy’).
+  - *map.z.val*: numérique. Au lancement de l’application, valeurs
+    minimale et maximale des coordonnées Z à présélectionner dans la
+    visualisation en plan.
+  - *map.density*: caractères. Au lancement de l’application, calculer
+    et afficher ou non les courbes de densité dans la visualisation en
+    plan (soit ‘no’, ‘overall’, ou ‘by.variable’).
+  - *map.refits*: TRUE ou FALSE. Afficher ou non les remontages dans la
+    visualisation en plan.
+  - *plot3d.hulls*: TRUE ou FALSE. Au lancement de l’application,
+    calculer et afficher ou non les enveloppes convexes dans la
+    visualisation 3D.
+  - *plot3d.surfaces*: TRUE ou FALSE. Au lancement de l’application,
+    calculer et afficher ou non les surfaces de régression dans la
+    visualisation 3D.
+  - *plot3d.refits*: TRUE ou FALSE. Au lancement de l’application,
+    afficher ou non les remontages dans la visualisation 3D.
+  - *sectionX.x.val*: numérique. Au lancement de l’application, valeurs
+    minimale et maximale des coordonnées X à présélectionner dans la
+    visualisation en section X.
+  - *sectionX.y.val*: numérique. Au lancement de l’application, valeurs
+    minimale et maximale des coordonnées Y à présélectionner dans la
+    visualisation en section X.
+  - *sectionX.refits*: TRUE ou FALSE. Au lancement de l’application,
+    afficher ou non les remontages dans la visualisation en section X.
+  - *sectionY.x.val*: numérique. Au lancement de l’application, valeurs
+    minimale et maximale des coordonnées X à présélectionner dans la
+    visualisation en section Y.
+  - *sectionY.y.val*: numérique. Au lancement de l’application, valeurs
+    minimale et maximale des coordonnées Y à présélectionner dans la
+    visualisation en section Y.
+  - *sectionY.refits*: TRUE ou FALSE. Au lancement de l’application,
+    afficher ou non les remontages dans la visualisation en section Y.
+  - *camera.center*: numérique. Au lancement de l’application,
+    coordonnées du point vers lequel la caméra est orientée dans la
+    visualisation 3D (valeurs par défaut: x=0, y=0, z=0).
+  - *camera.eye*: numérique. Au lancement de l’application, coordonnées
+    de la position de la caméra dans la visualisation 3D (valeurs par
+    défaut: x=1.25, y=1.25, z=1.25).
+
+### Affichage réactif des visualisations
+
+``` r
+archeoViz(run.plots = FALSE)
+```
+
+  - *run.plots*: TRUE ou FALSE. Si les visualisations doivent, ou non,
+    être immédiatement calculées et affichées (sans nécessiter un click
+    sur les boutons de l’interface).
 
 # Références
 

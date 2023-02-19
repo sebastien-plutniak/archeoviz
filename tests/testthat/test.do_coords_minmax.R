@@ -5,7 +5,7 @@ test_that(".do_coords_minmax", {
   res$y <- res$ymin
   res$z <- res$zmin
   
-  res <- .do_coords_minmax(res)
+  res <- .do_coords_minmax(res, square.size=100)
   
   expect_equal(typeof(res), "list")
   expect_equal(length(res), 6)

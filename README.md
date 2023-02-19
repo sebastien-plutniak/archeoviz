@@ -33,10 +33,11 @@ Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.
       - [Suggesting changes](#suggesting-changes)
   - [**Use**](#use)
       - [Data input](#data-input)
-          - [Tables upload](#tables-upload)
+          - [Loading files through the Input data
+            tab](#loading-files-through-the-input-data-tab)
           - [Random data](#random-data)
-          - [Function parameters](#function-parameters)
-      - [Data set sub-setting](#dataset-sub-setting)
+          - [Through function parameters](#through-function-parameters)
+      - [Data sub-setting](#data-sub-setting)
           - [Location mode](#location-mode)
           - [Objects category](#objects-category)
           - [Data subgroups](#data-subgroups)  
@@ -47,6 +48,10 @@ Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.
           - [Regression surfaces](#regression-surfaces)
           - [Convex hulls](#convex-hulls)
           - [2D kernel density](#2d-kernel-density)
+  - [**Advanced parameters**](#advanced-parameters)
+      - [Square grid](#square-grid)
+      - [Parameters presetting](#parameters-presetting)
+      - [Reactive plot display](#reactive-plot-display)
   - [**References**](#references)
 
 # Installation
@@ -104,17 +109,15 @@ located at the root of the directory:
 archeoViz(objects.df = NULL,   # data.frame with data about the objects
           refits.df = NULL,    # optional data.frame for refitting data
           timeline.df = NULL,  # optional data.frame for the excavation timeline
-          default.group =NULL, # Whether to group data 'by.layer' or 'by.variable'
           title = NULL,        # title of the site / data set
           home.text = NULL,    # html content to display on the home page
-          lang = "en"          # interface language (English or French)
+          lang = "en"          # interface language ("en": English, "fr": French, "pt": Portuguese)
           set.theme = "cosmo") # graphic theme for the Shiny interface
 ```
 
 The possible values for the `set.theme` parameter are illustrated on
 [this page](https://rstudio.github.io/shinythemes/). The language of the
-application can be set with the `lang` parameter, either with an
-“en”/“English” or “fr”/“French” value.
+application can be set with the `lang` parameter.
 
 ## Demonstration
 
@@ -170,7 +173,7 @@ There are three ways to input data in `archeoViz`:
 3.  set the `archeoViz` main function’s parameters before running the
     application.
 
-### Tables upload
+### Loading files through the Input data tab
 
 Tables for three types of data can be uploaded from the “Input data”
 tab:
@@ -193,7 +196,7 @@ feature). An “objects” data set, a “refits” data set, and a “timeline�
 data set are generated, making it possible to test all the `archeoViz`
 functionalities.
 
-### Function parameters
+### Through function parameters
 
 `archeoViz`’s launching function (`archeoViz()`) can be run without
 parameter
@@ -213,7 +216,7 @@ archeoViz(objects.df = NULL,  # data.frame with data about the objects
           timeline.df = NULL) # optional data.frame for the excavation timeline
 ```
 
-## Dataset sub-setting
+## Data sub-setting
 
 Once data are loaded, a sub-selection of the data set can be done in the
 left side menu. Several parameters are possible: the type of location
@@ -278,6 +281,31 @@ Several graphical outputs can be generated in `archeoViz`.
   - the excavation map (in the “Excavation timeline” tab) can be
     downloaded in .svg format with the button below the plot.
 
+## Reffiting
+
+Refitting are usually recorded by archaologists in two ways:
+
+1.  by sets of refitting objects: using a two columns table, where a row
+    corresponds to an **object**. The first column stores the object’
+    unique id and the second column stores the id of the set of
+    refitting objects this object belongs to.
+2.  by refitting relationships: using a two columns table, where a row
+    corresponds to a **relationship**. The first column stores the first
+    object’s unique id and the second column stores the second object’s
+    unique id.
+
+Although the second data structure is more accurate, the first is more
+commonly used.
+
+`archeoViz` processes the two data structures in different ways:
+
+  - sets of refitting objects must be described using a specific column
+    in the `objects.df` table (e.g. `object_refits`) and are represented
+    by the color of points in the plots (as for any other variable);
+  - refitting relationships must be described using the `refits.df`
+    table and are visualised as segments connecting the refitting
+    objects in the plots.
+
 ## Spatial statistics
 
 `archeoViz` includes some spatial analysis functionalities, intended for
@@ -307,6 +335,119 @@ density. Density can be computed for all the points together or by layer
 `kde2d` function of the
 [`MASS`](https://CRAN.R-project.org/package=MASS) package (through
 [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
+
+## Advanced parameters
+
+The `archeoViz()` function can be set with multiple optional parameters,
+related to:
+
+  - the input data (already detailed
+    [above](#through-function-parameters)),
+  - the contents of the home page (already detailed
+    [above](#deployed-use)),
+  - the square grid,
+  - the presetting of the parameters that can be set through the
+    application’s interface,
+  - the reactive behavior of the application regarding the generation of
+    plots.
+
+<!-- end list -->
+
+``` r
+archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
+          title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
+          square.size = 100, reverse.axis.values = NULL, reverse.square.names = NULL,
+          add.x.square.labels = NULL, add.y.square.labels = NULL,
+          class.variable = NULL, class.values = NULL,
+          default.group = "by.layer", location.mode = NULL,
+          map.z.val = NULL, map.density = "no", map.refits = NULL,
+          plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+          sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+          camera.center = NULL, camera.eye = NULL, run.plots = FALSE
+          )
+```
+
+### Square grid
+
+``` r
+archeoViz(square.size = 100,
+          reverse.axis.values = NULL, reverse.square.names = NULL,
+          add.x.square.labels = NULL, add.y.square.labels = NULL
+          )
+```
+
+  - *square.size*: numerical. Size (width and height) in centimeter of
+    the squares in the grid system. Default value is 100 cm.
+  - *reverse.axis.values*: character. Whether to reverse the values of
+    one or several axes (‘x’, ‘y’, ‘z’).
+  - *reverse.square.names*: character. Whether to reverse the square
+    names on the ‘x’, ‘y’ axes, or both (‘xy’).
+  - *add.x.square.labels*: character. Additional square labels on the
+    ‘x’ axis.
+  - *add.y.square.labels*: character. Additional square labels on the
+    ‘y’ axis.
+
+### Parameters presetting
+
+``` r
+archeoViz(class.variable = NULL, class.values = NULL,
+          default.group = "by.layer", location.mode = NULL,
+          map.z.val = NULL, map.density = "no", map.refits = NULL,
+          plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+          sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+          camera.center = NULL, camera.eye = NULL
+          )
+```
+
+  - *class.variable*: character. At the launch of the app, name of the
+    variable to preselect.
+  - *class.values*: character vector. At the launch of the app, names of
+    the values to preselect.
+  - *default.group*: character. At the launch of the app, preselection
+    of the variable used to group data (one of ‘by.layer’ or
+    ‘by.variable’).
+  - *location.mode*: character. At the launch of the app, preselection
+    of the location method (one of ‘exact’, ‘fuzzy’, ‘exact.fuzzy’).
+  - *map.z.val*: numerical. Minimal and maximal Z coordinates values to
+    display in the map plot.
+  - *map.density*: character. At the launch of the app, whether to
+    compute and show density contours in the map plot (one of ‘no’,
+    ‘overall’, ‘by.variable’).
+  - *map.refits*: TRUE or FALSE. Whether to show refits in the map plot.
+  - *plot3d.hulls*: TRUE or FALSE. At the launch of the app, whether to
+    compute and show convex hulls in the 3D plot.
+  - *plot3d.surfaces*: TRUE or FALSE. At the launch of the app, whether
+    to compute and show regression in the 3D plot.
+  - *plot3d.refits*: TRUE or FALSE. At the launch of the app, whether to
+    show refits on the 3D section plot.
+  - *sectionX.x.val*: numerical. At the launch of the app, minimal and
+    maximal X coordinates values to display in the X section plot.
+  - *sectionX.y.val*: numerical. At the launch of the app, minimal and
+    maximal Y coordinates values to display in the X section plot.
+  - *sectionX.refits*: TRUE or FALSE. At the launch of the app, whether
+    to show refits in the X section plot.
+  - *sectionY.x.val*: numerical. At the launch of the app, minimal and
+    maximal X coordinates values to display in the Y section plot.
+  - *sectionY.y.val*: numerical. At the launch of the app, minimal and
+    maximal Y coordinates values to display in the Y section plot.
+  - *sectionY.refits*: TRUE or FALSE. At the launch of the app, whether
+    to show refits in the Y section plot.
+  - *camera.center*: numerical. In 3D plot, coordinates of the point to
+    which the camera looks at (default values: x=0, y=0, z=0).
+  - *camera.eye*: numerical. In 3D plot, coordinates of the camera’s
+    position (default values: x=1.25, y=1.25, z=1.25).
+
+### Reactive plot display
+
+``` r
+archeoViz(run.plots = FALSE)
+```
+
+  - *run.plots*: TRUE or FALSE. Whether to immediately compute and show
+    plots (without requiring the user to click on the buttons in the
+    interface).
 
 # References
 

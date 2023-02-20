@@ -4,7 +4,7 @@ app_server <- function(input, output, session) {
   # Interface ----
   # : title ----
   output$title.edited <- renderUI({
-    archeoViz.label <- paste(" <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>archeoViz</a> v",
+    archeoViz.label <- paste(" <a href=https://analytics.huma-num.fr/archeoviz/home/ title='Go to the archeoViz portal' target=_blank>archeoViz</a> v",
                              utils::packageVersion("archeoViz"), sep="")
     title <- shiny::getShinyOption("title")
     
@@ -158,7 +158,6 @@ app_server <- function(input, output, session) {
     req(input$class_variable, coords.min.max)
     
     df <- objects.dataset()
-    
     df$group.variable <- factor(eval(parse(text = paste0("df$", group.variable() ))))
     df$layer_color <- factor(df$group.variable,
                              levels = levels(df$group.variable),
@@ -460,6 +459,7 @@ app_server <- function(input, output, session) {
   
   # PLOT  3D ----
   plot3d <- eventReactive(goButton3D(), {
+    req(ratio3D.value)
     validate(need(input$class_values, .term_switcher("notif.tick.value")))
     
     dataset <- objects.subdataset()
@@ -617,7 +617,7 @@ app_server <- function(input, output, session) {
                     aspectmode = "manual", 
                     aspectratio = list(x = 1, 
                                        y = (coords$ymax - coords$ymin) / (coords$xmax - coords$xmin), 
-                                       z = input$ratio * ((coords$zmax - coords$zmin) / (coords$xmax - coords$xmin)))
+                                       z = ratio3D.value() * ((coords$zmax - coords$zmin) / (coords$xmax - coords$xmin)))
                   ))  #end layout
     # fig <- plotly::event_register(fig, 'plotly_click')
   }) # end plot3d
@@ -707,7 +707,9 @@ app_server <- function(input, output, session) {
     sel <- dataset$z >= valuesZ[1] & dataset$z <= valuesZ[2]
     
     planZ.df <- dataset[sel, ]
+    
     color.var <- group.variable()
+    planZ.df[, color.var] <- as.character(planZ.df[, color.var])
     col <- unique(planZ.df[, c("layer_color", color.var)])
     col <- col[order(col[, 2]), ]
     # col <- structure(as.character(col$layer_color),
@@ -793,16 +795,24 @@ app_server <- function(input, output, session) {
   #   }
   # })
   
-  # : slider ratio 3D
-  output$ratio3D <- renderUI({
-    init.ratio.value <- 1
-    if( ! is.null(getShinyOption("params")$ratio)){
-      init.ratio.value <- getShinyOption("params")$ratio
-    }
+  # : slider ratio 3D ----
+  ratio3D.value <- reactive({
     
+    ratio3D.value <- input$ratio
+    
+    if(is.null(ratio3D.value)){
+      ratio3D.value <- getShinyOption("params")$plot3d.ratio
+      if(is.null(ratio3D.value)){
+        ratio3D.value <- 1
+      }
+    }
+    ratio3D.value
+  })
+  
+  output$ratio3D <- renderUI({
     sliderInput("ratio", .term_switcher("ratio"), width="100%", sep = "",
                 min=.5, max=2,
-                value = init.ratio.value,
+                value = ratio3D.value(),
                 step=.1)
   })
   
@@ -849,13 +859,14 @@ app_server <- function(input, output, session) {
   })
   
   output$sliderXy <- renderUI({
+    req(coords.min.max)
     coords <- coords.min.max()
     
     init.valueXy <- c(coords$ymin, coords$ymax)
     
-    # if( ! is.null(getShinyOption("params")$sectionXy) ){
-    #   init.valueXy <- getShinyOption("params")$sectionXy
-    # }
+    if( ! is.null(getShinyOption("params")$sectionXy) ){
+      init.valueXy <- getShinyOption("params")$sectionXy
+    }
     
     sliderInput("sectionXy", "Y: min/max", width="100%", sep = "", step=1,
                 min = coords$ymin, max = coords$ymax, round=T,

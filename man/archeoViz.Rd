@@ -13,7 +13,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
 		  class.variable = NULL, class.values = NULL,
 		  default.group = "by.layer", location.mode = NULL,
 		  map.z.val = NULL, map.density = "no", map.refits = NULL,
-		  plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+		  plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
 		  sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
 		  sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
 		  camera.center = NULL, camera.eye = NULL, run.plots = FALSE
@@ -39,6 +39,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{map.z.val}{double. Minimal and maximal Z coordinates values to display in the map plot.}
   \item{map.density}{character. At the launch of the app, whether to compute and show density contours in the map plot (one of 'no', 'overall', 'by.variable').}
   \item{map.refits}{logical. Whether to show refits in the map plot.}
+  \item{plot3d.ratio}{double. At the launch of the app, ratio of the vertical axis in the 3D plot.}
   \item{plot3d.hulls}{logical. At the launch of the app, whether to compute and show convex hulls in the 3D plot.}
   \item{plot3d.surfaces}{logical. At the launch of the app, whether to compute and show regression in the 3D plot.}
   \item{plot3d.refits}{logical. At the launch of the app, whether to show refits on the 3D section plot.}

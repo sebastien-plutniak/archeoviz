@@ -407,10 +407,9 @@ app_server <- function(input, output, session) {
     
     site.map() +
       geom_rect(data = rect.df,
-                aes_string(ymin = "ymin", ymax = "ymax",
-                           xmin = "xmin", xmax = "xmax"),
-                fill="red", alpha=.7
-      )
+                aes(ymin = .data[["ymin"]], ymax = .data[["ymax"]],
+                           xmin = .data[["xmin"]], xmax = .data[["xmax"]]),
+                fill="red", alpha=.7)
   })
   
   #  : mini-map Y ----
@@ -426,8 +425,8 @@ app_server <- function(input, output, session) {
     
     site.map() +
       geom_rect(data = rect.df,
-                aes_string(ymin = "ymin", ymax = "ymax",
-                           xmin = "xmin", xmax = "xmax"),
+                aes(ymin = .data[["ymin"]], ymax = .data[["ymax"]],
+                           xmin = .data[["xmin"]], xmax = .data[["xmax"]]),
                 fill="red", alpha=.7
       )
   })
@@ -734,11 +733,13 @@ app_server <- function(input, output, session) {
     
     map <- site.map() +
       geom_point(data = planZ.df,
-                 aes_string(x = "x", y = "y", color = color.var,
-                            square="square", 
-                            xyz= "xyz",
-                            object_type="object_type",
-                            location_mode="location_mode", id="id"
+                 aes(x = .data[["x"]], y = .data[["y"]],
+                     color = .data[[color.var]],
+                     square = .data[["square"]], 
+                     xyz = .data[["xyz"]],
+                     object_type = .data[["object_type"]],
+                     location_mode = .data[["location_mode"]],
+                     id = .data[["id"]]
                             ),
                  size = input$map.point.size / 10
                  ) +
@@ -755,16 +756,16 @@ app_server <- function(input, output, session) {
   
         map <- map +
           geom_density2d(data=planZ.df.sub,
-                         aes_string(x = "x", y = "y",
-                                    group = color.var,
-                                    color = color.var),
+                         aes(x = .data[["x"]], y = .data[["y"]],
+                             group = .data[[color.var]],
+                             color = .data[[color.var]]),
                          size = .2)
       }
     
       if(input$map.density == "overall"){
         map <- map +
           geom_density2d(data=planZ.df,
-                         aes_string(x = "x", y = "y"),
+                         aes(x = .data[["x"]], y = .data[["y"]]),
                          size = .2, color = "grey30")
       }
     }
@@ -786,7 +787,8 @@ app_server <- function(input, output, session) {
           
           map <- map +
             geom_segment(data = refitting.df,
-                         aes_string(x="x", xend="xend", y="y", yend="yend"),
+                         aes(x = .data[["x"]], xend = .data[["xend"]],
+                             y = .data[["y"]], yend = .data[["yend"]]),
                          color = "red", linewidth=.3 )
         }
       } 
@@ -1093,8 +1095,9 @@ app_server <- function(input, output, session) {
     
     timeline.map() +
       geom_tile(data = time.sub.df,
-                aes_string(x = "square_x", y = "square_y",
-                           fill = "excavation", alpha = "excavation"),
+                aes(x = .data[["square_x"]], y = .data[["square_y"]],
+                    fill = .data[["excavation"]],
+                    alpha = .data[["excavation"]]),
                 show.legend = F) +
       scale_fill_manual("State:", values = c("white", "darkolivegreen4") ) +
       scale_alpha_manual(values = c(0, .7)) 
@@ -1114,7 +1117,8 @@ app_server <- function(input, output, session) {
     
     timeline.map() +
       geom_tile(data = time.df,
-                aes_string(x = "square_x", y = "square_y", fill = "excavation"),
+                aes(x = .data[["square_x"]], y = .data[["square_y"]], 
+                    fill = .data[["excavation"]]),
                 show.legend = F)  +
       scale_fill_manual("State:", values = c("white", "darkolivegreen4") ) +
       facet_wrap(~year) +

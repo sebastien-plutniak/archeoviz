@@ -434,20 +434,36 @@ app_server <- function(input, output, session) {
   
   # : timeline map ----
   timeline.map <- reactive({
-    squares <- squares()
+    # squares <- squares()
+    axis.labels <- axis.labels()
+
+    map.grid <- expand.grid("square_x" = axis.labels$xaxis$labels,
+                            "square_y" = axis.labels$yaxis$labels)
     
-    map.grid <- expand.grid("square_x" = squares$square_x,
-                            "square_y" = squares$square_y)
-    ggplot() +
-      theme_minimal(base_size = 11) +
+    timeline.map <- ggplot() +
+      theme_minimal(base_size = 12) +
       geom_tile(data = map.grid,
-                aes_string(x="square_x", y="square_y"), alpha=0) +
-      geom_vline(xintercept =  seq(0.5, length(squares$square_x) +.5, 1),
+                aes(x = .data[["square_x"]], y = .data[["square_y"]]), alpha=0) +
+      geom_vline(xintercept =  seq(0.5, length(axis.labels$xaxis$labels) + .5, 1),
                  colour = "grey70" ) +
-      geom_hline(yintercept =  seq(0.5, length(squares$square_y) + .5, 1),
+      geom_hline(yintercept =  seq(0.5, length(axis.labels$yaxis$labels) + .5, 1),
                  colour = "grey70" ) +
       coord_fixed() +
       xlab("") + ylab("")
+    
+    # reverse axes if needed:
+    reverse <- getShinyOption("reverse.axis.values")
+    if(grepl("x", reverse)){ 
+      timeline.map <- timeline.map + 
+        scale_x_reverse(breaks = axis.labels$xaxis$breaks,
+                                   labels = axis.labels$xaxis$labels)
+    }
+    if(grepl("y", reverse)){ 
+      timeline.map <- timeline.map + 
+        scale_y_reverse(breaks = axis.labels$yaxis$breaks,
+                                   labels = axis.labels$yaxis$labels)
+    }
+    timeline.map
   })   
   
   goButton3D <- reactive({
@@ -1067,7 +1083,7 @@ app_server <- function(input, output, session) {
   
   
   #  Timeline ----
-  
+  #  : main timeline ----
   output$timeline.map <- renderPlot({
     req(timeline.data)
     
@@ -1077,9 +1093,11 @@ app_server <- function(input, output, session) {
     
     timeline.map() +
       geom_tile(data = time.sub.df,
-                aes_string(x = "square_x", y = "square_y", fill = "excavation"),
-                show.legend = F, alpha=.8) +
-      scale_fill_manual("State:", values = c("white", "darkolivegreen4") ) 
+                aes_string(x = "square_x", y = "square_y",
+                           fill = "excavation", alpha = "excavation"),
+                show.legend = F) +
+      scale_fill_manual("State:", values = c("white", "darkolivegreen4") ) +
+      scale_alpha_manual(values = c(0, .7)) 
   })
   
   
@@ -1089,7 +1107,7 @@ app_server <- function(input, output, session) {
       ggsave(file, plot = timeline.map())
     }
   )
-  
+  #  : timeline grid ----
   output$timeline.map.grid <- renderPlot({
     req(timeline.data())
     time.df <- timeline.data()
@@ -1100,8 +1118,8 @@ app_server <- function(input, output, session) {
                 show.legend = F)  +
       scale_fill_manual("State:", values = c("white", "darkolivegreen4") ) +
       facet_wrap(~year) +
-      theme(axis.text.x = element_text(size=.1),
-            axis.text.y = element_text(size=.1))
+      theme(axis.text.x = element_blank(),
+          axis.text.y = element_blank())
   })
   
   

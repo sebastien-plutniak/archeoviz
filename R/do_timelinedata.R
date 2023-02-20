@@ -34,8 +34,13 @@
   time.df$excavation <- T
   time.df$year <- as.integer(time.df$year)
   
-  time.grid <- expand.grid("square_x" = sort(unique(time.df$square_x)),
-                           "square_y" = sort(unique(time.df$square_y)),
+  square_x <- sort(unique(time.df$square_x))
+  square_x <- square_x[ ! (is.na(square_x) | square_x %in% c(" ", "", "NA"))]
+  square_y <- sort(unique(time.df$square_y))       
+  square_y <- square_y[ ! (is.na(square_y) | square_y %in% c(" ", "", "NA"))]
+  
+  time.grid <- expand.grid("square_x" = square_x,
+                           "square_y" = square_y,
                            "year" = unique(time.df$year))
   
   time.df <- merge(time.grid,

@@ -25,7 +25,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{timeline.df}{data frame, with data documenting the year of excavation of the site's squares.}
   \item{title}{character. Title to display on the application.}
   \item{home.text}{character. Html contents to display on the home page of the application.}
-  \item{lang}{character. Language of the interface, one of 'en' (English), 'fr' (French), 'pt' (Portuguese).}
+  \item{lang}{character. Language of the interface, one of 'en' (English), 'fr' (French), 'it' (Italian), 'pt' (Portuguese).}
   \item{set.theme}{character. Name of the shinytheme to use.}
   \item{square.size}{integer. Size (width and height) in centimeter of the squares in the grid system. Default value is 100 cm.}
   \item{reverse.axis.values}{character. Whether to reverse the values of one or several axes ('x', 'y', 'z').}

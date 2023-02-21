@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-`archeoViz` is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial statistics methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive timeline of an excavation. `archeoViz` can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The interface is available in English, French, and Portuguese.
+`archeoViz` is a packaged R Shiny application for the visualisation, exploration, and web communication of archaeological excavation data. It includes interactive 3D and 2D visualisations, can generate cross sections and map of the remains, can run basic spatial statistics methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive timeline of an excavation. `archeoViz` can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The interface is available in English, French, Italian, and Portuguese.
 
 
 - [**Installation**](#installation)
@@ -101,7 +101,7 @@ archeoViz(objects.df = NULL,   # data.frame with data about the objects
           timeline.df = NULL,  # optional data.frame for the excavation timeline
           title = NULL,        # title of the site / data set
           home.text = NULL,    # html content to display on the home page
-          lang = "en"          # interface language ("en": English, "fr": French, "pt": Portuguese)
+          lang = "en"          # interface language ("en": English, "fr": French, "it": Italian, "pt": Portuguese)
           set.theme = "cosmo") # graphic theme for the Shiny interface
 ```
 
@@ -113,6 +113,7 @@ The language of the application can be set with the `lang` parameter.
 Demonstration instances of the application are deployed on the *Huma Num* Shiny server:
 
 * [archeoViz in English](https://analytics.huma-num.fr/archeoviz/en).
+* [archeoViz in Italian](https://analytics.huma-num.fr/archeoviz/it).
 * [archeoViz in French](https://analytics.huma-num.fr/archeoviz/fr).
 
 For a real case use, see the example of the prehistoric [Poeymaü cave](https://analytics.huma-num.fr/Sebastien.Plutniak/poeymau/) in the Pyrenees (note that this application is a modified version of `archeoViz`).

@@ -149,7 +149,7 @@
     </p>"
   
   # :  it ----
-  input.objects.pt <- 
+  input.objects.it <- 
     "<p>
     È richiesta una tabella in formato csv. Ogni riga descrive un oggetto, con i seguenti campi obbligatori:
     <ul>

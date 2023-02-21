@@ -1096,11 +1096,11 @@ app_server <- function(input, output, session) {
     timeline.map() +
       geom_tile(data = time.sub.df,
                 aes(x = .data[["square_x"]], y = .data[["square_y"]],
-                    fill = .data[["excavation"]],
-                    alpha = .data[["excavation"]]),
+                    fill = .data[["excavation"]]),
                 show.legend = F) +
-      scale_fill_manual("State:", values = c("white", "darkolivegreen4") ) +
-      scale_alpha_manual(values = c(0, .7)) 
+      scale_fill_manual("State:",
+      values = c(grDevices::rgb(0,0,0,0), 
+                 grDevices::rgb(.43, .54, .23, .7)) )
   })
   
   
@@ -1120,10 +1120,11 @@ app_server <- function(input, output, session) {
                 aes(x = .data[["square_x"]], y = .data[["square_y"]], 
                     fill = .data[["excavation"]]),
                 show.legend = F)  +
-      scale_fill_manual("State:", values = c("white", "darkolivegreen4") ) +
+      scale_fill_manual("State:",
+                        values = c("white", grDevices::rgb(.43, .54, .23, .7)) ) +
       facet_wrap(~year) +
-      theme(axis.text.x = element_blank(),
-          axis.text.y = element_blank())
+      theme(axis.text.x = element_text(color="white", size = .1),
+          axis.text.y = element_text(color="white", size=.1))
   })
   
   

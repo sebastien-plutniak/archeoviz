@@ -1,4 +1,7 @@
 
+# archeoViz 0.2.4
+
+* add 'Italian'/'it' as an option for the 'lang' parameter in the 'archeoViz()' function.
 
 # archeoViz 0.2.3
 Released: 2023-02-19

@@ -89,10 +89,12 @@
     # : as factors ----
     df$square_x <- factor(df$square_x, exclude = c(NA, "", " "))
     df$square_y <- factor(df$square_y, exclude = c(NA, "", " "))
-    levels(df$square_x) <- sort(c(levels(df$square_x), add.x.square.labels))
-    levels(df$square_y) <- sort(c(levels(df$square_y), add.y.square.labels))
-    
+    df$square_x <- factor(df$square_x,
+                    levels = sort(c(levels(df$square_x), add.x.square.labels)))
+    df$square_y <- factor(df$square_y,
+                    levels = sort(c(levels(df$square_y), add.y.square.labels)))
     df$square <- paste(df$square_x, df$square_y, sep = "-")
+    
   } else{
     df$square_x <- NULL
     df$square_y <- NULL

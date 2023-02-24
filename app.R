@@ -6,7 +6,7 @@ archeoViz::archeoViz(objects.df = NULL,    # data.frame with data about the obje
                      timeline.df = NULL,   # (optional) data.frame for the excavation timeline
                      title = NULL,         # title of the site / data set
                      home.text = NULL,     # html content to display on the home page
-                     lang = "fr",          # language of the app interface
+                     lang = "en",          # language of the app interface
                      set.theme = "cosmo")  # graphic theme for the Shiny interface
                                            # see https://rstudio.github.io/shinythemes for possible values
 

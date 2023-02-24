@@ -20,7 +20,7 @@
                 <i>archeoViz</i> peut être utilisée localement ou déployée sur un serveur,
                 soit en chargeant des données via l'interface, soit en 
                 lançant l'application avec un jeu de donnée spécifique.
-                L'interface est disponible en anglais et en français.
+                L'interface est disponible en anglais, français, italien et portugais.
                 </p>
                 Le code source est libre et publié sur le 
                 <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>dépôt github</a>."
@@ -43,7 +43,7 @@
                 <i>archeoViz</i> can be used locally or deployed on a server, 
                 either by allowing the user to load data through the interface
                 or by running the app with a specific data set.
-                The interface is available in English and in French.
+                The interface is available in English, French, Italian and Portuguese.
                 </p>
                 The source code is openly published on the 
                 dedicated <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github repository</a>."
@@ -57,7 +57,7 @@
                 </p>
                 <p>
                 Distribuído como um pacote R, 
-                o <i>archeoViz</i> ppode ser usado localmente ou implantado em um servidor, seja carregando dados por meio da interface, seja iniciando o aplicativo com um conjunto de dados específico. A interface está disponível em inglês, em francês, e em português.
+                o <i>archeoViz</i> pode ser usado localmente ou implantado em um servidor, seja carregando dados por meio da interface, seja iniciando o aplicativo com um conjunto de dados específico. A interface está disponível em inglês, francês, italiano, e português.
                 </p>
                 O código-fonte é livre e publicado no 
                 <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>repositório github</a>."
@@ -70,7 +70,7 @@
                 Offre <b>visualizzazioni</b> in 3D e 2D, genera <b>sezioni</b> e <b>carte</b> dei resti archeologici, consente di realizzare statistiche spaziali semplici (inviluppi convessi, superfici di regressione, stima kernel di densità 2D) e di visualizzare una cronologia interattiva degli scavi di un sito.
                 </p>
                 <p>
-                Distribuito come pacchetto R, <i>archeoViz</i> può essere utilizzato localmente o distribuito su un server, caricando i dati tramite l’interfaccia o lanciando l’applicazione con un insieme di dati specifico. L’interfaccia è disponibile in inglese, francese, portoghese, e italiano.
+                Distribuito come pacchetto R, <i>archeoViz</i> può essere utilizzato localmente o distribuito su un server, caricando i dati tramite l’interfaccia o lanciando l’applicazione con un insieme di dati specifico. L’interfaccia è disponibile in inglese, francese, italiano e portoghese.
                 </p>
                 Il codice sorgente è open source e pubblicato sul 
                 <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>repository github</a>."

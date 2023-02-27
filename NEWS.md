@@ -1,7 +1,11 @@
 
-# archeoViz 0.2.4
+# archeoViz 0.3
+Released: 2023-02-26
 
-* add 'Italian'/'it' as an option for the 'lang' parameter in the 'archeoViz()' function.
+* Add a 'Reproducibility' tab, generating an R command to launch archeoViz() with the current settings of the app.
+* In the '3D plot' tab, add a button to download the 3D plot widget as a .html file.
+* Add 'Italian'/'it' as an option for the 'lang' parameter in the 'archeoViz()' function.
+* Various fixes, concerning the squares labels, the display of the summary tables.
 
 # archeoViz 0.2.3
 Released: 2023-02-19

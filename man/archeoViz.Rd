@@ -8,7 +8,7 @@
 archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
 		  square.size = 100,
-		   reverse.axis.values = NULL, reverse.square.names = NULL,
+		  reverse.axis.values = NULL, reverse.square.names = NULL,
 		  add.x.square.labels = NULL, add.y.square.labels = NULL,
 		  class.variable = NULL, class.values = NULL,
 		  default.group = "by.layer", location.mode = NULL,

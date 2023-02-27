@@ -72,10 +72,10 @@
   if(is.null(df$zmax)){ df$zmax <- df$zmin }
   
   # : location mode ----
-  df[, "location_mode"] <- .term_switcher("exact")
+  df[, "location_mode"] <- "exact"
   
   # : generate random coordinates if needed ----
-  location.term <- .term_switcher("fuzzy")
+  location.term <- "fuzzy"
   df <- .coordinates_sampling(df, "xmin", "xmax", "x", location.term)
   df <- .coordinates_sampling(df, "ymin", "ymax", "y", location.term)
   df <- .coordinates_sampling(df, "zmin", "zmax", "z", location.term)

@@ -1,11 +1,11 @@
 demo_objects_data <- function(n.objects=NULL){
   df <- data.frame(
     id = seq_len(n.objects),
-    square_x = factor(sample(seq_len(10), n.objects, replace = TRUE, prob=c(5:1, 5:1))),
-    square_y = factor(sample(seq_len(8),  n.objects, replace = TRUE, prob=8:1)),
-    xmin = sample(seq_len(999), n.objects, replace = TRUE),
+    square_x = factor(sample(seq_len(9), n.objects, replace = TRUE, prob=c(5:1, 4:1))),
+    square_y = factor(sample(seq_len(7),  n.objects, replace = TRUE, prob=7:1)),
+    xmin = sample(seq_len(899), n.objects, replace = TRUE),
     xmax = NA,
-    ymin = sample(seq_len(799), n.objects, replace = TRUE),
+    ymin = sample(seq_len(699), n.objects, replace = TRUE),
     ymax = NA,
     zmin = sample(seq(200, 1000, 200), n.objects, replace = TRUE, prob = c(1, 2, 3, 2, 2)),
     zmax = NA,

@@ -1,16 +1,16 @@
 archeoViz
 ================
 
-`archeoViz` is a packaged R Shiny application for the visualisation,
-exploration, and web communication of archaeological excavation data. It
-includes interactive 3D and 2D visualisations, can generate cross
-sections and map of the remains, can run basic spatial statistics
-methods (convex hull, regression surfaces, 2D kernel density
-estimation), and display an interactive timeline of an excavation.
+`archeoViz` is a packaged R Shiny application for the *visualisation*,
+*exploration*, and web *communication* of archaeological excavation
+data. It includes interactive 3D and 2D *visualisations*, can generate
+*cross sections* and *map* of the remains, can run basic *spatial
+statistics* methods (convex hull, regression surfaces, 2D kernel density
+estimation), and display an interactive *timeline* of an excavation.
 `archeoViz` can be used locally or deployed on a server, either by
 allowing the user to load data through the interface or by running the
-app with a specific data set. The interface is available in English and
-in French.
+app with a specific data set. The app interface is available in English,
+French, Italian, and Portuguese.
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -19,10 +19,14 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
 [![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
 [![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://app.codecov.io/gh/sebastien-plutniak/archeoviz)
+[![archeoViz status
+badge](https://sebastien-plutniak.r-universe.dev/badges/archeoViz)](https://sebastien-plutniak.r-universe.dev/archeoViz)
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
+[![CRAN
+Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.org/package=archeoViz)
 
   - [**Installation**](#installation)
       - [Local use](#local-use)
@@ -48,10 +52,12 @@ Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.
           - [Regression surfaces](#regression-surfaces)
           - [Convex hulls](#convex-hulls)
           - [2D kernel density](#2d-kernel-density)
+  - [**Reproducibility**](#reproducibility)
   - [**Advanced parameters**](#advanced-parameters)
       - [Square grid](#square-grid)
       - [Parameters presetting](#parameters-presetting)
       - [Reactive plot display](#reactive-plot-display)
+  - [**Acknowledgment**](#acknowledgment)
   - [**References**](#references)
 
 # Installation
@@ -69,7 +75,7 @@ The package can be installed from CRAN with:
 install.packages("archeoViz")
 ```
 
-The development version is available on GitHub and can be installed
+The development version is available on *GitHub* and can be installed
 with:
 
 ``` r
@@ -111,7 +117,7 @@ archeoViz(objects.df = NULL,   # data.frame with data about the objects
           timeline.df = NULL,  # optional data.frame for the excavation timeline
           title = NULL,        # title of the site / data set
           home.text = NULL,    # html content to display on the home page
-          lang = "en"          # interface language ("en": English, "fr": French, "pt": Portuguese)
+          lang = "en"          # interface language ("en": English, "fr": French, "it": Italian, "pt": Portuguese)
           set.theme = "cosmo") # graphic theme for the Shiny interface
 ```
 
@@ -124,13 +130,16 @@ application can be set with the `lang` parameter.
 Demonstration instances of the application are deployed on the *Huma
 Num* Shiny server:
 
-  - [archeoViz in English](https://analytics.huma-num.fr/archeoviz/en).
-  - [archeoViz in French](https://analytics.huma-num.fr/archeoviz/fr).
+  - [`archeoViz` in
+    English](https://analytics.huma-num.fr/archeoviz/en).
+  - [`archeoViz` in French](https://analytics.huma-num.fr/archeoviz/fr).
+  - [`archeoViz` in
+    Italian](https://analytics.huma-num.fr/archeoviz/it).
+  - [`archeoViz` in
+    Portuguese](https://analytics.huma-num.fr/archeoviz/pt).
 
-For a real case use, see the example of the prehistoric [Poeymaü
-cave](https://analytics.huma-num.fr/Sebastien.Plutniak/poeymau/) in the
-Pyrenees (note that this application is a modified version of
-`archeoViz`).
+Real use cases are presented on the [*archeoViz
+Portal*](https://analytics.huma-num.fr/archeoviz/home).
 
 # Community guidelines
 
@@ -259,7 +268,7 @@ generated using the
 [`plotly`](https://CRAN.R-project.org/package=plotly) library. All the
 plots are dynamic and include a menu bar above the plot with several
 options (generating an image file, zooming, moving the view, etc). See
-details on the [plotly
+details on the [`plotly`
 website](http://plotly.github.io/getting-to-know-the-plotly-modebar/).
 
 Clicking on a legend’s item modifies the display:
@@ -276,10 +285,13 @@ relationships must be represented or not.
 
 Several graphical outputs can be generated in `archeoViz`.
 
-  - All the plots generated with `plotly` include an export function in
-    .svg format.
-  - the excavation map (in the “Excavation timeline” tab) can be
-    downloaded in .svg format with the button below the plot.
+  - The 3D visualisation, the map and the section visualisation can all
+    be exported in .svg format (by cliking on the “camera” icon in the
+    menu bar above the plot).
+  - The 3D visualisation can be exported in interactive html format by
+    clicking on the “Download” button.
+  - The plan of the excavation chronology can be exported in .svg format
+    by clicking on the “Download” button.
 
 ## Reffiting
 
@@ -336,6 +348,17 @@ density. Density can be computed for all the points together or by layer
 [`MASS`](https://CRAN.R-project.org/package=MASS) package (through
 [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
 
+## Reproducibility
+
+`archeoViz` is, by definition, an interactive application. However,
+several features guarantee the reproducibility and communicability of
+the result of interactions with the application.
+
+  - The 3D visualisation can be exported in an interactive html
+    standalone format, considering the data selection made by the user.
+  - In the “Reproducibility” tab, an R command is dynamically generated,
+    considering the current application settings made by the user.
+
 ## Advanced parameters
 
 The `archeoViz()` function can be set with multiple optional parameters,
@@ -345,11 +368,11 @@ related to:
     [above](#through-function-parameters)),
   - the contents of the home page (already detailed
     [above](#deployed-use)),
-  - the square grid,
-  - the presetting of the parameters that can be set through the
-    application’s interface,
-  - the reactive behavior of the application regarding the generation of
-    plots.
+  - the [square grid](#square-grid),
+  - the [presetting](#parameters-presetting) of the parameters that can
+    be set through the application’s interface,
+  - the [reactive behavior](#reactive-plot-display) of the application
+    regarding the generation of plots.
 
 <!-- end list -->
 
@@ -377,15 +400,16 @@ archeoViz(square.size = 100,
           )
 ```
 
-  - *square.size*: numerical. Size (width and height) in centimeter of
+  - **square.size**: numerical. Size (width and height) in centimeter of
     the squares in the grid system. Default value is 100 cm.
-  - *reverse.axis.values*: character. Whether to reverse the values of
-    one or several axes (‘x’, ‘y’, ‘z’).
-  - *reverse.square.names*: character. Whether to reverse the square
-    names on the ‘x’, ‘y’ axes, or both (‘xy’).
-  - *add.x.square.labels*: character. Additional square labels on the
+  - **reverse.axis.values**: character. Name of the axis or axes to be
+    reversed (any combination of ‘x’, ‘y’, ‘z’).
+  - **reverse.square.names**: character. Name of the axis or axes for
+    which to reverse the order of the square labels (any combination of
+    ‘x’, ‘y’, ‘z’).
+  - **add.x.square.labels**: character. Additional square labels for the
     ‘x’ axis.
-  - *add.y.square.labels*: character. Additional square labels on the
+  - **add.y.square.labels**: character. Additional square labels for the
     ‘y’ axis.
 
 ### Parameters presetting
@@ -401,42 +425,43 @@ archeoViz(class.variable = NULL, class.values = NULL,
           )
 ```
 
-  - *class.variable*: character. At the launch of the app, name of the
+  - **class.variable**: character. At the launch of the app, name of the
     variable to preselect.
-  - *class.values*: character vector. At the launch of the app, names of
-    the values to preselect.
-  - *default.group*: character. At the launch of the app, preselection
-    of the variable used to group data (one of ‘by.layer’ or
-    ‘by.variable’).
-  - *location.mode*: character. At the launch of the app, preselection
-    of the location method (one of ‘exact’, ‘fuzzy’, ‘exact.fuzzy’).
-  - *map.z.val*: numerical. Minimal and maximal Z coordinates values to
-    display in the map plot.
-  - *map.density*: character. At the launch of the app, whether to
-    compute and show density contours in the map plot (one of ‘no’,
-    ‘overall’, ‘by.variable’).
-  - *map.refits*: TRUE or FALSE. Whether to show refits in the map plot.
-  - *plot3d.hulls*: TRUE or FALSE. At the launch of the app, whether to
-    compute and show convex hulls in the 3D plot.
-  - *plot3d.surfaces*: TRUE or FALSE. At the launch of the app, whether
-    to compute and show regression in the 3D plot.
-  - *plot3d.refits*: TRUE or FALSE. At the launch of the app, whether to
-    show refits on the 3D section plot.
-  - *sectionX.x.val*: numerical. At the launch of the app, minimal and
+  - **class.values**: character vector. At the launch of the app, names
+    of the values to preselect.
+  - **default.group**: character. At the launch of the app, preselection
+    of the variable used to group data (one of “by.layer” or
+    “by.variable”).
+  - **location.mode**: character. At the launch of the app, preselection
+    of the location method (one of “exact”, “fuzzy”, “exact.fuzzy”).
+  - **map.z.val**: numerical. Minimal and maximal Z coordinates values
+    to display in the map plot.
+  - **map.density**: character. At the launch of the app, whether to
+    compute and show density contours in the map plot (one of “no”,
+    “overall”, “by.variable”).
+  - **map.refits**: TRUE or FALSE. Whether to show refits in the map
+    plot.
+  - **plot3d.hulls**: TRUE or FALSE. At the launch of the app, whether
+    to compute and show convex hulls in the 3D plot.
+  - **plot3d.surfaces**: TRUE or FALSE. At the launch of the app,
+    whether to compute and show regression in the 3D plot.
+  - **plot3d.refits**: TRUE or FALSE. At the launch of the app, whether
+    to show refits on the 3D section plot.
+  - **sectionX.x.val**: numerical. At the launch of the app, minimal and
     maximal X coordinates values to display in the X section plot.
-  - *sectionX.y.val*: numerical. At the launch of the app, minimal and
+  - **sectionX.y.val**: numerical. At the launch of the app, minimal and
     maximal Y coordinates values to display in the X section plot.
-  - *sectionX.refits*: TRUE or FALSE. At the launch of the app, whether
-    to show refits in the X section plot.
-  - *sectionY.x.val*: numerical. At the launch of the app, minimal and
+  - **sectionX.refits**: TRUE or FALSE. At the launch of the app,
+    whether to show refits in the X section plot.
+  - **sectionY.x.val**: numerical. At the launch of the app, minimal and
     maximal X coordinates values to display in the Y section plot.
-  - *sectionY.y.val*: numerical. At the launch of the app, minimal and
+  - **sectionY.y.val**: numerical. At the launch of the app, minimal and
     maximal Y coordinates values to display in the Y section plot.
-  - *sectionY.refits*: TRUE or FALSE. At the launch of the app, whether
-    to show refits in the Y section plot.
-  - *camera.center*: numerical. In 3D plot, coordinates of the point to
-    which the camera looks at (default values: x=0, y=0, z=0).
-  - *camera.eye*: numerical. In 3D plot, coordinates of the camera’s
+  - **sectionY.refits**: TRUE or FALSE. At the launch of the app,
+    whether to show refits in the Y section plot.
+  - **camera.center**: numerical. In 3D plot, coordinates of the point
+    to which the camera looks at (default values: x=0, y=0, z=0).
+  - **camera.eye**: numerical. In 3D plot, coordinates of the camera’s
     position (default values: x=1.25, y=1.25, z=1.25).
 
 ### Reactive plot display
@@ -445,13 +470,20 @@ archeoViz(class.variable = NULL, class.values = NULL,
 archeoViz(run.plots = FALSE)
 ```
 
-  - *run.plots*: TRUE or FALSE. Whether to immediately compute and show
-    plots (without requiring the user to click on the buttons in the
-    interface).
+  - **run.plots**: TRUE or FALSE. Whether to immediately compute and
+    show plots (without requiring the user to click on the buttons in
+    the interface).
+
+# Acknowledgment
+
+The `archeoViz` application and package is developed and maintained by
+Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and
+Thomas Perrin tested and supported the project in its early stage.
+Renata Araujo and Sara Giardino translated the application into
+Portuguese and Italian, respectively.
 
 # References
 
   - Plutniak, Sébastien. 2023. “archeoViz. Visualisation, Exploration,
-    and Web Communication of Archaeological Excavation Data”. v0.2.1,
-    DOI:
+    and Web Communication of Archaeological Excavation Data”. v1.0, DOI:
     [10.5281/zenodo.7512526](https://doi.org/10.5281/zenodo.7512526).

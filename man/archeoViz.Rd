@@ -29,10 +29,10 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{lang}{character. Language of the interface, one of 'en' (English), 'fr' (French), 'it' (Italian), 'pt' (Portuguese).}
   \item{set.theme}{character. Name of the shinytheme to use.}
   \item{square.size}{integer. Size (width and height) in centimeter of the squares in the grid system. Default value is 100 cm.}
-  \item{reverse.axis.values}{character. Whether to reverse the values of one or several axes ('x', 'y', 'z').}
-  \item{reverse.square.names}{character. Whether to reverse the square names on the 'x', 'y' axes, or both ('xy').}
-  \item{add.x.square.labels}{character. Additional square labels on the 'x' axis.}
-  \item{add.y.square.labels}{character. Additional square labels on the 'y' axis.}
+  \item{reverse.axis.values}{character. Name of the axis or axes to be reversed (any combination of 'x', 'y', 'z').}
+  \item{reverse.square.names}{character. Name of the axis or axes for which to reverse the order of the square labels (any combination of 'x', 'y', 'z').}
+  \item{add.x.square.labels}{character. Additional square labels for the 'x' axis.}
+  \item{add.y.square.labels}{character. Additional square labels for the 'y' axis.}
   \item{class.variable}{character. At the launch of the app, name of the variable to preselect.}
   \item{class.values}{character. At the launch of the app, names of the values to preselect.}
   \item{default.group}{character. At the launch of the app, preselection of the variable used to group data (one of 'by.layer' or 'by.variable').}
@@ -50,14 +50,11 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{sectionY.x.val}{double. At the launch of the app, minimal and maximal X coordinates values to display in the Y section plot.}
   \item{sectionY.y.val}{double. At the launch of the app, minimal and maximal Y coordinates values to display in the Y section plot.}
   \item{sectionY.refits}{logical. At the launch of the app, whether to show refits in the Y section plot.}
-  \item{camera.center}{double. In 3D plot, coordinates of the point to which the camera is oriented, to pass to the 'plotly::layout()' function (default values: x=0, y=0, z=0).}
-  \item{camera.eye}{double. In 3D plot, coordinates of the camera's view point to pass to the 'plotly::layout()' function (default values: x=1.25, y=1.25, z=1.25).}
+  \item{camera.center}{double. In 3D plot, coordinates of the point to which the camera is oriented, to pass to the `plotly::layout()` function (default values: x=0, y=0, z=0).}
+  \item{camera.eye}{double. In 3D plot, coordinates of the camera's view point to pass to the `plotly::layout()` function (default values: x=1.25, y=1.25, z=1.25).}
   \item{run.plots}{logical. Whether to immediately compute and show plots (without requiring the user to click on the buttons in the interface).}
 }
 \details{
-
-
-
 
 This function launches the `archeoViz` application.
 It can be used without parameter, allowing the user to input data through the "Input data" tab.

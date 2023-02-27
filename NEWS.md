@@ -1,11 +1,12 @@
 
-# archeoViz 0.3
-Released: 2023-02-26
+# archeoViz 1.0
+Released: 2023-02-27
 
 * Add a 'Reproducibility' tab, generating an R command to launch archeoViz() with the current settings of the app.
 * In the '3D plot' tab, add a button to download the 3D plot widget as a .html file.
 * Add 'Italian'/'it' as an option for the 'lang' parameter in the 'archeoViz()' function.
 * Various fixes, concerning the squares labels, the display of the summary tables.
+* Plot background is now adapted when using dark graphic themes (cyborg, darkly, slate).
 
 # archeoViz 0.2.3
 Released: 2023-02-19

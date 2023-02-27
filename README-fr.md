@@ -11,8 +11,8 @@ régression, estimation de densité par noyau en 2D), et de visualiser
 une *chronologie* interactive des fouilles d’un site. `archeoViz` peut
 être utilisée localement ou déployée sur un serveur, soit en chargeant
 des données via l’interface, soit en lançant l’application avec un jeu
-de donnée spécifique. L’interface est disponible en anglais et en
-français.
+de donnée spécifique. L’interface est disponible en anglais, français,
+italien, et portugais.
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -21,10 +21,14 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
 [![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
 [![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://app.codecov.io/gh/sebastien-plutniak/archeoviz)
+[![archeoViz status
+badge](https://sebastien-plutniak.r-universe.dev/badges/archeoViz)](https://sebastien-plutniak.r-universe.dev/archeoViz)
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
+[![CRAN
+Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.org/package=archeoViz)
 
   - [**Installation**](#installation)
       - [Locale](#locale)
@@ -54,12 +58,13 @@ Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.
           - [Enveloppes convexes](#enveloppes-convexes)
           - [Estimation 2D de densité par
             noyau](#estimation-2d-de-densité-par-noyau)
-      - [**Paramètres avancés**](#paramètres-avancés)
-          - [Carroyage](#carroyage)
-          - [Pré-sélection des
-            paramètres](#pré-sélection-des-paramètres)
-          - [Affichage réactif des
-            visualisations](#affichage-réactif-des-visualisations)
+  - [**Reproductibilité**](#reproductibilité)  
+  - [**Paramètres avancés**](#paramètres-avancés)
+      - [Carroyage](#carroyage)
+      - [Pré-sélection des paramètres](#pré-sélection-des-paramètres)
+      - [Affichage réactif des
+        visualisations](#affichage-réactif-des-visualisations)
+  - [**Remerciements**](#remerciements)
   - [**Références**](#références)
 
 # Installation
@@ -119,7 +124,7 @@ archeoViz(objects.df = NULL,   # data.frame pour les objets
                                # par couche ("by.layer") ou "by.variable"
           title = NULL,        # titre du site / du jeu de données
           home.text = NULL,    # contenu html à afficher sur la page d'accueil
-          lang = "fr"          # langue de l'interface ("en": Anglais, "fr": Français, "pt": Portugais)
+          lang = "fr"          # langue de l'interface ("en": Anglais, "fr": Français, "it": Italien "pt": Portugais)
           set.theme = "cosmo") # thème graphique de l'interface Shiny
 ```
 
@@ -133,23 +138,23 @@ Des instances de démonstration de l’application sont déployées sur le
 Shiny server d’*Huma Num*:
 
   - [`archeoViz` en
-    Français](https://analytics.huma-num.fr/archeoviz/fr).
+    français](https://analytics.huma-num.fr/archeoviz/fr).
   - [`archeoViz` en
-    Anglais](https://analytics.huma-num.fr/archeoviz/en).
+    anglais](https://analytics.huma-num.fr/archeoviz/en).
   - [`archeoViz` en
-    Portugais](https://analytics.huma-num.fr/archeoviz/pt).
+    italien](https://analytics.huma-num.fr/archeoviz/it).
+  - [`archeoViz` en
+    portugais](https://analytics.huma-num.fr/archeoviz/pt).
 
-Pour un cas d’emploi réel, voir l’exemple de la grotte préhistorique du
-[Poeymaü](https://analytics.huma-num.fr/Sebastien.Plutniak/poeymau/)
-dans les Pyrénées (N.B. il s’agit dans ce cas d’une version modifiée de
-l’application `archeoViz`).
+Des cas d’applications à divers sites archéologiques sont rassemblés sur
+le [*Portail archeoViz*](https://analytics.huma-num.fr/archeoviz/home).
 
 # Recommandations communautaires
 
 ## Signaler un bug
 
 Si vous rencontrez un bug, ouvrez une
-[issue](https://github.com/sebastien-plutniak/archeoviz/issues) en
+[*issue*](https://github.com/sebastien-plutniak/archeoviz/issues) en
 indiquant tous les détails nécessaires pour le reproduire.
 
 ## Suggérer un changement
@@ -175,9 +180,9 @@ objectifs:
   - le déploiement aisé d’un outil d’exposition et de communication, à
     destination d’un plus large public.
 
-N.B.: par conséquent, `archeoViz` n’t pas destiné à se substituer à des
-outils d’analyse plus sophistiqués (e.g., SIG, packages statistiques,
-etc.)
+N.B.: par conséquent, `archeoViz` n’est pas destiné à se substituer à
+des outils d’analyse plus sophistiqués (e.g., SIG, packages
+statistiques, etc.)
 
 ## Données
 
@@ -291,12 +296,12 @@ archéologues:
     deuxième colonne contient l’identifiant unique de l’ensemble
     d’objets remontant entre eux auquel l’objet considéré appartient.
 2.  par relation de remontage: en employant alors un tableau à deux
-    colonnes où une ligne correspond à un **relation de remontage**. La
+    colonnes où une ligne correspond à une **relation de remontage**. La
     première colonne contient l’identifiant unique du premier objet et
     la deuxième colonne contient l’identifiant unique du deuxième objet.
 
 Bien que la seconde structure de donnée soit plus précise, c’est la
-pemière qui est le plus fréquemment employée.
+première qui est le plus fréquemment employée.
 
 Ces deux structures de données sont traitées différement dans
 `archeoViz`:
@@ -318,13 +323,13 @@ visualisations sont dynamiques et sont surmontées d’une barre de menu
 comportant plusieurs options (générer un fichier image, zoomer, déplacer
 le point de vue, etc.). Davantage de détails sont disponibles sur le
 [site de
-plotly](http://plotly.github.io/getting-to-know-the-plotly-modebar/).
+`plotly`](http://plotly.github.io/getting-to-know-the-plotly-modebar/).
 
 Cliquer sur un item de la légende modifie l’affichage:
 
-  - un simple click sur un item active/désactive son affichage;
-  - un double click sur un item limite l’affichage à cet item seul (un
-    autre double click annule cette sélection).
+  - un simple clic sur un item active/désactive son affichage;
+  - un double clic sur un item limite l’affichage à cet item seul (un
+    autre double clic annule cette sélection).
 
 Cette fonctionnalité permet de définir les couches devant être
 affichées. De plus, la taille des points peut être ajustée, ainsi que
@@ -334,10 +339,14 @@ l’affichage ou non des relations de remontage.
 
 Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 
-  - Toutes les visualisations générées avec `plotly` comportent une
-    fonction d’exportation en format .svg.
-  - le plan des fouilles (dans l’onglet “Chronologie”) peut être
-    téléchargé au format .svg en cliquant sur le bouton en dessous.
+  - Les visualisations en 3D, en plan et en sections comportent une
+    fonction d’export graphique en format .svg (accessible en cliquant
+    sur l’icône “appareil photo” de la barre de menu s’affichant au
+    dessus des visualisations).
+  - La visualisation 3D peut être exportée en format html interactif en
+    cliquant sur le bouton “Télécharger”.
+  - Le plan de la chronologie des fouilles peut être téléchargé au
+    format .svg en cliquant sur le bouton “Télécharger”.
 
 ## Statistiques spatiales
 
@@ -371,19 +380,34 @@ la fonction `kde2d` du package
 [`MASS`](https://CRAN.R-project.org/package=MASS) (à travers le package
 [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
 
+## Reproductibilité
+
+`archeoViz` est, par définition, une application interactive. Toutefois,
+plusieurs fonctionnalités permettent de garantir la reproductibilité et
+la communicabilité à des tiers du résultat d’interactions avec
+l’application.
+
+  - La visualisation 3D est exportable dans un format interactif html
+    *standalone*, tenant compte de la sélection de données effectuée par
+    l’utilisateur.
+  - Dans l’onglet “Reproductibilité”, une commande R est générée
+    dynamiquement, tenant compte du paramétrage de l’application courant
+    réalisé par l’utilisateur.
+
 ## Paramètres avancés
 
-La fonction `archeoViz()` admet de nombreux paramètres optionels,
+La fonction `archeoViz()` admet de nombreux paramètres optionnels,
 relatifs à:
 
   - les données à charger (traité
     [ci-dessus](#par-paramétrage-de-la-fonction)),
   - le contenu de la page d’accueil (traité [ci-dessus](#déployée)),
-  - le carroyage,
-  - le pré-paramètrage des paramètres pouvant être définis dans
-    l’interface graphique,
-  - le comportement réactif de l’application à propos du calcul et de
-    l’affichage des viausalisations.
+  - le [carroyage](#carroyage),
+  - le [pré-paramètrage](#pré-sélection-des-paramètres) des paramètres
+    pouvant être définis dans l’interface graphique,
+  - le [comportement réactif](#affichage-réactif-des-visualisations) de
+    l’application à propos du calcul et de l’affichage des
+    visualisations.
 
 <!-- end list -->
 
@@ -411,16 +435,18 @@ archeoViz(square.size = 100,
           )
 ```
 
-  - *square.size*: numérique. Size (width and height) in centimeter of
-    the squares in the grid system. Default value is 100 cm.
-  - *reverse.axis.values*: caractères. Whether to reverse the values of
-    one or several axes (‘x’, ‘y’, ‘z’).
-  - *reverse.square.names*: caractères. Whether to reverse the square
-    names on the ‘x’, ‘y’ axes, or both (‘xy’).
-  - *add.x.square.labels*: caractères. Additional square labels on the
-    ‘x’ axis.
-  - *add.y.square.labels*: caractères. Additional square labels on the
-    ‘y’ axis.
+  - **square.size** : numérique. Taille (longueur et largeur) en
+    centimètre des carrés du carroyage. La valeur par défaut est 100
+    cm.
+  - **reverse.axis.values** : caractères. Nom de l’axe ou des axes à
+    inverser (une combinaison de ‘x’, ‘y’, ‘z’).
+  - **reverse.square.names** : caractères. Nom de l’axe ou des axes pour
+    lesquels inverser l’ordre des labels de carrés (une combinaison de
+    ‘x’, ‘y’, ‘z’).
+  - **add.x.square.labels** : caractères. Labels de carrés additionnels
+    pour l’axe ‘x’.
+  - **add.y.square.labels** : caractères. Labels de carrés additionnels
+    pour l’axe ‘y’.
 
 ### Pré-sélection des paramètres
 
@@ -435,54 +461,54 @@ archeoViz(class.variable = NULL, class.values = NULL,
           )
 ```
 
-  - *class.variable*: caractères. Au lancement de l’application, nom de
-    la variable à pré-sélectionner.
-  - *class.values*: caractères. Au lancement de l’application, nom des
-    valeurs à pré-sélectionner.
-  - *default.group*: caractères. Au lancement de l’application,
+  - **class.variable** : caractères. Au lancement de l’application, nom
+    de la variable à pré-sélectionner.
+  - **class.values** : caractères. Au lancement de l’application, nom
+    des valeurs à pré-sélectionner.
+  - **default.group** : caractères. Au lancement de l’application,
     pré-sélection de la variable à employer pour grouper les données
-    (soit ‘by.layer’ ou ‘by.variable’).
-  - *location.mode*: caractères. Au lancement de l’application,
+    (soit “by.layer” ou “by.variable”).
+  - **location.mode** : caractères. Au lancement de l’application,
     pré-sélection du ou des modes de localisation à afficher (soit
-    ‘exact’, ‘fuzzy’, ou ‘exact.fuzzy’).
-  - *map.z.val*: numérique. Au lancement de l’application, valeurs
+    “exact”, “fuzzy”, ou “exact.fuzzy”).
+  - **map.z.val** : numérique. Au lancement de l’application, valeurs
     minimale et maximale des coordonnées Z à présélectionner dans la
     visualisation en plan.
-  - *map.density*: caractères. Au lancement de l’application, calculer
-    et afficher ou non les courbes de densité dans la visualisation en
-    plan (soit ‘no’, ‘overall’, ou ‘by.variable’).
-  - *map.refits*: TRUE ou FALSE. Afficher ou non les remontages dans la
-    visualisation en plan.
-  - *plot3d.hulls*: TRUE ou FALSE. Au lancement de l’application,
+  - **map.density** : caractères. Au lancement de l’application,
+    calculer et afficher ou non les courbes de densité dans la
+    visualisation en plan (soit “no”, “overall”, ou “by.variable”).
+  - **map.refits** : TRUE ou FALSE. Afficher ou non les remontages dans
+    la visualisation en plan.
+  - **plot3d.hulls** : TRUE ou FALSE. Au lancement de l’application,
     calculer et afficher ou non les enveloppes convexes dans la
     visualisation 3D.
-  - *plot3d.surfaces*: TRUE ou FALSE. Au lancement de l’application,
+  - **plot3d.surfaces** : TRUE ou FALSE. Au lancement de l’application,
     calculer et afficher ou non les surfaces de régression dans la
     visualisation 3D.
-  - *plot3d.refits*: TRUE ou FALSE. Au lancement de l’application,
+  - **plot3d.refits** : TRUE ou FALSE. Au lancement de l’application,
     afficher ou non les remontages dans la visualisation 3D.
-  - *sectionX.x.val*: numérique. Au lancement de l’application, valeurs
-    minimale et maximale des coordonnées X à présélectionner dans la
-    visualisation en section X.
-  - *sectionX.y.val*: numérique. Au lancement de l’application, valeurs
-    minimale et maximale des coordonnées Y à présélectionner dans la
-    visualisation en section X.
-  - *sectionX.refits*: TRUE ou FALSE. Au lancement de l’application,
+  - **sectionX.x.val** : numérique. Au lancement de l’application,
+    valeurs minimale et maximale des coordonnées X à présélectionner
+    dans la visualisation en section X.
+  - **sectionX.y.val** : numérique. Au lancement de l’application,
+    valeurs minimale et maximale des coordonnées Y à présélectionner
+    dans la visualisation en section X.
+  - **sectionX.refits** : TRUE ou FALSE. Au lancement de l’application,
     afficher ou non les remontages dans la visualisation en section X.
-  - *sectionY.x.val*: numérique. Au lancement de l’application, valeurs
-    minimale et maximale des coordonnées X à présélectionner dans la
-    visualisation en section Y.
-  - *sectionY.y.val*: numérique. Au lancement de l’application, valeurs
-    minimale et maximale des coordonnées Y à présélectionner dans la
-    visualisation en section Y.
-  - *sectionY.refits*: TRUE ou FALSE. Au lancement de l’application,
+  - **sectionY.x.val** : numérique. Au lancement de l’application,
+    valeurs minimale et maximale des coordonnées X à présélectionner
+    dans la visualisation en section Y.
+  - **sectionY.y.val** : numérique. Au lancement de l’application,
+    valeurs minimale et maximale des coordonnées Y à présélectionner
+    dans la visualisation en section Y.
+  - **sectionY.refits** : TRUE ou FALSE. Au lancement de l’application,
     afficher ou non les remontages dans la visualisation en section Y.
-  - *camera.center*: numérique. Au lancement de l’application,
+  - **camera.center** : numérique. Au lancement de l’application,
     coordonnées du point vers lequel la caméra est orientée dans la
     visualisation 3D (valeurs par défaut: x=0, y=0, z=0).
-  - *camera.eye*: numérique. Au lancement de l’application, coordonnées
-    de la position de la caméra dans la visualisation 3D (valeurs par
-    défaut: x=1.25, y=1.25, z=1.25).
+  - **camera.eye** : numérique. Au lancement de l’application,
+    coordonnées de la position de la caméra dans la visualisation 3D
+    (valeurs par défaut: x=1.25, y=1.25, z=1.25).
 
 ### Affichage réactif des visualisations
 
@@ -490,13 +516,20 @@ archeoViz(class.variable = NULL, class.values = NULL,
 archeoViz(run.plots = FALSE)
 ```
 
-  - *run.plots*: TRUE ou FALSE. Si les visualisations doivent, ou non,
-    être immédiatement calculées et affichées (sans nécessiter un click
-    sur les boutons de l’interface).
+  - **run.plots** : TRUE ou FALSE. Si les visualisations doivent, ou
+    non, être immédiatement calculées et affichées (sans nécessiter un
+    clic sur les boutons de l’interface).
+
+# Remerciements
+
+L’application et le package `archeoViz` sont développés et maintenus par
+Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, et
+Thomas Perrin ont testé et soutenu ce projet durant ses premières
+étapes. Renata Araujo et Sara Giardino ont traduit l’application
+respectivement en portugais et en italien.
 
 # Références
 
   - Plutniak, Sébastien. 2023. “archeoViz. Visualisation, Exploration,
-    and Web Communication of Archaeological Excavation Data”. v0.2.1,
-    DOI:
+    and Web Communication of Archaeological Excavation Data”. v1.0, DOI:
     [10.5281/zenodo.7512526](https://doi.org/10.5281/zenodo.7512526).

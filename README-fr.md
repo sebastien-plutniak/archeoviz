@@ -530,6 +530,7 @@ respectivement en portugais et en italien.
 
 # Références
 
-  - Plutniak, Sébastien. 2023. “archeoViz. Visualisation, Exploration,
-    and Web Communication of Archaeological Excavation Data”. v1.0, DOI:
-    [10.5281/zenodo.7512526](https://doi.org/10.5281/zenodo.7512526).
+  - Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz.
+    Visualisation, Exploration, and Web Communication of Archaeological
+    Excavation Data”. v1.0.0, DOI:
+    [10.5281/zenodo.7682227](https://doi.org/10.5281/zenodo.7682227).

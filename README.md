@@ -403,14 +403,14 @@ archeoViz(square.size = 100,
   - **square.size**: numerical. Size (width and height) in centimeter of
     the squares in the grid system. Default value is 100 cm.
   - **reverse.axis.values**: character. Name of the axis or axes to be
-    reversed (any combination of ‘x’, ‘y’, ‘z’).
+    reversed (any combination of “x”, “y”, “z”).
   - **reverse.square.names**: character. Name of the axis or axes for
     which to reverse the order of the square labels (any combination of
-    ‘x’, ‘y’, ‘z’).
+    “x”, “y”, “z”).
   - **add.x.square.labels**: character. Additional square labels for the
-    ‘x’ axis.
+    “x” axis.
   - **add.y.square.labels**: character. Additional square labels for the
-    ‘y’ axis.
+    “y” axis.
 
 ### Parameters presetting
 
@@ -484,6 +484,7 @@ Portuguese and Italian, respectively.
 
 # References
 
-  - Plutniak, Sébastien. 2023. “archeoViz. Visualisation, Exploration,
-    and Web Communication of Archaeological Excavation Data”. v1.0, DOI:
-    [10.5281/zenodo.7512526](https://doi.org/10.5281/zenodo.7512526).
+  - Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz.
+    Visualisation, Exploration, and Web Communication of Archaeological
+    Excavation Data”. v1.0.0, DOI:
+    [10.5281/zenodo.7682227](https://doi.org/10.5281/zenodo.7682227).

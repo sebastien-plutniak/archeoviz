@@ -1,6 +1,8 @@
 
 
 app_server <- function(input, output, session) {
+  .data <- NULL
+  
   # Interface ----
   # : title ----
   output$title.edited <- renderUI({
@@ -745,8 +747,6 @@ app_server <- function(input, output, session) {
     planZ.df[, color.var] <- as.character(planZ.df[, color.var])
     col <- unique(planZ.df[, c("layer_color", color.var)])
     col <- col[order(col[, 2]), ]
-    # col <- structure(as.character(col$layer_color),
-    #                  .Names = eval(parse(text = paste0("col$", color.var)))  )
     col <- as.character(col$layer_color)
     
     map <- site.map() +

@@ -4,7 +4,7 @@ Title: Visualisation, Exploration, and Web Communication of Archaeological Excav
 Version: 0.3
 Date: 2023-02-27
 Authors@R: c(person("Sebastien", "Plutniak", email = "sebastien.plutniak@posteo.net", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6674-3806")),
-             person("Renata", "Araujo", email = "rennyaraujo@yahoo.com", role = "ctb", comment = c(ORCID = "0000-0002-6674-3806")),
+             person("Renata", "Araujo", email = "rennyaraujo@yahoo.com", role = "ctb", comment = c(ORCID = "0000-0001-8874-2858")),
              person("Sara", "Giardino", email = "saragiardino@gmail.com", role = "ctb", comment = c(ORCID = "0000-0001-5634-7060"))
              )
 Author: Sebastien Plutniak [aut, cre] (<https://orcid.org/0000-0002-6674-3806>),
@@ -22,6 +22,7 @@ Imports:
 	cxhull,
 	reshape2,
 	svglite,
+	htmlwidgets,
 	shiny,
 	shinythemes,
 Suggests: 

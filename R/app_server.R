@@ -37,7 +37,7 @@ app_server <- function(input, output, session) {
         home.text, 
         "</div>"
       ) # end paste
-      )# end HTML
+      ) # end HTML
       ) # end div
     } else{stop("'home.text' parameter must be a character string.")}
     
@@ -163,7 +163,7 @@ app_server <- function(input, output, session) {
                              levels = levels(df$group.variable),
                              labels = grDevices::rainbow(length(levels(df$group.variable))))
     # location mode selection:
-    if(input$location != .term_switcher("exact.fuzzy")){
+    if(input$location != "exact.fuzzy"){
       df.sub <- df[df$location_mode %in% input$location, ]
     }else{
       df.sub <- df
@@ -338,8 +338,8 @@ app_server <- function(input, output, session) {
   })
   
   # : by variable ----
-  by.variable.table <- reactive({
-    req(input$class_variable, input$class_values)
+  by.variable.table <- eventReactive(input$goButton, {
+    req(input$class_variable, input$class_values, objects.subdataset)
     dataset <- objects.subdataset()
     
     .do_by_variable_table(dataset, input$class_variable, input$location)
@@ -349,9 +349,8 @@ app_server <- function(input, output, session) {
                                           rownames = T, digits=0)
   
   # : by layer ----
-  # by.layer.table <- eventReactive(input$goButton, {
-  by.layer.table <- reactive({
-    req(input$class_variable, input$class_values)
+  by.layer.table <- eventReactive(input$goButton, {
+    req(input$class_variable, input$class_values, objects.subdataset)
     dataset <- objects.subdataset()
     
     .do_by_layer_table(dataset, input$location)
@@ -379,6 +378,16 @@ app_server <- function(input, output, session) {
       scale_y_continuous(breaks = axis.labels$yaxis$breaks,
                          labels = axis.labels$yaxis$labels) +
       xlab("") + ylab("")
+    
+    # set background color:
+    if(getShinyOption("background.col") != "white"){
+      background <- element_rect(fill = getShinyOption("background.col"))
+      map <- map + theme_dark(base_size = 11) + 
+        theme(panel.background = background,
+              plot.background = background,
+              legend.background = background
+              ) 
+    }
     
     # reverse axes if needed:
     reverse <- getShinyOption("reverse.axis.values")
@@ -610,6 +619,8 @@ app_server <- function(input, output, session) {
     }
     
     fig <- layout(fig,
+                  paper_bgcolor = getShinyOption("background.col"), 
+                  plot_bgcolor =  getShinyOption("background.col"),
                   scene = list(
                     xaxis = list(title = 'X',
                                  tickmode = "array",
@@ -641,6 +652,13 @@ app_server <- function(input, output, session) {
   
   click.selection <- reactive(plotly::event_data("plotly_click"))
   
+  
+  output$download.3d.plot <- downloadHandler(
+    filename = "3dplot.html",
+    content = function(file2) {
+      htmlwidgets::saveWidget(plot3d(), file = file2)
+    }
+  )
   
   # PLOTS 2D ----
   # :  X section plot ----
@@ -1019,24 +1037,33 @@ app_server <- function(input, output, session) {
     
     if(n.location.modes == 1){
       # loc.modes <- c(.term_switcher(tolower(unique(df$location_mode))))
-      loc.modes <- unique(df$location_mode)
+      loc.values <- c(unique(df$location_mode))
+      loc.names <-  c(.term_switcher(loc.values))
       # loc.modes <- unique(df$location_mode)
     } else if( n.location.modes == 2) {
-      loc.modes <- c(.term_switcher("exact"), 
-                     .term_switcher("fuzzy"), 
+      # loc.modes <- c(.term_switcher("exact"), 
+      #                .term_switcher("fuzzy"), 
+      #                .term_switcher("exact.fuzzy"))
+      loc.values <- c("exact", "fuzzy", "exact.fuzzy")
+      loc.names <- c(.term_switcher("exact"),
+                     .term_switcher("fuzzy"),
                      .term_switcher("exact.fuzzy"))
+      
     }
     
-    loc.modes <- structure(loc.modes, .Names = loc.modes)  
+    # loc.modes <- structure(loc.modes, .Names = loc.modes)  
     
-    loc.mode.selection <- .term_switcher(tolower(unique(df$location_mode)[1]))
+    loc.selection <- .term_switcher(tolower(unique(df$location_mode)[1]))
+    loc.selection <- tolower(unique(df$location_mode)[1])
     if( ! is.null(getShinyOption("params")$location)){
-      loc.mode.selection <- getShinyOption("params")$location
+      loc.selection <- getShinyOption("params")$location
     }
     
     radioButtons("location", .term_switcher("location"),
-                 choices = loc.modes,
-                 selected = loc.mode.selection)
+                 # choices = loc.modes,
+                 choiceNames = loc.names,
+                 choiceValues = loc.values,
+                 selected = loc.selection)
   })
   
   # : Refitting display selectors  ----
@@ -1083,6 +1110,60 @@ app_server <- function(input, output, session) {
     }
   })
   
+  #  Reproducibility ----
+  
+  output$reproducibility <- reactive({
+    
+    get.shiny.param <- function(param){
+      param.value <- shiny::getShinyOption(param)
+      if( is.null(param.value)){
+        return(NULL)
+      } else if(param.value == ""){
+        return(NULL)
+      } else {
+        paste0("<span style=\"color: Darkblue;\">", param, "</span>",  "=", "\"", param.value, "\"")
+      }
+    }
+    
+    param.list <- list("square.size", "reverse.axis.values", "reverse.square.names",
+                       "add.x.square.labels", "add.y.square.labels", "title", "lang", "set.theme")
+    param.list <- sapply(param.list, get.shiny.param)
+    param.list <- param.list[ ! sapply(param.list, is.null) ]
+    
+    class_values <- input$class_values
+    if(length(input$class_values) == 1){
+      class_values <- paste0("\"", class_values, "\"")
+    }
+    if(sum(input$class_values == .term_switcher("all"))){
+      class_values <-  NULL
+    }
+    
+    params.list2 <- list("class.variable" = paste0("\"", input$class_variable, "\""),
+                         "class.values" = class_values, 
+                  "default.group" = paste0("\"", input$group.selection, "\""),
+                  "location.mode" = paste0("\"", input$location, "\""),
+                  "map.z.val" = input$planZ, "map.density" = input$map.density,  "map.refits" = input$refits.map,
+                  "plot3d.ratio" = input$ratio, "plot3d.hulls" = input$cxhull, "plot3d.surfaces" = input$surface,  "plot3d.refits" = input$refits,
+                  "sectionX.x.val" = input$sectionXx, "sectionX.y.val" = input$sectionXy, "sectionX.refits" = input$refits.sectionX,
+                  "sectionY.x.val" = input$sectionYx, "sectionY.y.val" = input$sectionYy, "sectionY.refits" = input$refits.sectionY
+                  )
+    params.list2 <- params.list2[ ! sapply(params.list2, is.null) ]
+    params.list2 <- params.list2[ ! params.list2 %in%  c("", "\"\"") ]
+    
+    names.list2 <- paste0("<span style=\"color: Darkblue;\">", names(params.list2), "</span>")
+    params.list2 <- paste0(names.list2, "=", params.list2)
+    
+    if(nrow(refitting.df()[[1]]) != 0){
+      refits.param <- "<span style=\"color: Darkblue;\">refits.df</span>=refit.data, "
+    } else{refits.param <- NULL}
+    
+    paste0(c("archeoViz(<span style=color:Darkblue;>objects.df</span>=data, ",
+             refits.param,
+             paste(param.list, collapse = ", "), ", ",
+             paste(params.list2, collapse = ", "),
+            ")"), collapse = "")
+    
+  })
   
   #  Timeline ----
   #  : main timeline ----

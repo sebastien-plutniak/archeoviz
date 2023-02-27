@@ -104,9 +104,8 @@ ui <- shinyUI(
           tabPanel(.term_switcher("tab.plot3d"), # 3D plot ----
                    fluidRow(
                      column(10,
-                            # plotly::plotlyOutput("plot3d",  width = 800, height = 650),
                             plotly::plotlyOutput("plot3d",  width = "100%", height = 650),
-                            uiOutput("id.table")
+                            uiOutput("id.table"), 
                      ),
                      column(2,
                             br(),
@@ -119,7 +118,8 @@ ui <- shinyUI(
                             uiOutput("show.refits"),
                             sliderInput("point.size", .term_switcher("point.size"), width="100%", sep = "",
                                         min=1, max=5, value=2, step=1),
-                            uiOutput("ratio3D")
+                            uiOutput("ratio3D"), 
+                            downloadButton("download.3d.plot", .term_switcher("download"))
                      )  # end column
                    )  # end fluid row
           ),      #end tabPanel
@@ -161,7 +161,7 @@ ui <- shinyUI(
                             sliderInput("sectionY.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
-                            imageOutput("site.mapY", width = "250px", height = "250px")
+                            plotOutput("site.mapY")
                      )
                    )#end fluidrow
           ), # end tabPanel
@@ -182,9 +182,9 @@ ui <- shinyUI(
                      column(3,
                             uiOutput("show.refits.sectionX"),
                             sliderInput("sectionX.point.size", .term_switcher("point.size"),
-                                        width="80%", sep = "",
+                                        width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
-                            imageOutput("site.mapX", width = "250px", height = "250px")
+                            plotOutput("site.mapX")
                      )
                    ) #end fluidrow
           ), # end tabPanel
@@ -208,17 +208,31 @@ ui <- shinyUI(
                      column(7,
                             imageOutput("timeline.map", width = "100%", height = "500px")),
                      column(5,
-                            imageOutput("timeline.map.grid", width = "100%", height = "400px")),
+                            imageOutput("timeline.map.grid", width = "100%", height = "400px"),
+                            downloadButton("download.timeline.map", .term_switcher("download"))),
                    ), #end fluidrow
-                   br(),
-                   downloadButton("download.timeline.map", "Download map (svg)"),
           ), #end tabPanel
-
-          tabPanel(.term_switcher("tab.guidelines"), # Guidelines ----
+        
+        tabPanel(.term_switcher("tab.reproducibility"), # Reproducibility ----
+                 column(12, align="center",
+                        br(),
+                          HTML(paste("<div style=width:40%;, align=left>",
+                                     .term_switcher("reproducibility"),
+                                     "<br><div style=\"font-family:Courier; width:100%;\", align=left>",
+                                       htmlOutput("reproducibility"),
+                                  "</div>",
+                                "</div>"
+                        ) # end paste
+                        )  # end HTML
+                 ) # end column
+        ), #end tabPanel
+        
+        tabPanel(.term_switcher("tab.guidelines"), # Guidelines ----
                column(12, align="left",
                       tags$div(
                         HTML(paste("<div style=width:70%;, align=left>",
-                       .term_switcher("guidelines")
+                       .term_switcher("guidelines"),
+                       "</div>"
                           ))# end HTML
                          )# end div
                        ) # end column

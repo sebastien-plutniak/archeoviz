@@ -158,7 +158,7 @@
       <li> <b>ymin</b> : <i>valore numerico</i>, coordinata dell’oggetto sull’asse Y</li>
       <li> <b>zmin</b> : <i>valore numerico</i>, coordinata dell’oggetto sull’asse Z (profondità)</li>
       <li> <b>layer</b> : <i>valore numerico</i>, identificativo del livello dell’oggetto</li>
-      <li> <b>object_type</b> : <i>valore alfanumerico</i>, categoria delloggetto</li>
+      <li> <b>object_type</b> : <i>valore alfanumerico</i>, categoria dell’oggetto</li>
     </ul>
     Si possono inserire inoltre dei campi opzionali, tra cui:
     <ul>
@@ -238,6 +238,19 @@
     <li> <b>square_y</b>: <i>valore alfanumerico</i>, identificatore del quadrato sull’asse Y</li>
     </ul>
     </p>"
+  
+  # reproducibility ----
+  reproducibility.fr <- "<h1>Reproductibilité</h1>
+                         <p>Pour reproduire vos réglages actuels, exécutez <i>archeoViz</i> avec la commande R suivante (ajustez les paramètres “objects.df” et “refits.df” selon vos données) :</p>"
+  
+  reproducibility.en <- "<h1>Reproducibility</h1>
+                         <p>To reproduce your current settings, run <i>archeoViz</i> with the following R command (adjust the “objects.df” and “refits.df” parameters to your needs): </p>"
+  
+  reproducibility.pt <- "<h1>Reprodutibilidade</h1>
+                         <p>Para reproduzir as suas definições actuais, execute o <i>archeoViz</i> com o seguinte comando R (ajuste os parâmetros “objects.df” e “refits.df” aos seus dados):</p>"
+  
+  reproducibility.it <- "<h1>Riproducibilità</h1>
+                         <p>Per riprodurre le impostazioni attuali, eseguire archeoViz con il seguente comando R (regolare i parametri “objects.df” e “refits.df” in base ai propri dati):</p>"
   
   # guidelines ----
   # : en ----
@@ -743,14 +756,17 @@
   # : fr ----
   fr <- list(
     welcome = welcome.fr,
+    reproducibility = reproducibility.fr,
     tab.home = "Accueil",
     tab.input = "Données",
     tab.plot3d ="Vue 3D",
     tab.map = "Plan",
     tab.tables = "Tableaux",
     tab.timeline = "Chronologie",
+    tab.reproducibility = "Reproductibilité",
     tab.guidelines = "Aide",
     all = "TOUTES",
+    download = "Télécharger",
     location = "Mode de localisation",
     values = "Valeurs",
     validate = "1) Valider la sélection",
@@ -801,14 +817,17 @@
   # : en ----
   en <- list(
     welcome = welcome.en,
+    reproducibility = reproducibility.en,
     tab.home = "Home",
     tab.input = "Input data",
     tab.plot3d ="3D plot",
     tab.map = "Map",
     tab.tables = "Tables",
     tab.timeline = "Timeline",
+    tab.reproducibility = "Reproducibility",
     tab.guidelines = "Guidelines",
     all = "ALL",
+    download = "Download",
     location = "Location method",
     values = "Values",
     validate = "(1) Validate selection",
@@ -859,14 +878,17 @@
   # : pt ----
   pt <- list(  
     welcome = welcome.pt,
+    reproducibility = reproducibility.pt,
     tab.home = "Início",
     tab.input = "Dados",
     tab.plot3d ="Visualização 3D",
     tab.map = "Mapa",
     tab.tables = "Tabelas",
     tab.timeline = "Cronologia",
+    tab.reproducibility = "Reprodutibilidade",
     tab.guidelines = "Ajuda",
     all = "TUDO",
+    download = "Descarregar",
     location = "Modo de localização",
     values = "Valores",
     validate = "Validar a seleção",
@@ -917,14 +939,17 @@
   # : it ----
   it <- list(  
     welcome = welcome.it,
+    reproducibility = reproducibility.it,
     tab.home = "Home",
     tab.input = "Dati",
     tab.plot3d = "Vista 3D",
     tab.map = "Mappa",
     tab.tables = "Tabelle",
     tab.timeline = "Cronologia",
+    tab.reproducibility = "Riproducibilità",
     tab.guidelines = "Aiuto",
     all = "TUTTE",
+    download = "Scaricare",
     location = "Modalità di localizzazione",
     values = "Valori",
     validate = "Convalida selezione",
@@ -955,8 +980,8 @@
     by.variable = "Per variabile",
     tab.variable.loc = "Numero di oggetti per variabile e modalità di localizzazione",
     tab.layer.loc = "Numero di oggetti per strato e modalità di localizzazione",
-    exact = "esatta",
-    fuzzy = "vago",
+    exact = "Esatta",
+    fuzzy = "Vago",
     depth = "Profondità",
     group = "Raggruppare i dati",
     through = "con",

@@ -59,7 +59,6 @@
     
     # subset refitting data set:
     sel <- (refitting.df[, 1] %in% section.df$id) & (refitting.df[, 2] %in% section.df$id)
-    # sel <- (refitting.df[, 1] %in% section.df$id) | (refitting.df[, 2] %in% section.df$id)
     refitting.df <- refitting.df[which(sel), ]
 
     # define values for the x axis:
@@ -74,14 +73,6 @@
                                  line = list(width=1),
                                  hoverinfo = "skip",
                                  inherit = F)
-    
-    # section <- plotly::add_paths(section, x = ~x, y = ~z,
-    #                       split = ~id,
-    #                       data = refitting.df,
-    #                       color = I("red"), showlegend=F,
-    #                       line = list(width=1),
-    #                       hoverinfo = "skip",
-    #                       inherit = F)
   }
 }
   # add layout ----
@@ -99,6 +90,8 @@
   }
   
   section <- plotly::layout(section,
+                     paper_bgcolor = getShinyOption("background.col"), 
+                     plot_bgcolor =  getShinyOption("background.col"),
                      xaxis = list(title = toupper(xaxis),
                                   zeroline = FALSE,
                                   range = xrange,
@@ -110,7 +103,7 @@
                                   range = c(coords$zmax, coords$zmin),
                                   scaleanchor="x"
                      )
-  )
+                     )
   
   section
 }

@@ -25,9 +25,10 @@
 
   # add config ----
   section <- plotly::config(section,
+                            displaylogo = FALSE,
                             toImageButtonOptions = list(
                               format = "svg",
-                              filename = "section",
+                              filename = "archeoviz-section",
                               width = 600, height = 600
                               ))
   # add points ----

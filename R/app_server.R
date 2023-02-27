@@ -509,9 +509,10 @@ app_server <- function(input, output, session) {
     )
     
     fig <- config(fig,
+                  displaylogo = FALSE,
                   toImageButtonOptions = list(
                     format = "svg",
-                    filename = "archeoViz3D",
+                    filename = "archeoviz-3d",
                     width = 600, height = 600
                   )
     )
@@ -812,7 +813,13 @@ app_server <- function(input, output, session) {
       } 
     }
     
-    ggplotly(map, tooltip = c("id", "xyz", "square", "location_mode", "object_type"))
+    map <- ggplotly(map, tooltip = c("id", "xyz", "square",
+                                     "location_mode", "object_type")) 
+    plotly::config(map,
+                   displaylogo = FALSE,  
+                   toImageButtonOptions = list(format = "svg",
+                                               filename = "archeoviz-map",
+                                               width = 600, height = 600))
   },  ignoreNULL = ( ! getShinyOption("params")$run.plots) )
   
   output$map <- plotly::renderPlotly({ map() })

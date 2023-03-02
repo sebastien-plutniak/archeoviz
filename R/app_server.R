@@ -375,11 +375,10 @@ app_server <- function(input, output, session) {
       geom_vline(xintercept = square.coords$range.x, colour = "darkgrey" ) +
       geom_hline(yintercept = square.coords$range.y, colour = "darkgrey" ) +
       coord_fixed() +
-      scale_x_continuous(breaks = axis.labels$xaxis$breaks,
+      scale_x_continuous("", breaks = axis.labels$xaxis$breaks,
                          labels = axis.labels$xaxis$labels) +
-      scale_y_continuous(breaks = axis.labels$yaxis$breaks,
-                         labels = axis.labels$yaxis$labels) +
-      xlab("") + ylab("")
+      scale_y_continuous("", breaks = axis.labels$yaxis$breaks,
+                         labels = axis.labels$yaxis$labels) 
     
     # set background color:
     if(getShinyOption("background.col") != "white"){
@@ -444,11 +443,19 @@ app_server <- function(input, output, session) {
   
   # : timeline map ----
   timeline.map <- reactive({
-    # squares <- squares()
     axis.labels <- axis.labels()
 
     map.grid <- expand.grid("square_x" = axis.labels$xaxis$labels,
                             "square_y" = axis.labels$yaxis$labels)
+    
+    # reverse squares if needed:
+    reverse <- getShinyOption("reverse.axis.values")
+    if(grepl("x", reverse)){ 
+      levels(map.grid$square_x) <- rev(levels(map.grid$square_x))
+    }
+    if(grepl("y", reverse)){ 
+      levels(map.grid$square_y) <- rev(levels(map.grid$square_y))
+    }
     
     timeline.map <- ggplot() +
       theme_minimal(base_size = 12) +
@@ -461,18 +468,6 @@ app_server <- function(input, output, session) {
       coord_fixed() +
       xlab("") + ylab("")
     
-    # reverse axes if needed:
-    reverse <- getShinyOption("reverse.axis.values")
-    if(grepl("x", reverse)){ 
-      timeline.map <- timeline.map + 
-        scale_x_reverse(breaks = axis.labels$xaxis$breaks,
-                                   labels = axis.labels$xaxis$labels)
-    }
-    if(grepl("y", reverse)){ 
-      timeline.map <- timeline.map + 
-        scale_y_reverse(breaks = axis.labels$yaxis$breaks,
-                                   labels = axis.labels$yaxis$labels)
-    }
     timeline.map
   })   
   
@@ -958,6 +953,7 @@ app_server <- function(input, output, session) {
   # : slider timeline  ----
   output$sliderTimeline <- renderUI({
     time.df <- timeline.data()
+    
     sliderInput("history.date", "Year", width="100%",  sep = "",
                 min = min(time.df$year), max = max(time.df$year),
                 value = min(time.df$year), step=1)
@@ -1122,7 +1118,7 @@ app_server <- function(input, output, session) {
   output$reproducibility <- reactive({
     
     get.shiny.param <- function(param){
-      param.value <- shiny::getShinyOption(param)
+      param.value <- getShinyOption(param)
       if( is.null(param.value)){
         return(NULL)
       } else if(param.value == ""){
@@ -1178,6 +1174,9 @@ app_server <- function(input, output, session) {
     req(timeline.data)
     
     time.df <- timeline.data()
+
+    # year <- input$history.date
+    # if(is.null(input$history.date)){ year <- min(time.df$year, na.rm=T)}
     
     time.sub.df <- time.df[time.df$year == input$history.date, ]
     

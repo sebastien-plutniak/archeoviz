@@ -13,6 +13,7 @@
     colnames(time.df) <- c("square", "year", "excavation", "square_x", "square_y")
     time.df$year <- as.integer(as.character(time.df$year))
     time.df <- time.df[time.df$excavation > 0, ]
+    time.df <- time.df[ ! is.na(time.df$year), ]
     time.df <- time.df[, c("year", "square_x", "square_y")]
   }
   else if(! is.null(timeline.ui.df)){
@@ -46,7 +47,6 @@
   time.df <- merge(time.grid,
                    time.df[c("square_x", "square_y", "year", "excavation")],
                    by = c("square_x", "square_y", "year"), all.x = T)
-  
   time.df[ is.na(time.df$excavation), ]$"excavation" <- F
   list(data = time.df, notif.text = notif.text, notif.type = notif.type)
 }

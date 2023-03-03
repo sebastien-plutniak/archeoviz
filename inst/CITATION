@@ -7,7 +7,8 @@ bibentry(
    year   = "2023",
    Note   = "R package version 1.0.0",
    doi    = "10.5281/zenodo.7682227",
-   textVersion = "Plutniak, Sébastien, Renata Araujo, Sara Giardino (2023). archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data. v1.0.0, DOI: 10.5281/zenodo.7682227"
+   url    = "https://cran.r-project.org/package=archeoViz", 
+   textVersion = "Plutniak, Sébastien, Renata Araujo, Sara Giardino (2023). archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data. v1.0.0, https://cran.r-project.org/package=archeoViz, DOI: 10.5281/zenodo.7682227"
 )
 
 citFooter("This free open-source software implements academic research by the authors and co-workers. If you use it, please support the project by citing the appropriate journal articles.")

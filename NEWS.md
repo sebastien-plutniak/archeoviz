@@ -1,6 +1,12 @@
 
+
+# archeoViz 1.0.1
+Released: 2023-03-03
+
+* fix timeline plots when the 'reverse.axis.values' parameter is used
+
 # archeoViz 1.0
-Released: 2023-02-27
+Released: 2023-02-27 (on CRAN)
 
 * Add a 'Reproducibility' tab, generating an R command to launch archeoViz() with the current settings of the app.
 * In the '3D plot' tab, add a button to download the 3D plot widget as a .html file.

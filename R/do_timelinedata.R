@@ -48,5 +48,9 @@
                    time.df[c("square_x", "square_y", "year", "excavation")],
                    by = c("square_x", "square_y", "year"), all.x = T)
   time.df[ is.na(time.df$excavation), ]$"excavation" <- F
+  
+  time.df$square_x <- factor(time.df$square_x)
+  time.df$square_y <- factor(time.df$square_y)
+  
   list(data = time.df, notif.text = notif.text, notif.type = notif.type)
 }

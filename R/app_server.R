@@ -105,7 +105,6 @@ app_server <- function(input, output, session) {
     
     if(class(refits)[1] != "list"){
       refits <- .do_refits_preprocessing(refits, objects.dataset())
-      # refits <- .do_refits_preprocessing(refits, objects.subdataset())
     }
     
     refits # an empty data.frame or a list with two dataframes
@@ -520,10 +519,14 @@ app_server <- function(input, output, session) {
     if(! is.null(input$refits)){
       if(input$refits){
         refitting.df <- refitting.df()
+        refitting.df <- refitting.df$refits.3d
+
+        sel <- (refitting.df[, 1] %in% dataset$id) | (refitting.df[, 2] %in% dataset$id)
+        refitting.df <- refitting.df[which(sel), ]
 
         fig <- add_paths(fig, x= ~x, y= ~y, z= ~z,
                          split = ~id.internal,
-                         data = refitting.df$refits.3d,
+                         data = refitting.df,
                          color = I("red"), showlegend = FALSE,
                          hoverinfo = "skip",
                          inherit = F)

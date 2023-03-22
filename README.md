@@ -193,8 +193,50 @@ tab:
     the site was excavated.
 
 The tables must be .csv files with the first row used containing the
-columns’ labels (the separator can be set). More details about the
-required formats and columns are provided in the “Input data” tab.
+columns’ labels (the separator can be set).
+
+#### Objects table
+
+A row describes a single object with the following mandatory fields:
+
+  - **id**: *alphanumerical value*, unique identifier of the object
+  - **xmin**: *numerical value*, coordinate of the object on the X axis
+    (in cm)
+  - **ymin**: *numerical value*, coordinate of the object on the Y axis
+    (in cm)
+  - **zmin**: *numerical value*, coordinate of the object on the Z axis
+    (positive depth value in cm)
+  - **layer**: *alphanumerical value*, identifier of the object’s layer
+  - **object\_type**: *alphanumerical value*, category of the object
+
+In addition, optional fields are possible, including:
+
+  - **square\_x**: *alphanumerical value*, identifier of the square on
+    the X axis
+  - **square\_y**: *alphanumerical value*, identifier of the square on
+    the Y axis
+  - **year** : *numerical value*, year when the object was excavated
+  - **xmax**: *numerical value*, when the X location of the object is
+    included in a range of X coordinates
+  - **ymax**: *numerical value*, when the Y location of the object is
+    included in a range of Y coordinates
+  - **zmax**: *numerical value*, when the Z location of the object is
+    included in a range of Z coordinates
+  - **object\_edit**: unlimited number of additional variable describing
+    the object (field names must start with `object_` and have different
+    suffixes)
+
+The labels of the squares of the grid:
+
+  - are ordered alpha-numerically;
+  - are not displayed, in order to avoid erroneous displays, if the
+    number of labels does not correspond exactly to the total number of
+    100 cm squares that can be defined in the range of minimum and
+    maximum coordinates contained in the xmin and ymin variables;
+  - can be completed with the `add.x.square.labels` and
+    `add.y.square.labels` parameters of the `archeoViz()` function in
+    order to add the missing labels (on the X and Y axes of the grid,
+    respectively).
 
 ### Random data
 

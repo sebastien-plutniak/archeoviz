@@ -19,7 +19,6 @@ knitr::opts_chunk$set(
 `archeoViz` is a packaged R Shiny application for the *visualisation*, *exploration*, and web *communication* of archaeological excavation data. It includes interactive 3D and 2D *visualisations*, can generate *cross sections* and *map* of the remains, can run basic *spatial statistics* methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive *timeline* of an excavation. `archeoViz` can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The app interface is available in English, French, Italian, and Portuguese.
 
 
-
 - [**Installation**](#installation)
   - [Local use](#local-use)
   - [Deployed use](#deployed-use)
@@ -163,7 +162,34 @@ Tables for three types of data can be uploaded from the “Input data” tab:
 * a “timeline” table (optional), with data about when each square of the site was excavated.
 
 The tables must be .csv files with the first row used containing the columns' labels (the separator can be set).
-More details about the required formats and columns are provided in the “Input data” tab.
+
+#### Objects table
+
+A row describes a single object with the following mandatory fields:
+
+ * **id**: *alphanumerical value*, unique identifier of the object 
+* **xmin**: *numerical value*, coordinate of the object on the X axis (in cm)
+* **ymin**: *numerical value*, coordinate of the object on the Y axis (in cm)
+* **zmin**: *numerical value*, coordinate of the object on the Z axis (positive depth value in cm)
+* **layer**: *alphanumerical value*, identifier of the object's layer
+* **object_type**: *alphanumerical value*, category of the object
+
+In addition, optional fields are possible, including:
+
+* **square_x**: *alphanumerical value*, identifier of the square on the X axis
+* **square_y**: *alphanumerical value*, identifier of the square on the Y axis
+* **year** : *numerical value*, year when the object was excavated
+* **xmax**: *numerical value*, when the X location of the object is included in a range of X coordinates
+* **ymax**: *numerical value*, when the Y location of the object is included in a range of Y coordinates
+* **zmax**: *numerical value*, when the Z location of the object is included in a range of Z coordinates
+* **object_edit**: unlimited number of additional variable describing the object (field names must start with `object_` and have different suffixes)
+ 
+The labels of the squares of the grid:
+
+* are ordered alpha-numerically;
+* are not displayed, in order to avoid erroneous displays, if the number of labels does not correspond exactly to the total number of 100 cm squares that can be defined in the range of minimum and maximum coordinates contained in the xmin and ymin variables;
+* can be completed with the `add.x.square.labels` and `add.y.square.labels` parameters of the `archeoViz()` function in order to add the missing labels (on the X and Y axes of the grid, respectively).
+
 
 ### Random data
 
@@ -308,10 +334,10 @@ archeoViz(square.size = 100,
 ```
 
 * **square.size**: numerical. Size (width and height) in centimeter of the squares in the grid system. Default value is 100 cm.
-* **reverse.axis.values**: character. Name of the axis or axes to be reversed (any combination of 'x', 'y', 'z').
-* **reverse.square.names**: character. Name of the axis or axes for which to reverse the order of the square labels (any combination of 'x', 'y', 'z').
-* **add.x.square.labels**: character. Additional square labels for the 'x' axis. 
-* **add.y.square.labels**: character. Additional square labels for the 'y' axis.
+* **reverse.axis.values**: character. Name of the axis or axes to be reversed (any combination of “x”, “y”, “z”).
+* **reverse.square.names**: character. Name of the axis or axes for which to reverse the order of the square labels (any combination of “x”, “y”, “z”).
+* **add.x.square.labels**: character. Additional square labels for the “x” axis. 
+* **add.y.square.labels**: character. Additional square labels for the “y” axis.
 
 ### Parameters presetting
 

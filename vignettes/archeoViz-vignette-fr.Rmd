@@ -163,7 +163,34 @@ Des tableaux pour trois types de données peuvent être chargés à partir de l'
 * un tableau “timeline” (optionnel), à propos des carrés du site et des années où ils ont été fouillés.
 
 Les tableaux doivent être au format .csv et la première ligne doit contenir les noms des variables (le symbole séparateur du csv peut être défini dans l'interface).
-Plus de détails à propos des formats et des colonnes sont donnés dans l'onglet “Données”.
+
+#### Tableau objects
+
+Chaque ligne décrit un objet et doit comporter les variables obligatoires suivantes :
+
+* **id** : *valeur alphanumérique*, identifiant unique de l'objet
+* **xmin** : *valeur numérique*, coordonnée de l'objet en axe X (en cm)
+* **ymin** : *valeur numérique*, coordonnée de l'objet en axe Y (en cm)
+* **zmin** : *valeur numérique*, coordonnée de l'objet en axe Z (valeur positive de profondeur en cm)
+* **layer** : *valeur alphanumérique*, identifiant de la couche de l'objet
+* **object_type** : *valeur alphanumérique*, catégorie de l'objet
+
+De plus, des variables optionnelles sont possibles:
+
+* **square_x** : *valeur alphanumérique*, identifiant du carré de l'objet en axe X
+* **square_y** : *valeur alphanumérique*, identifiant du carré de l'objet en axe Y
+* **year** : *valeur numérique*, année de fouille de l'objet
+* **xmax** : *valeur numérique*, lorsque la localisation de l'objet en X est comprise dans un intervalle de coordonnées
+* **ymax** : *valeur numérique*, lorsque la localisation de l'objet en Y est comprise dans un intervalle de coordonnées
+* **zmax** : *valeur numérique*, lorsque la localisation de l'objet en Z est comprise dans un intervalle de coordonnées
+* **object_edit** : nombre non limité de variables additionnelles décrivant l'objet (les noms de colonnes doivent commencer par *object_* et avoir des suffixes différents
+
+Les labels des carrés du carroyage :
+
+* sont ordonnés alpha-numériquement ;
+* ne sont pas affichés, afin d'éviter des affichages erronés, si le nombbre de labels ne correspond pas exactement au nombre total de carrés de 100 cm pouvant être définis dans l'intervalle des coordonnées minimales et maximales contenues dans les variables xmin et ymin ;
+* peuvent être complétés avec les paramètres `add.x.square.labels` et `add.y.square.labels` de la fonction `archeoViz()` afin d'ajouter les labels manquants (respectivement, sur les axes X et Y du carroyage).
+
 
 ### Par génération de données aléatoires
 
@@ -370,4 +397,6 @@ L'application et le package `archeoViz` sont développés et maintenus par Séba
 # Références
 
 * Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data”. v1.0.0, DOI: [10.5281/zenodo.7682227](https://doi.org/10.5281/zenodo.7682227).
+
+
 

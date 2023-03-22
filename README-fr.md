@@ -207,8 +207,53 @@ de l’onglet “Données”:
 
 Les tableaux doivent être au format .csv et la première ligne doit
 contenir les noms des variables (le symbole séparateur du csv peut être
-défini dans l’interface). Plus de détails à propos des formats et des
-colonnes sont donnés dans l’onglet “Données”.
+défini dans l’interface).
+
+#### Tableau objects
+
+Chaque ligne décrit un objet et doit comporter les variables
+obligatoires suivantes :
+
+  - **id** : *valeur alphanumérique*, identifiant unique de l’objet
+  - **xmin** : *valeur numérique*, coordonnée de l’objet en axe X (en
+    cm)
+  - **ymin** : *valeur numérique*, coordonnée de l’objet en axe Y (en
+    cm)
+  - **zmin** : *valeur numérique*, coordonnée de l’objet en axe Z
+    (valeur positive de profondeur en cm)
+  - **layer** : *valeur alphanumérique*, identifiant de la couche de
+    l’objet
+  - **object\_type** : *valeur alphanumérique*, catégorie de l’objet
+
+De plus, des variables optionnelles sont possibles:
+
+  - **square\_x** : *valeur alphanumérique*, identifiant du carré de
+    l’objet en axe X
+  - **square\_y** : *valeur alphanumérique*, identifiant du carré de
+    l’objet en axe Y
+  - **year** : *valeur numérique*, année de fouille de l’objet
+  - **xmax** : *valeur numérique*, lorsque la localisation de l’objet en
+    X est comprise dans un intervalle de coordonnées
+  - **ymax** : *valeur numérique*, lorsque la localisation de l’objet en
+    Y est comprise dans un intervalle de coordonnées
+  - **zmax** : *valeur numérique*, lorsque la localisation de l’objet en
+    Z est comprise dans un intervalle de coordonnées
+  - **object\_edit** : nombre non limité de variables additionnelles
+    décrivant l’objet (les noms de colonnes doivent commencer par
+    *object\_* et avoir des suffixes différents
+
+Les labels des carrés du carroyage :
+
+  - sont ordonnés alpha-numériquement ;
+  - ne sont pas affichés, afin d’éviter des affichages erronés, si le
+    nombbre de labels ne correspond pas exactement au nombre total de
+    carrés de 100 cm pouvant être définis dans l’intervalle des
+    coordonnées minimales et maximales contenues dans les variables
+    xmin et ymin ;
+  - peuvent être complétés avec les paramètres `add.x.square.labels` et
+    `add.y.square.labels` de la fonction `archeoViz()` afin d’ajouter
+    les labels manquants (respectivement, sur les axes X et Y du
+    carroyage).
 
 ### Par génération de données aléatoires
 

@@ -579,3 +579,9 @@ respectivement en portugais et en italien.
     Visualisation, Exploration, and Web Communication of Archaeological
     Excavation Data”. v1.0.0, DOI:
     [10.5281/zenodo.7682227](https://doi.org/10.5281/zenodo.7682227).
+  - Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution
+    spatiale du mobilier archéologique: l’application archeoViz et son
+    portail
+    web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”.
+    **Bulletin de la Société préhistorique française**, 120(1),
+    p. 70-74.

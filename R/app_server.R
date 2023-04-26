@@ -1131,7 +1131,7 @@ app_server <- function(input, output, session) {
       }
     }
     
-    param.list <- list("square.size", "reverse.axis.values", "reverse.square.names",
+    param.list <- list("reverse.axis.values", "reverse.square.names",
                        "add.x.square.labels", "add.y.square.labels", "title", "lang", "set.theme")
     param.list <- sapply(param.list, get.shiny.param)
     param.list <- param.list[ ! sapply(param.list, is.null) ]
@@ -1144,11 +1144,13 @@ app_server <- function(input, output, session) {
       class_values <-  NULL
     }
     
-    params.list2 <- list("class.variable" = paste0("\"", input$class_variable, "\""),
+    params.list2 <- list("home.text" = "\" \"",
+                         "class.variable" = paste0("\"", input$class_variable, "\""),
                          "class.values" = class_values, 
+                         "square.size" = getShinyOption("square.size"),
                   "default.group" = paste0("\"", input$group.selection, "\""),
                   "location.mode" = paste0("\"", input$location, "\""),
-                  "map.z.val" = input$planZ, "map.density" = input$map.density,  "map.refits" = input$refits.map,
+                  "map.z.val" = input$planZ, "map.density" = paste0("\"", input$map.density, "\""),  "map.refits" = input$refits.map,
                   "plot3d.ratio" = input$ratio, "plot3d.hulls" = input$cxhull, "plot3d.surfaces" = input$surface,  "plot3d.refits" = input$refits,
                   "sectionX.x.val" = input$sectionXx, "sectionX.y.val" = input$sectionXy, "sectionX.refits" = input$refits.sectionX,
                   "sectionY.x.val" = input$sectionYx, "sectionY.y.val" = input$sectionYy, "sectionY.refits" = input$refits.sectionY

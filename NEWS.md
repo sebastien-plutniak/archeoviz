@@ -2,7 +2,8 @@
 # archeoViz 1.0.2
 Released: 
 
-* In the '3D plot', only the refitting lines related to the objects included in the data subset are displayed 
+* In the '3D plot', only the refitting lines related to the objects included in the data subset are displayed.
+* Fixing issues in the generation of the R command in the 'reproducibility' tab.
 
 # archeoViz 1.0.1
 Released: 2023-03-03

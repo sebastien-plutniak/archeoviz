@@ -95,10 +95,9 @@ jobs:
         shell: bash
         if: matrix.config.os == 'ubuntu-20.04'  
       - name: Upload test results
-        if: failure()
+        if: ${{ (failure()) && ( matrix.config.os == 'ubuntu-20.04' ) }}  
         uses: actions/upload-artifact@v3
         with:
           name: coverage-test-failures
           path: ${{ runner.temp }}/archeoViz    
-        if: matrix.config.os == 'ubuntu-20.04'      
         

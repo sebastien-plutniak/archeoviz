@@ -88,12 +88,12 @@ jobs:
             )
         shell: Rscript {0}    
       - name: Show testthat output
+        if: ${{ (always()) && ( matrix.config.os == 'ubuntu-20.04' ) }}  
         if: always()
         run: |
           ## --------------------------------------------------------------------
           find ${{ runner.temp }}/archeoViz -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
-        if: matrix.config.os == 'ubuntu-20.04'  
       - name: Upload test results
         if: ${{ (failure()) && ( matrix.config.os == 'ubuntu-20.04' ) }}  
         uses: actions/upload-artifact@v3

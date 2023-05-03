@@ -4,6 +4,8 @@ Released:
 
 * In the '3D plot', only the refitting lines related to the objects included in the data subset are displayed.
 * Fixing issues in the generation of the R command in the 'reproducibility' tab.
+* Add a table with details about the clicked point in tabs 'Map', 'Section X', and 'Section Y'.
+* Add support for html in the tables about the clicked point.
 
 # archeoViz 1.0.1
 Released: 2023-03-03

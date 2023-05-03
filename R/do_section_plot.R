@@ -21,14 +21,15 @@
   grid.coord$x <- eval(parse(text = paste0("grid.coord$", xaxis)))
   
   # begin plot ----
-  section <- plotly::plot_ly(section.df)
+  section <- plotly::plot_ly(section.df,
+                             source = xaxis)
 
   # add config ----
   section <- plotly::config(section,
                             displaylogo = FALSE,
                             toImageButtonOptions = list(
                               format = "svg",
-                              filename = "archeoviz-section",
+                              filename = paste0("archeoviz-", xaxis, "-section"),
                               width = 600, height = 600
                               ))
   # add points ----

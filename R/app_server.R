@@ -318,25 +318,84 @@ app_server <- function(input, output, session) {
         tableOutput('refits.preview.tab'))
   })
   
-  # : 3D selection ----
-  output$id.tab <- renderTable({
-    # req(input$class_values)
-    # if (input$goButton == 0) return()
-    
-    dataset <- objects.subdataset()
-    x <- click.selection()$x 
-    y <- click.selection()$y 
-    z <- click.selection()$z 
-    id <- dataset[dataset$x == x & dataset$y == y &  dataset$z == z,]$id
-    df.tab <- dataset[which(dataset$id == id), ]
-    df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "group.variable", "color.values", "xyz"))]
-  }, digits=0)
+  # : 3D selection tab ----
+  # output$id.tab <- renderTable({
+  #   # req(input$class_values)
+  #   # if (input$goButton == 0) return()
+  #   
+  #   dataset <- objects.subdataset()
+  #   x <- click.selection()$x 
+  #   y <- click.selection()$y 
+  #   z <- click.selection()$z 
+  #   id <- dataset[dataset$x == x & dataset$y == y &  dataset$z == z,]$id
+  #   df.tab <- dataset[which(dataset$id == id), ]
+  #   df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "group.variable", "color.values", "xyz"))]
+  # }, digits=0)
+  # 
+  # output$id.table <- renderUI({
+  #   div(style = 'overflow-x: scroll; overflow: auto',
+  #       p(.term_switcher("click.on.point")),
+  #       tableOutput('id.tab'))
+  # })
   
-  output$id.table <- renderUI({
-    div(style = 'overflow-x: scroll; overflow: auto',
-        p(.term_switcher("click.on.point")),
-        tableOutput('id.tab'))
+    
+  output$plot3d.selection.tab <- renderUI({
+    dataset <- objects.subdataset()
+    
+    id <- 1
+    if( ! is.null(plot3d.click.selection())){
+      x <- plot3d.click.selection()$x 
+      y <- plot3d.click.selection()$y 
+      z <- plot3d.click.selection()$z 
+      id <- dataset[dataset$x == x & dataset$y == y & dataset$z == z,]$id
+      id <- which(dataset$id == id)
+    }
+    
+    .do_selection_table(dataset, id)
   })
+  
+  # : Map selection tab ----
+  output$map.selection.tab <- renderUI({
+    dataset <- objects.subdataset()
+    id <- 1
+    if( ! is.null(map.click.selection())){
+      x <- map.click.selection()$x 
+      y <- map.click.selection()$y 
+      id <- dataset[dataset$x == x & dataset$y == y, ]$id
+      id <- which(dataset$id %in% id)
+    }
+    
+    .do_selection_table(dataset, id)
+  })
+  # : Section X selection tab ----
+  output$sectionX.selection.tab <- renderUI({
+    dataset <- objects.subdataset()
+
+    id <- 1
+    if( ! is.null(sectionX.click.selection())){
+      x <- sectionX.click.selection()$x
+      y <- sectionX.click.selection()$y
+      id <- dataset[dataset$y == x & dataset$z == y,]$id
+      id <- which(dataset$id == id)
+    }
+    .do_selection_table(dataset, id)
+  })
+
+  # : Section Y selection tab ----
+  output$sectionY.selection.tab <- renderUI({
+    dataset <- objects.subdataset()
+
+    id <- 1
+    if( ! is.null(sectionY.click.selection())){
+      x <- sectionY.click.selection()$x
+      y <- sectionY.click.selection()$y
+      id <- dataset[dataset$x == x & dataset$z == y,]$id
+      id <- which(dataset$id == id)
+    }
+
+    .do_selection_table(dataset, id)
+  })
+  
   
   # : by variable ----
   by.variable.table <- eventReactive(input$goButton, {
@@ -499,7 +558,8 @@ app_server <- function(input, output, session) {
                    text = ~paste('id:', id,
                                  '<br>Square:', square,
                                  '<br>Location:', location_mode,
-                                 '<br>Class:', object_type)
+                                 '<br>Class:', object_type),
+                   source = "A"
     )
     
     fig <- config(fig,
@@ -651,7 +711,7 @@ app_server <- function(input, output, session) {
   
   output$plot3d <- plotly::renderPlotly(plot3d())
   
-  click.selection <- reactive(plotly::event_data("plotly_click"))
+  plot3d.click.selection <- reactive(plotly::event_data("plotly_click", source="A"))
   
   
   output$download.3d.plot <- downloadHandler(
@@ -691,6 +751,7 @@ app_server <- function(input, output, session) {
   
   output$sectionXplot <- plotly::renderPlotly({sectionXplot()})
   
+  sectionX.click.selection <- reactive(plotly::event_data("plotly_click", source="y"))
   
   # : Y section plot ----
   goButtonY <- reactive({
@@ -720,6 +781,8 @@ app_server <- function(input, output, session) {
   }) #end section Y
   
   output$sectionYplot <- plotly::renderPlotly({sectionYplot()})
+  
+  sectionY.click.selection <- reactive(plotly::event_data("plotly_click", source="x"))
   
   # : Map plot ####
   # goButtonZ <- reactive({
@@ -812,7 +875,9 @@ app_server <- function(input, output, session) {
     }
     
     map <- ggplotly(map, tooltip = c("id", "xyz", "square",
-                                     "location_mode", "object_type")) 
+                                     "location_mode", "object_type"),
+                    source = "B") 
+    
     plotly::config(map,
                    displaylogo = FALSE,  
                    toImageButtonOptions = list(format = "svg",
@@ -821,6 +886,8 @@ app_server <- function(input, output, session) {
   },  ignoreNULL = ( ! getShinyOption("params")$run.plots) )
   
   output$map <- plotly::renderPlotly({ map() })
+  
+  map.click.selection <- reactive(plotly::event_data("plotly_click", source="B"))
   
   # Conditionnal interface ----
   

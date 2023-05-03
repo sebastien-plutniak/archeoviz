@@ -3,6 +3,11 @@ shiny::addResourcePath("archeoViz", system.file("R", package="archeoViz"))
 
 ui <- shinyUI(
   fluidPage(
+    tags$head(tags$style(HTML(".tabclass 
+                              th { padding: 0 1em 1em ;}
+                              td { padding: 0 1em 1em ;}
+                              "))),
+    
     theme = shinythemes::shinytheme(getShinyOption("set.theme")),
     # Sidebar ----
     sidebarLayout(
@@ -105,7 +110,8 @@ ui <- shinyUI(
                    fluidRow(
                      column(10,
                             plotly::plotlyOutput("plot3d",  width = "100%", height = 650),
-                            uiOutput("id.table"), 
+                            p(.term_switcher("click.on.point")),
+                            uiOutput("plot3d.selection.tab"), 
                      ),
                      column(2,
                             br(),
@@ -129,6 +135,8 @@ ui <- shinyUI(
                      column(10,
                             uiOutput("sliderMap"),
                             plotly::plotlyOutput("map", width = "100%", height = 500),
+                            p(.term_switcher("click.on.point")),
+                            uiOutput("map.selection.tab"), 
                      ),
                      column(2,
                             br(),
@@ -154,7 +162,9 @@ ui <- shinyUI(
                    ),
                    fluidRow(
                      column(9,
-                            plotly::plotlyOutput("sectionYplot", width = "100%", height = 500)
+                            plotly::plotlyOutput("sectionYplot", width = "100%", height = 500),
+                            p(.term_switcher("click.on.point")),
+                            uiOutput("sectionY.selection.tab")
                      ),
                      column(3,
                             uiOutput("show.refits.sectionY"),
@@ -177,7 +187,9 @@ ui <- shinyUI(
                    ),
                    fluidRow(
                      column(9,
-                            plotly::plotlyOutput("sectionXplot", width = "100%", height = 500)
+                            plotly::plotlyOutput("sectionXplot", width = "100%", height = 500),
+                            p(.term_switcher("click.on.point")),
+                            uiOutput("sectionX.selection.tab")
                      ),
                      column(3,
                             uiOutput("show.refits.sectionX"),

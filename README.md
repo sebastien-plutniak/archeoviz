@@ -193,7 +193,10 @@ tab:
     the site was excavated.
 
 The tables must be .csv files with the first row used containing the
-columns’ labels (the separator can be set).
+columns’ labels (the separator can be set). Contents in html are
+allowed. This makes possible, in particular, to add links to external
+resources (e.g., the permanent identifier of the object’s in other
+databases, or of the concepts used to describe the object, etc.).
 
 #### Objects table
 
@@ -300,8 +303,9 @@ convex hulls.
 
 ### Objects selection
 
-In the “3D plot” tab, clicking on a point displays information about
-that point in the table below the plot.
+In the “3D plot”, “Map”, “Section X”, and “Section Y” tabs, clicking on
+a point displays information about that point in the table below the
+plot.
 
 ## Interactive visualisation
 
@@ -327,11 +331,12 @@ relationships must be represented or not.
 
 Several graphical outputs can be generated in `archeoViz`.
 
-  - The 3D visualisation, the map and the section visualisation can all
-    be exported in .svg format (by cliking on the “camera” icon in the
-    menu bar above the plot).
-  - The 3D visualisation can be exported in interactive html format by
-    clicking on the “Download” button.
+  - The plots in The plots in the “3D plot”, “Map”, “Section X”, and
+    “Section Y” can be exported:
+      - in .svg format (by cliking on the “camera” icon in the menu bar
+        above the plot),
+      - in an interactive html format, by clicking on the “Export”
+        button.
   - The plan of the excavation chronology can be exported in .svg format
     by clicking on the “Download” button.
 
@@ -534,5 +539,4 @@ Portuguese and Italian, respectively.
     spatiale du mobilier archéologique: l’application archeoViz et son
     portail
     web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”.
-    *Bulletin de la Société préhistorique française*, 120(1),
-    p. 70-74.
+    *Bulletin de la Société préhistorique française*, 120(1), p. 70-74.

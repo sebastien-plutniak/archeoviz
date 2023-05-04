@@ -4,7 +4,7 @@ Released:
 
 * In the '3D plot', only the refitting lines related to the objects included in the data subset are displayed.
 * Fixing issues in the generation of the R command in the 'reproducibility' tab.
-* Add a table with details about the clicked point in the 'Map', 'Section X', and 'Section Y' tabs (using knitr::kable(), what adds a  dependency to knitr).
+* Add a table with details about the clicked point in the 'Map', 'Section X', and 'Section Y' tabs (using knitr::kable(), what adds a dependency to knitr).
 * Add support for html in the tables displaying details about the clicked point.
 * Add buttons to export the plots as html widgets in the 'Map', 'Section X', and 'Section Y' tabs.
 

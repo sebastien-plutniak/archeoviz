@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 
 
+
 `archeoViz` est une application dédiée à l'archéologie. Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques de terrain. Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *cartes* des restes archéologiques, permet de réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une *chronologie* interactive des fouilles d'un site. `archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en anglais, français, italien, et portugais.
 
 
@@ -162,9 +163,9 @@ Des tableaux pour trois types de données peuvent être chargés à partir de l'
 * un tableau “refits” (optionnel), à propos des relations de remontage;
 * un tableau “timeline” (optionnel), à propos des carrés du site et des années où ils ont été fouillés.
 
-Les tableaux doivent être au format .csv et la première ligne doit contenir les noms des variables (le symbole séparateur du csv peut être défini dans l'interface).
+Les tableaux doivent être au format .csv et la première ligne doit contenir les noms des variables (le symbole séparateur du csv peut être défini dans l'interface). Les contenus au format html sont autorisés. Cela permet notamment d'introduire références vers des ressources complémentaires du jeu de données (par .ex l'identifiant unique de l'objets dans une autre base de données, ou ceux des concepts d'ontologies employés pour décrire l'objet, etc.).
 
-#### Tableau objects
+#### Tableau objets
 
 Chaque ligne décrit un objet et doit comporter les variables obligatoires suivantes :
 
@@ -242,7 +243,7 @@ Cette option détermine l'application des couleurs dans les graphiques 3D et 2D 
 
 ### Par objet 
 
-Enfin, dans l'onglet “Vue 3D”, cliquer sur un point active l'affichage d'information à son sujet dans le tableau présent sous la visualisation.
+Dans les onglets “Vue 3D”, “Carte”, “Section X” et  “Section Y”, cliquer sur un point active l'affichage d'informations à son sujet dans le tableau présent sous la visualisation.
 
 ## Remontages
 
@@ -268,7 +269,7 @@ Davantage de détails sont disponibles sur le [site de `plotly`](http://plotly.g
 Cliquer sur un item de la légende modifie l'affichage:
 
 * un simple clic sur un item active/désactive son affichage;
-* un double clic sur un item limite l'affichage à cet item seul  (un autre double clic annule cette sélection).
+* un double clic sur un item limite l'affichage à cet item seul (un autre double clic annule cette sélection).
 
 Cette fonctionnalité permet de définir les couches devant être affichées.
 De plus, la taille des points peut être ajustée, ainsi que l'affichage ou non des relations de remontage.
@@ -277,8 +278,9 @@ De plus, la taille des points peut être ajustée, ainsi que l'affichage ou non 
 
 Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 
-* Les visualisations en 3D, en plan et en sections comportent une fonction d'export graphique en format .svg (accessible en cliquant sur l'icône “appareil photo” de la barre de menu s'affichant au dessus des visualisations).
-* La visualisation 3D peut être exportée en format html interactif en cliquant sur le bouton “Télécharger”.
+* Les visualisations en 3D, en plan et en sections peuvent être exportées :
+	* au format .svg, en cliquant sur l'icône “appareil photo” de la barre de menu s'affichant au dessus des visualisations ;
+	* en format html interactif, en cliquant sur le bouton “Exporter” dans la colonne droite de l'interface.
 * Le plan de la chronologie des fouilles peut être téléchargé au format .svg en cliquant sur le bouton “Télécharger”.
 
 ## Statistiques spatiales
@@ -290,7 +292,6 @@ Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 Dans l'onglet “Vue 3D”, cliquer sur “Calculer les surfaces” puis “Valider” affiche les surfaces de régression associées à chaque sous-ensemble de points  (couche), comportant au moins 100 points. Les surfaces sont calculées grâce au modèle additif généralisé implémenté dans le package  [`mgcv`](https://CRAN.R-project.org/package=mgcv).
 
 ### Enveloppes convexes
-
 
 Cliquer sur “Calculer les enveloppes” puis “Valider”, dans l'onglet “Vue 3D”,  affiche les enveloppes convexes associées à chaque sous-ensemble de points  (couches), comportant au moins 20 points. Les enveloppes sont calculées en employant le package [`cxhull`](https://CRAN.R-project.org/package=cxhull).
 
@@ -397,6 +398,6 @@ L'application et le package `archeoViz` sont développés et maintenus par Séba
 # Références
 
 * Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data”. v1.0.0, DOI: [10.5281/zenodo.7682227](https://doi.org/10.5281/zenodo.7682227).
-* Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution spatiale du mobilier archéologique: l'application archeoViz et son portail web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”. *Bulletin de la Société préhistorique française*, 120(1), p. 70-74.
+* Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution spatiale du mobilier archéologique: l'application archeoViz et son portail web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”. **Bulletin de la Société préhistorique française**, 120(1), p. 70-74.
 
 

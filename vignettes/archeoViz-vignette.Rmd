@@ -161,7 +161,7 @@ Tables for three types of data can be uploaded from the “Input data” tab:
 * a “refits” table (optional), with data about the refitting objects;
 * a “timeline” table (optional), with data about when each square of the site was excavated.
 
-The tables must be .csv files with the first row used containing the columns' labels (the separator can be set).
+The tables must be .csv files with the first row used containing the columns' labels (the separator can be set). Contents in html are allowed. This makes possible, in particular, to add links to external resources (e.g., the permanent identifier of the object's in other databases, or of the concepts used to describe the object, etc.).
 
 #### Objects table
 
@@ -235,7 +235,7 @@ This option determines the colours of the points in the 3D and 2D plots and the 
 
 ### Objects selection
 
-In the “3D plot” tab, clicking on a point displays information about that point in the table below the plot.
+In the “3D plot”, “Map”, “Section X”, and “Section Y” tabs, clicking on a point displays information about that point in the table below the plot.
 
 ## Interactive visualisation
 
@@ -245,7 +245,7 @@ The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” 
 Clicking on a legend's item modifies the display:
 
 * a simple click on an item activates/deactivates its display;
-* a double click on an item  displays this item only (another double click cancels it).
+* a double click on an item displays this item only (another double click cancels it).
 
 This feature makes it possible to choose which layers are shown.
 In addition, the size of the points can be set and whether the refitting relationships must be represented or not.
@@ -254,8 +254,9 @@ In addition, the size of the points can be set and whether the refitting relatio
 
 Several graphical outputs can be generated in `archeoViz`.
 
-* The 3D visualisation, the map and the section visualisation can all be exported in .svg format (by cliking on the “camera” icon in the menu bar above the plot).
-* The 3D visualisation can be exported in interactive html format by clicking on the "Download" button.
+* The plots in The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” can be exported:
+	* in .svg format (by cliking on the “camera” icon in the menu bar above the plot),
+	* in an interactive html format, by clicking on the "Export" button.
 * The plan of the excavation chronology can be exported in .svg format by clicking on the "Download" button.
 
 ## Reffiting

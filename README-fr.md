@@ -207,9 +207,13 @@ de l’onglet “Données”:
 
 Les tableaux doivent être au format .csv et la première ligne doit
 contenir les noms des variables (le symbole séparateur du csv peut être
-défini dans l’interface).
+défini dans l’interface). Les contenus au format html sont autorisés.
+Cela permet notamment d’introduire références vers des ressources
+complémentaires du jeu de données (par .ex l’identifiant unique de
+l’objets dans une autre base de données, ou ceux des concepts
+d’ontologies employés pour décrire l’objet, etc.).
 
-#### Tableau objects
+#### Tableau objets
 
 Chaque ligne décrit un objet et doit comporter les variables
 obligatoires suivantes :
@@ -326,9 +330,9 @@ surface de régression et d’enveloppes convexes.
 
 ### Par objet
 
-Enfin, dans l’onglet “Vue 3D”, cliquer sur un point active l’affichage
-d’information à son sujet dans le tableau présent sous la
-visualisation.
+Dans les onglets “Vue 3D”, “Carte”, “Section X” et “Section Y”, cliquer
+sur un point active l’affichage d’informations à son sujet dans le
+tableau présent sous la visualisation.
 
 ## Remontages
 
@@ -384,12 +388,12 @@ l’affichage ou non des relations de remontage.
 
 Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 
-  - Les visualisations en 3D, en plan et en sections comportent une
-    fonction d’export graphique en format .svg (accessible en cliquant
-    sur l’icône “appareil photo” de la barre de menu s’affichant au
-    dessus des visualisations).
-  - La visualisation 3D peut être exportée en format html interactif en
-    cliquant sur le bouton “Télécharger”.
+  - Les visualisations en 3D, en plan et en sections peuvent être
+    exportées :
+      - au format .svg, en cliquant sur l’icône “appareil photo” de la
+        barre de menu s’affichant au dessus des visualisations ;
+      - en format html interactif, en cliquant sur le bouton “Exporter”
+        dans la colonne droite de l’interface.
   - Le plan de la chronologie des fouilles peut être téléchargé au
     format .svg en cliquant sur le bouton “Télécharger”.
 

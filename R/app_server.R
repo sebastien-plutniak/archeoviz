@@ -321,60 +321,29 @@ app_server <- function(input, output, session) {
   # : sel. tab: 3D ----
 
   output$plot3d.selection.tab <- renderUI({
-    dataset <- objects.subdataset()
-    
-    id <- 1
-    if( ! is.null(plot3d.click.selection())){
-      x <- plot3d.click.selection()$x 
-      y <- plot3d.click.selection()$y 
-      z <- plot3d.click.selection()$z 
-      id <- dataset[dataset$x == x & dataset$y == y & dataset$z == z,]$id
-      id <- which(dataset$id == id)
-    }
-    
-    .do_selection_table(dataset, id)
+    .do_selection_table("dataset" = objects.subdataset(), 
+                        "xyz" = plot3d.click.selection(),
+                        "dims" = "xyz")
   })
   
   # : sel. tab. : Map ----
   output$map.selection.tab <- renderUI({
-    dataset <- objects.subdataset()
-    id <- 1
-    if( ! is.null(map.click.selection())){
-      x <- map.click.selection()$x 
-      y <- map.click.selection()$y 
-      id <- dataset[dataset$x == x & dataset$y == y, ]$id
-      id <- which(dataset$id %in% id)
-    }
-    
-    .do_selection_table(dataset, id)
+    .do_selection_table("dataset" = objects.subdataset(), 
+                        "xyz" = map.click.selection(),
+                        "dims" = "xy")
   })
   # : sel. tab: X section ----
   output$sectionX.selection.tab <- renderUI({
-    dataset <- objects.subdataset()
-
-    id <- 1
-    if( ! is.null(sectionX.click.selection())){
-      x <- sectionX.click.selection()$x
-      y <- sectionX.click.selection()$y
-      id <- dataset[dataset$y == x & dataset$z == y,]$id
-      id <- which(dataset$id == id)
-    }
-    .do_selection_table(dataset, id)
+    .do_selection_table("dataset" = objects.subdataset(), 
+                        "xyz" = sectionX.click.selection(),
+                        "dims" = "yz")
   })
 
   ## : sel. tab: Y section ----
   output$sectionY.selection.tab <- renderUI({
-    dataset <- objects.subdataset()
-
-    id <- 1
-    if( ! is.null(sectionY.click.selection())){
-      x <- sectionY.click.selection()$x
-      y <- sectionY.click.selection()$y
-      id <- dataset[dataset$x == x & dataset$z == y,]$id
-      id <- which(dataset$id == id)
-    }
-
-    .do_selection_table(dataset, id)
+    .do_selection_table("dataset" = objects.subdataset(), 
+                        "xyz" = sectionY.click.selection(),
+                        "dims" = "xz")
   })
   
   

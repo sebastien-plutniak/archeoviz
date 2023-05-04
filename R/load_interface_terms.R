@@ -370,7 +370,7 @@
 <li>a “refits” table (optional), with data about the refitting objects;</li>
 <li>a “timeline” table (optional), with data about when each square of the site was excavated.</li>
 </ul>
-<p>The tables must be .csv files with the first row used containing the columns’ labels (the separator can be set).</p>
+<p>The tables must be .csv files with the first row used containing the columns’ labels (the separator can be set). Contents in html are allowed. This makes possible, in particular, to add links to external resources (e.g., the permanent identifier of the object’s in other databases, or of the concepts used to describe the object, etc.).</p>
 <h4 id=objects-table>Objects table</h4>
 <p>A row describes a single object with the following mandatory fields:</p>
 <ul>
@@ -415,7 +415,7 @@
 <h3 id=data-subgroups>Data subgroups</h3>
 <p>The data can be grouped in two ways: either by layer or by the selected “object_” variable. This option determines the colours of the points in the 3D and 2D plots and the subsets when computing surfaces and convex hulls.</p>
 <h3 id=objects-selection>Objects selection</h3>
-<p>In the “3D plot” tab, clicking on a point displays information about that point in the table below the plot.</p>
+<p>In the “3D plot”, “Map”, “Section X”, and “Section Y” tabs, clicking on a point displays information about that point in the table below the plot.</p>
 <h2 id=interactive-visualisation>Interactive visualisation</h2>
 <p>The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” tabs are generated using the <a href=https://CRAN.R-project.org/package=plotly><code>plotly</code></a> library. All the plots are dynamic and include a menu bar above the plot with several options (generating an image file, zooming, moving the view, etc). See details on the <a href=http://plotly.github.io/getting-to-know-the-plotly-modebar/><code>plotly</code> website</a>.</p>
 <p>Clicking on a legend’s item modifies the display:</p>
@@ -427,8 +427,11 @@
 <h2 id=graphical-outputs>Graphical outputs</h2>
 <p>Several graphical outputs can be generated in <code>archeoViz</code>.</p>
 <ul>
-<li>The 3D visualisation, the map and the section visualisation can all be exported in .svg format (by cliking on the “camera” icon in the menu bar above the plot).</li>
-<li>The 3D visualisation can be exported in interactive html format by clicking on the “Download” button.</li>
+<li>The plots in The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” can be exported:
+<ul>
+<li>in .svg format (by cliking on the “camera” icon in the menu bar above the plot),</li>
+<li>in an interactive html format, by clicking on the “Export” button.</li>
+</ul></li>
 <li>The plan of the excavation chronology can be exported in .svg format by clicking on the “Download” button.</li>
 </ul>
 <h2 id=reffiting>Reffiting</h2>
@@ -531,14 +534,13 @@
 <h1 id=references>References</h1>
 <ul>
 <li>Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data”. v1.0.0, DOI: <a href=https://doi.org/10.5281/zenodo.7682227>10.5281/zenodo.7682227</a>.</li>
+<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique: l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
 </ul>
 "
   
   
 #  : fr ----
 guidelines.fr <- "
- 
-
 <h1 id=archeoviz>archeoViz</h1>
 <p><code>archeoViz</code> est une application dédiée à l’archéologie. Elle permet de <em>visualiser</em>, d’<em>explorer</em> interactivement, et d’exposer et <em>communiquer</em> rapidement sur le web des données archéologiques de terrain. Elle propose des <em>visualisations</em> en 3D et 2D, génère des <em>coupes</em> et des <em>cartes</em> des restes archéologiques, permet de réaliser des <em>statistiques spatiales</em> simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une <em>chronologie</em> interactive des fouilles d’un site. <code>archeoViz</code> peut être utilisée localement ou déployée sur un serveur, soit en chargeant des données via l’interface, soit en lançant l’application avec un jeu de donnée spécifique. L’interface est disponible en anglais, français, italien, et portugais.</p>
 <ul>
@@ -660,8 +662,8 @@ guidelines.fr <- "
 <li>un tableau “refits” (optionnel), à propos des relations de remontage;</li>
 <li>un tableau “timeline” (optionnel), à propos des carrés du site et des années où ils ont été fouillés.</li>
 </ul>
-<p>Les tableaux doivent être au format .csv et la première ligne doit contenir les noms des variables (le symbole séparateur du csv peut être défini dans l’interface).</p>
-<h4 id=tableau-objects>Tableau objects</h4>
+<p>Les tableaux doivent être au format .csv et la première ligne doit contenir les noms des variables (le symbole séparateur du csv peut être défini dans l’interface). Les contenus au format html sont autorisés. Cela permet notamment d’introduire références vers des ressources complémentaires du jeu de données (par .ex l’identifiant unique de l’objets dans une autre base de données, ou ceux des concepts d’ontologies employés pour décrire l’objet, etc.).</p>
+<h4 id=tableau-objets>Tableau objets</h4>
 <p>Chaque ligne décrit un objet et doit comporter les variables obligatoires suivantes :</p>
 <ul>
 <li><strong>id</strong> : <em>valeur alphanumérique</em>, identifiant unique de l’objet</li>
@@ -706,7 +708,7 @@ guidelines.fr <- "
 <p>Il est, de plus, possible de préciser si les couleurs doivent être définies en fonction des couches ou en fonction de la variable objet sélectionnée.</p>
 <p>Des sous-groupes de données peuvent être définies de deux manières: soit par couche ou en fonction de la variable “object_” sélectionnée. Cette option détermine l’application des couleurs dans les graphiques 3D et 2D et les sous-groupes de données auxquels sont appliqués les calculs de surface de régression et d’enveloppes convexes.</p>
 <h3 id=par-objet>Par objet</h3>
-<p>Enfin, dans l’onglet “Vue 3D”, cliquer sur un point active l’affichage d’information à son sujet dans le tableau présent sous la visualisation.</p>
+<p>Dans les onglets “Vue 3D”, “Carte”, “Section X” et  “Section Y”, cliquer sur un point active l'affichage d'informations à son sujet dans le tableau présent sous la visualisation.</p>
 <h2 id=remontages>Remontages</h2>
 <p>Les remontages sont généralement enregistrés de deux manières par les archéologues:</p>
 <ol>
@@ -730,8 +732,11 @@ guidelines.fr <- "
 <h2 id=sorties-graphiques>Sorties graphiques</h2>
 <p>Plusieurs sorties graphiques peuvent être générées dans <code>archeoViz</code>.</p>
 <ul>
-<li>Les visualisations en 3D, en plan et en sections comportent une fonction d’export graphique en format .svg (accessible en cliquant sur l’icône “appareil photo” de la barre de menu s’affichant au dessus des visualisations).</li>
-<li>La visualisation 3D peut être exportée en format html interactif en cliquant sur le bouton “Télécharger”.</li>
+<li>Les visualisations en 3D, en plan et en sections peuvent être exportées :
+<ul>
+<li>au format .svg, en cliquant sur l’icône “appareil photo” de la barre de menu s’affichant au dessus des visualisations ;</li>
+<li>en format html interactif, en cliquant sur le bouton “Exporter” dans la colonne droite de l’interface.</li>
+</ul></li>
 <li>Le plan de la chronologie des fouilles peut être téléchargé au format .svg en cliquant sur le bouton “Télécharger”.</li>
 </ul>
 <h2 id=statistiques-spatiales>Statistiques spatiales</h2>
@@ -822,6 +827,7 @@ guidelines.fr <- "
 <h1 id=références>Références</h1>
 <ul>
 <li>Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data”. v1.0.0, DOI: <a href=https://doi.org/10.5281/zenodo.7682227>10.5281/zenodo.7682227</a>.</li>
+<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique: l’application archeoViz et son portail web</a>”. <strong>Bulletin de la Société préhistorique française</strong>, 120(1), p. 70-74.</li>
 </ul>
 "
   

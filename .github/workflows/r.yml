@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Set up R ${{ matrix.r-version }}
         #~ uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
-      - uses: r-lib/actions/setup-r@v2
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.r-version }}
       - name: Install Dependencies (Windows)
@@ -56,7 +56,7 @@ jobs:
         run: |
           install.packages(c("rlang", "remotes", "rcmdcheck", "sf", "Morpho", "stringi", "rgl"), INSTALL_opts = c("--no-multiarch"))
           install.packages(c("xfun", "stringi"), type="binary", INSTALL_opts = c("--no-multiarch"))
-          remotes::install_github("dmurdoch/rgl")
+          remotes::install_github("dmurdoch/rgl", INSTALL_opts = c("--no-multiarch"))
           remotes::install_deps(dependencies = TRUE, INSTALL_opts = c("--no-multiarch"))
         env: 
            GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}  

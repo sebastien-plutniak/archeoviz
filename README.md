@@ -534,5 +534,5 @@ Portuguese and Italian, respectively.
     spatiale du mobilier archéologique: l’application archeoViz et son
     portail
     web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”.
-    **Bulletin de la Société préhistorique française**, 120(1),
+    *Bulletin de la Société préhistorique française*, 120(1),
     p. 70-74.

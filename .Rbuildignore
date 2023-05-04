@@ -9,6 +9,6 @@ README-fr.md
 README-fr.Rmd
 README-fr.html
 LICENSE.md
-datasets
+archeoviz-portal
 R/utf8-to-ascii.sh
 R/load_interface_terms_save.R

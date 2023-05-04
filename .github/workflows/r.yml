@@ -53,18 +53,21 @@ jobs:
         shell: Rscript {0}    
       - name: Install R dependencies (windows, R '4.1.1')
         run: |
-          install.packages(c("remotes", "rcmdcheck", "sf", "Morpho", "stringi", "devtools"), INSTALL_opts = c("--no-multiarch"))
+          remove.packages("rlang")
+          install.packages(c("rlang", "remotes", "rcmdcheck", "sf", "Morpho", "stringi"), INSTALL_opts = c("--no-multiarch"))
           install.packages(c("xfun", "stringi"), type="binary", INSTALL_opts = c("--no-multiarch"))
-          devtools::install_github("dmurdoch/rgl")
+          remotes::install_github("dmurdoch/rgl")
           remotes::install_deps(dependencies = TRUE, INSTALL_opts = c("--no-multiarch"))
+        env: GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}  
         if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '4.1.1') }}
         shell: Rscript {0}      
       - name: Install R dependencies (windows, R '3.6.3')
         run: |
-          install.packages(c("remotes", "rcmdcheck", "sf", "purrr", "Morpho", "plyr", "tidyr", "plotly", "testthat", "shiny", "devtools"), INSTALL_opts = c("--no-multiarch"))
+          install.packages(c("remotes", "rcmdcheck", "sf", "purrr", "Morpho", "plyr", "tidyr", "plotly", "testthat", "shiny"), INSTALL_opts = c("--no-multiarch"))
           install.packages(c("rlang", "Rcpp", "htmltools", "digest", "cxhull"), type="binary", INSTALL_opts = c("--no-multiarch"))
-          devtools::install_github("dmurdoch/rgl")
+          remotes::install_github("dmurdoch/rgl")
           remotes::install_deps(dependencies = TRUE)
+        env: GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '3.6.3') }}
         shell: Rscript {0}              
       - name: Install R dependencies (Ubuntu)

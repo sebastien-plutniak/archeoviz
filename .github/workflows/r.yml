@@ -58,7 +58,8 @@ jobs:
           install.packages(c("xfun", "stringi"), type="binary", INSTALL_opts = c("--no-multiarch"))
           remotes::install_github("dmurdoch/rgl")
           remotes::install_deps(dependencies = TRUE, INSTALL_opts = c("--no-multiarch"))
-        env: GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}  
+        env: 
+           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}  
         if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '4.1.1') }}
         shell: Rscript {0}      
       - name: Install R dependencies (windows, R '3.6.3')
@@ -67,7 +68,8 @@ jobs:
           install.packages(c("rlang", "Rcpp", "htmltools", "digest", "cxhull"), type="binary", INSTALL_opts = c("--no-multiarch"))
           remotes::install_github("dmurdoch/rgl")
           remotes::install_deps(dependencies = TRUE)
-        env: GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+        env: 
+           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '3.6.3') }}
         shell: Rscript {0}              
       - name: Install R dependencies (Ubuntu)

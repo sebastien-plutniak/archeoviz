@@ -4,13 +4,14 @@ Released:
 
 * In the '3D plot', only the refitting lines related to the objects included in the data subset are displayed.
 * Fixing issues in the generation of the R command in the 'reproducibility' tab.
-* Add a table with details about the clicked point in tabs 'Map', 'Section X', and 'Section Y'.
-* Add support for html in the tables about the clicked point.
+* Add a table with details about the clicked point in the 'Map', 'Section X', and 'Section Y' tabs (using knitr::kable(), what adds a  dependency to knitr).
+* Add support for html in the tables displaying details about the clicked point.
+* Add buttons to export the plots as html widgets in the 'Map', 'Section X', and 'Section Y' tabs.
 
 # archeoViz 1.0.1
 Released: 2023-03-03
 
-* fix timeline plots when the 'reverse.axis.values' parameter is used
+* fix timeline plots when the 'reverse.axis.values' parameter is used.
 
 # archeoViz 1.0
 Released: 2023-02-27 (on CRAN)

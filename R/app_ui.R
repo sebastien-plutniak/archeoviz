@@ -109,9 +109,7 @@ ui <- shinyUI(
           tabPanel(.term_switcher("tab.plot3d"), # 3D plot ----
                    fluidRow(
                      column(10,
-                            plotly::plotlyOutput("plot3d",  width = "100%", height = 650),
-                            p(.term_switcher("click.on.point")),
-                            uiOutput("plot3d.selection.tab"), 
+                            plotly::plotlyOutput("plot3d",  width = "100%", height = 650)
                      ),
                      column(2,
                             br(),
@@ -125,18 +123,21 @@ ui <- shinyUI(
                             sliderInput("point.size", .term_switcher("point.size"), width="100%", sep = "",
                                         min=1, max=5, value=2, step=1),
                             uiOutput("ratio3D"), 
-                            downloadButton("download.3d.plot", .term_switcher("download"))
+                            downloadButton("download.3d.plot", .term_switcher("export"))
                      )  # end column
-                   )  # end fluid row
+                   ),  # end fluid row
+                   fluidRow(column(12,
+                     p(.term_switcher("click.on.point")),
+                     uiOutput("plot3d.selection.tab"),
+                     br()
+                   )) # end colums, end fluidrow
           ),      #end tabPanel
 
           tabPanel(.term_switcher("tab.map"),  # map ----
                    fluidRow(
                      column(10,
                             uiOutput("sliderMap"),
-                            plotly::plotlyOutput("map", width = "100%", height = 500),
-                            p(.term_switcher("click.on.point")),
-                            uiOutput("map.selection.tab"), 
+                            plotly::plotlyOutput("map", width = "100%", height = 500)
                      ),
                      column(2,
                             br(),
@@ -147,8 +148,14 @@ ui <- shinyUI(
                             sliderInput("map.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=2, step=1),
+                            downloadButton("download.map.plot", .term_switcher("export"))
                             )#end column
-                   ) #end fluid row
+                   ), #end fluid row
+                   fluidRow(column(12,
+                                   p(.term_switcher("click.on.point")),
+                                   uiOutput("map.selection.tab"),
+                                   br()
+                   )) # end colums, end fluidrow                   
           ), # end tabPanel
 
           tabPanel("Section X",  # section X ----
@@ -162,18 +169,22 @@ ui <- shinyUI(
                    ),
                    fluidRow(
                      column(9,
-                            plotly::plotlyOutput("sectionYplot", width = "100%", height = 500),
-                            p(.term_switcher("click.on.point")),
-                            uiOutput("sectionY.selection.tab")
+                            plotly::plotlyOutput("sectionYplot", width = "100%", height = 500)
                      ),
                      column(3,
                             uiOutput("show.refits.sectionY"),
                             sliderInput("sectionY.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
-                            plotOutput("site.mapY")
+                            plotOutput("site.mapY"),
+                            downloadButton("download.section.y.plot", .term_switcher("export"))
                      )
-                   )#end fluidrow
+                   ), #end fluid row
+                   fluidRow(column(12,
+                                   p(.term_switcher("click.on.point")),
+                                   uiOutput("sectionY.selection.tab"),
+                                   br()
+                   )) # end colums, end fluidrow   
           ), # end tabPanel
 
           tabPanel("Section Y",  #section Y ----
@@ -187,18 +198,22 @@ ui <- shinyUI(
                    ),
                    fluidRow(
                      column(9,
-                            plotly::plotlyOutput("sectionXplot", width = "100%", height = 500),
-                            p(.term_switcher("click.on.point")),
-                            uiOutput("sectionX.selection.tab")
+                            plotly::plotlyOutput("sectionXplot", width = "100%", height = 500)
                      ),
                      column(3,
                             uiOutput("show.refits.sectionX"),
                             sliderInput("sectionX.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
-                            plotOutput("site.mapX")
+                            plotOutput("site.mapX"),
+                            downloadButton("download.section.x.plot", .term_switcher("export"))
                      )
-                   ) #end fluidrow
+                   ), #end fluid row
+                   fluidRow(column(12,
+                                   p(.term_switcher("click.on.point")),
+                                   uiOutput("sectionX.selection.tab"),
+                                   br()
+                   )) # end colums, end fluidrow  
           ), # end tabPanel
 
           tabPanel(.term_switcher("tab.tables"),  #  tables ----

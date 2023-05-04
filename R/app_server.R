@@ -318,27 +318,8 @@ app_server <- function(input, output, session) {
         tableOutput('refits.preview.tab'))
   })
   
-  # : 3D selection tab ----
-  # output$id.tab <- renderTable({
-  #   # req(input$class_values)
-  #   # if (input$goButton == 0) return()
-  #   
-  #   dataset <- objects.subdataset()
-  #   x <- click.selection()$x 
-  #   y <- click.selection()$y 
-  #   z <- click.selection()$z 
-  #   id <- dataset[dataset$x == x & dataset$y == y &  dataset$z == z,]$id
-  #   df.tab <- dataset[which(dataset$id == id), ]
-  #   df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "group.variable", "color.values", "xyz"))]
-  # }, digits=0)
-  # 
-  # output$id.table <- renderUI({
-  #   div(style = 'overflow-x: scroll; overflow: auto',
-  #       p(.term_switcher("click.on.point")),
-  #       tableOutput('id.tab'))
-  # })
-  
-    
+  # : sel. tab: 3D ----
+
   output$plot3d.selection.tab <- renderUI({
     dataset <- objects.subdataset()
     
@@ -354,7 +335,7 @@ app_server <- function(input, output, session) {
     .do_selection_table(dataset, id)
   })
   
-  # : Map selection tab ----
+  # : sel. tab. : Map ----
   output$map.selection.tab <- renderUI({
     dataset <- objects.subdataset()
     id <- 1
@@ -367,7 +348,7 @@ app_server <- function(input, output, session) {
     
     .do_selection_table(dataset, id)
   })
-  # : Section X selection tab ----
+  # : sel. tab: X section ----
   output$sectionX.selection.tab <- renderUI({
     dataset <- objects.subdataset()
 
@@ -381,7 +362,7 @@ app_server <- function(input, output, session) {
     .do_selection_table(dataset, id)
   })
 
-  # : Section Y selection tab ----
+  ## : sel. tab: Y section ----
   output$sectionY.selection.tab <- renderUI({
     dataset <- objects.subdataset()
 
@@ -713,9 +694,9 @@ app_server <- function(input, output, session) {
   
   plot3d.click.selection <- reactive(plotly::event_data("plotly_click", source="A"))
   
-  
+  #  : widget out: 3D ----
   output$download.3d.plot <- downloadHandler(
-    filename = "3dplot.html",
+    filename = paste0(gsub(" ", "-", shiny::getShinyOption("title")), "-3d-plot.html"),
     content = function(file2) {
       htmlwidgets::saveWidget(plot3d(), file = file2)
     }
@@ -753,6 +734,14 @@ app_server <- function(input, output, session) {
   
   sectionX.click.selection <- reactive(plotly::event_data("plotly_click", source="y"))
   
+  #  : widget out: X section ----
+  output$download.section.x.plot <- downloadHandler(
+    filename = paste0(gsub(" ", "-", shiny::getShinyOption("title")), "-sectionY.html"),
+    content = function(file2) {
+      htmlwidgets::saveWidget(sectionXplot(), file = file2)
+    }
+  )
+  
   # : Y section plot ----
   goButtonY <- reactive({
     req(input$class_variable, input$class_values, input$sectionYx)
@@ -783,6 +772,14 @@ app_server <- function(input, output, session) {
   output$sectionYplot <- plotly::renderPlotly({sectionYplot()})
   
   sectionY.click.selection <- reactive(plotly::event_data("plotly_click", source="x"))
+  
+  #  : widget out: Y section ----
+  output$download.section.y.plot <- downloadHandler(
+    filename = paste0(gsub(" ", "-", shiny::getShinyOption("title")), "-sectionX.html"),
+    content = function(file3) {
+      htmlwidgets::saveWidget(sectionYplot(), file = file3)
+    }
+  )
   
   # : Map plot ####
   # goButtonZ <- reactive({
@@ -888,6 +885,14 @@ app_server <- function(input, output, session) {
   output$map <- plotly::renderPlotly({ map() })
   
   map.click.selection <- reactive(plotly::event_data("plotly_click", source="B"))
+  
+  #  : widget out: Map  ----
+  output$download.map.plot <- downloadHandler(
+    filename = paste0(gsub(" ", "-", shiny::getShinyOption("title")), "-map.html"),
+    content = function(file2) {
+      htmlwidgets::saveWidget(map(), file = file2)
+    }
+  )
   
   # Conditionnal interface ----
   

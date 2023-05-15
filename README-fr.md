@@ -297,13 +297,18 @@ catégories des objets, et la définition de sous-groupes de données.
 ### Par mode de localisation
 
 La localisation des objets archéologiques peut avoir été enregistrée de
-différentes manières, plus ou moins précises: comme des points
-(coordonnées xyz), sur des lignes, des plans, ou au sein de volumes
-(intervalles de valeurs x, y et/ou z). Dans `archeoViz`, une distinction
-est faite entre les localisations exactes (les points) et les autres
-types de localisations vagues (lignes, plans, volumes). Les boutons
-permettent de sélectionner le sous-ensemble de données correspondant à
-l’un, l’autre, ou les deux modes de localisation.
+différentes manières, plus ou moins précises: d’une part, de manière
+exacte avec des points (localisés par un triplé de coordonnées x, y et
+z) et, d’autre part, de manière plus ou moins imprécises sur des lignes,
+des plans, ou au sein de volumes (avec différentes ensembles de paires
+de valeurs x, y et/ou z). Dans `archeoViz`, une distinction est faite
+entre les localisations exactes (les points) et les autres types de
+localisations vagues (lignes, plans, volumes). Il est possible
+d’afficher les deux types de localisations (exactes et vagues), ainsi
+que de visualiser les incertitudes de localisation sous la forme de
+lignes, plans et volumes. Cette dernière option est gourmande en
+ressources, l’utiliser avec des données trop nombreuses peut ralentir
+considérablement l’application.
 
 ### Par catégorie d’objet
 
@@ -518,8 +523,8 @@ archeoViz(class.variable = NULL, class.values = NULL,
     pré-sélection de la variable à employer pour grouper les données
     (soit “by.layer” ou “by.variable”).
   - **location.mode** : caractères. Au lancement de l’application,
-    pré-sélection du ou des modes de localisation à afficher (soit
-    “exact”, “fuzzy”, ou “exact.fuzzy”).
+    pré-sélection du ou des modes de localisation à afficher (“exact”,
+    “fuzzy”, ou “show.uncertainty”).
   - **map.z.val** : numérique. Au lancement de l’application, valeurs
     minimale et maximale des coordonnées Z à présélectionner dans la
     visualisation en plan.

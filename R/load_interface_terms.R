@@ -884,7 +884,14 @@ guidelines.fr <- "
     group = "Grouper les données",
     through = "avec",
     total = "Total",
-    exact.fuzzy = "Exacte ou vague",
+    objects = "objets",
+    show.uncertainty = "Montrer les incertitudes",
+    linear.uncertainty = "incertitude linéaire",
+    planar.uncertainty = "incertitude planaire",
+    volume.uncertainty = "incertitude volumétrique",
+    linear = "Linéaire",
+    planar = "Planaire",
+    volume = "Volumétrique",
     click.on.point = "Cliquez sur un point pour afficher ses informations.",
     notif.objects.ok = "Fichier des objets ok!",
     notif.objects.not.ok = "Erreur. Certains champs requis sont absents, vérifiez le fichier.",
@@ -892,7 +899,9 @@ guidelines.fr <- "
     notif.tick.value = "Cochez au moins une valeur (dans le menu latéral gauche).",
     notif.error.coords.type = "Des valeurs xmin, ymin, ou zmin ne sont pas numériques.",
     notif.error.identifier = "Les identifiants uniques des objets ne sont pas uniques.",
-    notif.warn.obj.removed = "Les objets aux coordonnées incomplètes ont été supprimés."
+    notif.warn.obj.removed = "Les objets aux coordonnées incomplètes ont été supprimés.",
+    notif.warn.uncertainty = "Nombreuses localisations incertaines. L'affichage risque d'être lent.",
+    notif.warn.refits = "Nombreux remontages. L'affichage risque d'être lent."
   )
   
   # : en ----
@@ -943,9 +952,16 @@ guidelines.fr <- "
     fuzzy = "Fuzzy",
     depth = "Depth",
     group = "Group data",
-    total = "Total",
     through = "with",
-    exact.fuzzy = "Exact or fuzzy",
+    total = "Total",
+    objects = "objects",
+    linear.uncertainty = "linear uncertainty",
+    planar.uncertainty = "planar uncertainty",
+    volume.uncertainty = "volume uncertainty",
+    linear = "Linear",
+    planar = "Planar",
+    volume = "Volume",
+    show.uncertainty = "Show uncertainty",
     click.on.point = "Click on a point to get more information.",
     notif.objects.ok = "Objects file ok!",
     notif.objects.not.ok = "Error. Some of the mandatory fields are absent. Please check the file.",
@@ -953,7 +969,9 @@ guidelines.fr <- "
     notif.tick.value = "Tick at least one value (in the left side menu)",
     notif.error.coords.type = "xmin, ymin, or zmin value(s) are not numerical.",
     notif.error.identifier = "Some of the objects' unique identifier are duplicated.",
-    notif.warn.obj.removed = "Objects with incomplete coordinates have been removed."
+    notif.warn.obj.removed = "Objects with incomplete coordinates have been removed.",
+    notif.warn.uncertainty = "Many objects with uncertain location: it might slow down the app.",
+    notif.warn.refits = "Many refits: it might slow down the app."
   )
   
   
@@ -1008,7 +1026,14 @@ guidelines.fr <- "
     group = "Agrupar dados",
     through = "com",
     total = "Total",
-    exact.fuzzy = "Exato ou vago",
+    objects = "objetos",
+    show.uncertainty = "Mostrar incerteza",
+    linear.uncertainty = "incerteza linear",
+    planar.uncertainty = "incerteza plana",
+    volume.uncertainty = "incerteza volumétrica",
+    linear = "Lineare",
+    planar = "Planare",
+    volume = "Volumetrica",
     click.on.point = "Clique sobre um ponto para obter mais informações",
     notif.objects.ok = "Arquivo de objetos ok!",
     notif.objects.not.ok = "Erro. Certos campos exigidos estão ausentes. Por favor, verifique o arquivo.",
@@ -1016,7 +1041,9 @@ guidelines.fr <- "
     notif.tick.value = "Marque pelo menos um valor (no menu lateral esquerdo).",
     notif.error.coords.type = "Os valores xmin, ymin, ou zmin não são numéricos.",
     notif.error.identifier = "Alguns dos identificadores únicos dos objetos estão duplicados.",
-    notif.warn.obj.removed = "Objetos com coordenadas incompletas foram removidos."
+    notif.warn.obj.removed = "Objetos com coordenadas incompletas foram removidos.",
+    notif.warn.uncertainty = "Many objects with uncertain location: it might slow down the app.",
+    notif.warn.refits = "Many refits: it might slow down the app."
   )
   
   # : it ----
@@ -1070,7 +1097,14 @@ guidelines.fr <- "
     group = "Raggruppare i dati",
     through = "con",
     total = "Totale",
-    exact.fuzzy = "Esatta o vago",
+    objects = "oggetti",
+    show.uncertainty = "Mostra l'incertezza",
+    linear.uncertainty = "incertezza lineare",
+    planar.uncertainty = "incertezza planare",
+    volume.uncertainty = "incertezza volumetrica",
+    linear = "Lineare",
+    planar = "Planare",
+    volume = "Volumetrica",
     click.on.point = "Fare clic su un punto per visualizzarne le informazioni",
     notif.objects.ok = "File degli oggetto ok!",
     notif.objects.not.ok = "Errore. Mancano alcuni campi obbligatori, controllare il file",
@@ -1078,7 +1112,9 @@ guidelines.fr <- "
     notif.tick.value = "Spuntare almeno un valore (nel menu laterale a sinistra)",
     notif.error.coords.type = "I valori xmin, ymin o zmin non sono numerici",
     notif.error.identifier = "Gli identificativi univoci degli oggetti non sono unici",
-    notif.warn.obj.removed = "Gli oggetti con coordinate incomplete sono stati rimossi"
+    notif.warn.obj.removed = "Gli oggetti con coordinate incomplete sono stati rimossi",
+    notif.warn.uncertainty = "Many objects with uncertain location: it might slow down the app.",
+    notif.warn.refits = "Many refits: it might slow down the app."
   )
   
   # SWITCH ----

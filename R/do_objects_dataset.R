@@ -30,7 +30,7 @@
   # : test coords format ----
   coords.type.check <- function(x){
     typeof(x) %in% c("integer", "double")
-    }
+  }
   
   if(sum(apply(df[1, c("xmin", "ymin", "zmin")], 2, coords.type.check)) != 3){
     return(list(data = df,
@@ -71,14 +71,27 @@
   if(is.null(df$ymax)){ df$ymax <- df$ymin }
   if(is.null(df$zmax)){ df$zmax <- df$zmin }
   
+  # if coord.max absent, set coord.max = coord.min 
+  df[is.na(df$xmax), "xmax"] <- df[is.na(df$xmax), "xmin"]
+  df[is.na(df$ymax), "ymax"] <- df[is.na(df$ymax), "ymin"]
+  df[is.na(df$zmax), "zmax"] <- df[is.na(df$zmax), "zmin"]
+  
   # : location mode ----
   df[, "location_mode"] <- "exact"
+  
+  # tag fuzzy coordinates:
+  df$x.fuzzy <- F
+  df$y.fuzzy <- F
+  df$z.fuzzy <- F
   
   # : generate random coordinates if needed ----
   location.term <- "fuzzy"
   df <- .coordinates_sampling(df, "xmin", "xmax", "x", location.term)
   df <- .coordinates_sampling(df, "ymin", "ymax", "y", location.term)
   df <- .coordinates_sampling(df, "zmin", "zmax", "z", location.term)
+  
+  # compute fuzzy sum
+  df$fuzzy.sum <- apply(df[, c("x.fuzzy", "y.fuzzy", "z.fuzzy")], 1, sum)
   
   # : add a string summary of the coordinates: ----
   df$xyz <- paste0(round(df$x, 1), ", ", round(df$y, 1), ", ", round(df$z, 1))
@@ -90,9 +103,9 @@
     df$square_x <- factor(df$square_x, exclude = c(NA, "", " "))
     df$square_y <- factor(df$square_y, exclude = c(NA, "", " "))
     df$square_x <- factor(df$square_x,
-                    levels = sort(c(levels(df$square_x), add.x.square.labels)))
+                          levels = sort(c(levels(df$square_x), add.x.square.labels)))
     df$square_y <- factor(df$square_y,
-                    levels = sort(c(levels(df$square_y), add.y.square.labels)))
+                          levels = sort(c(levels(df$square_y), add.y.square.labels)))
     df$square <- paste(df$square_x, df$square_y, sep = "-")
     
   } else{

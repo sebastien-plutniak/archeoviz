@@ -53,8 +53,7 @@
                                    showlegend=F, hoverinfo="skip", inherit = F)
 
   # add refits ----
-  if(! is.null(show.refits)){
-  if(show.refits){
+  if( sum(show.refits) > 0){
     
     refitting.df <- refitting.df()
     refitting.df <- refitting.df$refits.2d
@@ -75,8 +74,7 @@
                                  line = list(width=1),
                                  hoverinfo = "skip",
                                  inherit = F)
-  }
-}
+    }
   # add layout ----
   
   xrange <- c(eval(parse(text = paste0("coords$", xaxis, "min"))),

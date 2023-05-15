@@ -278,12 +278,17 @@ recording, the category of the objects, and the way to group the data.
 
 ### Location mode
 
-The location of archaeological objects can be recorded in different
-ways, depending on the precision of the data: as points (xyz
-coordinates), on lines, plans, or within a volume (ranges of x, y, and z
-values). In `archeoViz`, a distinction is made between exact locations
-(points) and the other types of fuzzy location methods (lines, plans,
-volumes). The radio buttons allow selecting these options.
+The location of archaeological objects may have been recorded in
+different, more or less precise ways: on the one hand, exactly with
+points (located by a triplet of x, y and z coordinates) and, on the
+other hand, more or less imprecisely with lines, planes, or within
+volumes (with different sets of x, y and/or z value pairs). In
+`archeoViz`, a distinction is made between exact locations (points) and
+other vague types of locations (lines, planes, volumes). Both types of
+locations (exact and vague) can be displayed, and location uncertainties
+can also be visualised as lines, planes and volumes. This last option is
+resource intensive, and using it with too much data can slow down the
+application considerably.
 
 ### Objects category
 
@@ -480,7 +485,8 @@ archeoViz(class.variable = NULL, class.values = NULL,
     of the variable used to group data (one of “by.layer” or
     “by.variable”).
   - **location.mode**: character. At the launch of the app, preselection
-    of the location method (one of “exact”, “fuzzy”, “exact.fuzzy”).
+    of the location method (one of “exact”, “fuzzy”,
+    “show.uncertainty”).
   - **map.z.val**: numerical. Minimal and maximal Z coordinates values
     to display in the map plot.
   - **map.density**: character. At the launch of the app, whether to

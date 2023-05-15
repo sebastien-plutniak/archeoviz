@@ -1,6 +1,13 @@
 
+# archeoViz 1.1.1
+Released: 2023-05-15
+
+* Change in the 'location' menu: add a third option to visualise spatial uncertainty in the location of the objects (as lines, plans, volumes). Consequently, chage in the pssible values for the 'location' parameter ('exact.fuzzy' is replaced by 'show.uncertainty').
+* In the 'Tables' tab, the types of spatial uncertainty can now be displayed in the tables.
+* Bugs fixed: activating the immediate display of the refitting lines (with the parameters 'map.refits', 'sectionX.refits', 'sectionX.refits') failed and has been fixed.
+
 # archeoViz 1.0.2
-Released: 
+Released: 2023-05-04
 
 * In the '3D plot', only the refitting lines related to the objects included in the data subset are displayed.
 * Fixing issues in the generation of the R command in the 'reproducibility' tab.

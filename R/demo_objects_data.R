@@ -20,17 +20,42 @@ demo_objects_data <- function(n.objects=NULL){
 
   df$layer <- factor(df$zmin, labels = LETTERS[seq_len(length(unique(df$zmin)))] )
 
-  sample.set <- sample(seq_len(n.objects), n.objects / 3, replace = FALSE)
-  df[sample.set, ]$xmax <- trunc(jitter(df[sample.set, ]$xmin))
-  sample.set <- sample(seq_len(n.objects), n.objects / 3, replace = FALSE)
-  df[sample.set, ]$ymax <- trunc(jitter(df[sample.set, ]$ymin))
-
+  # selection of objects to alterate:
+  sample.set <- sample(seq_len(n.objects), n.objects / 5, replace = FALSE)
+  
+  # alterate X coordinates:
+  df[sample.set, ]$xmax <- df[sample.set, ]$xmin + sample(seq_len(100), length(sample.set), replace = TRUE) - 1
+  df[which(df$xmax > 899), ]$xmax <- df[which(df$xmax > 899), ]$xmin
+  
+  # half of the subset will have only 1 coordinate alterated:
+  idx <- sample(seq_len(length(sample.set)),  length(sample.set) / 2)
+  sample.set[idx] <-  sample.set[idx] + 1
+  
+  # alterate Y coordinates:
+  df[sample.set, ]$ymax <- df[sample.set, ]$ymin + sample(seq_len(100), length(sample.set), replace = TRUE) - 1
+  df[which(df$ymax > 699), ]$ymax <- df[which(df$ymax > 699), ]$ymin
+  
+  # alterate Z coordinate
   df$zmin <- sapply(df$zmin, function(x) { x + sample(seq.int(-90, 90), 1, prob=seq_len(181))} )
 
+  # half of the subset will have only 3 coordinate alterated:
+  idx <- sample(seq_len(length(sample.set)),  length(sample.set) / 2)
+  sample.set[idx] <-  sample.set[idx] + 1
+  
+  # alterate 2 coordinates:
+  df[sample.set, ]$zmax <- df[sample.set, ]$zmin + sample(seq_len(50), length(sample.set), replace = TRUE) - 1
+  df[which(df$zmax > 999), ]$zmax <- df[which(df$zmax > 999), ]$zmin
+  
   df$object_lithic_type <- NA
-  df[df$object_type == "lithic", ]$object_lithic_type <- 
-    sample(c("blade", "scraper", "point", "biface"),
-           nrow(df[df$object_type == "lithic", ]),
-           replace = TRUE)
-  df
+  
+  if(nrow(df[df$object_type == "lithic", ]) > 0){
+    df[which(df$object_type == "lithic"), ]$object_lithic_type <-
+      sample(c("blade", "scraper", "point", "biface"),
+             nrow(df[which(df$object_type == "lithic"), ]),
+             replace = TRUE)
+  }
+  
+  
+  df[complete.cases(df$id),]
 }
+

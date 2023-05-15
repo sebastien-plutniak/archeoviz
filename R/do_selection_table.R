@@ -14,7 +14,7 @@
   # retrieve the line corresponding to the selected point:
   id <- which(dataset$id == id)
 	df.tab <- dataset[id, ]
-	df.tab <- df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "group.variable", "color.values", "xyz", "layer_color"))]
+	df.tab <- df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "group.variable", "color.values", "xyz", "layer_color", "x.fuzzy", "y.fuzzy", "z.fuzzy", "fuzzy.sum"))]
 
 	# format the table:
 	div(style = 'overflow-x: auto; overflow: auto; ',

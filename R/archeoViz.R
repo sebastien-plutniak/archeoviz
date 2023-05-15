@@ -54,8 +54,8 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
   
   params <- list("class_variable" = class.variable, "class_values" = class.values,
                  "default.group" = default.group, "location" = location.mode,
-                 "planZ" = map.z.val, "map.density" = map.density, "refits.map" = map.refits, 
-                 "plot3d.ratio" = plot3d.ratio, "cxhull" = plot3d.hulls, "surface" = plot3d.surfaces, "refits" = plot3d.refits,
+                 "planZ" = map.z.val, "map.density" = map.density, "map.refits" = map.refits, 
+                 "plot3d.ratio" = plot3d.ratio, "cxhull" = plot3d.hulls, "surface" = plot3d.surfaces, "plot3d.refits" = plot3d.refits,
                  "sectionXx" = sectionX.x.val, "sectionXy" = sectionX.y.val, "refits.sectionX" = sectionX.refits,
                  "sectionYx" = sectionY.x.val, "sectionYy" = sectionY.y.val, "refits.sectionY" = sectionY.refits,
                  "camera.center" = camera.center, "camera.eye" = camera.eye, "run.plots" = run.plots)

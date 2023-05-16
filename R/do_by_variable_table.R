@@ -1,7 +1,8 @@
 .do_by_variable_table <- function(dataset, class_variable, input.location){
   
   df <- table(eval(parse(text = paste0("dataset$", class_variable))),
-                    dataset$location_mode)
+                    dataset$location_mode,
+              useNA = "ifany")
   
   if(nrow(df) == 0) return()
   
@@ -9,7 +10,8 @@
     dataset$fuzzy.sum <- factor(dataset$fuzzy.sum, levels = c(0, 1, 2, 3), 
                                 labels = c("exact", "linear", "planar", "volume"))
     df <- table(eval(parse(text = paste0("dataset$", class_variable))),
-                dataset$fuzzy.sum)
+                dataset$fuzzy.sum,
+                useNA = "ifany")
   }
   
   if(nrow(df) > 1 & ncol(df) > 1){
@@ -29,6 +31,7 @@
   }
   
   colnames(df) <- sapply(colnames(df), .term_switcher)
+  rownames(df)[is.na(rownames(df))] <- "NA"
   rownames(df)[nrow(df)] <- .term_switcher("total")
   
   df

@@ -342,7 +342,7 @@ app_server <- function(input, output, session) {
   
   
   # : by variable ----
-  by.variable.table <- eventReactive(input$goButton, {
+  by.variable.table <- reactive({
     req(input$class_variable, input$class_values, objects.subdataset)
     dataset <- objects.subdataset()
     
@@ -353,7 +353,7 @@ app_server <- function(input, output, session) {
                                           rownames = T, digits=0)
   
   # : by layer ----
-  by.layer.table <- eventReactive(input$goButton, {
+  by.layer.table <- reactive({
     req(input$class_variable, input$class_values, objects.subdataset)
     dataset <- objects.subdataset()
     
@@ -407,7 +407,7 @@ app_server <- function(input, output, session) {
   }) 
   
   #  : mini-map X ----
-  output$site.mapX <- renderPlot({
+  site.mapX <- reactive({
     req(input$sectionXy)
     coords <- coords.min.max()
     
@@ -423,9 +423,19 @@ app_server <- function(input, output, session) {
                            xmin = .data[["xmin"]], xmax = .data[["xmax"]]),
                 fill="red", alpha=.7)
   })
+  output$site.mapX <- renderPlot({site.mapX()}, height = 300)
   
+  output$downloadMinimapX <- downloadHandler(
+    filename = paste0(gsub(" ", "-", shiny::getShinyOption("title")), "-minimap-x.svg"),
+    content = function(file) {
+      ggsave(file, plot = site.mapX(), 
+             device = "svg", width=9, height=9, pointsize = 14)
+    }
+  )
+  
+ 
   #  : mini-map Y ----
-  output$site.mapY <- renderPlot({
+  site.mapY <- reactive({
     req(input$sectionYy)
     coords <- coords.min.max()
     
@@ -439,9 +449,19 @@ app_server <- function(input, output, session) {
       geom_rect(data = rect.df,
                 aes(ymin = .data[["ymin"]], ymax = .data[["ymax"]],
                            xmin = .data[["xmin"]], xmax = .data[["xmax"]]),
-                fill="red", alpha=.7
+                fill="red",  alpha=.7
       )
   })
+  output$site.mapY <- renderPlot({site.mapY()}, height = 300)
+  
+  output$downloadMinimapY <- downloadHandler(
+    filename = paste0(gsub(" ", "-", shiny::getShinyOption("title")), "-minimap-y.svg"),
+    content = function(file) {
+      ggsave(file, plot = site.mapY(),
+             device = "svg", width=9, height=9, pointsize = 14)
+    }
+  )
+  
   
   # : timeline map ----
   timeline.map <- reactive({
@@ -1267,12 +1287,11 @@ app_server <- function(input, output, session) {
   #  Reproducibility ----
   
   output$reproducibility <- reactive({
-    
     get.shiny.param <- function(param){
       param.value <- getShinyOption(param)
       if( is.null(param.value)){
         return(NULL)
-      } else if(param.value == ""){
+      } else if(sum(param.value == "") != 0){
         return(NULL)
       } else {
         paste0("<span style=\"color: Darkblue;\">", param, "</span>",  "=", "\"", param.value, "\"")
@@ -1280,7 +1299,7 @@ app_server <- function(input, output, session) {
     }
     
     param.list <- list("reverse.axis.values", "reverse.square.names",
-                       "add.x.square.labels", "add.y.square.labels", "title", "lang", "set.theme")
+                        "title", "lang", "set.theme")
     param.list <- sapply(param.list, get.shiny.param)
     param.list <- param.list[ ! sapply(param.list, is.null) ]
     
@@ -1293,6 +1312,8 @@ app_server <- function(input, output, session) {
     }
     
     params.list2 <- list("home.text" = "\" \"",
+                         "add.x.square.labels" = getShinyOption("add.x.square.labels"),
+                         "add.y.square.labels" = getShinyOption("add.y.square.labels"),
                          "class.variable" = paste0("\"", input$class_variable, "\""),
                          "class.values" = class_values, 
                          "square.size" = getShinyOption("square.size"),
@@ -1323,7 +1344,7 @@ app_server <- function(input, output, session) {
   
   #  Timeline ----
   #  : main timeline ----
-  output$timeline.map <- renderPlot({
+  timeline.map.plot <- reactive({
     req(timeline.data)
     
     time.df <- timeline.data()
@@ -1343,11 +1364,13 @@ app_server <- function(input, output, session) {
                  grDevices::rgb(.43, .54, .23, .7)) )
   })
   
+  output$timeline.map <- renderPlot({ timeline.map.plot() })
   
   output$download.timeline.map <- downloadHandler(
     filename = "timeline-map.svg",
     content = function(file) {
-      ggsave(file, plot = timeline.map())
+      ggsave(file, plot = timeline.map.plot(),
+             device = "svg", width=9, height=9, pointsize = 14)
     }
   )
   #  : timeline grid ----

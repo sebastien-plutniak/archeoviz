@@ -1373,8 +1373,9 @@ app_server <- function(input, output, session) {
              device = "svg", width=9, height=9, pointsize = 14)
     }
   )
+  
   #  : timeline grid ----
-  output$timeline.map.grid <- renderPlot({
+  timeline.map.grid <- reactive({
     req(timeline.data())
     time.df <- timeline.data()
     
@@ -1384,11 +1385,47 @@ app_server <- function(input, output, session) {
                     fill = .data[["excavation"]]),
                 show.legend = F)  +
       scale_fill_manual("State:",
-                        values = c("white", grDevices::rgb(.43, .54, .23, .7)) ) +
+                        values = c(grDevices::rgb(0, 0, 0, 0),
+                                   grDevices::rgb(.43, .54, .23, 1)) ) +
       facet_wrap(~year) +
       theme(axis.text.x = element_text(color="white", size = .1),
-          axis.text.y = element_text(color="white", size=.1))
+            axis.text.y = element_text(color="white", size = .1),
+            panel.grid.major = element_blank())
   })
   
+  output$timeline.map.grid <- renderPlot({ timeline.map.grid()})
+  
+  output$download.timeline.map.grid <- downloadHandler(
+    filename = "timeline-map-grid.svg",
+    content = function(file) {
+      ggsave(file, plot = timeline.map.grid(),
+             device = "svg", width=9, height=9, pointsize = 14)
+    }
+  )
   
 } # end of server.R
+
+# 
+# sample_df <- data.frame(
+#   x = 1:20),
+#   y = 1:20
+# )
+# 
+# group_means_df <- setNames(
+#   aggregate(value ~ group, sample_df, mean),
+#   c("group", "group_mean")
+# )
+# 
+#   ggplot(data = sample_df, mapping = aes(x = x, y = y)) +
+#       theme_minimal(base_size = 11) +
+#       # geom_vline(xintercept = seq(1,10,2) ) +
+#       # geom_hline(yintercept = seq(1,10,2) ) +
+#   geom_point()  +
+#   coord_fixed() +
+#   scale_x_continuous("xx") +
+#   scale_y_continuous("x")   + 
+#     theme(panel.grid.minor = element_line(color = "red"),
+#           panel.grid.major = element_line(color = "blue"),
+#           )
+# 
+# a$layers

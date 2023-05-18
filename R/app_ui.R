@@ -144,7 +144,7 @@ ui <- shinyUI(
                             actionButton("goButtonZ", .term_switcher("refresh")),
                             br(), br(),
                             uiOutput("density_selector"),
-                            uiOutput("show.refits.map"),
+                            uiOutput("show.map.refits"),
                             sliderInput("map.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=2, step=1),
@@ -171,11 +171,15 @@ ui <- shinyUI(
                      column(9,
                             plotly::plotlyOutput("sectionYplot", width = "100%", height = 500)
                      ),
-                     column(3,
+                     column(3, align="center",
                             uiOutput("show.refits.sectionY"),
                             sliderInput("sectionY.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
+                            downloadLink("downloadMinimapX", 
+                                         paste(.term_switcher("download"),
+                                               tolower(.term_switcher("tab.map"))) ),
+                            br(),
                             plotOutput("site.mapY"),
                             downloadButton("download.section.y.plot", .term_switcher("export"))
                      )
@@ -200,12 +204,17 @@ ui <- shinyUI(
                      column(9,
                             plotly::plotlyOutput("sectionXplot", width = "100%", height = 500)
                      ),
-                     column(3,
+                     column(3, align="center",
                             uiOutput("show.refits.sectionX"),
                             sliderInput("sectionX.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
+                            downloadLink("downloadMinimapY", 
+                                         paste(.term_switcher("download"),
+                                               tolower(.term_switcher("tab.map"))) ),
+                            br(),
                             plotOutput("site.mapX"),
+                            # br(), br(),
                             downloadButton("download.section.x.plot", .term_switcher("export"))
                      )
                    ), #end fluid row
@@ -232,11 +241,16 @@ ui <- shinyUI(
           tabPanel(.term_switcher("tab.timeline"),  # Timeline ----
                    uiOutput("sliderTimeline"),
                    fluidRow(
-                     column(7,
-                            imageOutput("timeline.map", width = "100%", height = "500px")),
-                     column(5,
-                            imageOutput("timeline.map.grid", width = "100%", height = "400px"),
-                            downloadButton("download.timeline.map", .term_switcher("download"))),
+                     column(7, align="center",
+                            imageOutput("timeline.map"), #,  height = "500px", width = "100%",
+                            br(),
+                            downloadButton("download.timeline.map", .term_switcher("download"))
+                            ),
+                            
+                     column(5,  align="center",
+                            imageOutput("timeline.map.grid"), #, width = "100%", height = "400px"
+                            br(),
+                            downloadButton("download.timeline.map.grid", .term_switcher("download"))),
                    ), #end fluidrow
           ), #end tabPanel
         

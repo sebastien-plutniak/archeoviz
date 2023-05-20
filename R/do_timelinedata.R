@@ -1,11 +1,11 @@
 .do_timelinedata <- function(from.func.time.df = NULL, full.dataset = NULL, timeline.ui.df = NULL){
-  # sources priority: 
+  # sources selection:  ----
   #            function parameter > objects table > timeline table
   
   if (! is.null(from.func.time.df)){
     time.df <- from.func.time.df
   } 
-  else if( ! is.null(full.dataset$year)){
+  else if( ! (is.null(full.dataset$year) | ("" %in% unique(full.dataset$square) & length(unique(full.dataset$square)) == 1) ) ){
     time.df <- table(full.dataset$square, full.dataset$year)
     time.df <- as.data.frame(time.df)
     time.df$square_x <- as.character(gsub("(.*)-(.*)", "\\1", time.df[, 1]))
@@ -16,22 +16,16 @@
     time.df <- time.df[ ! is.na(time.df$year), ]
     time.df <- time.df[, c("year", "square_x", "square_y")]
   }
-  else if(! is.null(timeline.ui.df)){
+  else if( try(nrow(timeline.ui.df()) > 0, silent = TRUE) == T ){
     time.df <- timeline.ui.df()
+  } else {
+    return(list(data = NULL, notif.text = "notif.timeline.not.ok", notif.type = "message"))
   }
   
-  # Process:
+  # Process: ----
   time.df <- data.frame(time.df)
-  # file validation:
   colnames(time.df) <- tolower(colnames(time.df))
   
-  if( sum(c("year", "square_x", "square_y") %in% colnames(time.df)) != 3 ){
-    return(list(data = time.df, notif.text = "notif.objects.not.ok", notif.type = "error"))
-  } else{
-    notif.text = "notif.timeline.ok"
-    notif.type = "message"
-  }
-  # end of file validation
   time.df$excavation <- T
   time.df$year <- as.integer(time.df$year)
   
@@ -52,5 +46,5 @@
   time.df$square_x <- factor(time.df$square_x)
   time.df$square_y <- factor(time.df$square_y)
   
-  list(data = time.df, notif.text = notif.text, notif.type = notif.type)
+  list(data = time.df, notif.text = "notif.timeline.ok", notif.type = "message")
 }

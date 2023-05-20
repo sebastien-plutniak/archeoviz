@@ -1,7 +1,14 @@
 app_server <- function(input, output, session) {
   .data <- NULL
-  
+
   # Interface ----
+  
+  # : guidelines ----
+  # hide input tab when using the function's dataset parameter
+  if(! is.null(getShinyOption("objects.df"))){
+    hideTab(inputId = "tabs", target = .term_switcher("tab.input"))
+  }
+    
   # : title ----
   output$title.edited <- renderUI({
     archeoViz.label <- paste(" <a href=https://analytics.huma-num.fr/archeoviz/home/ title='Go to the archeoViz portal' target=_blank>archeoViz</a> v",
@@ -10,12 +17,12 @@ app_server <- function(input, output, session) {
     
     if(is.null(title)){
       title.edited <- paste("<h4>", archeoViz.label, "</h4>")
-    } else if(is.character(title) & nchar(title) <= 20){
+    } else if(is.character(title) & nchar(title) <= 25){
       title.edited <- paste("<h4>", title, "</h4>",
                             .term_switcher("through"), archeoViz.label,
                             "<br><br>", sep="")
     } else{
-      stop("The title parameter must be a character string (20 characters max).")
+      stop("The title parameter must be a character string (25 characters max).")
     }
     div(HTML(title.edited))
   })
@@ -52,10 +59,11 @@ app_server <- function(input, output, session) {
   
   
   timeline.ui.df <- reactive({
-    time.df <- utils::read.csv(timeline.file()$datapath,
-                               header=T, #quote = "",
-                               sep=input$sep2, dec = input$dec.sep2,
-                               stringsAsFactors = F)
+    req(timeline.file())
+    utils::read.csv(timeline.file()$datapath,
+                    header=T, #quote = "",
+                    sep=input$sep2, dec = input$dec.sep2,
+                    stringsAsFactors = F)
   })
   
   timeline.data <- reactive({
@@ -67,8 +75,9 @@ app_server <- function(input, output, session) {
     timeline <- .do_timelinedata(from.func.time.df, 
                                  objects.dataset, 
                                  timeline.ui.df) # this is the reactive object
-    showNotification(.term_switcher(timeline$notif.text),
-                     type = timeline$notif.type)
+    # notification disabled
+    # showNotification(.term_switcher(timeline$notif.text),
+    #                  type = timeline$notif.type)
     timeline$data
   })
   
@@ -1000,18 +1009,6 @@ app_server <- function(input, output, session) {
   
   # Conditionnal interface ----
   
-  # : guidelines ----
-  # hide input tab when using the function's dataset parameter
-  if(! is.null(getShinyOption("objects.df"))){
-    hideTab(inputId = "tabs", target =  .term_switcher("tab.input"))
-  }
-  
-  # reactive({
-  #   if(now(timeline.data())==0){
-  #     hideTab(inputId = "tabs", target =  .term_switcher("tab.timeline"))
-  #   }
-  # })
-  
   # : slider ratio 3D ----
   ratio3D.value <- reactive({
     
@@ -1132,6 +1129,7 @@ app_server <- function(input, output, session) {
   # : slider timeline  ----
   output$sliderTimeline <- renderUI({
     time.df <- timeline.data()
+    if(is.null(time.df)) return()
     
     sliderInput("history.date", "Year", width="100%",  sep = "",
                 min = min(time.df$year), max = max(time.df$year),
@@ -1284,6 +1282,18 @@ app_server <- function(input, output, session) {
     }
   })
   
+  # : download button : timeline plot ----
+  output$download.button.timeline.map.grid <- renderUI({
+    req(timeline.map.plot())
+    downloadButton("download.timeline.map.grid", .term_switcher("download"))
+  })
+  
+  # : download button : timeline grid plot ----
+  output$download.button.timeline.map <- renderUI({
+    req(timeline.map.plot())
+    downloadButton("download.timeline.map", .term_switcher("download"))
+  })
+  
   #  Reproducibility ----
   
   output$reproducibility <- reactive({
@@ -1348,6 +1358,7 @@ app_server <- function(input, output, session) {
     req(timeline.data)
     
     time.df <- timeline.data()
+    if(is.null(time.df)) return()
 
     # year <- input$history.date
     # if(is.null(input$history.date)){ year <- min(time.df$year, na.rm=T)}
@@ -1376,8 +1387,10 @@ app_server <- function(input, output, session) {
   
   #  : timeline grid ----
   timeline.map.grid <- reactive({
-    req(timeline.data())
+    req(timeline.data)
     time.df <- timeline.data()
+    
+    if(is.null(time.df)) return()
     
     timeline.map() +
       geom_tile(data = time.df,

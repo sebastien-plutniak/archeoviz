@@ -894,7 +894,7 @@ guidelines.fr <- "
     volume = "Volumétrique",
     click.on.point = "Cliquez sur un point pour afficher ses informations.",
     notif.objects.ok = "Fichier des objets ok!",
-    notif.objects.not.ok = "Erreur. Certains champs requis sont absents, vérifiez le fichier.",
+    notif.objects.not.ok = "Erreur. Certains champs requis sont absents, vérifiez les données.",
     notif.no.data = "Pas de données dans ces intervalles.",
     notif.tick.value = "Cochez au moins une valeur (dans le menu latéral gauche).",
     notif.error.coords.type = "Des valeurs xmin, ymin, ou zmin ne sont pas numériques.",

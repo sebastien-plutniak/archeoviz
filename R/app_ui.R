@@ -244,13 +244,14 @@ ui <- shinyUI(
                      column(7, align="center",
                             imageOutput("timeline.map"), #,  height = "500px", width = "100%",
                             br(),
-                            downloadButton("download.timeline.map", .term_switcher("download"))
+                            uiOutput("download.button.timeline.map")
                             ),
                             
                      column(5,  align="center",
                             imageOutput("timeline.map.grid"), #, width = "100%", height = "400px"
                             br(),
-                            downloadButton("download.timeline.map.grid", .term_switcher("download"))),
+                            uiOutput("download.button.timeline.map.grid")
+                     )
                    ), #end fluidrow
           ), #end tabPanel
         

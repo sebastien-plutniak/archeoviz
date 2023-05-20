@@ -66,6 +66,7 @@
     df <- df[ - n.removed, ]
   }
   
+  
   # : add max coordinates if absent: ----
   if(is.null(df$xmax)){ df$xmax <- df$xmin }
   if(is.null(df$ymax)){ df$ymax <- df$ymin }
@@ -75,6 +76,9 @@
   df[is.na(df$xmax), "xmax"] <- df[is.na(df$xmax), "xmin"]
   df[is.na(df$ymax), "ymax"] <- df[is.na(df$ymax), "ymin"]
   df[is.na(df$zmax), "zmax"] <- df[is.na(df$zmax), "zmin"]
+  
+  df[, c("xmin", "ymin", "zmin", "xmax", "ymax", "zmax")] <- 
+    apply(df[, c("xmin", "ymin", "zmin", "xmax", "ymax", "zmax")], 2, trunc)
   
   # : location mode ----
   df[, "location_mode"] <- "exact"

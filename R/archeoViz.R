@@ -10,7 +10,8 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                       plot3d.refits = NULL,
                       sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
                       sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
-                      camera.center = NULL, camera.eye = NULL, run.plots = FALSE
+                      camera.center = NULL, camera.eye = NULL, 
+                      run.plots = FALSE, html.export = TRUE
                       ){
   
   
@@ -58,7 +59,8 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                  "plot3d.ratio" = plot3d.ratio, "cxhull" = plot3d.hulls, "surface" = plot3d.surfaces, "plot3d.refits" = plot3d.refits,
                  "sectionXx" = sectionX.x.val, "sectionXy" = sectionX.y.val, "refits.sectionX" = sectionX.refits,
                  "sectionYx" = sectionY.x.val, "sectionYy" = sectionY.y.val, "refits.sectionY" = sectionY.refits,
-                 "camera.center" = camera.center, "camera.eye" = camera.eye, "run.plots" = run.plots)
+                 "camera.center" = camera.center, "camera.eye" = camera.eye,
+                 "run.plots" = run.plots, "html.export" = html.export)
   
   
   # define shiny options ----

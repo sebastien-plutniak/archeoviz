@@ -123,7 +123,7 @@ ui <- shinyUI(
                             sliderInput("point.size", .term_switcher("point.size"), width="100%", sep = "",
                                         min=1, max=5, value=2, step=1),
                             uiOutput("ratio3D"), 
-                            downloadButton("download.3d.plot", .term_switcher("export"))
+                            uiOutput("download.button.html.export.3d")
                      )  # end column
                    ),  # end fluid row
                    fluidRow(column(12,
@@ -148,7 +148,7 @@ ui <- shinyUI(
                             sliderInput("map.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=2, step=1),
-                            downloadButton("download.map.plot", .term_switcher("export"))
+                            uiOutput("download.button.html.export.map")
                             )#end column
                    ), #end fluid row
                    fluidRow(column(12,
@@ -181,7 +181,7 @@ ui <- shinyUI(
                                                tolower(.term_switcher("tab.map"))) ),
                             br(),
                             plotOutput("site.mapY"),
-                            downloadButton("download.section.y.plot", .term_switcher("export"))
+                            uiOutput("download.button.html.export.sectionY")
                      )
                    ), #end fluid row
                    fluidRow(column(12,
@@ -214,8 +214,7 @@ ui <- shinyUI(
                                                tolower(.term_switcher("tab.map"))) ),
                             br(),
                             plotOutput("site.mapX"),
-                            # br(), br(),
-                            downloadButton("download.section.x.plot", .term_switcher("export"))
+                            uiOutput("download.button.html.export.sectionX")
                      )
                    ), #end fluid row
                    fluidRow(column(12,

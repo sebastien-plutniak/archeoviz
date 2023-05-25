@@ -1,4 +1,11 @@
 
+
+# archeoViz 1.1.2
+Released: 2023-05-
+
+* The display of the buttons to export the plots as html files can now be set to TRUE or FALSE with the 'export.html' parameter.
+* The small maps in the 'Section X' and 'Section Y' tabs can now be downloaded.
+
 # archeoViz 1.1.1
 Released: 2023-05-15
 

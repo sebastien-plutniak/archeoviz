@@ -504,7 +504,7 @@ app_server <- function(input, output, session) {
   
   goButton3D <- reactive({
     req(input$class_values, objects.dataset())
-    if( (input$goButton3D > 0) | getShinyOption("params")$run.plots  ){
+    if( (input$goButton3D > 0) | getShinyOption("run.plots")  ){
       TRUE
     } else { return() }
   })
@@ -818,7 +818,7 @@ app_server <- function(input, output, session) {
   # :  X section plot ----
   goButtonX <- reactive({
     req(input$class_variable, input$class_values, input$sectionXy)
-    if( (input$goButtonX > 0) | getShinyOption("params")$run.plots  ){
+    if( (input$goButtonX > 0) | getShinyOption("run.plots")  ){
       TRUE
     } else { return() }
   })
@@ -857,7 +857,7 @@ app_server <- function(input, output, session) {
   # : Y section plot ----
   goButtonY <- reactive({
     req(input$class_variable, input$class_values, input$sectionYx)
-    if( (input$goButtonY > 0) | getShinyOption("params")$run.plots  ){
+    if( (input$goButtonY > 0) | getShinyOption("run.plots")  ){
       TRUE
     } else { return() }
   })
@@ -896,7 +896,7 @@ app_server <- function(input, output, session) {
   # : Map plot ####
   # goButtonZ <- reactive({
   #   req(input$class_variable, input$class_values, input$map.density)
-  #   if( (input$goButtonZ > 0) | getShinyOption("params")$run.plots  ){
+  #   if( (input$goButtonZ > 0) | getShinyOption("run.plots")  ){
   #     TRUE
   #   } else { return() }
   # })
@@ -993,7 +993,7 @@ app_server <- function(input, output, session) {
                    toImageButtonOptions = list(format = "svg",
                                                filename = "archeoviz-map",
                                                width = 600, height = 600))
-  },  ignoreNULL = ( ! getShinyOption("params")$run.plots) )
+  },  ignoreNULL = ( ! getShinyOption("run.plots")) )
   
   output$map <- plotly::renderPlotly({ map() })
   
@@ -1285,25 +1285,25 @@ app_server <- function(input, output, session) {
   
   # : button html export 3D  ----
   output$download.button.html.export.3d <- renderUI({
-    if(getShinyOption("params")$html.export){
+    if(getShinyOption("html.export")){
       downloadButton("download.3d.plot", .term_switcher("export"))
     }
   })  
   # : button html map  ----
   output$download.button.html.export.map <- renderUI({
-    if(getShinyOption("params")$html.export){
+    if(getShinyOption("html.export")){
       downloadButton("download.map.plot", .term_switcher("export"))
     }
   })  
   # : button html section X  ----
   output$download.button.html.export.sectionX <- renderUI({
-    if(getShinyOption("params")$html.export){
+    if(getShinyOption("html.export")){
       downloadButton("download.section.x.plot", .term_switcher("export"))
     }
   })  
   # : button html section Y  ----
   output$download.button.html.export.sectionY <- renderUI({
-    if(getShinyOption("params")$html.export){
+    if(getShinyOption("html.export")){
       downloadButton("download.section.y.plot", .term_switcher("export"))
     }
   })
@@ -1323,23 +1323,9 @@ app_server <- function(input, output, session) {
   #  Reproducibility ----
   
   output$reproducibility <- reactive({
-    get.shiny.param <- function(param){
-      param.value <- getShinyOption(param)
-      if( is.null(param.value)){
-        return(NULL)
-      } else if(sum(param.value == "") != 0){
-        return(NULL)
-      } else {
-        paste0("<span style=\"color: Darkblue;\">", param, "</span>",  "=", "\"", param.value, "\"")
-      }
-    }
-    
-    param.list <- list("reverse.axis.values", "reverse.square.names",
-                       "title", "lang", "set.theme")
-    param.list <- sapply(param.list, get.shiny.param)
-    param.list <- param.list[ ! sapply(param.list, is.null) ]
     
     class_values <- input$class_values
+    
     if(length(input$class_values) == 1){
       class_values <- paste0("\"", class_values, "\"")
     }
@@ -1347,35 +1333,29 @@ app_server <- function(input, output, session) {
       class_values <-  NULL
     }
     
-    params.list2 <- list("home.text" = "\" \"",
+    reactive.params <- list("home.text" = "\" \"",
                          "add.x.square.labels" = getShinyOption("add.x.square.labels"),
                          "add.y.square.labels" = getShinyOption("add.y.square.labels"),
                          "class.variable" = paste0("\"", input$class_variable, "\""),
                          "class.values" = class_values, 
-                         "square.size" = getShinyOption("square.size"),
                          "default.group" = paste0("\"", input$group.selection, "\""),
                          "location.mode" = paste0("\"", input$location, "\""),
-                         "map.z.val" = input$planZ, "map.density" = paste0("\"", input$map.density, "\""),  "map.refits" = input$map.refits,
-                         "plot3d.ratio" = input$ratio, "plot3d.hulls" = input$cxhull, "plot3d.surfaces" = input$surface,  "plot3d.refits" = input$refits,
-                         "sectionX.x.val" = input$sectionXx, "sectionX.y.val" = input$sectionXy, "sectionX.refits" = input$refits.sectionX,
-                         "sectionY.x.val" = input$sectionYx, "sectionY.y.val" = input$sectionYy, "sectionY.refits" = input$refits.sectionY
+                         "map.z.val" = input$planZ,
+                         "map.density" = paste0("\"", input$map.density, "\""),
+                         "map.refits" = input$map.refits,
+                         "plot3d.ratio" = input$ratio,
+                         "plot3d.hulls" = input$cxhull,
+                         "plot3d.surfaces" = input$surface,
+                         "plot3d.refits" = input$refits,
+                         "sectionX.x.val" = input$sectionXx,
+                         "sectionX.y.val" = input$sectionXy,
+                         "sectionX.refits" = input$refits.sectionX,
+                         "sectionY.x.val" = input$sectionYx,
+                         "sectionY.y.val" = input$sectionYy,
+                         "sectionY.refits" = input$refits.sectionY
     )
-    params.list2 <- params.list2[ ! sapply(params.list2, is.null) ]
-    params.list2 <- params.list2[ ! params.list2 %in%  c("", "\"\"") ]
     
-    names.list2 <- paste0("<span style=\"color: Darkblue;\">", names(params.list2), "</span>")
-    params.list2 <- paste0(names.list2, "=", params.list2)
-    
-    if(nrow(refitting.df()[[1]]) != 0){
-      refits.param <- "<span style=\"color: Darkblue;\">refits.df</span>=refit.data, "
-    } else{refits.param <- NULL}
-    
-    paste0(c("archeoViz(<span style=color:Darkblue;>objects.df</span>=data, ",
-             refits.param,
-             paste(param.list, collapse = ", "), ", ",
-             paste(params.list2, collapse = ", "),
-             ")"), collapse = "")
-    
+    .do_r_command(reactive.params, refitting.df())
   })
   
   #  Timeline ----

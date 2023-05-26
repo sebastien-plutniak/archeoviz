@@ -59,9 +59,7 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                  "plot3d.ratio" = plot3d.ratio, "cxhull" = plot3d.hulls, "surface" = plot3d.surfaces, "plot3d.refits" = plot3d.refits,
                  "sectionXx" = sectionX.x.val, "sectionXy" = sectionX.y.val, "refits.sectionX" = sectionX.refits,
                  "sectionYx" = sectionY.x.val, "sectionYy" = sectionY.y.val, "refits.sectionY" = sectionY.refits,
-                 "camera.center" = camera.center, "camera.eye" = camera.eye,
-                 "run.plots" = run.plots, "html.export" = html.export)
-  
+                 "camera.center" = camera.center, "camera.eye" = camera.eye)
   
   # define shiny options ----
   shinyOptions("objects.df"  = objects.df,
@@ -78,7 +76,9 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                "lang"        = lang,
                "set.theme"   = set.theme,
                "ui.terms"    = ui.terms,
-               "background.col" = background.col)
+               "background.col" = background.col,
+               "run.plots" = run.plots,
+               "html.export" = html.export)
   
   shinyApp(ui = app_ui, server = app_server)
 }

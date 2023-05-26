@@ -8,7 +8,7 @@ test_that(".do_objects_dataset: simulated data", {
   expect_equal(dim(res$data), c(100, 24))
   expect_equal(colnames(res$data), c("id", "square_x", "square_y", "xmin", "xmax", "ymin", "ymax", "zmin", "zmax", "layer", "object_type", "object_class_size", "year", "object_lithic_type", "location_mode", "x.fuzzy", "y.fuzzy", "z.fuzzy", "x", "y", "z", "fuzzy.sum", "xyz", "square"))
   expect_equal(c(sapply(res$data[1, ], typeof), use.names=F),
-               c("integer", "integer", "integer", "integer", "double", "integer", "double",  "double", "double", "integer", "character", "character", "integer", "character", "character", "logical", "logical", "logical", "integer", "integer", "double", "integer", "character", "character"))
+               c("integer", "integer", "integer", "integer", "integer", "integer", "integer",  "integer", "integer", "integer", "character", "character", "integer", "character", "character", "logical", "logical", "logical", "integer", "integer", "integer", "integer", "character", "character"))
 })
 
 
@@ -25,7 +25,7 @@ test_that(".do_objects_dataset: no max coordinates", {
   expect_equal(dim(res$data), c(100, 24))
   expect_equal(colnames(res$data), c("id", "square_x", "square_y", "xmin", "ymin",  "zmin", "layer", "object_type", "object_class_size", "year", "object_lithic_type", "xmax", "ymax","zmax", "location_mode", "x.fuzzy", "y.fuzzy", "z.fuzzy", "x", "y", "z", "fuzzy.sum", "xyz", "square"))
   expect_equal(c(sapply(res$data[1, ], typeof), use.names=F),
-               c( "integer", "integer", "integer", "integer", "integer", "double", "integer", "character", "character", "integer", "character", "integer", "integer", "double", "character", "logical", "logical", "logical", "integer", "integer", "double", "integer", "character", "character"))
+               c( "integer", "integer", "integer", "integer", "integer", "integer", "integer", "character", "character", "integer", "character", "integer", "integer", "integer", "character", "logical", "logical", "logical", "integer", "integer", "integer", "integer", "character", "character"))
 })
 
 

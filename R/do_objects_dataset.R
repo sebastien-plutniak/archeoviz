@@ -78,7 +78,8 @@
   df[is.na(df$zmax), "zmax"] <- df[is.na(df$zmax), "zmin"]
   
   df[, c("xmin", "ymin", "zmin", "xmax", "ymax", "zmax")] <- 
-    apply(df[, c("xmin", "ymin", "zmin", "xmax", "ymax", "zmax")], 2, trunc)
+    apply(df[, c("xmin", "ymin", "zmin", "xmax", "ymax", "zmax")], 2, 
+          function(x) as.integer(trunc(x))  )
   
   # : location mode ----
   df[, "location_mode"] <- "exact"

@@ -16,7 +16,7 @@ affiliations:
  - name: CNRS, CITERES-LAT, Université de Tours, Tours, France
    index: 1
 date: 2 June 2023
-bibliography: archeoviz-joss-paper.bib
+bibliography: paper.bib
 toccolor: teal
 citecolor: teal
 linkcolor: teal

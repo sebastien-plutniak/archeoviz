@@ -45,6 +45,7 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
             aléatoires](#par-génération-de-données-aléatoires)
           - [Par paramétrage de la
             fonction](#par-paramétrage-de-la-fonction)
+          - [À travers une URL](#à-travers-une-url)
       - [Sous-sélection de données](#sous-sélection-de-données)
           - [Par mode de localisation](#par-mode-de-localisation)
           - [Par catégorie d’objet](#par-catégorie-dobjet)
@@ -287,9 +288,16 @@ archeoViz(objects.df = NULL,  # data.frame pour les objets
           timeline.df = NULL) # data.frame optionnel pour la chronologie
 ```
 
+### À travers une URL
+
+L’URL d’une instance `archeoViz` en ligne, par exemple
+<https://analytics.huma-num.fr/archeoviz/fr>, peut comporter un
+paramètre `?objects.df=`, prenant pour valeur l’URL d’un fichier CSV
+respectant le format `archeoViz`.
+
 ## Sous-sélection de données
 
-Après que les données soient chargées, des sous-sélection peuvent être
+Après que les données soient chargées, des sous-sélections peuvent être
 réalisées en employant les options du menu gauche de l’interface.
 Plusieurs paramètres sont possibles: le mode de localisation, les
 catégories des objets, et la définition de sous-groupes de données.
@@ -437,31 +445,32 @@ la fonction `kde2d` du package
 ## Reproductibilité
 
 `archeoViz` est, par définition, une application interactive. Toutefois,
-plusieurs fonctionnalités permettent de garantir la reproductibilité et
-la communicabilité à des tiers du résultat d’interactions avec
+plusieurs fonctionnalités permettent de satisfaire les besoins de
+reproductibilité et de communicabilité des résultats d’interactions avec
 l’application.
 
   - La visualisation 3D est exportable dans un format interactif html
-    *standalone*, tenant compte de la sélection de données effectuée par
-    l’utilisateur.
+    *standalone*, tenant compte de la sous-sélection de données
+    effectuée par l’utilisateur (dans le menu latéral gauche).
   - Dans l’onglet “Reproductibilité”, une commande R est générée
-    dynamiquement, tenant compte du paramétrage de l’application courant
-    réalisé par l’utilisateur.
+    dynamiquement, tenant compte du paramétrage de l’application réalisé
+    par l’utilisateur en agissant avec l’interface graphique.
 
 ## Paramètres avancés
 
 La fonction `archeoViz()` admet de nombreux paramètres optionnels,
-relatifs à:
+relatifs aux :
 
-  - les données à charger (traité
+  - données à charger (traité
     [ci-dessus](#par-paramétrage-de-la-fonction)),
-  - le contenu de la page d’accueil (traité [ci-dessus](#déployée)),
-  - le [carroyage](#carroyage),
-  - le [pré-paramètrage](#pré-sélection-des-paramètres) des paramètres
+  - contenu de la page d’accueil (traité [ci-dessus](#déployée)),
+  - [carroyage](#carroyage),
+  - [pré-paramètrage](#pré-sélection-des-paramètres) des paramètres
     pouvant être définis dans l’interface graphique,
-  - le [comportement réactif](#affichage-réactif-des-visualisations) de
+  - [comportement réactif](#affichage-réactif-des-visualisations) de
     l’application à propos du calcul et de l’affichage des
     visualisations.
+  - [export html](#export-html).
 
 <!-- end list -->
 
@@ -476,7 +485,8 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
-          camera.center = NULL, camera.eye = NULL, run.plots = FALSE
+          camera.center = NULL, camera.eye = NULL, 
+          run.plots = FALSE, html.export = TRUE
           )
 ```
 
@@ -573,6 +583,11 @@ archeoViz(run.plots = FALSE)
   - **run.plots** : TRUE ou FALSE. Si les visualisations doivent, ou
     non, être immédiatement calculées et affichées (sans nécessiter un
     clic sur les boutons de l’interface).
+
+### Export html
+
+  - **html.export** : TRUE ou FALSE. Afficher ou non les boutons
+    permettant d’exporter les visualisations en format html interactif.
 
 # Remerciements
 

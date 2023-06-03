@@ -1,7 +1,10 @@
 
+# archeoViz 1.2.0
+Released: 2023-06-
+* Data input through the '?objects.df' URL parameter is now supported.
 
 # archeoViz 1.1.2
-Released: 2023-05-
+Released: 2023-06-03
 
 * The display of the buttons to export the plots as html files can now be set to TRUE or FALSE with the 'export.html' parameter.
 * The small maps in the 'Section X' and 'Section Y' tabs can now be downloaded.

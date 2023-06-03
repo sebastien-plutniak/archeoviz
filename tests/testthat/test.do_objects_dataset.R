@@ -19,7 +19,7 @@ test_that(".do_objects_dataset: no max coordinates", {
   df <- demo_objects_data(100)
   df <- df[, ! colnames(df) %in% c("xmax", "ymax", "zmax")]
   
-  res <- .do_objects_dataset(from.func.objects.df = df)
+  res <- .do_objects_dataset(from.parameter.input = df)
   
   expect_equal(res$notif.text, "notif.objects.ok")
   expect_equal(dim(res$data), c(100, 24))
@@ -37,7 +37,7 @@ test_that(".do_objects_dataset: duplicated identifiers", {
   df <- demo_objects_data(100)
   df[2, ]$id <- 1
   
-  res <- .do_objects_dataset(from.func.objects.df = df)
+  res <- .do_objects_dataset(from.parameter.input = df)
   
   expect_equal(res$notif.text, "notif.error.identifier")
   expect_equal(dim(res$data), c(100, 14))

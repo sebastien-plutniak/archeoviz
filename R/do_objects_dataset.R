@@ -1,14 +1,15 @@
-.do_objects_dataset <- function(from.func.objects.df=NULL, demoData.n=NULL,
-                                input.ui.table=NULL, 
+.do_objects_dataset <- function(from.parameter.input=NULL, 
+                                from.ui.input=NULL, 
+                                demoData.n=NULL,
                                 add.x.square.labels=NULL, add.y.square.labels=NULL){
   # source selection ----
-  if (! is.null(from.func.objects.df)){
-    df <- from.func.objects.df
+  if (! is.null(from.parameter.input)){
+    df <- from.parameter.input
   } else{
     if(demoData.n > 0){
       df <- demo_objects_data(demoData.n)
-    } else if(! is.null(input.ui.table)){
-      df <- input.ui.table()
+    } else if(! is.null(from.ui.input)){
+      df <- from.ui.input()
     }
   }
   

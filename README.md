@@ -41,6 +41,7 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
             tab](#loading-files-through-the-input-data-tab)
           - [Random data](#random-data)
           - [Through function parameters](#through-function-parameters)
+          - [Through an URL](#through-an-url)
       - [Data sub-setting](#data-sub-setting)
           - [Location mode](#location-mode)
           - [Objects category](#objects-category)
@@ -175,12 +176,14 @@ sophisticated analysis tools (e.g., GIS, statistical packages, etc.)
 
 ## Data input
 
-There are three ways to input data in `archeoViz`:
+There are four ways to input data in `archeoViz`:
 
 1.  uploading tables in the “Input data” tab,
 2.  using randomly generated data from the “Input data” tab;
 3.  set the `archeoViz` main function’s parameters before running the
     application.
+4.  through the URL paramteres, when using online instance of
+    `archeoViz`
 
 ### Loading files through the Input data tab
 
@@ -225,9 +228,9 @@ In addition, optional fields are possible, including:
     included in a range of Y coordinates
   - **zmax**: *numerical value*, when the Z location of the object is
     included in a range of Z coordinates
-  - **object\_edit**: unlimited number of additional variable describing
-    the object (field names must start with `object_` and have different
-    suffixes)
+  - **object\_edit**: unlimited number of additional variables
+    describing the object (field names must start with `object_` and
+    have different suffixes)
 
 The labels of the squares of the grid:
 
@@ -269,6 +272,13 @@ archeoViz(objects.df = NULL,  # data.frame with data about the objects
           refits.df = NULL,   # data.frame for refitting objects
           timeline.df = NULL) # optional data.frame for the excavation timeline
 ```
+
+### Through an URL
+
+The URL of an online instance of `archeoViz`, for example
+<https://analytics.huma-num.fr/archeoviz/en/>, can include a
+`?objects.df=` parameter, whose value is the URL of a CSV file observing
+the `archeoViz` format.
 
 ## Data sub-setting
 
@@ -425,6 +435,7 @@ related to:
     be set through the application’s interface,
   - the [reactive behavior](#reactive-plot-display) of the application
     regarding the generation of plots.
+  - the [html export](#html-export).
 
 <!-- end list -->
 
@@ -526,6 +537,11 @@ archeoViz(run.plots = FALSE)
   - **run.plots**: TRUE or FALSE. Whether to immediately compute and
     show plots (without requiring the user to click on the buttons in
     the interface).
+
+### Html export
+
+  - **html.export** : TRUE or FALSE. Whether or not to allow figures to
+    be exported as interactive html widgets.
 
 # Acknowledgment
 

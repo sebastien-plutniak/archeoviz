@@ -134,10 +134,17 @@ app_server <- function(input, output, session) {
   #  : static preprocessing ----
   objects.dataset <- reactive({
     
+    query <- shiny::parseQueryString(session$clientData$url_search)
+    if ( ! is.null(query[['objects.df']])) {
+      objects.df <- utils::read.csv(url(as.character(query)))
+    } else{
+      objects.df <- getShinyOption("objects.df")
+    }
+    
     result <- .do_objects_dataset(
-      from.func.objects.df = getShinyOption("objects.df"),
+      from.parameter.input = objects.df,
+      from.ui.input        = objects.ui.input,
       demoData.n           = input$demoData.n, 
-      input.ui.table       = objects.ui.input,
       add.x.square.labels = getShinyOption("add.x.square.labels"),
       add.y.square.labels = getShinyOption("add.y.square.labels")
     )

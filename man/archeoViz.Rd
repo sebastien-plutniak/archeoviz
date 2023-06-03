@@ -18,7 +18,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
           camera.center = NULL, camera.eye = NULL,
-          run.plots = FALSE, export.html = TRUE
+          run.plots = FALSE, html.export = TRUE
           )
 }
 \arguments{
@@ -54,7 +54,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{camera.center}{double. In 3D plot, coordinates of the point to which the camera is oriented, to pass to the `plotly::layout()` function (default values: x=0, y=0, z=0).}
   \item{camera.eye}{double. In 3D plot, coordinates of the camera's view point to pass to the `plotly::layout()` function (default values: x=1.25, y=1.25, z=1.25).}
   \item{run.plots}{logical. Whether to immediately compute and show plots (without requiring the user to click on the buttons in the interface).}
-  \item{export.html}{logical. Whether or not to allow figures to be exported as html widgets.}
+  \item{html.export}{logical. Whether or not to allow figures to be exported as html widgets.}
 }
 \details{
 

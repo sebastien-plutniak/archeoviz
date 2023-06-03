@@ -2,7 +2,7 @@ Package: archeoViz
 Type: Package
 Title: Visualisation, Exploration, and Web Communication of Archaeological Spatial Data
 Version: 1.1.2
-Date: 2023-05-17
+Date: 2023-06-03
 Authors@R: c(person("Sebastien", "Plutniak", email = "sebastien.plutniak@posteo.net", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6674-3806")),
              person("Renata", "Araujo", email = "rennyaraujo@yahoo.com", role = "ctb", comment = c(ORCID = "0000-0001-8874-2858")),
              person("Sara", "Giardino", email = "saragiardino@gmail.com", role = "ctb", comment = c(ORCID = "0000-0001-5634-7060"))

@@ -16,10 +16,10 @@ ui <- shinyUI(
         conditionalPanel(condition = 'output.locationPanel',
             uiOutput("location_choice"),
             uiOutput("group.selector"),
-            uiOutput("class_variable"),
+            uiOutput("class.variable"),
             actionButton("goButton", .term_switcher("validate")),
             br(),br(),
-            uiOutput("class_values"),
+            uiOutput("class.values"),
             ), # end conditionnal panel
         width=2), # end sidebarpanel
 
@@ -117,8 +117,8 @@ ui <- shinyUI(
                             br(),
                             h4(.term_switcher("header.3d.options")),
                             uiOutput("show.surfaces"),
-                            checkboxInput("cxhull", .term_switcher("hulls"),
-                                          value = getShinyOption("params")$cxhull ),
+                            checkboxInput("plot3d.hulls", .term_switcher("hulls"),
+                                          value = getShinyOption("params")$plot3d.hulls ),
                             uiOutput("show.refits"),
                             sliderInput("point.size", .term_switcher("point.size"), width="100%", sep = "",
                                         min=1, max=5, value=2, step=1),
@@ -172,7 +172,7 @@ ui <- shinyUI(
                             plotly::plotlyOutput("sectionYplot", width = "100%", height = 500)
                      ),
                      column(3, align="center",
-                            uiOutput("show.refits.sectionY"),
+                            uiOutput("show.sectionY.refits"),
                             sliderInput("sectionY.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
@@ -205,7 +205,7 @@ ui <- shinyUI(
                             plotly::plotlyOutput("sectionXplot", width = "100%", height = 500)
                      ),
                      column(3, align="center",
-                            uiOutput("show.refits.sectionX"),
+                            uiOutput("show.sectionX.refits"),
                             sliderInput("sectionX.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),

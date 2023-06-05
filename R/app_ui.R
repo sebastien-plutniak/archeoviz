@@ -119,7 +119,7 @@ ui <- shinyUI(
                             uiOutput("show.surfaces"),
                             checkboxInput("plot3d.hulls", .term_switcher("hulls"),
                                           value = getShinyOption("params")$plot3d.hulls ),
-                            uiOutput("show.refits"),
+                            uiOutput("show.3d.refits"),
                             sliderInput("point.size", .term_switcher("point.size"), width="100%", sep = "",
                                         min=1, max=5, value=2, step=1),
                             uiOutput("ratio3D"), 
@@ -161,27 +161,27 @@ ui <- shinyUI(
           tabPanel("Section X",  # section X ----
                    fluidRow(
                      column(10,
-                            uiOutput("sliderYx"),
-                            uiOutput("sliderYy")
+                            uiOutput("sliderXx"),
+                            uiOutput("sliderXy")
                      ),
                      column(1,
-                            br(), actionButton("goButtonY", .term_switcher("refresh")))
+                            br(), actionButton("goButtonX", .term_switcher("refresh")))
                    ),
                    fluidRow(
                      column(9,
-                            plotly::plotlyOutput("sectionYplot", width = "100%", height = 500)
+                            plotly::plotlyOutput("sectionXplot", width = "100%", height = 500)
                      ),
                      column(3, align="center",
-                            uiOutput("show.sectionY.refits"),
-                            sliderInput("sectionY.point.size", .term_switcher("point.size"),
+                            uiOutput("show.sectionX.refits"),
+                            sliderInput("sectionX.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
                             downloadLink("downloadMinimapX", 
                                          paste(.term_switcher("download"),
                                                tolower(.term_switcher("tab.map"))) ),
                             br(),
-                            plotOutput("site.mapY"),
-                            uiOutput("download.button.html.export.sectionY")
+                            plotOutput("site.mapX"),
+                            uiOutput("download.button.html.export.sectionX")
                      )
                    ), #end fluid row
                    fluidRow(column(12,
@@ -194,27 +194,27 @@ ui <- shinyUI(
           tabPanel("Section Y",  #section Y ----
                    fluidRow(
                      column(10,
-                            uiOutput("sliderXx"),
-                            uiOutput("sliderXy")
+                            uiOutput("sliderYx"),
+                            uiOutput("sliderYy")
                      ),
                      column(1, br(),
-                            actionButton("goButtonX", .term_switcher("refresh")),)
+                            actionButton("goButtonY", .term_switcher("refresh")),)
                    ),
                    fluidRow(
                      column(9,
-                            plotly::plotlyOutput("sectionXplot", width = "100%", height = 500)
+                            plotly::plotlyOutput("sectionYplot", width = "100%", height = 500)
                      ),
                      column(3, align="center",
-                            uiOutput("show.sectionX.refits"),
-                            sliderInput("sectionX.point.size", .term_switcher("point.size"),
+                            uiOutput("show.sectionY.refits"),
+                            sliderInput("sectionY.point.size", .term_switcher("point.size"),
                                         width="100%", sep = "",
                                         min=1, max=10, value=5, step=1),
                             downloadLink("downloadMinimapY", 
                                          paste(.term_switcher("download"),
                                                tolower(.term_switcher("tab.map"))) ),
                             br(),
-                            plotOutput("site.mapX"),
-                            uiOutput("download.button.html.export.sectionX")
+                            plotOutput("site.mapY"),
+                            uiOutput("download.button.html.export.sectionY")
                      )
                    ), #end fluid row
                    fluidRow(column(12,

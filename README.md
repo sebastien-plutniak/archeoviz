@@ -2,10 +2,10 @@ archeoViz
 ================
 
 `archeoViz` is a packaged R Shiny application for the *visualisation*,
-*exploration*, and web *communication* of archaeological excavation
-data. It includes interactive 3D and 2D *visualisations*, can generate
-*cross sections* and *map* of the remains, can run basic *spatial
-statistics* methods (convex hull, regression surfaces, 2D kernel density
+*exploration*, and web *communication* of archaeological spatial data.
+It includes interactive 3D and 2D *visualisations*, can generate *cross
+sections* and *maps* of the remains, can run basic *spatial statistics*
+methods (convex hull, regression surfaces, 2D kernel density
 estimation), and display an interactive *timeline* of an excavation.
 `archeoViz` can be used locally or deployed on a server, either by
 allowing the user to load data through the interface or by running the
@@ -23,6 +23,7 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lif
 badge](https://sebastien-plutniak.r-universe.dev/badges/archeoViz)](https://sebastien-plutniak.r-universe.dev/archeoViz)
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
+[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/sebastien-plutniak/archeoviz)](https://archive.softwareheritage.org/browser/origin/https://github.com/sebastien-plutniak/archeoviz/)
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
 [![CRAN
@@ -30,7 +31,7 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
 
   - [**Installation**](#installation)
       - [Local use](#local-use)
-      - [Deployed use](#deployed-use)
+      - [Remote use](#remote-use)
       - [Demonstration](#demonstration)
   - [**Community guidelines**](#community-guidelines)
       - [Reporting bugs](#reporting-bugs)
@@ -56,9 +57,10 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
   - [**Reproducibility**](#reproducibility)
   - [**Advanced parameters**](#advanced-parameters)
       - [Square grid](#square-grid)
-      - [Parameters presetting](#parameters-presetting)
+      - [Parameter presetting](#parameter-presetting)
       - [Reactive plot display](#reactive-plot-display)
-  - [**Acknowledgment**](#acknowledgment)
+      - [URL parameters](#url-parameters)
+  - [**Acknowledgments**](#acknowledgments)
   - [**References**](#references)
 
 # Installation
@@ -91,7 +93,7 @@ library(archeoViz)
 archeoViz()
 ```
 
-## Deployed use
+## Remote use
 
 To deploy `archeoViz` on your Shiny server, first download and unzip the
 package:
@@ -117,7 +119,7 @@ archeoViz(objects.df = NULL,   # data.frame with data about the objects
           refits.df = NULL,    # optional data.frame for refitting data
           timeline.df = NULL,  # optional data.frame for the excavation timeline
           title = NULL,        # title of the site / data set
-          home.text = NULL,    # html content to display on the home page
+          home.text = NULL,    # HTML content to display on the home page
           lang = "en"          # interface language ("en": English, "fr": French, "it": Italian, "pt": Portuguese)
           set.theme = "cosmo") # graphic theme for the Shiny interface
 ```
@@ -171,6 +173,10 @@ to lower the technical barriers to fulfil three objectives:
   - fast deployment of a display and communication tool intended for a
     broader audience.
 
+In addition, `archeoViz` is a suitable pedagogical resource for teaching
+spatial analysis in archaeology, data structuring, open science, and
+reproducibile workflow.
+
 N.B.: consequently, `archeoViz` is not intended to replace more
 sophisticated analysis tools (e.g., GIS, statistical packages, etc.)
 
@@ -182,7 +188,7 @@ There are four ways to input data in `archeoViz`:
 2.  using randomly generated data from the “Input data” tab;
 3.  set the `archeoViz` main function’s parameters before running the
     application.
-4.  through the URL paramteres, when using online instance of
+4.  through the URL parameters, when using an online instance of
     `archeoViz`
 
 ### Loading files through the Input data tab
@@ -195,9 +201,9 @@ tab:
   - a “timeline” table (optional), with data about when each square of
     the site was excavated.
 
-The tables must be .csv files with the first row used containing the
-columns’ labels (the separator can be set). Contents in html are
-allowed. This makes possible, in particular, to add links to external
+The tables must be CSV files with the first row used containing the
+columns’ labels (the separator can be set). Contents in HTML are
+allowed. This makes it possible, in particular, to add links to external
 resources (e.g., the permanent identifier of the object’s in other
 databases, or of the concepts used to describe the object, etc.).
 
@@ -235,10 +241,10 @@ In addition, optional fields are possible, including:
 The labels of the squares of the grid:
 
   - are ordered alpha-numerically;
-  - are not displayed, in order to avoid erroneous displays, if the
-    number of labels does not correspond exactly to the total number of
-    100 cm squares that can be defined in the range of minimum and
-    maximum coordinates contained in the xmin and ymin variables;
+  - are not displayed to avoid erroneous displays, if the number of
+    labels does not correspond exactly to the total number of 100 cm
+    squares that can be defined in the range of minimum and maximum
+    coordinates contained in the xmin and ymin variables;
   - can be completed with the `add.x.square.labels` and
     `add.y.square.labels` parameters of the `archeoViz()` function in
     order to add the missing labels (on the X and Y axes of the grid,
@@ -275,7 +281,7 @@ archeoViz(objects.df = NULL,  # data.frame with data about the objects
 
 ### Through an URL
 
-The URL of an online instance of `archeoViz`, for example
+The URL of an online instance of `archeoViz`, for example,
 <https://analytics.huma-num.fr/archeoviz/en/>, can include a
 `?objects.df=` parameter, whose value is the URL of a CSV file observing
 the `archeoViz` format.
@@ -293,12 +299,12 @@ different, more or less precise ways: on the one hand, exactly with
 points (located by a triplet of x, y and z coordinates) and, on the
 other hand, more or less imprecisely with lines, planes, or within
 volumes (with different sets of x, y and/or z value pairs). In
-`archeoViz`, a distinction is made between exact locations (points) and
-other vague types of locations (lines, planes, volumes). Both types of
-locations (exact and vague) can be displayed, and location uncertainties
-can also be visualised as lines, planes and volumes. This last option is
-resource intensive, and using it with too much data can slow down the
-application considerably.
+`archeoViz`, a distinction is made between exact location (points) and
+other types of vague location (located on lines, planes, and volumes).
+Both types of locations (exact and vague) can be displayed, and location
+uncertainties can also be visualised as lines, planes and volumes. This
+last option is resource intensive, and using it with too much data can
+significantly slow down the application.
 
 ### Objects category
 
@@ -348,19 +354,19 @@ Several graphical outputs can be generated in `archeoViz`.
 
   - The plots in The plots in the “3D plot”, “Map”, “Section X”, and
     “Section Y” can be exported:
-      - in .svg format (by cliking on the “camera” icon in the menu bar
+      - in SVG format (by clicking on the “camera” icon in the menu bar
         above the plot),
-      - in an interactive html format, by clicking on the “Export”
+      - in an interactive HTML format, by clicking on the “Export”
         button.
-  - The plan of the excavation chronology can be exported in .svg format
+  - The plan of the excavation chronology can be exported in SVG format
     by clicking on the “Download” button.
 
-## Reffiting
+## Reffitings
 
-Refitting are usually recorded by archaologists in two ways:
+Refittings are usually recorded by archaeologists in two ways:
 
 1.  by sets of refitting objects: using a two columns table, where a row
-    corresponds to an **object**. The first column stores the object’
+    corresponds to an **object**. The first column stores the object’s
     unique id and the second column stores the id of the set of
     refitting objects this object belongs to.
 2.  by refitting relationships: using a two columns table, where a row
@@ -416,10 +422,13 @@ density. Density can be computed for all the points together or by layer
 several features guarantee the reproducibility and communicability of
 the result of interactions with the application.
 
-  - The 3D visualisation can be exported in an interactive html
+  - The 3D visualisation can be exported in an interactive HTML
     standalone format, considering the data selection made by the user.
   - In the “Reproducibility” tab, an R command is dynamically generated,
     considering the current application settings made by the user.
+  - In a more advanced use, the URL parameters makes it possible to set
+    an online instance of the application parameters of interest and to
+    communicate it by sending the URL.
 
 ## Advanced parameters
 
@@ -435,7 +444,8 @@ related to:
     be set through the application’s interface,
   - the [reactive behavior](#reactive-plot-display) of the application
     regarding the generation of plots.
-  - the [html export](#html-export).
+  - the [HTML export](#html-export).
+  - the [URL parameters](#url-parameters).
 
 <!-- end list -->
 
@@ -447,10 +457,11 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           class.variable = NULL, class.values = NULL,
           default.group = "by.layer", location.mode = NULL,
           map.z.val = NULL, map.density = "no", map.refits = NULL,
-          plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
-          camera.center = NULL, camera.eye = NULL, run.plots = FALSE
+          camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
+          run.plots = FALSE, html.export = TRUE
           )
 ```
 
@@ -475,7 +486,7 @@ archeoViz(square.size = 100,
   - **add.y.square.labels**: character. Additional square labels for the
     “y” axis.
 
-### Parameters presetting
+### Parameter presetting
 
 ``` r
 archeoViz(class.variable = NULL, class.values = NULL,
@@ -538,12 +549,74 @@ archeoViz(run.plots = FALSE)
     show plots (without requiring the user to click on the buttons in
     the interface).
 
-### Html export
+### HTML export
 
   - **html.export** : TRUE or FALSE. Whether or not to allow figures to
-    be exported as interactive html widgets.
+    be exported as interactive HTML widgets.
 
-# Acknowledgment
+### URL parameters
+
+An instance of `archeoViz` deployed online on a server can be set with
+URL parameters. Supported parameters include:
+
+  - `objects.df`, `refits.df`, `timeline.df`
+  - `title`, `home.text`
+  - `reverse.axis.values`, `reverse.square.names`
+  - `square.size`
+  - `add.x.square.labels`, `add.y.square.labels`
+  - `class.variable`, `class.values`
+  - `default.group`
+  - `location.mode`
+  - `map.density`, `map.refits`
+  - `plot3d.hulls`, `plot3d.surfaces`, `plot3d.refits`
+  - `sectionX.refits`
+  - `sectionY.refits`
+  - `run.plots`
+
+(The following parameters are not supported in the current version:
+`map.z.val`, `sectionX.x.val`, `sectionX.y.val`, `sectionY.x.val`,
+`sectionY.y.val`, `lang`, `set.theme`, `camera.center`, `camera.eye`,
+`html.export`.)
+
+The parameters must be written using the URL syntax
+(?param1=value\&param2=value2) and have the same type of values than
+when used in the R interface. For example, the following URL launches an
+`archeoViz` instance using the
+[Bilzingsleben](https://zenodo.org/record/8003880)
+dataset:
+
+<https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>
+
+This URL does the same, but also includes the refitting table (parameter
+`&refits.df=`) and set the activate the display of the refitting
+relationships in the 3D and map
+plots:
+
+<https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&plot3d.refits=TRUE&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv>
+
+The following URL launches the Bilzingsleben dataset, pre-setting the
+app to:
+
+1.  groups the points by variable (parameter `default.group`, with walue
+    `by.variable` instead of `by.layer`)
+2.  selects only the “Antlers” (parameter `class.values`)
+3.  redefines the size of the square grid (parameter `square.size`, 500
+    cm instead of the 100 cm default value)
+4.  enable the immediate display of the plots (parameter `run.plots`)
+5.  modifies the title of the page (parameter `title`)
+6.  modifies the content of the home page with basic html contents
+    (parameter
+`home.txt`)
+
+[https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable\&class.values=Antler\&square.size=500\&run.plots=TRUE\&title=Antlers%20at%20Bilzingsleben\&home.text=Many%20<b>antlers</b>\&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Anters%20at%20Bilzingsleben&home.text=Many%20%3Cb%3Eantlers%3C/b%3E&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
+
+Note that the parameters `reverse.axis.values`, `reverse.square.names`,
+`add.x.square.labels`, `add.y.square.labels`, `location.mode`, and
+`class.values`, which accept simple or multiple values in the R
+interface (e.g. c(“value1”, “value2”)) only accept one value when set as
+URL parameters (this is a restriction due to the URL syntax).
+
+# Acknowledgments
 
 The `archeoViz` application and package is developed and maintained by
 Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and
@@ -555,8 +628,8 @@ Portuguese and Italian, respectively.
 
   - Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz.
     Visualisation, Exploration, and Web Communication of Archaeological
-    Excavation Data”. v1.0.0, DOI:
-    [10.5281/zenodo.7682227](https://doi.org/10.5281/zenodo.7682227).
+    Excavation Data”. v1.1.2, DOI:
+    [10.5281/zenodo.7682227](https://doi.org/10.5281/zenodo.8000631).
   - Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution
     spatiale du mobilier archéologique: l’application archeoViz et son
     portail

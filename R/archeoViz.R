@@ -10,7 +10,7 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                       plot3d.refits = NULL,
                       sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
                       sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
-                      camera.center = NULL, camera.eye = NULL, 
+                      camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25), 
                       run.plots = FALSE, html.export = TRUE
                       ){
   

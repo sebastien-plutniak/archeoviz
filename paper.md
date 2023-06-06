@@ -16,7 +16,7 @@ affiliations:
  - name: CNRS, CITERES-LAT, Université de Tours, Tours, France
    index: 1
 date: 2 June 2023
-bibliography: paper.bib
+bibliography: archeoviz-joss-paper.bib
 toccolor: teal
 citecolor: teal
 linkcolor: teal
@@ -29,7 +29,6 @@ output:
 ---
 
 
-[comment]: https://pad.chapril.org/p/CidYRj_7vH_rUz43b1or
 
 
 # Summary
@@ -48,13 +47,13 @@ For more than a century, archaeologists have generated coordinated data during f
 are factors explaining the insufficient availability of field archaeological data [@SelhoferGeser2015], [@Bernard2019].
 Given the reluctance of archaeologists to publish data, `archeoViz` indirectly fosters data publication by demonstrating reuse, from the case of spatial archaeological data at the site level [@Plutniak2023archeoviz1.1.1], [@Plutniak2023bspf].
 
-Its minimal and multilingual interface (viz. issue 1) and the simple data structure it requires (viz. issues 2, 3) make it handy to use and fast to deploy on the web. This contributes to promoting datasets as citable scientific outputs and so their creators (viz. issue 4).
+Its minimal and multilingual interface (viz. issue 1) and the simple data structure it requires (viz. issues 2, 3) make it handy to use and fast to deploy on the web. This contributes to promoting datasets as citable scientific outputs and also provided recognition to their creators (viz. issue 4).
 
 # State of the Field
 
 ## Archaeological Visualisation Software
 
-First, `archeoViz` is related to other archaeological visualisation software, relying on similar technologies. However, this software differs with regard to their specialisations and whether or not they are distributed as packages:
+First, `archeoViz` is related to other archaeological visualisation software, relying on similar technologies. However, this software differs with regard to their specialisations and are available in various formats as scripts, applications, or packages:
 
 * Dataset-specific scripts or web applications:
 	* Shannon McPherron's R Shiny [`Plot it`](https://www.oldstoneage.com) application (unpublished), 
@@ -79,7 +78,7 @@ It is designed as the building block of a decentralised web edition network for 
 
 Since the 1960s, numerous attempts at building up standards and repositories were made in archaeology. All projects tended to collect as much data as possible and several independent databases existed with the same themes. The pitfalls of this centralised approach were addressed in the early 2000s with the development of the semantic web, ontologies, and linked open data technologies.
 
-`archeoViz` is designed along this the same line. Rather than collecting all data in the same place as in the centralised approach, `archeoViz` users create a particular instance of `archeoViz` for each dataset to visualise and communicate. These instances can be deployed on the server of their choice ((e.g., [shinyapps.io](https://www.shinyapps.io), [huma-num](https://huma-num.fr), or any other institutional or personal server). Nevertheless, `archeoViz` can be used in four ways, from purely local (on the user’s machine), to purely remote, including or not data publication on third-party repositories \autoref{fig:workflow}.
+`archeoViz` is designed along this the same line. Rather than collecting all data in the same place as in the centralised approach, `archeoViz` users create a particular instance of `archeoViz` for each dataset to visualise and communicate. These instances can be deployed on the server of their choice ((e.g., [shinyapps.io](https://www.shinyapps.io), [huma-num](https://huma-num.fr), or any other institutional or personal server). Nevertheless, `archeoViz` can be used in four ways, from purely local (on the user’s machine), to purely remote, assuming or not data publication on third-party repositories \autoref{fig:workflow}.
 
 
 ![**The four ways to use `archeoViz`**: local (green solid line), remote and dynamic (dashed line), remote and static with data publication on a third party service (black solid line), remote and static without data publication (blue solid line). \label{fig:workflow}](joss-figures/workflow-en.png)

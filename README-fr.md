@@ -18,14 +18,14 @@ italien, et portugais.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
+stable](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
 [![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://app.codecov.io/gh/sebastien-plutniak/archeoviz)
 [![archeoViz status
 badge](https://sebastien-plutniak.r-universe.dev/badges/archeoViz)](https://sebastien-plutniak.r-universe.dev/archeoViz)
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
-[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/sebastien-plutniak/archeoviz)](https://archive.softwareheritage.org/browser/origin/https://github.com/sebastien-plutniak/archeoviz/)
+[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/sebastien-plutniak/archeoviz)](https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://github.com/sebastien-plutniak/archeoviz)
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
 [![CRAN
@@ -40,13 +40,19 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
       - [Signaler un bug](#signaler-un-bug)
       - [Soumettre une modification](#soumettre-une-modification)
   - [**Utilisation**](#utilisation)
-      - [Données](#données)
-          - [Par chargement de tableaux](#par-chargement-de-tableaux)
+      - [Format de données](#formater-des-données)
+          - [Formater des données](#formater-des-données)
+          - [Tableau des objets](#tableau-des-objets)
+          - [Tableau des remontages](#tableau-des-remontages)
+          - [Tableau de la chronologie](#tableau-de-la-chronologie)
+      - [Charger des données](#charger-des-données)
+          - [Via l’interface de
+            l’application](#via-linterface-de-lapplication)
           - [Par génération de données
             aléatoires](#par-génération-de-données-aléatoires)
-          - [Par paramétrage de la
-            fonction](#par-paramétrage-de-la-fonction)
-          - [À travers une URL](#à-travers-une-url)
+          - [Via les paramètres de la fonction
+            R](#via-les-paramètres-de-la-fonction-r)
+          - [Via les paramètres d’une URL](#via-les-paramètres-dune-url)
       - [Sous-sélection de données](#sous-sélection-de-données)
           - [Par mode de localisation](#par-mode-de-localisation)
           - [Par catégorie d’objet](#par-catégorie-dobjet)
@@ -117,7 +123,7 @@ unzip(zipfile = "archeoviz.zip")
 Puis, rendez-vous à `https://<your-shiny-server>/archeoviz-main`.
 
 Pour paramétrer l’application avec vos données et préférences, éditez le
-fichier app.R situé à la racine du répertoire de l’application:
+fichier `app.R` situé à la racine du répertoire de l’application :
 
 ``` r
 archeoViz(objects.df = NULL,   # data.frame pour les objets
@@ -191,91 +197,128 @@ N.B.: par conséquent, `archeoViz` n’est pas destiné à se substituer à
 des outils d’analyse plus sophistiqués (e.g., SIG, packages de
 statistiques spatiales, etc.)
 
-## Données
+## Formater des données
 
-Il existe trois manières d’introduire des données dans `archeoViz`:
+Trois types de données peuvent être chargées dans `archeoViz` :
 
-1.  en chargeant des tableaux à partir de l’onglet “Données”,
-2.  en employant le générateur de données aléatoire dans l’onglet
-    “Données”;
-3.  en paramétrant la fonction `archeoViz` avant de lancer
-    l’application.
-
-### Par chargement de tableaux
-
-Des tableaux pour trois types de données peuvent être chargés à partir
-de l’onglet “Données”:
-
-  - un tableau “objects” (requis), à propos des objets;
+  - un tableau “objects” (requis), à propos des objets ;
   - un tableau “refits” (optionnel), à propos des relations de
-    remontage;
+    remontage ;
   - un tableau “timeline” (optionnel), à propos des carrés du site et
-    des années où ils ont été fouillés.
+    des années où ils ont été fouillés ou prospectés.
 
 Les tableaux doivent être au format CSV et la première ligne doit
 contenir les noms des variables (le symbole séparateur du CSV peut être
 défini dans l’interface). Les contenus au format HTML sont autorisés.
 Cela permet notamment d’introduire références vers des ressources
-complémentaires du jeu de données (par .ex l’identifiant unique de
+complémentaires du jeu de données (par exemple l’identifiant unique de
 l’objets dans une autre base de données, ou ceux des concepts
 d’ontologies employés pour décrire l’objet, etc.).
 
-#### Tableau objets
+Le formatage des données peut être réalisé :
+
+  - soit en utilisant un tableur sur votre machine permettant d’exporter
+    des fichiers CSV ;
+  - ou, pour le tableau des objets, en utilisant l’interface de
+    l’application
+    [*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) en
+    chargeant vos données, définissant les variables (onglet “Load
+    data”), puis en les exportant au format `archeoViz` (onglet
+    “Table” / “archeoViz exports”). Il est également possible de les
+    transférer directement à une instance `archeoViz` en ligne.
+
+### Tableau des objets
 
 Chaque ligne décrit un objet et doit comporter les variables
-obligatoires suivantes :
+obligatoires suivantes :
 
-  - **id** : *valeur alphanumérique*, identifiant unique de l’objet
-  - **xmin** : *valeur numérique*, coordonnée de l’objet en axe X (en
+  - **id** : *valeur alphanumérique*, identifiant unique de l’objet
+  - **xmin** : *valeur numérique*, coordonnée de l’objet en axe X (en
     cm)
-  - **ymin** : *valeur numérique*, coordonnée de l’objet en axe Y (en
+  - **ymin** : *valeur numérique*, coordonnée de l’objet en axe Y (en
     cm)
-  - **zmin** : *valeur numérique*, coordonnée de l’objet en axe Z
+  - **zmin** : *valeur numérique*, coordonnée de l’objet en axe Z
     (valeur positive de profondeur en cm)
-  - **layer** : *valeur alphanumérique*, identifiant de la couche de
+  - **layer** : *valeur alphanumérique*, identifiant de la couche de
     l’objet
-  - **object\_type** : *valeur alphanumérique*, catégorie de l’objet
+  - **object\_type** : *valeur alphanumérique*, catégorie de l’objet
 
-De plus, des variables optionnelles sont possibles:
+De plus, des variables optionnelles sont possibles :
 
-  - **square\_x** : *valeur alphanumérique*, identifiant du carré de
+  - **square\_x** : *valeur alphanumérique*, identifiant du carré de
     l’objet en axe X
-  - **square\_y** : *valeur alphanumérique*, identifiant du carré de
+  - **square\_y** : *valeur alphanumérique*, identifiant du carré de
     l’objet en axe Y
-  - **year** : *valeur numérique*, année de fouille de l’objet
-  - **xmax** : *valeur numérique*, lorsque la localisation de l’objet en
+  - **year** : *valeur numérique*, année de fouille de l’objet
+  - **xmax** : *valeur numérique*, lorsque la localisation de l’objet en
     X est comprise dans un intervalle de coordonnées
-  - **ymax** : *valeur numérique*, lorsque la localisation de l’objet en
+  - **ymax** : *valeur numérique*, lorsque la localisation de l’objet en
     Y est comprise dans un intervalle de coordonnées
-  - **zmax** : *valeur numérique*, lorsque la localisation de l’objet en
+  - **zmax** : *valeur numérique*, lorsque la localisation de l’objet en
     Z est comprise dans un intervalle de coordonnées
-  - **object\_edit** : nombre non limité de variables additionnelles
+  - **object\_edit** : nombre non limité de variables additionnelles
     décrivant l’objet (les noms de colonnes doivent commencer par
     *object\_* et avoir des suffixes différents
 
-Les labels des carrés du carroyage :
+Les labels des carrés du carroyage :
 
-  - sont ordonnés alpha-numériquement ;
+  - sont ordonnés alpha-numériquement ;
   - ne sont pas affichés, afin d’éviter des affichages erronés, si le
-    nombbre de labels ne correspond pas exactement au nombre total de
-    carrés de 100 cm pouvant être définis dans l’intervalle des
+    nombre de labels ne correspond pas exactement au nombre total de
+    carrés de 100 cm pouvant être définis dans l’intervalle des
     coordonnées minimales et maximales contenues dans les variables
-    xmin et ymin ;
+    xmin et ymin ;
   - peuvent être complétés avec les paramètres `add.x.square.labels` et
     `add.y.square.labels` de la fonction `archeoViz()` afin d’ajouter
     les labels manquants (respectivement, sur les axes X et Y du
     carroyage).
 
+### Tableau des remontages
+
+Un tableau à deux colonnes peut être chargé pour les remontages entre
+objets (format CSV). Chaque ligne doit contenir les identifiants uniques
+des deux objets liés à une relation de remontage (en correspondance avec
+les valeurs de la colonne `id` du tableau des objets).
+
+### Tableau de la chronologie
+
+Optionnellement, un tableau (CSV) peut être chargé à propos du déroulé
+de la fouille. Chaque ligne est relative à un carré de fouille et
+indique quand ce carré a été fouillé ou prospecté. Le tableau doit
+comporter les variables suivantes :
+
+  - **year** : valeur numérique, année de fouille
+  - **square\_x** : valeur alphanumérique, identifiant du carré en axe X
+  - **square\_y** : valeur alphanumérique, identifiant du carré en axe Y
+
+## Charger des données
+
+Quatre manières permettent de charger des données dans `archeoViz`:
+
+1.  en téléchargeant des tableaux à partir de l’onglet “Données” ;
+2.  en générant des données aléatoires dans l’onglet “Données” ;
+3.  en chargeant des tableaux à travers les paramètres de la fonction
+    `archeoViz`, dans un environnement R ;
+4.  en téléchargeant des tableaux via les paramètres d’URL, lors de
+    l’utilisation d’une instance `archeoViz` en ligne.
+
+### Via l’interface de l’application
+
+Des tableaux pour trois types de données peuvent être chargés à partir
+de l’onglet “Données”. Le séparateur CSV (la virgule, le point-virgule
+ou la tabulation) et le caractère distinguant les décimales dans les
+nombres (point ou virgule) peuvent être paramétrés.
+
 ### Par génération de données aléatoires
 
 À des fins de démonstration, il est possible d’employer des données
-aléatoirement générées. Déplacer le curseur sur une valeur supérieure à
-0, dans l’onglet “Données”, active cette fonctionnalité (replacer le
+générées aléatoirement. Déplacer le curseur sur une valeur supérieure
+à 0, dans l’onglet “Données”, active cette fonctionnalité (replacer le
 curseur sur 0 la désactive). Des données d’objets, de remontage, et de
 chronologie de la fouille sont alors générés, permettant de tester
 toutes les fonctionnalités d’`archeoViz`.
 
-### Par paramétrage de la fonction
+### Via les paramètres de la fonction R
 
 La fonction de lancement d’`archeoViz()` peut être exécutée sans définir
 de paramètres:
@@ -294,12 +337,18 @@ archeoViz(objects.df = NULL,  # data.frame pour les objets
           timeline.df = NULL) # data.frame optionnel pour la chronologie
 ```
 
-### À travers une URL
+### Via les paramètres d’une URL
 
-L’URL d’une instance `archeoViz` en ligne, par exemple
-<https://analytics.huma-num.fr/archeoviz/fr>, peut comporter un
-paramètre `?objects.df=`, prenant pour valeur l’URL d’un fichier CSV
-respectant le format `archeoViz`.
+L’URL d’une instance `archeoViz` en ligne peut être complétée avec les
+paramètres :
+
+  - `objects.df=`
+  - \`refits.df=\`\`
+  - `timeline.df=`
+
+prenant pour valeurs l’URL d’un fichier CSV respectant le format
+`archeoViz` décrit ci-dessus. Par exemple :
+<https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>
 
 ## Sous-sélection de données
 
@@ -313,7 +362,7 @@ catégories des objets, et la définition de sous-groupes de données.
 La localisation des objets archéologiques peut avoir été enregistrée de
 différentes manières, plus ou moins précises: d’une part, de manière
 exacte avec des points (localisés par un triplé de coordonnées x, y et
-z) et, d’autre part, de manière plus ou moins imprécises sur des lignes,
+z) et, d’autre part, de manière plus ou moins imprécise sur des lignes,
 des plans, ou au sein de volumes (avec différentes ensembles de paires
 de valeurs x, y et/ou z). Dans `archeoViz`, une distinction est faite
 entre les localisations exactes (les points) et les autres types de
@@ -363,7 +412,7 @@ archéologues:
     première colonne contient l’identifiant unique de l’objet et la
     deuxième colonne contient l’identifiant unique de l’ensemble
     d’objets remontant entre eux auquel l’objet considéré appartient.
-2.  par relation de remontage: en employant alors un tableau à deux
+2.  par relation de remontage : en employant alors un tableau à deux
     colonnes où une ligne correspond à une **relation de remontage**. La
     première colonne contient l’identifiant unique du premier objet et
     la deuxième colonne contient l’identifiant unique du deuxième objet.
@@ -371,13 +420,13 @@ archéologues:
 Bien que la seconde structure de donnée soit plus précise, c’est la
 première qui est le plus fréquemment employée.
 
-Ces deux structures de données sont traitées différement dans
-`archeoViz`:
+Ces deux structures de données sont traitées différemment dans
+`archeoViz` :
 
   - les ensembles d’objets remontant entre eux doivent être décrits dans
     une colonne spécifique dans le tableau `objects.df` table (nommée
     par ex. `object_refits`) et sont représentés par la couleur des
-    points dans les visualisations (comme pour tout autre variable);
+    points dans les visualisations (comme pour tout autre variable) ;
   - les relations de remontage doivent être décrits dans un tableau
     `refits.df` et sont visualisés par des segments reliant les objets
     liés par des relations de remontage.
@@ -408,9 +457,9 @@ l’affichage ou non des relations de remontage.
 Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 
   - Les visualisations en 3D, en plan et en sections peuvent être
-    exportées :
+    exportées :
       - au format SVG, en cliquant sur l’icône “appareil photo” de la
-        barre de menu s’affichant au dessus des visualisations ;
+        barre de menu s’affichant au-dessus des visualisations ;
       - en format HTML interactif, en cliquant sur le bouton “Exporter”
         dans la colonne droite de l’interface.
   - Le plan de la chronologie des fouilles peut être téléchargé au
@@ -461,15 +510,15 @@ l’application.
   - Dans l’onglet “Reproductibilité”, une commande R est générée
     dynamiquement, tenant compte du paramétrage de l’application réalisé
     par l’utilisateur en agissant avec l’interface graphique.
-  - Dans une usage plus avancé et technique, les paramètres d’URL
-    permettent de paramétrer une instance en ligne de l’application avec
-    des paramètres d’intérêt et de la communiquer l’ensemble en envoyant
+  - Dans un usage plus avancé, les paramètres d’URL permettent de
+    paramétrer une instance en ligne de l’application avec des
+    paramètres d’intérêt et de la communiquer l’ensemble en envoyant
     l’URL à un tiers.
 
 ## Paramètres avancés
 
 La fonction `archeoViz()` admet de nombreux paramètres optionnels,
-relatifs aux :
+relatifs aux :
 
   - données à charger (traité
     [ci-dessus](#par-paramétrage-de-la-fonction)),
@@ -509,17 +558,17 @@ archeoViz(square.size = 100,
           )
 ```
 
-  - **square.size** : numérique. Taille (longueur et largeur) en
+  - **square.size** : numérique. Taille (longueur et largeur) en
     centimètre des carrés du carroyage. La valeur par défaut est 100
     cm.
-  - **reverse.axis.values** : caractères. Nom de l’axe ou des axes à
+  - **reverse.axis.values** : caractères. Nom de l’axe ou des axes à
     inverser (une combinaison de ‘x’, ‘y’, ‘z’).
-  - **reverse.square.names** : caractères. Nom de l’axe ou des axes pour
+  - **reverse.square.names** : caractères. Nom de l’axe ou des axes pour
     lesquels inverser l’ordre des labels de carrés (une combinaison de
     ‘x’, ‘y’, ‘z’).
-  - **add.x.square.labels** : caractères. Labels de carrés additionnels
+  - **add.x.square.labels** : caractères. Labels de carrés additionnels
     pour l’axe ‘x’.
-  - **add.y.square.labels** : caractères. Labels de carrés additionnels
+  - **add.y.square.labels** : caractères. Labels de carrés additionnels
     pour l’axe ‘y’.
 
 ### Pré-sélection des paramètres
@@ -535,52 +584,52 @@ archeoViz(class.variable = NULL, class.values = NULL,
           )
 ```
 
-  - **class.variable** : caractères. Au lancement de l’application, nom
+  - **class.variable** : caractères. Au lancement de l’application, nom
     de la variable à pré-sélectionner.
-  - **class.values** : caractères. Au lancement de l’application, nom
+  - **class.values** : caractères. Au lancement de l’application, nom
     des valeurs à pré-sélectionner.
-  - **default.group** : caractères. Au lancement de l’application,
+  - **default.group** : caractères. Au lancement de l’application,
     pré-sélection de la variable à employer pour grouper les données
     (soit “by.layer” ou “by.variable”).
-  - **location.mode** : caractères. Au lancement de l’application,
+  - **location.mode** : caractères. Au lancement de l’application,
     pré-sélection du ou des modes de localisation à afficher (“exact”,
     “fuzzy”, ou “show.uncertainty”).
-  - **map.z.val** : numérique. Au lancement de l’application, valeurs
+  - **map.z.val** : numérique. Au lancement de l’application, valeurs
     minimale et maximale des coordonnées Z à présélectionner dans la
     visualisation en plan.
-  - **map.density** : caractères. Au lancement de l’application,
+  - **map.density** : caractères. Au lancement de l’application,
     calculer et afficher ou non les courbes de densité dans la
     visualisation en plan (soit “no”, “overall”, ou “by.variable”).
-  - **map.refits** : TRUE ou FALSE. Afficher ou non les remontages dans
+  - **map.refits** : TRUE ou FALSE. Afficher ou non les remontages dans
     la visualisation en plan.
-  - **plot3d.hulls** : TRUE ou FALSE. Au lancement de l’application,
+  - **plot3d.hulls** : TRUE ou FALSE. Au lancement de l’application,
     calculer et afficher ou non les enveloppes convexes dans la
     visualisation 3D.
-  - **plot3d.surfaces** : TRUE ou FALSE. Au lancement de l’application,
+  - **plot3d.surfaces** : TRUE ou FALSE. Au lancement de l’application,
     calculer et afficher ou non les surfaces de régression dans la
     visualisation 3D.
-  - **plot3d.refits** : TRUE ou FALSE. Au lancement de l’application,
+  - **plot3d.refits** : TRUE ou FALSE. Au lancement de l’application,
     afficher ou non les remontages dans la visualisation 3D.
-  - **sectionX.x.val** : numérique. Au lancement de l’application,
+  - **sectionX.x.val** : numérique. Au lancement de l’application,
     valeurs minimale et maximale des coordonnées X à présélectionner
     dans la visualisation en section X.
-  - **sectionX.y.val** : numérique. Au lancement de l’application,
+  - **sectionX.y.val** : numérique. Au lancement de l’application,
     valeurs minimale et maximale des coordonnées Y à présélectionner
     dans la visualisation en section X.
-  - **sectionX.refits** : TRUE ou FALSE. Au lancement de l’application,
+  - **sectionX.refits** : TRUE ou FALSE. Au lancement de l’application,
     afficher ou non les remontages dans la visualisation en section X.
-  - **sectionY.x.val** : numérique. Au lancement de l’application,
+  - **sectionY.x.val** : numérique. Au lancement de l’application,
     valeurs minimale et maximale des coordonnées X à présélectionner
     dans la visualisation en section Y.
-  - **sectionY.y.val** : numérique. Au lancement de l’application,
+  - **sectionY.y.val** : numérique. Au lancement de l’application,
     valeurs minimale et maximale des coordonnées Y à présélectionner
     dans la visualisation en section Y.
-  - **sectionY.refits** : TRUE ou FALSE. Au lancement de l’application,
+  - **sectionY.refits** : TRUE ou FALSE. Au lancement de l’application,
     afficher ou non les remontages dans la visualisation en section Y.
-  - **camera.center** : numérique. Au lancement de l’application,
+  - **camera.center** : numérique. Au lancement de l’application,
     coordonnées du point vers lequel la caméra est orientée dans la
     visualisation 3D (valeurs par défaut: x=0, y=0, z=0).
-  - **camera.eye** : numérique. Au lancement de l’application,
+  - **camera.eye** : numérique. Au lancement de l’application,
     coordonnées de la position de la caméra dans la visualisation 3D
     (valeurs par défaut: x=1.25, y=1.25, z=1.25).
 
@@ -590,13 +639,13 @@ archeoViz(class.variable = NULL, class.values = NULL,
 archeoViz(run.plots = FALSE)
 ```
 
-  - **run.plots** : TRUE ou FALSE. Si les visualisations doivent, ou
+  - **run.plots** : TRUE ou FALSE. Si les visualisations doivent, ou
     non, être immédiatement calculées et affichées (sans nécessiter un
     clic sur les boutons de l’interface).
 
 ### Export HTML
 
-  - **html.export** : TRUE ou FALSE. Afficher ou non les boutons
+  - **html.export** : TRUE ou FALSE. Afficher ou non les boutons
     permettant d’exporter les visualisations en format HTML interactif.
 
 ### Paramètres URL
@@ -619,7 +668,7 @@ supportés:
   - `sectionY.refits`
   - `run.plots`
 
-(Les paramètres suivantes ne sont pas supportés dans la version actuelle
+(Les paramètres suivants ne sont pas supportés dans la version actuelle
 de l’application: `map.z.val`, `sectionX.x.val`, `sectionX.y.val`,
 `sectionY.x.val`, `sectionY.y.val`, `lang`, `set.theme`,
 `camera.center`, `camera.eye`, `html.export`.)
@@ -635,18 +684,18 @@ instance `archeoViz` à partir du tableau principal du jeu de données
 Cette URL fait de même, mais inclut également le tableau des remontages
 (paramètre `&refits.df=`) et active l’affichage immédiat des relations
 de remontage dans le graphique 3D et le
-plan:
+plan :
 
 <https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&plot3d.refits=TRUE&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv>
 
-L’URL suivante lance le jeu de données Bilzingsleben dataset, en
-pré-réglant l’application telle que:
+L’URL suivante lance le jeu de données Bilzingsleben, en pré-réglant
+l’application telle que:
 
 1.  les points sont groupés par variable (paramètre `default.group`,
     avec la valeur `by.variable` plutôt que `by.layer`)
 2.  ne sélectionne que les “Antlers” (paramètre `class.values`)
 3.  redéfini la taille des carrés du carroyage (paramètre `square.size`
-    500 cm au lieu de la valeur par défaut 100 cm)
+    500 cm au lieu de la valeur par défaut 100 cm)
 4.  active l’affichage immédiat des graphiques (paramètre `run.plots`)
 5.  modifie le titre de la page (paramètre `title`)
 6.  modifie le contenu de la page d’accueil, illustrant l’usage d’un
@@ -655,8 +704,7 @@ pré-réglant l’application telle que:
 
 [https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable\&class.values=Antler\&square.size=500\&run.plots=TRUE\&title=Antlers%20at%20Bilzingsleben\&home.text=Many%20<b>antlers</b>\&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Anters%20at%20Bilzingsleben&home.text=Many%20%3Cb%3Eantlers%3C/b%3E&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
 
-À noter que les paramètres `reverse.axis.values`,
-`reverse.square.names`, `add.x.square.labels`, `add.y.square.labels`,
+À noter que les paramètres `add.x.square.labels`, `add.y.square.labels`,
 `location.mode`, et `class.values`, qui admettent des valeurs simples ou
 multiples dans l’interface R (par ex. c(“value1”, “value2”)) n’admettent
 qu’une seule valeur lorsqu’employé comme paramètre d’URL (il s’agit
@@ -674,8 +722,8 @@ respectivement en portugais et en italien.
 
   - Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz.
     Visualisation, Exploration, and Web Communication of Archaeological
-    Excavation Data”. v1.1.2, DOI:
-    [10.5281/zenodo.7682227](https://doi.org/10.5281/zenodo.8000631).
+    Spatial Data”. v1.2.0, DOI:
+    [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution
     spatiale du mobilier archéologique: l’application archeoViz et son
     portail

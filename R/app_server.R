@@ -1099,7 +1099,7 @@ app_server <- function(input, output, session) {
     ratio3D.value <- input$ratio
     
     if(is.null(ratio3D.value)){
-      ratio3D.value <- getShinyOption("params")$plot3d.ratio
+      ratio3D.value <- as.numeric(getShinyOption("params")$plot3d.ratio)
       if(is.null(ratio3D.value)){
         ratio3D.value <- 1
       }

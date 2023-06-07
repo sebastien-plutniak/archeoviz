@@ -65,6 +65,8 @@ Alternatively, the `objects.df` parameter, and the optional `refits.df` and `tim
 The aspect of the application can be modified using the `title`, `home.text`, and `set.theme` parameters.
 Possible values for the `set.theme` parameter includes the allowed values for the `shinytheme()` function (i.e., "cerulean", "cosmo", "cyborg", "darkly", "flatly", "journal", "lumen", "paper", "readable", "sandstone", "simplex", "slate", "spacelab", "superhero", "united", "yeti").
 
+Note that the `SEAHORS` package includes interactive features to format a dataset in `archeoViz` format, export it or send it to an online `archeoViz` instance.
+
 }
 \value{
 	Launch the `archeoViz` Shiny application.
@@ -72,14 +74,15 @@ Possible values for the `set.theme` parameter includes the allowed values for th
 \author{Sebastien Plutniak <sebastien.plutniak at posteo.net>}
 
 \seealso{
-	\code{shiny}
+  \code{shiny}
   \code{\link[shinythemes]{shinytheme}}
-	\code{plotly}
+  \code{plotly}
   \code{\link[plotly]{layout}}
-	\code{ggplot2}
+  \code{ggplot2}
   \code{\link[mgcv]{gam}}
   \code{\link[cxhull]{cxhull}}
   \code{\link[cxhull]{hullMesh}}
+  \code{SEAHORS}
 }
 
 \examples{

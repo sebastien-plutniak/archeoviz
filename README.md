@@ -16,49 +16,55 @@ French, Italian, and Portuguese.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
+stable](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
 [![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://app.codecov.io/gh/sebastien-plutniak/archeoviz)
 [![archeoViz status
 badge](https://sebastien-plutniak.r-universe.dev/badges/archeoViz)](https://sebastien-plutniak.r-universe.dev/archeoViz)
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
-[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/sebastien-plutniak/archeoviz)](https://archive.softwareheritage.org/browser/origin/https://github.com/sebastien-plutniak/archeoviz/)
+[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/sebastien-plutniak/archeoviz)](https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://github.com/sebastien-plutniak/archeoviz)
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
 [![CRAN
 Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.org/package=archeoViz)
 
   - [**Installation**](#installation)
-      - [Local use](#local-use)
-      - [Remote use](#remote-use)
+      - [Local Use](#local-use)
+      - [Remote Use](#remote-use)
       - [Demonstration](#demonstration)
-  - [**Community guidelines**](#community-guidelines)
-      - [Reporting bugs](#reporting-bugs)
-      - [Suggesting changes](#suggesting-changes)
+  - [**Community Guidelines**](#community-guidelines)
+      - [Reporting Bugs](#reporting-bugs)
+      - [Suggesting Changes](#suggesting-changes)
   - [**Use**](#use)
-      - [Data input](#data-input)
-          - [Loading files through the Input data
-            tab](#loading-files-through-the-input-data-tab)
-          - [Random data](#random-data)
-          - [Through function parameters](#through-function-parameters)
-          - [Through an URL](#through-an-url)
+      - [Data Format](#data-format)
+          - [Formatting Data](#formatting-data)
+          - [Objects Table](#objects-table)
+          - [Refitting Table](#refitting-table)
+          - [Timeline Table](#timeline-table)
+      - [Data Input](#data-input)
+          - [Through the Application
+            Interface](#through-the-application-interface)
+          - [Generating Random Data](#generating-random-data)
+          - [Through the R Function
+            Parameters](#through-the-r-function-parameters)
+          - [Through URL Parameters](#through-url-parameters)
       - [Data sub-setting](#data-sub-setting)
           - [Location mode](#location-mode)
-          - [Objects category](#objects-category)
-          - [Data subgroups](#data-subgroups)  
-          - [Objects selection](#objects-selection)
-      - [Interactive visualisation](#interactive-visualisation)
-      - [Graphical outputs](#graphical-outputs)
-      - [Spatial statistics](#spatial-statistics)
-          - [Regression surfaces](#regression-surfaces)
-          - [Convex hulls](#convex-hulls)
-          - [2D kernel density](#2d-kernel-density)
+          - [Objects Category](#objects-category)
+          - [Data Subgroups](#data-subgroups)  
+          - [Objects Selection](#objects-selection)
+      - [Interactive Visualisation](#interactive-visualisation)
+      - [Graphical Outputs](#graphical-outputs)
+      - [Spatial Statistics](#spatial-statistics)
+          - [Regression Surfaces](#regression-surfaces)
+          - [Convex Hulls](#convex-hulls)
+          - [2D Kernel Density](#2d-kernel-density)
   - [**Reproducibility**](#reproducibility)
-  - [**Advanced parameters**](#advanced-parameters)
-      - [Square grid](#square-grid)
-      - [Parameter presetting](#parameter-presetting)
-      - [Reactive plot display](#reactive-plot-display)
+  - [**Advanced Parameters**](#advanced-parameters)
+      - [Square Grid](#square-grid)
+      - [Parameter Presetting](#parameter-presetting)
+      - [Reactive Plot Display](#reactive-plot-display)
       - [URL parameters](#url-parameters)
   - [**Acknowledgments**](#acknowledgments)
   - [**References**](#references)
@@ -164,7 +170,7 @@ model](https://docs.github.com/articles/about-pull-requests).
 # Use
 
 Having archaeological remains from a given site, `archeoViz` is designed
-to lower the technical barriers to fulfil three objectives:
+to lower the technical barriers to fulfill three objectives:
 
   - basic spatial exploration and generation of simple graphical
     reports;
@@ -175,39 +181,40 @@ to lower the technical barriers to fulfil three objectives:
 
 In addition, `archeoViz` is a suitable pedagogical resource for teaching
 spatial analysis in archaeology, data structuring, open science, and
-reproducibile workflow.
+reproducible workflow.
 
 N.B.: consequently, `archeoViz` is not intended to replace more
 sophisticated analysis tools (e.g., GIS, statistical packages, etc.)
 
-## Data input
+## Data Format
 
-There are four ways to input data in `archeoViz`:
-
-1.  uploading tables in the “Input data” tab,
-2.  using randomly generated data from the “Input data” tab;
-3.  set the `archeoViz` main function’s parameters before running the
-    application.
-4.  through the URL parameters, when using an online instance of
-    `archeoViz`
-
-### Loading files through the Input data tab
-
-Tables for three types of data can be uploaded from the “Input data”
-tab:
+Three types of data can be loaded in `archeoViz`:
 
   - an “objects” table (mandatory), with data about the objects;
   - a “refits” table (optional), with data about the refitting objects;
   - a “timeline” table (optional), with data about when each square of
-    the site was excavated.
+    the site was excavated or surveyed.
 
-The tables must be CSV files with the first row used containing the
-columns’ labels (the separator can be set). Contents in HTML are
-allowed. This makes it possible, in particular, to add links to external
-resources (e.g., the permanent identifier of the object’s in other
-databases, or of the concepts used to describe the object, etc.).
+### Formatting data
 
-#### Objects table
+The tables must be CSV files with the first row containing the column
+labels. Contents in HTML are allowed. This makes it possible, in
+particular, to add links to external resources (e.g., to objects
+permanent identifier in other databases, or to concepts identifiers in
+standard ontologies / thesaurii, etc.).
+
+Formatting your data can be done:
+
+  - either using a spreadsheet editor on your machine to generate CSV
+    files;
+  - or, for the `objects table,` using the
+    [*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) application
+    to load your data, define the variables (in the “Load data” tab),
+    and export it to the `archeoViz` format (in the “Table” / “archeoViz
+    exports” tab). It is also possible to directly send the data to an
+    online `archeoViz` instance.
+
+### Objects table
 
 A row describes a single object with the following mandatory fields:
 
@@ -250,16 +257,52 @@ The labels of the squares of the grid:
     order to add the missing labels (on the X and Y axes of the grid,
     respectively).
 
-### Random data
+### Refitting table
 
-For demonstration purposes using randomly generated data is made
-possible. To activate this feature, set the slider in “Input data” to a
+A data table with two columns can be uploaded for refitting data (CSV
+format). Each row must contain the unique identifiers of two refitting
+objects (corresponding to the values of the `id` column in the objects
+table).
+
+### Timeline table
+
+A table (CSV format) can be uploaded about excavation history. Row gives
+the year when each grid square of the site was excavated or surveyed.
+This table must include the following variables:
+
+  - **year**: numerical value, the year of excavation
+  - **square\_x**: alphanumerical value, identifier of the excavated
+    square on the X axis
+  - **square\_y**: alphanumerical value, identifier of the excavated
+    square on the Y axis
+
+## Data Input
+
+There are four ways to input data in `archeoViz`:
+
+1.  uploading data tables through the “Input data” tab,
+2.  generating random data in the “Input data” tab;
+3.  loading data tables through the `archeoViz` function’s parameters,
+    in the R interface;
+4.  uploading data tables through URL parameters, when using an online
+    instance of `archeoViz`.
+
+### Through the application interface
+
+The three types of tables can be loaded in the “Input data” tab. The CSV
+separator (one of: comma, semicolon, tabulation) and the character used
+for decimal points (period or comma).
+
+### Generating random data
+
+Using randomly generated data is made possible for demonstration
+purposes. To activate this feature, set the slider in “Input data” to a
 value higher than 0 (setting the value back to 0 deactivates the
 feature). An “objects” data set, a “refits” data set, and a “timeline”
 data set are generated, making it possible to test all the `archeoViz`
 functionalities.
 
-### Through function parameters
+### Through the R function parameters
 
 `archeoViz`’s launching function (`archeoViz()`) can be run without
 parameter
@@ -279,12 +322,17 @@ archeoViz(objects.df = NULL,  # data.frame with data about the objects
           timeline.df = NULL) # optional data.frame for the excavation timeline
 ```
 
-### Through an URL
+### Through URL parameters
 
-The URL of an online instance of `archeoViz`, for example,
-<https://analytics.huma-num.fr/archeoviz/en/>, can include a
-`?objects.df=` parameter, whose value is the URL of a CSV file observing
-the `archeoViz` format.
+The URL of an online instance of `archeoViz` can include the parameters:
+
+  - `objects.df=`
+  - \`refits.df=\`\`
+  - `timeline.df=`
+
+whose values must be the URL of a CSV file observing the `archeoViz`
+format described above. For example:
+<https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>
 
 ## Data sub-setting
 
@@ -610,11 +658,11 @@ app to:
 
 [https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable\&class.values=Antler\&square.size=500\&run.plots=TRUE\&title=Antlers%20at%20Bilzingsleben\&home.text=Many%20<b>antlers</b>\&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Anters%20at%20Bilzingsleben&home.text=Many%20%3Cb%3Eantlers%3C/b%3E&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
 
-Note that the parameters `reverse.axis.values`, `reverse.square.names`,
-`add.x.square.labels`, `add.y.square.labels`, `location.mode`, and
-`class.values`, which accept simple or multiple values in the R
-interface (e.g. c(“value1”, “value2”)) only accept one value when set as
-URL parameters (this is a restriction due to the URL syntax).
+Note that the parameters `add.x.square.labels`, `add.y.square.labels`,
+`location.mode`, and `class.values`, which accept simple or multiple
+values in the R interface (e.g. c(“value1”, “value2”)) only accept one
+value when set as URL parameters (this is a restriction due to the URL
+syntax).
 
 # Acknowledgments
 
@@ -628,8 +676,8 @@ Portuguese and Italian, respectively.
 
   - Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz.
     Visualisation, Exploration, and Web Communication of Archaeological
-    Excavation Data”. v1.1.2, DOI:
-    [10.5281/zenodo.7682227](https://doi.org/10.5281/zenodo.8000631).
+    Spatial Data”. v1.2.0, DOI:
+    [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution
     spatiale du mobilier archéologique: l’application archeoViz et son
     portail

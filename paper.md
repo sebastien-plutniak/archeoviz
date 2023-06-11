@@ -16,7 +16,7 @@ affiliations:
  - name: CNRS, CITERES-LAT, Université de Tours, Tours, France
    index: 1
 date: 2 June 2023
-bibliography: archeoviz-joss-paper.bib
+bibliography: paper.bib
 toccolor: teal
 citecolor: teal
 linkcolor: teal
@@ -65,7 +65,7 @@ First, `archeoViz` is related to other archaeological visualisation software, re
 
 ## Geographic Information Systems
 
-Second, `archeoViz` is a lightweight, complementary alternative to the more demanding and complex association of GIS software and export libraries, e.g. `ArchField` [@SmithEtal2015] or `QGIS` and its [`Qgis2threejs`](https://plugins.qgis.org/plugins/Qgis2threejs/) plugin to export in HTML format.
+Second, `archeoViz` is a lightweight, complementary alternative to more complex archaeological software, e.g. `ArchField` [@SmithEtal2015], `Aspectus` [@VurpillotEtal2018], and to the more demanding association of GIS software and export libraries, e.g. [`Potree`](https://potree.org) or `QGIS` and its [`Qgis2threejs`](https://plugins.qgis.org/plugins/Qgis2threejs/) plugin to export in HTML format.
 
 ## Online Data Repositories
 

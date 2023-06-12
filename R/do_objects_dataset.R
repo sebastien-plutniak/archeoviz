@@ -34,9 +34,9 @@
   }
   
   if(sum(apply(df[1, c("xmin", "ymin", "zmin")], 2, coords.type.check)) != 3){
-    return(list(data = df,
-                notif.text = "notif.error.coords.type",
-                notif.type = "error"))
+    df[ , c("xmin", "ymin", "zmin")] <- apply(df[ , c("xmin", "ymin", "zmin")], 2, as.numeric)
+    notif.text <- "notif.error.coords.type"
+    notif.type <- "warning"
   }
   
   # : test unique identifiers ----
@@ -45,7 +45,6 @@
                 notif.text = "notif.error.identifier",
                 notif.type = "error"))
   }
-  
   
   # Objects ----
   df$object_type <- as.character(df$object_type)

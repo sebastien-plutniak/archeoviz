@@ -125,7 +125,7 @@ app_server <- function(input, output, session) {
   })
   
   timeline.data <- reactive({
-    objects.dataset <- objects.dataset()
+    objects.df <- objects.dataset()
     
     query <- shiny::parseQueryString(session$clientData$url_search)
     
@@ -139,7 +139,7 @@ app_server <- function(input, output, session) {
     # sources priority: 
     #   function parameter > objects table > timeline table
     timeline <- .do_timelinedata(from.param.time.df, 
-                                 objects.dataset, 
+                                 objects.df, 
                                  timeline.ui.df) # this is the reactive object
     # notification disabled
     # showNotification(.term_switcher(timeline$notif.text),
@@ -221,10 +221,9 @@ app_server <- function(input, output, session) {
     
     showNotification(.term_switcher(result$notif.text),
                      type = result$notif.type, duration = 10)
-    
-    if(result$notif.type != "error"){
-      result$data
-    }
+    if(result$notif.type == "error") return(NULL)
+
+    result$data
   })
   
   # : group variable ----
@@ -1309,7 +1308,6 @@ app_server <- function(input, output, session) {
                      .term_switcher("fuzzy"),
                      .term_switcher("show.uncertainty"))
     }
-    
     loc.selection <- .term_switcher(tolower(unique(df$location_mode)[1]))
     loc.selection <- tolower(unique(df$location_mode)[1])
     if( ! is.null(getShinyOption("params")$location)){

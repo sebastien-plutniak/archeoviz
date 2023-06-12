@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
 ```
 
 
-
 `archeoViz` is a packaged R Shiny application for the *visualisation*, *exploration*, and web *communication* of archaeological spatial data. It includes interactive 3D and 2D *visualisations*, can generate *cross sections* and *maps* of the remains, can run basic *spatial statistics* methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive *timeline* of an excavation. `archeoViz` can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The app interface is available in English, French, Italian, and Portuguese.
 
 
@@ -28,6 +27,12 @@ knitr::opts_chunk$set(
   - [Reporting Bugs](#reporting-bugs)
   - [Suggesting Changes](#suggesting-changes)
 - [**Use**](#use)
+  - [Spatial Information in archeoViz](#spatial-information-in-archeoviz)
+    - [Exact Location: Plotted Objects](#exact-location-plotted-objects)
+    - [Vague Location: Spits, Buckets, Sieved Objects, and Errors](#vague-location-spits-buckets-sieved-objects-and-errors)
+  - [Refittings and Fabric Measurements](#refittings-and-fabric-measurements)
+      - [Refittings](#refittings)
+      - [Fabric Measurements](#fabric-measurements)      
   - [Data Format](#data-format)
     - [Formatting Data](#formatting-data)
     - [Objects Table](#objects-table)
@@ -39,12 +44,12 @@ knitr::opts_chunk$set(
     - [Through the R Function Parameters](#through-the-r-function-parameters)
     - [Through URL Parameters](#through-url-parameters)
   - [Data sub-setting](#data-sub-setting)
-    - [Location mode](#location-mode)
-    - [Objects Category](#objects-category)
-    - [Data Subgroups](#data-subgroups)    
-    - [Objects Selection](#objects-selection)
+    - [By Location Mode](#by-location-mode)
+    - [By Layer or Object Category](#by-objects-category)
   - [Interactive Visualisation](#interactive-visualisation)
-  - [Graphical Outputs](#graphical-outputs)
+    - [General Features](#general-features)
+    - [Visualising Spatial Uncertainty](#visualising-spatial-uncertainty)
+    - [Graphical Outputs](#graphical-outputs)
   - [Spatial Statistics](#spatial-statistics)  
     - [Regression Surfaces](#regression-surfaces)
     - [Convex Hulls](#convex-hulls)
@@ -149,12 +154,59 @@ Having archaeological remains from a given site, `archeoViz` is designed to lowe
 
 * basic spatial exploration and generation of simple graphical reports;
 * fast pre-publication of archaeological data, intended for the scientific community;
-* fast deployment of a display and communication tool intended for a broader audience.
+* fast deployment of a visualisation and communication tool intended for a broader audience.
 
 In addition, `archeoViz` is a suitable pedagogical resource for teaching spatial analysis in archaeology, data structuring, open science, and reproducible workflow.
 
 N.B.: consequently, `archeoViz` is not intended to replace more sophisticated analysis tools (e.g., GIS, statistical packages, etc.)
 
+
+## Spatial Information in archeoViz
+
+Archaeologists record the location of archaeological objects at different scales and granularity. Accordingly, they use different geometrical concepts to represent location.
+
+### Exact Location: Plotted Objects
+
+Using grid coordinates or electronic “total station” enables recording  the individual location of objects on the field.
+In that case, the location are represented as points in `archeoViz` (triplets of x, y and z coordinates).
+
+### Vague Location: Spits, Buckets, Sieved Objects, and Errors
+
+However, it is also common that x, y, z, coordinates by object are not available,  for different reasons due to:
+
+* recording errors, loss of information, resulting in the need to replace one of several coordinates values by ranges (e.g., a X value is missing for an object and is replaced by the minimal and maximal X values of the square where this object was found);
+* choice of method (e.g., excavation made and recorded using spits of arbitrary depth, sieved objects, etc.).
+
+In all  these cases, we have to deal with vague location, when objects cannot be located as points but are somewhere between ranges of coordinates.
+Vague location can concern one, two, or the three spatial dimensions (the x, y, z coordinates, respectively).
+
+
+## Refittings and Fabric Measurements
+
+### Refittings
+
+Refittings are usually recorded by archaeologists in two ways:
+
+1. by sets of refitting objects: using a two columns table, where a row corresponds to an **object**. The first column stores the object's unique id and the second column stores the id of the set of refitting objects this object belongs to.
+2. by refitting relationships: using a two columns table, where a row corresponds to a **relationship**. The first column stores the first object's unique id and the second column stores the second object's unique id.
+
+Although the second data structure is more accurate, the first is more commonly used. 
+
+`archeoViz` processes and represents the two data structures in two ways:
+
+* sets of refitting objects must be described using a specific column in the `objects.df` table (e.g. `object_refits`) and are represented by the color of points in the plots (like any other variable);
+* refitting relationships must be described using the `refits.df` table and are visualised as segments connecting the refitting objects in the plots.
+
+
+### Fabric Measurements
+
+So far, `archeoViz` does not handle fabric measurements properly. However, the process used to represent refittings can also adapted and used to represent fabric measurements. This requires to distort the data structure as follows:
+
+* assuming that fabric measurements were recorded with two measurements on each object (and not with dip and plunge measurements),
+* different unique `id` values must be given to the two points, and
+* the two measures are processed as if they were two refitting objects.
+
+See an example of this method [here](https://analytics.huma-num.fr/archeoviz/shuidonggou2).
 
 ## Data Format
 
@@ -167,7 +219,7 @@ Three types of data can be loaded in `archeoViz`:
 ### Formatting data
 
 The tables must be CSV files with the first row containing the column labels. 
-Contents in HTML are allowed. This makes it possible, in particular, to add links to external resources (e.g., to objects permanent identifier in other databases, or to concepts identifiers in standard ontologies / thesaurii, etc.).
+Contents in HTML are allowed. This makes it possible, in particular, to add links to external resources (e.g., to objects permanent identifier in other databases, or to concepts identifiers in standard ontologies / thesauri, etc.).
 
 Formatting your data can be done:
 
@@ -254,7 +306,7 @@ archeoViz(objects.df = NULL,  # data.frame with data about the objects
 The URL of an online instance of `archeoViz` can include the parameters:
 
 * `objects.df=`
-* `refits.df=`` 
+* `refits.df=`
 * `timeline.df=`
 
 whose values must be the URL of a CSV file observing the `archeoViz` format described above.
@@ -262,37 +314,33 @@ For example:
 https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv
 
 
-## Data sub-setting
-
-Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording, the category of the objects, and the way to group the data. 
-
-### Location mode
-
-The location of archaeological objects may have been recorded in different, more or less precise ways: on the one hand, exactly with points (located by a triplet of x, y and z coordinates) and, on the other hand, more or less imprecisely with lines, planes, or within volumes (with different sets of x, y and/or z value pairs).
-In `archeoViz`, a distinction is made between exact location (points) and other types of vague location (located on lines, planes, and volumes).
-Both types of locations (exact and vague) can be displayed, and location uncertainties can also be visualised as lines, planes and volumes. This last option is resource intensive, and using it with too much data can significantly slow down the application.
 
 
-### Objects category
+## Data Sub-setting
 
+Once data are loaded, a sub-selection of the data can be done in the left side menu. Grouping can be done by crossing the following parameters: the mode of location, the layers, and the category of object. 
+
+### By Location Mode
+
+If all the objects have exact location or vague location, then no option is proposed.
+However, if the dataset includes both exact and vague location, then it is possible to select only one or both of these options.
+
+### By Layer or Object Category
+
+The data can be grouped in two ways: either based on their layer or on the selected “object_” variable.
+This option determines the colours of the points in the 3D and 2D plots and how to group points when computing  convex hulls and 3D regression surfaces.
 Sub-sets can be defined by object categories, using the “variable” and “values” fields.
 Once one of the “object_type” (or other possible “object_” variables) is selected, its values appear below and can be selected using the tick boxes.
 The selection must be validated by clicking on the “Validate” button.
-This selection determines the data that will be displayed in the plots and tables.
+This selection determines the data to be displayed in the plots and tables.
 
-### Data subgroups
 
-The data can be grouped in two ways: either by layer or by the selected “object_” variable.
-This option determines the colours of the points in the 3D and 2D plots and the subsets when computing surfaces and convex hulls.
-
-### Objects selection
-
-In the “3D plot”, “Map”, “Section X”, and “Section Y” tabs, clicking on a point displays information about that point in the table below the plot.
 
 ## Interactive visualisation
 
-The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” tabs are generated using the [`plotly`](https://CRAN.R-project.org/package=plotly) library. All the plots are dynamic and include a menu bar above the plot with several options (generating an image file, zooming, moving the view, etc). See details on the
-[`plotly` website](http://plotly.github.io/getting-to-know-the-plotly-modebar/).
+### General features
+
+The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” tabs are generated using the [`plotly`](https://CRAN.R-project.org/package=plotly) library. All the plots are dynamic and include a menu bar above the plot with several options (generating an image file, zooming, moving the view, etc). See details on the [`plotly` website](http://plotly.github.io/getting-to-know-the-plotly-modebar/).
 
 Clicking on a legend's item modifies the display:
 
@@ -302,7 +350,16 @@ Clicking on a legend's item modifies the display:
 This feature makes it possible to choose which layers are shown.
 In addition, the size of the points can be set and whether the refitting relationships must be represented or not.
 
-## Graphical outputs
+Finally, clicking on a point displays information about that point in the table below the plot.
+
+### Visualising Spatial Uncertainty
+
+In `archeoViz`, a distinction is made between exact location (given as x, y, z coordinates) and  vague locations (given as ranges of coordinates).
+Both types of locations  can be displayed. 
+The uncertainty of vague locations can be visualised by representing objects not as points but as lines, planes, and volumes (if ranges of coordinates are given for one, two, or three spatial dimensions, respectively). 
+Note that this feature is resource intensive and using it with too much data can significantly slow down the application.
+
+### Graphical outputs
 
 Several graphical outputs can be generated in `archeoViz`.
 
@@ -311,19 +368,6 @@ Several graphical outputs can be generated in `archeoViz`.
 	* in an interactive HTML format, by clicking on the "Export" button.
 * The plan of the excavation chronology can be exported in SVG format by clicking on the “Download” button.
 
-## Reffitings
-
-Refittings are usually recorded by archaeologists in two ways:
-
-1. by sets of refitting objects: using a two columns table, where a row corresponds to an **object**. The first column stores the object's unique id and the second column stores the id of the set of refitting objects this object belongs to.
-2. by refitting relationships: using a two columns table, where a row corresponds to a **relationship**. The first column stores the first object's unique id and the second column stores the second object's unique id.
-
-Although the second data structure is more accurate, the first is more commonly used. 
-
-`archeoViz` processes the two data structures in different ways:
-
-* sets of refitting objects must be described using a specific column in the `objects.df` table (e.g. `object_refits`) and are represented by the color of points in the plots (as for any other variable);
-* refitting relationships must be described using the `refits.df` table and are visualised as segments connecting the refitting objects in the plots.
 
 ## Spatial statistics
 
@@ -360,8 +404,8 @@ The `archeoViz()` function can be set with multiple optional parameters, related
 * the contents of the home page (already detailed [above](#deployed-use)),
 * the [square grid](#square-grid),
 * the [presetting](#parameters-presetting) of the parameters that can be set through the application's interface,
-* the [reactive behavior](#reactive-plot-display) of the application regarding the generation of plots.
-* the [HTML export](#html-export).
+* the [reactive behavior](#reactive-plot-display) of the application regarding the generation of plots,
+* the [HTML export](#html-export),
 * the [URL parameters](#url-parameters).
 
 ```{r, eval=FALSE}
@@ -410,8 +454,8 @@ archeoViz(class.variable = NULL, class.values = NULL,
 
 * **class.variable**: character. At the launch of the app, name of the variable to preselect.
 * **class.values**: character vector. At the launch of the app, names of the values to preselect.
-* **default.group**: character. At the launch of the app, preselection of the variable used to group data (one of “by.layer” or “by.variable”).
-* **location.mode**: character. At the launch of the app, preselection of the location method (one of “exact”, “fuzzy”, “show.uncertainty”).
+* **default.group**: character. At the launch of the app, preset of the variable used to group data (one of “by.layer” or “by.variable”).
+* **location.mode**: character. At the launch of the app, preset of the location methods (any combination of “exact”, “fuzzy”, “show.uncertainty”).
 * **map.z.val**: numerical. Minimal and maximal Z coordinates values to display in the map plot.
 * **map.density**: character. At the launch of the app, whether to compute and show density contours in the map plot (one of “no”, “overall”, “by.variable”).
 * **map.refits**: TRUE or FALSE. Whether to show refits in the map plot.
@@ -483,7 +527,7 @@ The following URL launches the Bilzingsleben dataset, pre-setting the app to:
 [https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Antlers%20at%20Bilzingsleben&home.text=Many%20<b>antlers</b>&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Anters%20at%20Bilzingsleben&home.text=Many%20<b>antlers</b>&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
  
  
-Note that the parameters `add.x.square.labels`, `add.y.square.labels`, `location.mode`, and `class.values`, which accept simple or multiple values in the R interface (e.g. c("value1", "value2")) only accept one value when set as URL parameters (this is a restriction due to the URL syntax).
+Note that the parameters `add.x.square.labels`, `add.y.square.labels`, `location.mode`, and `class.values`, which accept simple or multiple values in the R interface (e.g., c("value1", "value2")) only accept one value when set as URL parameters (this is a restriction due to the URL syntax).
 
 
 # Acknowledgments
@@ -493,4 +537,4 @@ The `archeoViz` application and package is developed and maintained by Sébastie
 # References
 
 * Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.0, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
-* Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution spatiale du mobilier archéologique: l'application archeoViz et son portail web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”. *Bulletin de la Société préhistorique française*, 120(1), p. 70-74.
+* Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution spatiale du mobilier archéologique : l'application archeoViz et son portail web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”. *Bulletin de la Société préhistorique française*, 120(1), p. 70-74.

@@ -37,7 +37,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{class.variable}{character. At the launch of the app, name of the variable to preselect.}
   \item{class.values}{character. At the launch of the app, names of the values to preselect.}
   \item{default.group}{character. At the launch of the app, preselection of the variable used to group data (one of 'by.layer' or 'by.variable').}
-  \item{location.mode}{character. At the launch of the app, preselection of the location method (one of 'exact', 'fuzzy', 'show.uncertainty').}
+  \item{location.mode}{character. At the launch of the app, preselection of the location methods (any combination of 'exact', 'fuzzy', 'show.uncertainty').}
   \item{map.z.val}{double. Minimal and maximal Z depth coordinates values to display in the map plot, e.g. c(0, 30).}
   \item{map.density}{character. At the launch of the app, whether to compute and show density contours in the map plot (one of 'no', 'overall', 'by.variable').}
   \item{map.refits}{logical. Whether to show refits in the map plot.}

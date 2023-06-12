@@ -11,7 +11,7 @@ README-fr.html
 LICENSE.md
 archeoviz-portal
 R/utf8-to-ascii.sh
-R/load_interface_terms_save.R
+R/load_interface_terms_utf8.R
 joss-figures
 paper.bib
 paper.md

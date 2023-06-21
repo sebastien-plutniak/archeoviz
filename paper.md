@@ -65,12 +65,12 @@ First, `archeoViz` is related to other archaeological visualisation software, re
 
 ## Geographic Information Systems
 
-Second, `archeoViz` is a lightweight, complementary alternative to more complex archaeological software, e.g. `ArchField` [@SmithEtal2015], `Aspectus` [@VurpillotEtal2018], and to the more demanding association of GIS software and export libraries, e.g. [`Potree`](https://potree.org) or `QGIS` and its [`Qgis2threejs`](https://plugins.qgis.org/plugins/Qgis2threejs/) plugin to export in HTML format.
+Second, `archeoViz` is a lightweight, complementary alternative to more complex archaeological software, e.g. `ArchField` [@SmithEtal2015], `Aspectus` [@VurpillotEtal2018], a “4D system” [@OrtegaalvaradoEtal2022] and to the more demanding association of GIS software and export libraries, e.g. [`Potree`](https://potree.org) or `QGIS` and its [`Qgis2threejs`](https://plugins.qgis.org/plugins/Qgis2threejs/) plugin to export in HTML format.
 
 ## Online Data Repositories
 
 Third, regarding data publication and edition, `archeoViz` relates to centralised web repositories that include visualisation features, e.g. [`arkeoGIS`](https://arkeogis.org)  [@Bernard2019] and [`Field`](https://field.dainst.org/project). It differs in taking into account the third spatial dimension and in being a stand-alone application.
-It is designed as the building block of a decentralised web edition network for archaeological data, made of as many `archeoViz`  instances as there are datasets.
+It is designed as the building block of a decentralised web edition network for archaeological data, made of as many `archeoViz` instances as there are datasets.
 
 
 

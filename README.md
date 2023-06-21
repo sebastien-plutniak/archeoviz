@@ -21,6 +21,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://lifecyc
 [![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://app.codecov.io/gh/sebastien-plutniak/archeoviz)
 [![archeoViz status
 badge](https://sebastien-plutniak.r-universe.dev/badges/archeoViz)](https://sebastien-plutniak.r-universe.dev/archeoViz)
+[![status](https://joss.theoj.org/papers/ec7d14809161bb21d0e258742e64f131/status.svg)](https://joss.theoj.org/papers/ec7d14809161bb21d0e258742e64f131)
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
 [![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/sebastien-plutniak/archeoviz)](https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://github.com/sebastien-plutniak/archeoviz)

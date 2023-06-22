@@ -69,8 +69,8 @@ Second, `archeoViz` is a lightweight, complementary alternative to more complex 
 
 ## Online Data Repositories
 
-Third, regarding data publication and edition, `archeoViz` relates to centralised web repositories that include visualisation features, e.g. [`arkeoGIS`](https://arkeogis.org)  [@Bernard2019] and [`Field`](https://field.dainst.org/project). It differs in taking into account the third spatial dimension and in being a stand-alone application.
-It is designed as the building block of a decentralised web edition network for archaeological data, made of as many `archeoViz` instances as there are datasets.
+Third, regarding data publication and edition, `archeoViz` relates to centralised web repositories that include visualisation features, e.g. [`arkeoGIS`](https://arkeogis.org) [@Bernard2019], [`BDA`](https://bda.huma-num.fr) [@Perrin2019], and [`Field`](https://field.dainst.org/project). It differs in being a stand-alone application, in focusing on intra-site data, and in taking into account the third spatial dimension.
+`archeoViz` is designed as the building block of a decentralised web edition network for archaeological data, made of as many `archeoViz` instances as there are datasets.
 
 
 

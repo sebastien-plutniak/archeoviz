@@ -5,7 +5,7 @@
   welcome.fr <- "<h1>Bienvenue dans <i>archeoViz</i> !</h1>
                 <p><i>archeoViz</i> est une application dédiée à l'archéologie.
                 Elle permet de <b>visualiser</b>, d'<b>explorer</b> interactivement, et  
-                d'exposer et <b>communiquer</b> rapidement  sur le web des données 
+                d'exposer et <b>communiquer</b> rapidement sur le web des données 
                 archéologiques de terrain.
                 </p>
                 <p>
@@ -28,7 +28,7 @@
                 <h1>Welcome to <i>archeoViz</i>!</h1>
                 <p><i>archeoViz</i> is an application designed for archaeology.
                 It makes possible to <b>visualise</b>, interactively <b>explore</b>, and quickly
-                deploy and <b>communicate</b> archaeological excavation data on the web.
+                deploy and <b>communicate</b> archaeological spatial data on the web.
                 </p>
                 <p>
                 It offers interactive 3D and 2D <b>visualisations</b>,
@@ -38,7 +38,7 @@
                 and display an interactive <b>timeline</b> of the excavation. 
                 </p>
                 <p>
-                Being wrapped as an R package, 
+                Shared as an R package, 
                 <i>archeoViz</i> can be used locally or deployed on a server, 
                 either by allowing the user to load data through the interface
                 or by running the app with a specific data set.
@@ -80,7 +80,7 @@
       <li> <b>id</b> : <i>valeur alphanumérique</i>, identifiant unique de l'objet </li>
       <li> <b>xmin</b> : <i>valeur numérique</i>, coordonnée de l'objet en axe X (en cm)</li>
       <li> <b>ymin</b> : <i>valeur numérique</i>, coordonnée de l'objet en axe Y (en cm)</li>
-      <li> <b>zmin</b> : <i>valeur numérique</i>, coordonnée de l'objet en axe Z (valeur positive de profondeur en cm)</li>
+      <li> <b>zmin</b> : <i>valeur numérique</i>, coordonnée de l'objet en axe Z (valeur de profondeur en cm)</li>
       <li> <b>layer</b> : <i>valeur alphanumérique</i>, identifiant de la couche de l'objet</li>
       <li> <b>object_type</b> : <i>valeur alphanumérique</i>, catégorie de l'objet</li>
     </ul>
@@ -104,7 +104,7 @@
       <li> <b>id</b>: <i>alphanumerical value</i>, unique identifier of the object </li>
       <li> <b>xmin</b>: <i>numerical value</i>, coordinate of the object on the X axis (in cm)</li>
       <li> <b>ymin</b>: <i>numerical value</i>, coordinate of the object on the Y axis (in cm)</li>
-      <li> <b>zmin</b>: <i>numerical value</i>, coordinate of the object on the Z axis (positive depth value in cm)</li>
+      <li> <b>zmin</b>: <i>numerical value</i>, coordinate of the object on the Z axis (depth value in cm)</li>
       <li> <b>layer</b>: <i>alphanumerical value</i>, identifier of the object's layer</li>
       <li> <b>object_type</b>: <i>alphanumerical value</i>, category of the object</li>
     </ul>
@@ -128,7 +128,7 @@
       <li> <b>id</b> : <i>valor alfanumérico</i>, identificador único do objeto </li>
       <li> <b>xmin</b> : <i>valor numérico</i>, coordenada do objeto no eixo X (em cm)</li>
       <li> <b>ymin</b> : <i>valor numérico</i>, coordenada do objeto no eixo Y (em cm)</li>
-      <li> <b>zmin</b> : <i>valor numérico</i>, coordenada do objeto no eixo Z (valor de profundidade positiva em cm)</li>
+      <li> <b>zmin</b> : <i>valor numérico</i>, coordenada do objeto no eixo Z (valor de profundidade em cm)</li>
       <li> <b>layer</b> : <i>valor alfanumérico</i>, identificador da camada do objeto</li>
       <li> <b>object_type</b> : <i>valor alfanumérico</i>, categoria do objeto</li>
     </ul>
@@ -152,7 +152,7 @@
       <li> <b>id</b> : <i>valore alfanumerico</i>, identificativo univoco dell’oggetto </li>
       <li> <b>xmin</b> : <i>valore numerico</i>, coordinata dell’oggetto sull’asse X (in cm)</li>
       <li> <b>ymin</b> : <i>valore numerico</i>, coordinata dell’oggetto sull’asse Y (in cm)</li>
-      <li> <b>zmin</b> : <i>valore numerico</i>, coordinata dell’oggetto sull’asse Z (valore positivo di profondità in cm)</li>
+      <li> <b>zmin</b> : <i>valore numerico</i>, coordinata dell’oggetto sull’asse Z (valore di profondità in cm)</li>
       <li> <b>layer</b> : <i>valore numerico</i>, identificativo del livello dell’oggetto</li>
       <li> <b>object_type</b> : <i>valore alfanumerico</i>, categoria dell’oggetto</li>
     </ul>
@@ -267,6 +267,16 @@
 </ul></li>
 <li><a href=#use><strong>Use</strong></a>
 <ul>
+<li><a href=#spatial-information-in-archeoviz>Spatial Information in archeoViz</a>
+<ul>
+<li><a href=#exact-location-plotted-objects>Exact Location: Plotted Objects</a></li>
+<li><a href=#vague-location-spits-buckets-sieved-objects-and-errors>Vague Location: Spits, Buckets, Sieved Objects, and Errors</a></li>
+</ul></li>
+<li><a href=#refittings-and-fabric-measurements>Refittings and Fabric Measurements</a>
+<ul>
+<li><a href=#refittings>Refittings</a></li>
+<li><a href=#fabric-measurements>Fabric Measurements</a></li>
+</ul></li>
 <li><a href=#data-format>Data Format</a>
 <ul>
 <li><a href=#formatting-data>Formatting Data</a></li>
@@ -283,13 +293,15 @@
 </ul></li>
 <li><a href=#data-sub-setting>Data sub-setting</a>
 <ul>
-<li><a href=#location-mode>Location mode</a></li>
-<li><a href=#objects-category>Objects Category</a></li>
-<li><a href=#data-subgroups>Data Subgroups</a></li>
-<li><a href=#objects-selection>Objects Selection</a></li>
+<li><a href=#by-location-mode>By Location Mode</a></li>
+<li><a href=#by-objects-category>By Layer or Object Category</a></li>
 </ul></li>
-<li><a href=#interactive-visualisation>Interactive Visualisation</a></li>
+<li><a href=#interactive-visualisation>Interactive Visualisation</a>
+<ul>
+<li><a href=#general-features>General Features</a></li>
+<li><a href=#visualising-spatial-uncertainty>Visualising Spatial Uncertainty</a></li>
 <li><a href=#graphical-outputs>Graphical Outputs</a></li>
+</ul></li>
 <li><a href=#spatial-statistics>Spatial Statistics</a>
 <ul>
 <li><a href=#regression-surfaces>Regression Surfaces</a></li>
@@ -362,10 +374,42 @@
 <ul>
 <li>basic spatial exploration and generation of simple graphical reports;</li>
 <li>fast pre-publication of archaeological data, intended for the scientific community;</li>
-<li>fast deployment of a display and communication tool intended for a broader audience.</li>
+<li>fast deployment of a visualisation and communication tool intended for a broader audience.</li>
 </ul>
 <p>In addition, <code>archeoViz</code> is a suitable pedagogical resource for teaching spatial analysis in archaeology, data structuring, open science, and reproducible workflow.</p>
 <p>N.B.: consequently, <code>archeoViz</code> is not intended to replace more sophisticated analysis tools (e.g., GIS, statistical packages, etc.)</p>
+<h2 id=spatial-information-in-archeoviz>Spatial Information in archeoViz</h2>
+<p>Archaeologists record the location of archaeological objects at different scales and granularity. Accordingly, they use different geometrical concepts to represent location.</p>
+<h3 id=exact-location-plotted-objects>Exact Location: Plotted Objects</h3>
+<p>Using grid coordinates or electronic “total station” enables recording the individual location of objects on the field. In that case, the location are represented as points in <code>archeoViz</code> (triplets of x, y and z coordinates).</p>
+<h3 id=vague-location-spits-buckets-sieved-objects-and-errors>Vague Location: Spits, Buckets, Sieved Objects, and Errors</h3>
+<p>However, it is also common that x, y, z, coordinates by object are not available, for different reasons due to:</p>
+<ul>
+<li>recording errors, loss of information, resulting in the need to replace one of several coordinates values by ranges (e.g., a X value is missing for an object and is replaced by the minimal and maximal X values of the square where this object was found);</li>
+<li>choice of method (e.g., excavation made and recorded using spits of arbitrary depth, sieved objects, etc.).</li>
+</ul>
+<p>In all these cases, we have to deal with vague location, when objects cannot be located as points but are somewhere between ranges of coordinates. Vague location can concern one, two, or the three spatial dimensions (the x, y, z coordinates, respectively).</p>
+<h2 id=refittings-and-fabric-measurements>Refittings and Fabric Measurements</h2>
+<h3 id=refittings>Refittings</h3>
+<p>Refittings are usually recorded by archaeologists in two ways:</p>
+<ol>
+<li>by sets of refitting objects: using a two columns table, where a row corresponds to an <strong>object</strong>. The first column stores the object’s unique id and the second column stores the id of the set of refitting objects this object belongs to.</li>
+<li>by refitting relationships: using a two columns table, where a row corresponds to a <strong>relationship</strong>. The first column stores the first object’s unique id and the second column stores the second object’s unique id.</li>
+</ol>
+<p>Although the second data structure is more accurate, the first is more commonly used.</p>
+<p><code>archeoViz</code> processes and represents the two data structures in two ways:</p>
+<ul>
+<li>sets of refitting objects must be described using a specific column in the <code>objects.df</code> table (e.g. <code>object_refits</code>) and are represented by the color of points in the plots (like any other variable);</li>
+<li>refitting relationships must be described using the <code>refits.df</code> table and are visualised as segments connecting the refitting objects in the plots.</li>
+</ul>
+<h3 id=fabric-measurements>Fabric Measurements</h3>
+<p>So far, <code>archeoViz</code> does not handle fabric measurements properly. However, the process used to represent refittings can also adapted and used to represent fabric measurements. This requires to distort the data structure as follows:</p>
+<ul>
+<li>assuming that fabric measurements were recorded with two measurements on each object (and not with dip and plunge measurements),</li>
+<li>different unique <code>id</code> values must be given to the two points, and</li>
+<li>the two measures are processed as if they were two refitting objects.</li>
+</ul>
+<p>See an example of this method <a href=https://analytics.huma-num.fr/archeoviz/shuidonggou2>here</a>.</p>
 <h2 id=data-format>Data Format</h2>
 <p>Three types of data can be loaded in <code>archeoViz</code>:</p>
 <ul>
@@ -374,7 +418,7 @@
 <li>a “timeline” table (optional), with data about when each square of the site was excavated or surveyed.</li>
 </ul>
 <h3 id=formatting-data>Formatting data</h3>
-<p>The tables must be CSV files with the first row containing the column labels. Contents in HTML are allowed. This makes it possible, in particular, to add links to external resources (e.g., to objects permanent identifier in other databases, or to concepts identifiers in standard ontologies / thesaurii, etc.).</p>
+<p>The tables must be CSV files with the first row containing the column labels. Contents in HTML are allowed. This makes it possible, in particular, to add links to external resources (e.g., to objects permanent identifier in other databases, or to concepts identifiers in standard ontologies / thesauri, etc.).</p>
 <p>Formatting your data can be done:</p>
 <ul>
 <li>either using a spreadsheet editor on your machine to generate CSV files;</li>
@@ -438,21 +482,18 @@
 <p>The URL of an online instance of <code>archeoViz</code> can include the parameters:</p>
 <ul>
 <li><code>objects.df=</code></li>
-<li>`refits.df=``</li>
+<li><code>refits.df=</code></li>
 <li><code>timeline.df=</code></li>
 </ul>
 <p>whose values must be the URL of a CSV file observing the <code>archeoViz</code> format described above. For example: <a href=https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv class=uri>https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
-<h2 id=data-sub-setting>Data sub-setting</h2>
-<p>Once data are loaded, a sub-selection of the data set can be done in the left side menu. Several parameters are possible: the type of location recording, the category of the objects, and the way to group the data.</p>
-<h3 id=location-mode>Location mode</h3>
-<p>The location of archaeological objects may have been recorded in different, more or less precise ways: on the one hand, exactly with points (located by a triplet of x, y and z coordinates) and, on the other hand, more or less imprecisely with lines, planes, or within volumes (with different sets of x, y and/or z value pairs). In <code>archeoViz</code>, a distinction is made between exact location (points) and other types of vague location (located on lines, planes, and volumes). Both types of locations (exact and vague) can be displayed, and location uncertainties can also be visualised as lines, planes and volumes. This last option is resource intensive, and using it with too much data can significantly slow down the application.</p>
-<h3 id=objects-category>Objects category</h3>
-<p>Sub-sets can be defined by object categories, using the “variable” and “values” fields. Once one of the “object_type” (or other possible “object_” variables) is selected, its values appear below and can be selected using the tick boxes. The selection must be validated by clicking on the “Validate” button. This selection determines the data that will be displayed in the plots and tables.</p>
-<h3 id=data-subgroups>Data subgroups</h3>
-<p>The data can be grouped in two ways: either by layer or by the selected “object_” variable. This option determines the colours of the points in the 3D and 2D plots and the subsets when computing surfaces and convex hulls.</p>
-<h3 id=objects-selection>Objects selection</h3>
-<p>In the “3D plot”, “Map”, “Section X”, and “Section Y” tabs, clicking on a point displays information about that point in the table below the plot.</p>
+<h2 id=data-sub-setting>Data Sub-setting</h2>
+<p>Once data are loaded, a sub-selection of the data can be done in the left side menu. Grouping can be done by crossing the following parameters: the mode of location, the layers, and the category of object.</p>
+<h3 id=by-location-mode>By Location Mode</h3>
+<p>If all the objects have exact location or vague location, then no option is proposed. However, if the dataset includes both exact and vague location, then it is possible to select only one or both of these options.</p>
+<h3 id=by-layer-or-object-category>By Layer or Object Category</h3>
+<p>The data can be grouped in two ways: either based on their layer or on the selected “object_” variable. This option determines the colours of the points in the 3D and 2D plots and how to group points when computing convex hulls and 3D regression surfaces. Sub-sets can be defined by object categories, using the “variable” and “values” fields. Once one of the “object_type” (or other possible “object_” variables) is selected, its values appear below and can be selected using the tick boxes. The selection must be validated by clicking on the “Validate” button. This selection determines the data to be displayed in the plots and tables.</p>
 <h2 id=interactive-visualisation>Interactive visualisation</h2>
+<h3 id=general-features>General features</h3>
 <p>The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” tabs are generated using the <a href=https://CRAN.R-project.org/package=plotly><code>plotly</code></a> library. All the plots are dynamic and include a menu bar above the plot with several options (generating an image file, zooming, moving the view, etc). See details on the <a href=http://plotly.github.io/getting-to-know-the-plotly-modebar/><code>plotly</code> website</a>.</p>
 <p>Clicking on a legend’s item modifies the display:</p>
 <ul>
@@ -460,7 +501,10 @@
 <li>a double click on an item displays this item only (another double click cancels it).</li>
 </ul>
 <p>This feature makes it possible to choose which layers are shown. In addition, the size of the points can be set and whether the refitting relationships must be represented or not.</p>
-<h2 id=graphical-outputs>Graphical outputs</h2>
+<p>Finally, clicking on a point displays information about that point in the table below the plot.</p>
+<h3 id=visualising-spatial-uncertainty>Visualising Spatial Uncertainty</h3>
+<p>In <code>archeoViz</code>, a distinction is made between exact location (given as x, y, z coordinates) and vague locations (given as ranges of coordinates). Both types of locations can be displayed. The uncertainty of vague locations can be visualised by representing objects not as points but as lines, planes, and volumes (if ranges of coordinates are given for one, two, or three spatial dimensions, respectively). Note that this feature is resource intensive and using it with too much data can significantly slow down the application.</p>
+<h3 id=graphical-outputs>Graphical outputs</h3>
 <p>Several graphical outputs can be generated in <code>archeoViz</code>.</p>
 <ul>
 <li>The plots in The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” can be exported:
@@ -469,18 +513,6 @@
 <li>in an interactive HTML format, by clicking on the “Export” button.</li>
 </ul></li>
 <li>The plan of the excavation chronology can be exported in SVG format by clicking on the “Download” button.</li>
-</ul>
-<h2 id=reffitings>Reffitings</h2>
-<p>Refittings are usually recorded by archaeologists in two ways:</p>
-<ol>
-<li>by sets of refitting objects: using a two columns table, where a row corresponds to an <strong>object</strong>. The first column stores the object’s unique id and the second column stores the id of the set of refitting objects this object belongs to.</li>
-<li>by refitting relationships: using a two columns table, where a row corresponds to a <strong>relationship</strong>. The first column stores the first object’s unique id and the second column stores the second object’s unique id.</li>
-</ol>
-<p>Although the second data structure is more accurate, the first is more commonly used.</p>
-<p><code>archeoViz</code> processes the two data structures in different ways:</p>
-<ul>
-<li>sets of refitting objects must be described using a specific column in the <code>objects.df</code> table (e.g. <code>object_refits</code>) and are represented by the color of points in the plots (as for any other variable);</li>
-<li>refitting relationships must be described using the <code>refits.df</code> table and are visualised as segments connecting the refitting objects in the plots.</li>
 </ul>
 <h2 id=spatial-statistics>Spatial statistics</h2>
 <p><code>archeoViz</code> includes some spatial analysis functionalities, intended for basic and exploratory use.</p>
@@ -504,8 +536,8 @@
 <li>the contents of the home page (already detailed <a href=#deployed-use>above</a>),</li>
 <li>the <a href=#square-grid>square grid</a>,</li>
 <li>the <a href=#parameters-presetting>presetting</a> of the parameters that can be set through the application’s interface,</li>
-<li>the <a href=#reactive-plot-display>reactive behavior</a> of the application regarding the generation of plots.</li>
-<li>the <a href=#html-export>HTML export</a>.</li>
+<li>the <a href=#reactive-plot-display>reactive behavior</a> of the application regarding the generation of plots,</li>
+<li>the <a href=#html-export>HTML export</a>,</li>
 <li>the <a href=#url-parameters>URL parameters</a>.</li>
 </ul>
 <!-- end list -->
@@ -547,8 +579,8 @@
 <ul>
 <li><strong>class.variable</strong>: character. At the launch of the app, name of the variable to preselect.</li>
 <li><strong>class.values</strong>: character vector. At the launch of the app, names of the values to preselect.</li>
-<li><strong>default.group</strong>: character. At the launch of the app, preselection of the variable used to group data (one of “by.layer” or “by.variable”).</li>
-<li><strong>location.mode</strong>: character. At the launch of the app, preselection of the location method (one of “exact”, “fuzzy”, “show.uncertainty”).</li>
+<li><strong>default.group</strong>: character. At the launch of the app, preset of the variable used to group data (one of “by.layer” or “by.variable”).</li>
+<li><strong>location.mode</strong>: character. At the launch of the app, preset of the location methods (any combination of “exact”, “fuzzy”, “show.uncertainty”).</li>
 <li><strong>map.z.val</strong>: numerical. Minimal and maximal Z coordinates values to display in the map plot.</li>
 <li><strong>map.density</strong>: character. At the launch of the app, whether to compute and show density contours in the map plot (one of “no”, “overall”, “by.variable”).</li>
 <li><strong>map.refits</strong>: TRUE or FALSE. Whether to show refits in the map plot.</li>
@@ -605,19 +637,19 @@
 <li>modifies the content of the home page with basic html contents (parameter <code>home.txt</code>)</li>
 </ol>
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Anters%20at%20Bilzingsleben&amp;home.text=Many%20%3Cb%3Eantlers%3C/b%3E&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Antlers%20at%20Bilzingsleben&amp;home.text=Many%20<b>antlers</b>&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
-<p>Note that the parameters <code>add.x.square.labels</code>, <code>add.y.square.labels</code>, <code>location.mode</code>, and <code>class.values</code>, which accept simple or multiple values in the R interface (e.g. c(“value1”, “value2”)) only accept one value when set as URL parameters (this is a restriction due to the URL syntax).</p>
+<p>Note that the parameters <code>add.x.square.labels</code>, <code>add.y.square.labels</code>, <code>location.mode</code>, and <code>class.values</code>, which accept simple or multiple values in the R interface (e.g., c(“value1”, “value2”)) only accept one value when set as URL parameters (this is a restriction due to the URL syntax).</p>
 <h1 id=acknowledgments>Acknowledgments</h1>
 <p>The <code>archeoViz</code> application and package is developed and maintained by Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and Thomas Perrin tested and supported the project in its early stage. Renata Araujo and Sara Giardino translated the application into Portuguese and Italian, respectively.</p>
 <h1 id=references>References</h1>
 <ul>
 <li>Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.0, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
-<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique: l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
-</ul>
-"
+<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique : l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
+</ul>"
   
   
 #  : fr ----
 guidelines.fr <- "
+
 <h1 id=archeoviz>archeoViz</h1>
 <p><code>archeoViz</code> est une application dédiée à l’archéologie. Elle permet de <em>visualiser</em>, d’<em>explorer</em> interactivement, et d’exposer et <em>communiquer</em> rapidement sur le web des données archéologiques spatialisées. Elle propose des <em>visualisations</em> en 3D et 2D, génère des <em>coupes</em> et des <em>cartes</em> des restes archéologiques, permet de réaliser des <em>statistiques spatiales</em> simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une <em>chronologie</em> interactive des fouilles d’un site. <code>archeoViz</code> peut être utilisée localement ou déployée sur un serveur, soit en chargeant des données via l’interface, soit en lançant l’application avec un jeu de donnée spécifique. L’interface est disponible en anglais, français, italien, et portugais.</p>
 <ul>
@@ -634,6 +666,16 @@ guidelines.fr <- "
 </ul></li>
 <li><a href=#utilisation><strong>Utilisation</strong></a>
 <ul>
+<li><a href=#spatial-information-in-archeoviz>L’information spatiale dans archeoViz</a>
+<ul>
+<li><a href=#localisation-exacte--les-objets-relevés>Localisation exacte : les objets relevés</a></li>
+<li><a href=#localisations-vagues--passes-seaux-tamis-et-erreurs>Localisations vagues : passes, seaux, tamis et erreurs</a></li>
+</ul></li>
+<li><a href=#remontages-et-mesures-de-fabrique>Remontages et mesures de fabrique</a>
+<ul>
+<li><a href=#remontages>Remontages</a></li>
+<li><a href=#mesures-de-fabrique>Mesures de fabrique</a></li>
+</ul></li>
 <li><a href=#formater-des-données>Format de données</a>
 <ul>
 <li><a href=#formater-des-données>Formater des données</a></li>
@@ -651,13 +693,14 @@ guidelines.fr <- "
 <li><a href=#sous-sélection-de-données>Sous-sélection de données</a>
 <ul>
 <li><a href=#par-mode-de-localisation>Par mode de localisation</a></li>
-<li><a href=#par-catégorie-dobjet>Par catégorie d’objet</a></li>
-<li><a href=#sous-groupes-de-données>Sous-groupes de données</a></li>
-<li><a href=#par-objet>Par objet</a></li>
+<li><a href=#par-couche-ou-catégorie-dobjet>Par couche ou catégorie d’objet</a></li>
 </ul></li>
-<li><a href=#remontages>Remontages</a></li>
-<li><a href=#visualisations-interactives>Visualisations interactives</a></li>
+<li><a href=#visualisations-interactives>Visualisations interactives</a>
+<ul>
+<li><a href=#généralités>Généralités</a></li>
 <li><a href=#sorties-graphiques>Sorties graphiques</a></li>
+<li><a href=#visualisation-de-l-incertitude%20spatiale>Visualisation de l’incertitude spatiale</a></li>
+</ul></li>
 <li><a href=#statistiques-spatiales>Statistiques spatiales</a>
 <ul>
 <li><a href=#surfaces-de-régression>Surfaces de régression</a></li>
@@ -701,7 +744,7 @@ guidelines.fr <- "
 <a class=sourceLine id=cb4-6 data-line-number=6><span class=co># décompression:</span></a>
 <a class=sourceLine id=cb4-7 data-line-number=7><span class=kw>unzip</span>(<span class=dt>zipfile =</span> <span class=st>&quot;archeoviz.zip&quot;</span>)</a></code></pre></div>
 <p>Puis, rendez-vous à <code>https://&lt;your-shiny-server&gt;/archeoviz-main</code>.</p>
-<p>Pour paramétrer l’application avec vos données et préférences, éditez le fichier <code>app.R</code> situé à la racine du répertoire de l’application :</p>
+<p>Pour paramétrer l’application avec vos données et préférences, éditez le fichier <code>app.R</code> situé à la racine du répertoire de l’application:</p>
 <div class=sourceCode id=cb5><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb5-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>objects.df =</span> <span class=ot>NULL</span>,   <span class=co># data.frame pour les objets</span></a>
 <a class=sourceLine id=cb5-2 data-line-number=2>          <span class=dt>refits.df =</span> <span class=ot>NULL</span>,    <span class=co># data.frame optionnel pour les remontages</span></a>
 <a class=sourceLine id=cb5-3 data-line-number=3>          <span class=dt>timeline.df =</span> <span class=ot>NULL</span>,  <span class=co># data.frame optionnel pour la chronologie des fouilles</span></a>
@@ -735,60 +778,92 @@ guidelines.fr <- "
 </ul>
 <p>En outre, <code>archeoViz</code> constitue une ressource pédagogique adaptée à l’enseignement des notions d’analyse spatiale en archéologie, de structuration de données, de science ouverte et de reproductibilité.</p>
 <p>N.B.: par conséquent, <code>archeoViz</code> n’est pas destiné à se substituer à des outils d’analyse plus sophistiqués (e.g., SIG, packages de statistiques spatiales, etc.)</p>
-<h2 id=formater-des-données>Formater des données</h2>
-<p>Trois types de données peuvent être chargées dans <code>archeoViz</code> :</p>
+<h2 id=linformation-spatiale-dans-archeoviz>L’information spatiale dans archeoViz</h2>
+<p>Les archéologues enregistrent la localisation des objets archéologique à différentes échelles et granularité. En fonction de cela, ils utilisent différentes concepts géométriques pour représenter ces localisations.</p>
+<h3 id=localisation-exacte--les-objets-relevés>Localisation exacte : les objets relevés</h3>
+<p>L’utilisation d’un carroyage ou d’une “station totale” permet d’enregistrer la localisation individuelle des objets sur le terrain. Dans ce cas, dans <code>archeoViz</code>, localisation de ces objets sera visualisée par des points (des triplets de valeurs de coordonnées x, y, z).</p>
+<h3 id=localisations-vagues--passes-seaux-tamis-et-erreurs>Localisations vagues : passes, seaux, tamis et erreurs</h3>
+<p>Toutefois, il est fréquent que les coordonnées x, y, z des objets ne soit pas disponible, pour différentes raisons:</p>
 <ul>
-<li>un tableau “objects” (requis), à propos des objets ;</li>
-<li>un tableau “refits” (optionnel), à propos des relations de remontage ;</li>
+<li>des erreurs d’enregistrement, des pertes d’information, entraînant la nécessité de remplacer une ou plusieurs valeurs de coordonnées par des intervalles de valeurs (par exemple, une valeur X est manquante pour un objet et est remplacée par les valeurs X minimale et maximale du carré où cet objet a été trouvé) ;</li>
+<li>le choix de la méthode (par exemple, lors d’une fouille réalisée et enregistrée à l’aide de passes de profondeur arbitraire ou, encore, des objets issus de refus de tamis, etc.)</li>
+</ul>
+<p>Dans tous ces cas, les localisations à traiter sont vagues, lorsque la localisation des objets n’est pas connue univoquement mais se situe quelque part au sein d’intervalles de coordonnées. La localisation vague peut concerner une, deux, ou trois dimensions spatiales (respectivement les coordonnées x, y et z).</p>
+<h2 id=remontages-et-mesures-de-fabrique>Remontages et mesures de fabrique</h2>
+<h3 id=remontages>Remontages</h3>
+<p>Les remontages sont généralement enregistrés de deux manières par les archéologues:</p>
+<ol>
+<li>par ensemble d’objets remontant entre eux: en employant alors un tableau à deux colonnes où une ligne correspond à un <strong>objet</strong>. La première colonne contient l’identifiant unique de l’objet et la deuxième colonne contient l’identifiant unique de l’ensemble d’objets remontant entre eux auquel l’objet considéré appartient.</li>
+<li>par relation de remontage: en employant alors un tableau à deux colonnes où une ligne correspond à une <strong>relation de remontage</strong>. La première colonne contient l’identifiant unique du premier objet et la deuxième colonne contient l’identifiant unique du deuxième objet.</li>
+</ol>
+<p>Bien que la seconde structure de donnée soit plus précise, c’est la première qui est le plus fréquemment employée.</p>
+<p>Ces deux structures de données sont traitées différemment dans <code>archeoViz</code>:</p>
+<ul>
+<li>les ensembles d’objets remontant entre eux doivent être décrits dans une colonne spécifique dans le tableau <code>objects.df</code> table (nommée par ex. <code>object_refits</code>) et sont représentés par la couleur des points dans les visualisations (comme pour tout autre variable);</li>
+<li>les relations de remontage doivent être décrits dans un tableau <code>refits.df</code> et sont visualisés par des segments reliant les objets liés par des relations de remontage.</li>
+</ul>
+<h3 id=mesures-de-fabrique>Mesures de fabrique</h3>
+<p>Pour l’heure, <code>archeoViz</code> ne gère pas les mesures de fabrique à proprement dit. Néanmoins, la procédure employée pour représenter les remontages peut être adaptée et employée pour représenter les mesures de fabriques. Cela suppose toutefois de tordre la logique de la structure des données de la manière suivante:</p>
+<ul>
+<li>en supposant que les mesures de fabriques ont été enregistrées en prenant deux mesures de localisation par objet (au contraire, donc, de mesure d’orientation et de pendage),</li>
+<li>des valeurs d’identifiants uniques <code>id</code> doivent être attribuées aux deux points, et</li>
+<li>les deux localisations sont traitées comme s’il s’agissait d’une relation de remontage entre deux objets.</li>
+</ul>
+<p>Un exemple de cette méthode est visible <a href=https://analytics.huma-num.fr/archeoviz/shuidonggou2>ici</a>.</p>
+<h2 id=formater-des-données>Formater des données</h2>
+<p>Trois types de données peuvent être chargées dans <code>archeoViz</code>:</p>
+<ul>
+<li>un tableau “objects” (requis), à propos des objets;</li>
+<li>un tableau “refits” (optionnel), à propos des relations de remontage;</li>
 <li>un tableau “timeline” (optionnel), à propos des carrés du site et des années où ils ont été fouillés ou prospectés.</li>
 </ul>
-<p>Les tableaux doivent être au format CSV et la première ligne doit contenir les noms des variables (le symbole séparateur du CSV peut être défini dans l’interface). Les contenus au format HTML sont autorisés. Cela permet notamment d’introduire références vers des ressources complémentaires du jeu de données (par exemple l’identifiant unique de l’objets dans une autre base de données, ou ceux des concepts d’ontologies employés pour décrire l’objet, etc.).</p>
-<p>Le formatage des données peut être réalisé :</p>
+<p>Les tableaux doivent être au format CSV et la première ligne doit contenir les noms des variables (le symbole séparateur du CSV peut être défini dans l’interface). Les contenus au format HTML sont autorisés. Cela permet notamment d’introduire références vers des ressources complémentaires du jeu de données (par exemple l’identifiant unique de l’objets dans une autre base de données, ou ceux de concepts d’ontologies employés pour décrire l’objet, etc.).</p>
+<p>Le formatage des données peut être réalisé :</p>
 <ul>
-<li>soit en utilisant un tableur sur votre machine permettant d’exporter des fichiers CSV ;</li>
+<li>soit en utilisant un tableur sur votre machine permettant d’exporter des fichiers CSV;</li>
 <li>ou, pour le tableau des objets, en utilisant l’interface de l’application <a href=https://aurelienroyer.shinyapps.io/Seahors/><em>SEAHORS</em></a> en chargeant vos données, définissant les variables (onglet “Load data”), puis en les exportant au format <code>archeoViz</code> (onglet “Table” / “archeoViz exports”). Il est également possible de les transférer directement à une instance <code>archeoViz</code> en ligne.</li>
 </ul>
 <h3 id=tableau-des-objets>Tableau des objets</h3>
-<p>Chaque ligne décrit un objet et doit comporter les variables obligatoires suivantes :</p>
+<p>Chaque ligne décrit un objet et doit comporter les variables obligatoires suivantes:</p>
 <ul>
-<li><strong>id</strong> : <em>valeur alphanumérique</em>, identifiant unique de l’objet</li>
-<li><strong>xmin</strong> : <em>valeur numérique</em>, coordonnée de l’objet en axe X (en cm)</li>
-<li><strong>ymin</strong> : <em>valeur numérique</em>, coordonnée de l’objet en axe Y (en cm)</li>
-<li><strong>zmin</strong> : <em>valeur numérique</em>, coordonnée de l’objet en axe Z (valeur positive de profondeur en cm)</li>
-<li><strong>layer</strong> : <em>valeur alphanumérique</em>, identifiant de la couche de l’objet</li>
-<li><strong>object_type</strong> : <em>valeur alphanumérique</em>, catégorie de l’objet</li>
+<li><strong>id</strong>: <em>valeur alphanumérique</em>, identifiant unique de l’objet</li>
+<li><strong>xmin</strong>: <em>valeur numérique</em>, coordonnée de l’objet en axe X (en cm)</li>
+<li><strong>ymin</strong>: <em>valeur numérique</em>, coordonnée de l’objet en axe Y (en cm)</li>
+<li><strong>zmin</strong>: <em>valeur numérique</em>, coordonnée de l’objet en axe Z (valeur positive de profondeur en cm)</li>
+<li><strong>layer</strong>: <em>valeur alphanumérique</em>, identifiant de la couche de l’objet</li>
+<li><strong>object_type</strong>: <em>valeur alphanumérique</em>, catégorie de l’objet</li>
 </ul>
-<p>De plus, des variables optionnelles sont possibles :</p>
+<p>De plus, des variables optionnelles sont possibles:</p>
 <ul>
-<li><strong>square_x</strong> : <em>valeur alphanumérique</em>, identifiant du carré de l’objet en axe X</li>
-<li><strong>square_y</strong> : <em>valeur alphanumérique</em>, identifiant du carré de l’objet en axe Y</li>
-<li><strong>year</strong> : <em>valeur numérique</em>, année de fouille de l’objet</li>
-<li><strong>xmax</strong> : <em>valeur numérique</em>, lorsque la localisation de l’objet en X est comprise dans un intervalle de coordonnées</li>
-<li><strong>ymax</strong> : <em>valeur numérique</em>, lorsque la localisation de l’objet en Y est comprise dans un intervalle de coordonnées</li>
-<li><strong>zmax</strong> : <em>valeur numérique</em>, lorsque la localisation de l’objet en Z est comprise dans un intervalle de coordonnées</li>
-<li><strong>object_edit</strong> : nombre non limité de variables additionnelles décrivant l’objet (les noms de colonnes doivent commencer par <em>object_</em> et avoir des suffixes différents</li>
+<li><strong>square_x</strong>: <em>valeur alphanumérique</em>, identifiant du carré de l’objet en axe X</li>
+<li><strong>square_y</strong>: <em>valeur alphanumérique</em>, identifiant du carré de l’objet en axe Y</li>
+<li><strong>year</strong>: <em>valeur numérique</em>, année de fouille de l’objet</li>
+<li><strong>xmax</strong>: <em>valeur numérique</em>, lorsque la localisation de l’objet en X est comprise dans un intervalle de coordonnées</li>
+<li><strong>ymax</strong>: <em>valeur numérique</em>, lorsque la localisation de l’objet en Y est comprise dans un intervalle de coordonnées</li>
+<li><strong>zmax</strong>: <em>valeur numérique</em>, lorsque la localisation de l’objet en Z est comprise dans un intervalle de coordonnées</li>
+<li><strong>object_edit</strong>: nombre non limité de variables additionnelles décrivant l’objet (les noms de colonnes doivent commencer par <em>object_</em> et avoir des suffixes différents</li>
 </ul>
-<p>Les labels des carrés du carroyage :</p>
+<p>Les labels des carrés du carroyage:</p>
 <ul>
-<li>sont ordonnés alpha-numériquement ;</li>
-<li>ne sont pas affichés, afin d’éviter des affichages erronés, si le nombre de labels ne correspond pas exactement au nombre total de carrés de 100 cm pouvant être définis dans l’intervalle des coordonnées minimales et maximales contenues dans les variables xmin et ymin ;</li>
+<li>sont ordonnés alpha-numériquement;</li>
+<li>ne sont pas affichés, afin d’éviter des affichages erronés, si le nombre de labels ne correspond pas exactement au nombre total de carrés de 100cm pouvant être définis dans l’intervalle des coordonnées minimales et maximales contenues dans les variables xmin et ymin;</li>
 <li>peuvent être complétés avec les paramètres <code>add.x.square.labels</code> et <code>add.y.square.labels</code> de la fonction <code>archeoViz()</code> afin d’ajouter les labels manquants (respectivement, sur les axes X et Y du carroyage).</li>
 </ul>
 <h3 id=tableau-des-remontages>Tableau des remontages</h3>
 <p>Un tableau à deux colonnes peut être chargé pour les remontages entre objets (format CSV). Chaque ligne doit contenir les identifiants uniques des deux objets liés à une relation de remontage (en correspondance avec les valeurs de la colonne <code>id</code> du tableau des objets).</p>
 <h3 id=tableau-de-la-chronologie>Tableau de la chronologie</h3>
-<p>Optionnellement, un tableau (CSV) peut être chargé à propos du déroulé de la fouille. Chaque ligne est relative à un carré de fouille et indique quand ce carré a été fouillé ou prospecté. Le tableau doit comporter les variables suivantes :</p>
+<p>Optionnellement, un tableau (CSV) peut être chargé à propos du déroulé de la fouille. Chaque ligne est relative à un carré de fouille et indique quand ce carré a été fouillé ou prospecté. Le tableau doit comporter les variables suivantes:</p>
 <ul>
-<li><strong>year</strong> : valeur numérique, année de fouille</li>
-<li><strong>square_x</strong> : valeur alphanumérique, identifiant du carré en axe X</li>
-<li><strong>square_y</strong> : valeur alphanumérique, identifiant du carré en axe Y</li>
+<li><strong>year</strong>: valeur numérique, année de fouille</li>
+<li><strong>square_x</strong>: valeur alphanumérique, identifiant du carré en axe X</li>
+<li><strong>square_y</strong>: valeur alphanumérique, identifiant du carré en axe Y</li>
 </ul>
 <h2 id=charger-des-données>Charger des données</h2>
 <p>Quatre manières permettent de charger des données dans <code>archeoViz</code>:</p>
 <ol>
-<li>en téléchargeant des tableaux à partir de l’onglet “Données” ;</li>
-<li>en générant des données aléatoires dans l’onglet “Données” ;</li>
-<li>en chargeant des tableaux à travers les paramètres de la fonction <code>archeoViz</code>, dans un environnement R ;</li>
+<li>en téléchargeant des tableaux à partir de l’onglet “Données”;</li>
+<li>en générant des données aléatoires dans l’onglet “Données”;</li>
+<li>en chargeant des tableaux à travers les paramètres de la fonction <code>archeoViz</code>, dans un environnement R;</li>
 <li>en téléchargeant des tableaux via les paramètres d’URL, lors de l’utilisation d’une instance <code>archeoViz</code> en ligne.</li>
 </ol>
 <h3 id=via-linterface-de-lapplication>Via l’interface de l’application</h3>
@@ -803,37 +878,21 @@ guidelines.fr <- "
 <a class=sourceLine id=cb7-2 data-line-number=2>          <span class=dt>refits.df =</span> <span class=ot>NULL</span>,   <span class=co># data.frame optionnel pour les remontages</span></a>
 <a class=sourceLine id=cb7-3 data-line-number=3>          <span class=dt>timeline.df =</span> <span class=ot>NULL</span>) <span class=co># data.frame optionnel pour la chronologie</span></a></code></pre></div>
 <h3 id=via-les-paramètres-dune-url>Via les paramètres d’une URL</h3>
-<p>L’URL d’une instance <code>archeoViz</code> en ligne peut être complétée avec les paramètres :</p>
+<p>L’URL d’une instance <code>archeoViz</code> en ligne peut être complétée avec les paramètres:</p>
 <ul>
 <li><code>objects.df=</code></li>
 <li>`refits.df=``</li>
 <li><code>timeline.df=</code></li>
 </ul>
-<p>prenant pour valeurs l’URL d’un fichier CSV respectant le format <code>archeoViz</code> décrit ci-dessus. Par exemple : <a href=https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv class=uri>https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
+<p>prenant pour valeurs l’URL d’un fichier CSV respectant le format <code>archeoViz</code> décrit ci-dessus. Par exemple: <a href=https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv class=uri>https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
 <h2 id=sous-sélection-de-données>Sous-sélection de données</h2>
 <p>Après que les données soient chargées, des sous-sélections peuvent être réalisées en employant les options du menu gauche de l’interface. Plusieurs paramètres sont possibles: le mode de localisation, les catégories des objets, et la définition de sous-groupes de données.</p>
 <h3 id=par-mode-de-localisation>Par mode de localisation</h3>
-<p>La localisation des objets archéologiques peut avoir été enregistrée de différentes manières, plus ou moins précises: d’une part, de manière exacte avec des points (localisés par un triplé de coordonnées x, y et z) et, d’autre part, de manière plus ou moins imprécise sur des lignes, des plans, ou au sein de volumes (avec différentes ensembles de paires de valeurs x, y et/ou z). Dans <code>archeoViz</code>, une distinction est faite entre les localisations exactes (les points) et les autres types de localisations vagues (lignes, plans, volumes). Il est possible d’afficher les deux types de localisations (exactes et vagues), ainsi que de visualiser les incertitudes de localisation sous la forme de lignes, plans et volumes. Cette dernière option est gourmande en ressources, l’utiliser avec des données trop nombreuses peut ralentir considérablement l’application.</p>
-<h3 id=par-catégorie-dobjet>Par catégorie d’objet</h3>
-<p>Des sous-ensembles de données peuvent être définis à partir des catégories des objets, en employant les champs “Variable” et “Valeurs”. Après que l’une des variables ait été sélectionnée (“object_type” ou une autre “object_” variable possible), ses valeurs apparaissent en dessous et peuvent être sélectionnées en cochant les items. La sélection doit être validée en cliquant sur le bouton “Valider”. Cette sélection détermine les données qui seront présentées dans les graphiques et tableaux.</p>
-<h3 id=sous-groupes-de-données>Sous-groupes de données</h3>
-<p>Il est, de plus, possible de préciser si les couleurs doivent être définies en fonction des couches ou en fonction de la variable objet sélectionnée.</p>
-<p>Des sous-groupes de données peuvent être définies de deux manières: soit par couche ou en fonction de la variable “object_” sélectionnée. Cette option détermine l’application des couleurs dans les graphiques 3D et 2D et les sous-groupes de données auxquels sont appliqués les calculs de surface de régression et d’enveloppes convexes.</p>
-<h3 id=par-objet>Par objet</h3>
-<p>Dans les onglets “Vue 3D”, “Carte”, “Section X” et “Section Y”, cliquer sur un point active l’affichage d’informations à son sujet dans le tableau présent sous la visualisation.</p>
-<h2 id=remontages>Remontages</h2>
-<p>Les remontages sont généralement enregistrés de deux manières par les archéologues:</p>
-<ol>
-<li>par ensemble d’objets remontant entre eux: en employant alors un tableau à deux colonnes où une ligne correspond à un <strong>objet</strong>. La première colonne contient l’identifiant unique de l’objet et la deuxième colonne contient l’identifiant unique de l’ensemble d’objets remontant entre eux auquel l’objet considéré appartient.</li>
-<li>par relation de remontage : en employant alors un tableau à deux colonnes où une ligne correspond à une <strong>relation de remontage</strong>. La première colonne contient l’identifiant unique du premier objet et la deuxième colonne contient l’identifiant unique du deuxième objet.</li>
-</ol>
-<p>Bien que la seconde structure de donnée soit plus précise, c’est la première qui est le plus fréquemment employée.</p>
-<p>Ces deux structures de données sont traitées différemment dans <code>archeoViz</code> :</p>
-<ul>
-<li>les ensembles d’objets remontant entre eux doivent être décrits dans une colonne spécifique dans le tableau <code>objects.df</code> table (nommée par ex. <code>object_refits</code>) et sont représentés par la couleur des points dans les visualisations (comme pour tout autre variable) ;</li>
-<li>les relations de remontage doivent être décrits dans un tableau <code>refits.df</code> et sont visualisés par des segments reliant les objets liés par des relations de remontage.</li>
-</ul>
+<p>Si tous les objets ont des localisation soit exactes soit vagues, aucune option n’est proposée. Par contre, le jeu de données comprend des localisations des deux types, alors il est possible de n’en sélectionner qu’un type ou les deux.</p>
+<h3 id=par-couche-ou-catégorie-dobjet>Par couche ou catégorie d’objet</h3>
+<p>Des sous-groupes de données peuvent être définies de deux manières: soit par couche ou en fonction de la variable “object_” sélectionnée. Cette option détermine l’application des couleurs dans les graphiques 3D et 2D et les sous-groupes de données auxquels sont appliqués les calculs de surface de régression et d’enveloppes convexes. Des sous-ensembles de données peuvent être définis à partir des catégories des objets, en employant les champs “Variable” et “Valeurs”. Après que l’une des variables ait été sélectionnée (“object_type” ou une autre “object_” variable possible), ses valeurs apparaissent en dessous et peuvent être sélectionnées en cochant les items. La sélection doit être validée en cliquant sur le bouton “Valider”. Cette sélection détermine les données qui seront présentées dans les graphiques et tableaux.</p>
 <h2 id=visualisations-interactives>Visualisations interactives</h2>
+<h3 id=généralités>Généralités</h3>
 <p>Les visualisations dans les onglets “Vue 3D”, “Carte”, “Section X” et “Section Y” sont générées à l’aide de la librairie <a href=https://CRAN.R-project.org/package=plotly/><code>plotly</code></a>. Toutes ces visualisations sont dynamiques et sont surmontées d’une barre de menu comportant plusieurs options (générer un fichier image, zoomer, déplacer le point de vue, etc.). Davantage de détails sont disponibles sur le <a href=http://plotly.github.io/getting-to-know-the-plotly-modebar/>site de <code>plotly</code></a>.</p>
 <p>Cliquer sur un item de la légende modifie l’affichage:</p>
 <ul>
@@ -841,12 +900,15 @@ guidelines.fr <- "
 <li>un double clic sur un item limite l’affichage à cet item seul (un autre double clic annule cette sélection).</li>
 </ul>
 <p>Cette fonctionnalité permet de définir les couches devant être affichées. De plus, la taille des points peut être ajustée, ainsi que l’affichage ou non des relations de remontage.</p>
-<h2 id=sorties-graphiques>Sorties graphiques</h2>
+<p>Enfin, cliquer sur un point active l’affichage d’informations à son sujet dans le tableau présent sous les visualisations.</p>
+<h3 id=visualisation-de-lincertitude-spatiale>Visualisation de l’incertitude spatiale</h3>
+<p>Dans <code>archeoViz</code>, une distinction est faite entre les localisations exactes (données sous la forme de coordonnées x, y, z) et les localisations vagues (données sous la forme d’intervalles de coordonnées). Il est possible d’afficher Les deux types de localisations peuvent être visualisées. Les incertitudes des localisations peuvent être rendues en représentant les objets non pas comme des points mais comme des lignes, des plans, ou des volumes (si des intervalles de coordonnées sont précisés pour, respectivement, une, deux ou trois dimensions spatiales). Cette dernière option est gourmande en ressources, l’appliquer à un nombre important d’objets peut ralentir considérablement l’application.</p>
+<h3 id=sorties-graphiques>Sorties graphiques</h3>
 <p>Plusieurs sorties graphiques peuvent être générées dans <code>archeoViz</code>.</p>
 <ul>
-<li>Les visualisations en 3D, en plan et en sections peuvent être exportées :
+<li>Les visualisations en 3D, en plan et en sections peuvent être exportées:
 <ul>
-<li>au format SVG, en cliquant sur l’icône “appareil photo” de la barre de menu s’affichant au-dessus des visualisations ;</li>
+<li>au format SVG, en cliquant sur l’icône “appareil photo” de la barre de menu s’affichant au-dessus des visualisations;</li>
 <li>en format HTML interactif, en cliquant sur le bouton “Exporter” dans la colonne droite de l’interface.</li>
 </ul></li>
 <li>Le plan de la chronologie des fouilles peut être téléchargé au format SVG en cliquant sur le bouton “Télécharger”.</li>
@@ -867,7 +929,7 @@ guidelines.fr <- "
 <li>Dans un usage plus avancé, les paramètres d’URL permettent de paramétrer une instance en ligne de l’application avec des paramètres d’intérêt et de la communiquer l’ensemble en envoyant l’URL à un tiers.</li>
 </ul>
 <h2 id=paramètres-avancés>Paramètres avancés</h2>
-<p>La fonction <code>archeoViz()</code> admet de nombreux paramètres optionnels, relatifs aux :</p>
+<p>La fonction <code>archeoViz()</code> admet de nombreux paramètres optionnels, relatifs aux:</p>
 <ul>
 <li>données à charger (traité <a href=#par-paramétrage-de-la-fonction>ci-dessus</a>),</li>
 <li>contenu de la page d’accueil (traité <a href=#déployée>ci-dessus</a>),</li>
@@ -897,11 +959,11 @@ guidelines.fr <- "
 <a class=sourceLine id=cb9-3 data-line-number=3>          <span class=dt>add.x.square.labels =</span> <span class=ot>NULL</span>, <span class=dt>add.y.square.labels =</span> <span class=ot>NULL</span></a>
 <a class=sourceLine id=cb9-4 data-line-number=4>          )</a></code></pre></div>
 <ul>
-<li><strong>square.size</strong> : numérique. Taille (longueur et largeur) en centimètre des carrés du carroyage. La valeur par défaut est 100 cm.</li>
-<li><strong>reverse.axis.values</strong> : caractères. Nom de l’axe ou des axes à inverser (une combinaison de ‘x’, ‘y’, ‘z’).</li>
-<li><strong>reverse.square.names</strong> : caractères. Nom de l’axe ou des axes pour lesquels inverser l’ordre des labels de carrés (une combinaison de ‘x’, ‘y’, ‘z’).</li>
-<li><strong>add.x.square.labels</strong> : caractères. Labels de carrés additionnels pour l’axe ‘x’.</li>
-<li><strong>add.y.square.labels</strong> : caractères. Labels de carrés additionnels pour l’axe ‘y’.</li>
+<li><strong>square.size</strong> : numérique. Taille (longueur et largeur) en centimètre des carrés du carroyage. La valeur par défaut est 100 cm.</li>
+<li><strong>reverse.axis.values</strong> : caractères. Nom de l’axe ou des axes à inverser (une combinaison de ‘x’, ‘y’, ‘z’).</li>
+<li><strong>reverse.square.names</strong> : caractères. Nom de l’axe ou des axes pour lesquels inverser l’ordre des labels de carrés (une combinaison de ‘x’, ‘y’, ‘z’).</li>
+<li><strong>add.x.square.labels</strong> : caractères. Labels de carrés additionnels pour l’axe ‘x’.</li>
+<li><strong>add.y.square.labels</strong> : caractères. Labels de carrés additionnels pour l’axe ‘y’.</li>
 </ul>
 <h3 id=pré-sélection-des-paramètres>Pré-sélection des paramètres</h3>
 <div class=sourceCode id=cb10><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb10-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>class.variable =</span> <span class=ot>NULL</span>, <span class=dt>class.values =</span> <span class=ot>NULL</span>,</a>
@@ -913,33 +975,33 @@ guidelines.fr <- "
 <a class=sourceLine id=cb10-7 data-line-number=7>          <span class=dt>camera.center =</span> <span class=ot>NULL</span>, <span class=dt>camera.eye =</span> <span class=ot>NULL</span></a>
 <a class=sourceLine id=cb10-8 data-line-number=8>          )</a></code></pre></div>
 <ul>
-<li><strong>class.variable</strong> : caractères. Au lancement de l’application, nom de la variable à pré-sélectionner.</li>
-<li><strong>class.values</strong> : caractères. Au lancement de l’application, nom des valeurs à pré-sélectionner.</li>
-<li><strong>default.group</strong> : caractères. Au lancement de l’application, pré-sélection de la variable à employer pour grouper les données (soit “by.layer” ou “by.variable”).</li>
-<li><strong>location.mode</strong> : caractères. Au lancement de l’application, pré-sélection du ou des modes de localisation à afficher (“exact”, “fuzzy”, ou “show.uncertainty”).</li>
-<li><strong>map.z.val</strong> : numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées Z à présélectionner dans la visualisation en plan.</li>
-<li><strong>map.density</strong> : caractères. Au lancement de l’application, calculer et afficher ou non les courbes de densité dans la visualisation en plan (soit “no”, “overall”, ou “by.variable”).</li>
-<li><strong>map.refits</strong> : TRUE ou FALSE. Afficher ou non les remontages dans la visualisation en plan.</li>
-<li><strong>plot3d.hulls</strong> : TRUE ou FALSE. Au lancement de l’application, calculer et afficher ou non les enveloppes convexes dans la visualisation 3D.</li>
-<li><strong>plot3d.surfaces</strong> : TRUE ou FALSE. Au lancement de l’application, calculer et afficher ou non les surfaces de régression dans la visualisation 3D.</li>
-<li><strong>plot3d.refits</strong> : TRUE ou FALSE. Au lancement de l’application, afficher ou non les remontages dans la visualisation 3D.</li>
-<li><strong>sectionX.x.val</strong> : numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées X à présélectionner dans la visualisation en section X.</li>
-<li><strong>sectionX.y.val</strong> : numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées Y à présélectionner dans la visualisation en section X.</li>
-<li><strong>sectionX.refits</strong> : TRUE ou FALSE. Au lancement de l’application, afficher ou non les remontages dans la visualisation en section X.</li>
-<li><strong>sectionY.x.val</strong> : numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées X à présélectionner dans la visualisation en section Y.</li>
-<li><strong>sectionY.y.val</strong> : numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées Y à présélectionner dans la visualisation en section Y.</li>
-<li><strong>sectionY.refits</strong> : TRUE ou FALSE. Au lancement de l’application, afficher ou non les remontages dans la visualisation en section Y.</li>
-<li><strong>camera.center</strong> : numérique. Au lancement de l’application, coordonnées du point vers lequel la caméra est orientée dans la visualisation 3D (valeurs par défaut: x=0, y=0, z=0).</li>
-<li><strong>camera.eye</strong> : numérique. Au lancement de l’application, coordonnées de la position de la caméra dans la visualisation 3D (valeurs par défaut: x=1.25, y=1.25, z=1.25).</li>
+<li><strong>class.variable</strong>: caractères. Au lancement de l’application, nom de la variable à pré-sélectionner.</li>
+<li><strong>class.values</strong>: caractères. Au lancement de l’application, nom des valeurs à pré-sélectionner.</li>
+<li><strong>default.group</strong>: caractères. Au lancement de l’application, pré-sélection de la variable à employer pour grouper les données (soit “by.layer” ou “by.variable”).</li>
+<li><strong>location.mode</strong>: caractères. Au lancement de l’application, pré-sélection du ou des modes de localisation à afficher (une combinaison des valeurs possibles “exact”, “fuzzy”, “show.uncertainty”).</li>
+<li><strong>map.z.val</strong>: numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées Z à présélectionner dans la visualisation en plan.</li>
+<li><strong>map.density</strong>: caractères. Au lancement de l’application, calculer et afficher ou non les courbes de densité dans la visualisation en plan (soit “no”, “overall”, ou “by.variable”).</li>
+<li><strong>map.refits</strong>: TRUE ou FALSE. Afficher ou non les remontages dans la visualisation en plan.</li>
+<li><strong>plot3d.hulls</strong>: TRUE ou FALSE. Au lancement de l’application, calculer et afficher ou non les enveloppes convexes dans la visualisation 3D.</li>
+<li><strong>plot3d.surfaces</strong>: TRUE ou FALSE. Au lancement de l’application, calculer et afficher ou non les surfaces de régression dans la visualisation 3D.</li>
+<li><strong>plot3d.refits</strong>: TRUE ou FALSE. Au lancement de l’application, afficher ou non les remontages dans la visualisation 3D.</li>
+<li><strong>sectionX.x.val</strong>: numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées X à présélectionner dans la visualisation en section X.</li>
+<li><strong>sectionX.y.val</strong>: numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées Y à présélectionner dans la visualisation en section X.</li>
+<li><strong>sectionX.refits</strong>: TRUE ou FALSE. Au lancement de l’application, afficher ou non les remontages dans la visualisation en section X.</li>
+<li><strong>sectionY.x.val</strong>: numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées X à présélectionner dans la visualisation en section Y.</li>
+<li><strong>sectionY.y.val</strong>: numérique. Au lancement de l’application, valeurs minimale et maximale des coordonnées Y à présélectionner dans la visualisation en section Y.</li>
+<li><strong>sectionY.refits</strong>: TRUE ou FALSE. Au lancement de l’application, afficher ou non les remontages dans la visualisation en section Y.</li>
+<li><strong>camera.center</strong>: numérique. Au lancement de l’application, coordonnées du point vers lequel la caméra est orientée dans la visualisation 3D (valeurs par défaut: x=0, y=0, z=0).</li>
+<li><strong>camera.eye</strong>: numérique. Au lancement de l’application, coordonnées de la position de la caméra dans la visualisation 3D (valeurs par défaut: x=1.25, y=1.25, z=1.25).</li>
 </ul>
 <h3 id=affichage-réactif-des-visualisations>Affichage réactif des visualisations</h3>
 <div class=sourceCode id=cb11><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb11-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>run.plots =</span> <span class=ot>FALSE</span>)</a></code></pre></div>
 <ul>
-<li><strong>run.plots</strong> : TRUE ou FALSE. Si les visualisations doivent, ou non, être immédiatement calculées et affichées (sans nécessiter un clic sur les boutons de l’interface).</li>
+<li><strong>run.plots</strong>: TRUE ou FALSE. Si les visualisations doivent, ou non, être immédiatement calculées et affichées (sans nécessiter un clic sur les boutons de l’interface).</li>
 </ul>
 <h3 id=export-html>Export HTML</h3>
 <ul>
-<li><strong>html.export</strong> : TRUE ou FALSE. Afficher ou non les boutons permettant d’exporter les visualisations en format HTML interactif.</li>
+<li><strong>html.export</strong>: TRUE ou FALSE. Afficher ou non les boutons permettant d’exporter les visualisations en format HTML interactif.</li>
 </ul>
 <h3 id=paramètres-url>Paramètres URL</h3>
 <p>Une instance <code>archeoViz</code> deployée en ligne sur un serveur peut être paramétrée en ajustant les paramètres de l’URL. Les paramètres acceptés supportés:</p>
@@ -961,13 +1023,13 @@ guidelines.fr <- "
 <p>(Les paramètres suivants ne sont pas supportés dans la version actuelle de l’application: <code>map.z.val</code>, <code>sectionX.x.val</code>, <code>sectionX.y.val</code>, <code>sectionY.x.val</code>, <code>sectionY.y.val</code>, <code>lang</code>, <code>set.theme</code>, <code>camera.center</code>, <code>camera.eye</code>, <code>html.export</code>.)</p>
 <p>Les paramètres doivent être écris en respectant la syntaxe URL (?param1=value&amp;param2=value2) et avoir le même type de valeurs que dans leur usage dans l’interface R. Par exemple, l’URL suivante lance une instance <code>archeoViz</code> à partir du tableau principal du jeu de données <a href=https://zenodo.org/record/8003880>Bilzingsleben</a>:</p>
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv class=uri>https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
-<p>Cette URL fait de même, mais inclut également le tableau des remontages (paramètre <code>&amp;refits.df=</code>) et active l’affichage immédiat des relations de remontage dans le graphique 3D et le plan :</p>
+<p>Cette URL fait de même, mais inclut également le tableau des remontages (paramètre <code>&amp;refits.df=</code>) et active l’affichage immédiat des relations de remontage dans le graphique 3D et le plan:</p>
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&amp;plot3d.refits=TRUE&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&amp;refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv class=uri>https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&amp;plot3d.refits=TRUE&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&amp;refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv</a></p>
 <p>L’URL suivante lance le jeu de données Bilzingsleben, en pré-réglant l’application telle que:</p>
 <ol>
 <li>les points sont groupés par variable (paramètre <code>default.group</code>, avec la valeur <code>by.variable</code> plutôt que <code>by.layer</code>)</li>
 <li>ne sélectionne que les “Antlers” (paramètre <code>class.values</code>)</li>
-<li>redéfini la taille des carrés du carroyage (paramètre <code>square.size</code> 500 cm au lieu de la valeur par défaut 100 cm)</li>
+<li>redéfini la taille des carrés du carroyage (paramètre <code>square.size</code> 500 cm au lieu de la valeur par défaut 100cm)</li>
 <li>active l’affichage immédiat des graphiques (paramètre <code>run.plots</code>)</li>
 <li>modifie le titre de la page (paramètre <code>title</code>)</li>
 <li>modifie le contenu de la page d’accueil, illustrant l’usage d’un simple balisage HTML (paramètre <code>home.txt</code>)</li>
@@ -978,8 +1040,8 @@ guidelines.fr <- "
 <p>L’application et le package <code>archeoViz</code> sont développés et maintenus par Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, et Thomas Perrin ont testé et soutenu ce projet durant ses premières étapes. Renata Araujo et Sara Giardino ont traduit l’application respectivement en portugais et en italien.</p>
 <h1 id=références>Références</h1>
 <ul>
-<li>Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.1.2, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
-<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique: l’application archeoViz et son portail web</a>”. <strong>Bulletin de la Société préhistorique française</strong>, 120(1), p. 70-74.</li>
+<li>Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.0, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
+<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique : l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
 </ul>
 "
   
@@ -1051,7 +1113,7 @@ guidelines.fr <- "
     notif.objects.not.ok = "Erreur. Certains champs requis sont absents, vérifiez les données.",
     notif.no.data = "Pas de données dans ces intervalles.",
     notif.tick.value = "Cochez au moins une valeur (dans le menu latéral gauche).",
-    notif.error.coords.type = "Des valeurs xmin, ymin, ou zmin ne sont pas numériques.",
+    notif.error.coords.type = "Des valeurs xmin, ymin, ou zmin ne sont pas numériques et ont été converties (pertes possibles).",
     notif.error.identifier = "Les identifiants uniques des objets ne sont pas uniques.",
     notif.warn.obj.removed = "Les objets aux coordonnées incomplètes ont été supprimés.",
     notif.warn.uncertainty = "Nombreuses localisations incertaines. L'affichage risque d'être lent.",
@@ -1122,8 +1184,8 @@ guidelines.fr <- "
     notif.objects.ok = "Objects file ok!",
     notif.objects.not.ok = "Error. Some of the mandatory fields are absent. Please check the file.",
     notif.no.data = "No data in these ranges.",
-    notif.tick.value = "Tick at least one value (in the left side menu)",
-    notif.error.coords.type = "xmin, ymin, or zmin value(s) are not numerical.",
+    notif.tick.value = "Tick at least one value (in the left side menu).",
+    notif.error.coords.type = "xmin, ymin, or zmin value(s) are not numerical and have been converted (with possible loss).",
     notif.error.identifier = "Some of the objects' unique identifier are duplicated.",
     notif.warn.obj.removed = "Objects with incomplete coordinates have been removed.",
     notif.warn.uncertainty = "Many objects with uncertain location: it might slow down the app.",
@@ -1197,7 +1259,7 @@ guidelines.fr <- "
     notif.objects.not.ok = "Erro. Certos campos exigidos estão ausentes. Por favor, verifique o arquivo.",
     notif.no.data = "Sem dados nesses intervalos.",
     notif.tick.value = "Marque pelo menos um valor (no menu lateral esquerdo).",
-    notif.error.coords.type = "Os valores xmin, ymin, ou zmin não são numéricos.",
+    notif.error.coords.type = "Os valores xmin, ymin, ou zmin não são numéricos e foram convertidos (com possíveis perdas)..",
     notif.error.identifier = "Alguns dos identificadores únicos dos objetos estão duplicados.",
     notif.warn.obj.removed = "Objetos com coordenadas incompletas foram removidos.",
     notif.warn.uncertainty = "Many objects with uncertain location: it might slow down the app.",
@@ -1265,14 +1327,14 @@ guidelines.fr <- "
     linear = "Lineare",
     planar = "Planare",
     volume = "Volumetrica",
-    click.on.point = "Fare clic su un punto per visualizzarne le informazioni",
+    click.on.point = "Fare clic su un punto per visualizzarne le informazioni.",
     notif.objects.ok = "File degli oggetto ok!",
-    notif.objects.not.ok = "Errore. Mancano alcuni campi obbligatori, controllare il file",
-    notif.no.data = "Nessun dato in questi intervalli",
-    notif.tick.value = "Spuntare almeno un valore (nel menu laterale a sinistra)",
-    notif.error.coords.type = "I valori xmin, ymin o zmin non sono numerici",
-    notif.error.identifier = "Gli identificativi univoci degli oggetti non sono unici",
-    notif.warn.obj.removed = "Gli oggetti con coordinate incomplete sono stati rimossi",
+    notif.objects.not.ok = "Errore. Mancano alcuni campi obbligatori, controllare il file.",
+    notif.no.data = "Nessun dato in questi intervalli.",
+    notif.tick.value = "Spuntare almeno un valore (nel menu laterale a sinistra).",
+    notif.error.coords.type = "Alcuni valori xmin, ymin o zmin non sono numerici e sono stati convertiti (con possibili perdite).",
+    notif.error.identifier = "Gli identificativi univoci degli oggetti non sono unici.",
+    notif.warn.obj.removed = "Gli oggetti con coordinate incomplete sono stati rimossi.",
     notif.warn.uncertainty = "Many objects with uncertain location: it might slow down the app.",
     notif.warn.refits = "Many refits: it might slow down the app."
   )

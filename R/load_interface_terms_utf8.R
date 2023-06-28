@@ -23,6 +23,7 @@
                 L'interface est disponible en anglais, français, italien et portugais.
                 </p>
                 Le package, sous licence libre, est publié sur le <a href=https://cran.r-project.org/package=archeoViz target=_blank>CRAN</a>. Son code source est aussi disponible sur <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a>."
+  
   # : en ----
   welcome.en <- "
                 <h1>Welcome to <i>archeoViz</i>!</h1>
@@ -45,6 +46,7 @@
                 The interface is available in English, French, Italian and Portuguese.
                 </p>
                 The package is published under a free license on the <a href=https://cran.r-project.org/package=archeoViz target=_blank>CRAN</a>. Its source code is also available on  <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a>."
+  
   # : pt ----
   welcome.pt <- "<h1>Bem-vindo ao <i>archeoViz</i>!</h1>
                 <p><i>archeoViz</i> é um aplicativo dedicado à arqueologia. Ele permite <b>visualizar</b>, <b>explorar</b> interativamente, e   
@@ -70,6 +72,37 @@
                 Distribuito come pacchetto R, <i>archeoViz</i> può essere utilizzato localmente o distribuito su un server, caricando i dati tramite l’interfaccia o lanciando l’applicazione con un insieme di dati specifico. L’interfaccia è disponibile in inglese, francese, italiano e portoghese.
                 </p>
                 Il pacchetto è open source e pubblicato su il <a href=https://cran.r-project.org/package=archeoViz target=_blank>CRAN</a> Il suo codice sorgente è disponibile anche su  <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a>."
+   
+   # : de ----
+   welcome.de <- "<h1>Willkommen bei <i>archeoViz</i>!</h1>
+                  <p>
+                    <i>archeoViz</i> ist eine für die Archäologie entwickelte Anwendung. 
+                    Sie ermöglicht die <b>Visualisierung</b>, interaktive <b>Erkundung</b> und 
+                    schnelle Bereitstellung und <b>Kommunikation</b> von Raumdaten
+                    archäologischer Grabungen und Prospektionen im Internet.
+                  </p>
+                  <p>
+                    <i>archeoViz</i> bietet interaktive 3D und 2D <b>Visualisierungen</b> und kann
+                    <b>Profile</b>, als auch <b>Karten</b> der Fundverteilungen generieren. Es 
+                    bietet zudem die Möglichkeit grundlegende Methoden der <b>räumlichen Statistik</b>
+                    ausführen (konvexe Hülle, Regressionsoberflächen, 2D-Kernel-Dichte-Schätzung)
+                    und stellt eine interaktive Darstellung der Ausgrabung in Zeitschritten zur 
+                    Verfügung. 
+                  </p> 
+                  <p>
+                    Als R-Paket, kann <i>archeoViz</i> lokal mit eigenen Daten ausgeführt werden.
+                    Oder Daten können Online über eine Eingabemaske eingeladen werden. Die 
+                    Eingabemaske ist derezit in Englisch, Französisch, Italienisch, Portugiesisch und 
+                    Deutsch verfügbar.
+                  </p>
+                  <p>     
+                    Das R-Paket wird unter einer GNU GPL-3 Lizenz auf dem Server 
+                    <a href=https://cran.r-project.org/package=archeoViz target=_blank>CRAN</a> 
+                      veröffentlicht. Sein Quellcode ist auf 
+                    <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a> 
+                      verfügbar.
+                  </p>"
+
   
   # Input objects ----
   # :  fr ----
@@ -168,6 +201,31 @@
     </ul>
     </p>"
   
+  # :  de ----
+    input.objects.de <- 
+      "<p>
+      Eine Datentablle wird benötigt (csv-Format). Zeilen beschreiben einzelne Objekte mit folgenden Pflichtfeldern:
+      <ul>
+        <li> <b>id</b>: <i>alphanumerischer Wert</i>, eindeutige Kennung des Objekts </li>
+        <li> <b>xmin</b>: <i>numerischer Wert</i>, Koordinate des Objekts auf der X-Achse (in cm)</li>
+        <li> <b>ymin</b>: <i>numerischer Wert</i>, Koordinate des Objekts auf der Y-Achse (in cm)</li>
+        <li> <b>zmin</b>: <i>numerischer Wert</i>, Koordinate des Objekts auf der Z-Achse (Tiefe in cm)</li>
+        <li> <b>layer</b>: <i>alphanumerischer Wert</i>, Kennung der Ebene/Schicht des Objekts</li>
+        <li> <b>object_type</b>: <i>alphanumerischer Wert</i>, Kategorie des Objekts</li>
+      </ul>
+      Darüber hinaus sind optionale Felder möglich:
+      <ul>
+        <li> <b>square_x</b>: <i>alphanumerischer Wert</i>, Kennung des Quadranten auf der X-Achse</li>
+        <li> <b>square_y</b>: <i>alphanumerischer Wert</i>, Kennung des Quadranten auf der Y-Achse</li>
+        <li> <b>year</b> : <i>numerischer Wert</i>, Ausgrabungsjahr</li>
+        <li> <b>xmax</b>: <i>numerischer Wert</i>, Zeitangaben, in der die X-Position des Objekts in einem Bereich von X-Koordinaten enthalten ist</li>
+        <li> <b>ymax</b>: <i>numerischer Wert</i>, Zeitangaben, in der die Y-Position des Objekts in einem Bereich von Y-Koordinaten enthalten ist</li>
+        <li> <b>zmax</b>: <i>numerischer Wert</i>, Zeitangaben, in der die Z-Position des Objekts in einem Bereich von Z-Koordinaten enthalten ist</li>
+        <li> <b>object<i>_edit</i></b>: unbegrenzte Anzahl zusätzlicher Variablen, die das Objekt beschreiben (Feldnamen müssen mit 'object_' beginnen und verschiedene Suffixe besitzen)</li>
+      </ul>
+      </p>"
+
+
   # Input refits ----
   input.refits.fr <- 
     "<p>
@@ -190,10 +248,15 @@
     "<p>
     È possibile caricare una tabella a due colonne per i riassemblaggi tra gli oggetti (formato csv). Ogni riga deve contenere gli identificativi univoci dei due oggetti riassemblati (in corrispondenza dei valori della colonna `id` della tabella degli oggetti).
     </p>"
-  
+
+  input.refits.de <- 
+    "<p>
+    Eine Datentabelle für Passobjekte (refitting) mit zwei Spalten hochgeladen werden (csv-Format).
+    Jede Zeile muss die eindeutigen Kennungen von zwei Passobjekten enthalten (entsprechend den Werten der Spalte 'ID' in der Objekttabelle).
+    </p>"   
+
   
   # Input timeline ----
-  
   input.timeline.fr <- 
     "<p>
     Optionnellement, un tableau (CSV) peut être chargé  à propos du déroulé de la fouille.
@@ -234,6 +297,17 @@
     <li> <b>square_y</b>: <i>valore alfanumerico</i>, identificatore del quadrato sull’asse Y</li>
     </ul>
     </p>"
+
+    input.timeline.de <- 
+    "<p>
+    Es kann eine Tabelle (csv-Format) über die Ausgrabungschronologie hochgeladen werden. Jede Zeile beschreibt einen Quadranten der Fundstelle mit den folgenden Variablen:
+    <ul>
+    <li> <b>year</b>: <i>numerischer Wert</i>, Jahr der Grabung/Maßnahme </li>
+    <li> <b>square_x</b>: <i>alphanumerischer Wert</i>, Kennung des Quadranten auf der X-Achse</li>
+    <li> <b>square_y</b>: <i>alphanumerischer Wert</i>, Kennung des Quadranten auf der Y-Achse</li>
+    </ul>
+    </p>"  
+  
   
   # reproducibility ----
   reproducibility.fr <- "<h1>Reproductibilité</h1>
@@ -247,6 +321,10 @@
   
   reproducibility.it <- "<h1>Riproducibilità</h1>
                          <p>Per riprodurre le impostazioni attuali, eseguire archeoViz con il seguente comando R (regolare i parametri “objects.df” e “refits.df” in base ai propri dati):</p>"
+
+  reproducibility.de <- "<h1>Reproduzierbarkeit</h1>
+                         <p>Um Ihre aktuellen Einstellungen zu reproduzieren, führen Sie <i>archeoViz</i> mit dem folgenden R-Befehl aus (passen Sie die Parameter 'objects.df' und 'refits.df' an Ihre Bedürfnisse an):  </p>"    
+
   
   # guidelines ----
   # : en ----
@@ -1192,7 +1270,6 @@ guidelines.fr <- "
     notif.warn.refits = "Many refits: it might slow down the app."
   )
   
-  
   # : pt ----
   pt <- list(  
     welcome = welcome.pt,
@@ -1338,14 +1415,86 @@ guidelines.fr <- "
     notif.warn.uncertainty = "Many objects with uncertain location: it might slow down the app.",
     notif.warn.refits = "Many refits: it might slow down the app."
   )
+
+  # : de ----
+  de <- list(
+    welcome = welcome.de,
+    reproducibility = reproducibility.de,
+    tab.home = "Home",
+    tab.input = "Dateneingabe",
+    tab.plot3d ="3D Ansicht",
+    tab.map = "Karte",
+    tab.tables = "Tabellen",
+    tab.timeline = "Chronologoie",
+    tab.reproducibility = "Reproduzierbarkeit",
+    tab.guidelines = "Leitfaden",
+    all = "ALLES",
+    download = "Download",
+    export = "Export (Html)",
+    location = "Lokalisierungsmethode",
+    values = "Werte",
+    validate = "(1) Auswahl bestätigen",
+    refresh = "(2) Aktualisieren",
+    header.3d.options = "Optionen 3D Ansicht",
+    header.objects.table = "Lade Objekttabelle",
+    header.simul.data = "Generiere simulierte Daten zur Demonstration",
+    header.refits.table = "Lade Passobjekttabelle",
+    header.timeline.table = "Lade Ausgrabungschronologietabelle",
+    choose.csv = "Wähle csv-Datei",
+    input.objects = input.objects.de,
+    input.refits = input.refits.de,
+    input.timeline = input.timeline.de,
+    guidelines = guidelines.de,
+    separator = "Trennzeichen",
+    decimal = "Dezimaltrenner",
+    use.demo = "Generiere n Objecte:",
+    surfaces = "Berechene Oberfläche",
+    hulls = "Berechene konvexe Hüllen",
+    refits = "Zeige Passobjekte",
+    point.size = "Punktgrößr",
+    ratio = "Vertikalverhältnis",
+    density = "Berechne Dichte",
+    density.no = "Keine",
+    overall = "Gesamt",
+    by.layer = "Nach Schicht",
+    by.variable = "Nach Variable",
+    tab.variable.loc = "Funde nach Variable und Lokalisierungsmethode",
+    tab.layer.loc = "Funde nach Schicht und Lokalisierungsmethode",
+    exact = "Genau",
+    fuzzy = "unscharf",
+    depth = "Tiefe",
+    group = "Gruppiere Daten",
+    through = "mit",
+    total = "Total",
+    objects = "Objekte",
+    linear.uncertainty = "lineare Unsicherheit",
+    planar.uncertainty = "Planare Unsicherheit",
+    volume.uncertainty = "Volumenunsicherheit",
+    linear = "Linear",
+    planar = "Planar",
+    volume = "Volumen",
+    year = "Jahr",
+    variable = "Variable",
+    show.uncertainty = "Zeige Unsicherheit",
+    click.on.point = "Klicken Sie auf einen Punkt, um weitere Informationen zu erhalten.",
+    notif.objects.ok = "Objektdatei ok!",
+    notif.objects.not.ok = "Fehler. Einige der Pflichtfelder fehlen. Bitte überprüfen Sie die Datei.",
+    notif.no.data = "Keine Daten in diesen Bereichen.",
+    notif.tick.value = "Kreuzen Sie mindestens einen Wert an (im Menü auf der linken Seite).",
+    notif.error.coords.type = "'xmin', 'ymin' oder 'zmin' Wert(e) sind nicht numerisch und wurden (möglicherweise mit Verlust) umgerechnet.",
+    notif.error.identifier = "Einige der eindeutigen Kennungen der Objekte sind doppelt vorhanden.",
+    notif.warn.obj.removed = "Objekte mit unvollständigen Koordinaten wurden entfernt.",
+    notif.warn.uncertainty = "Viele Objekte mit unsicherem Standort: Dies kann die Anwendung verlangsamen.",
+    notif.warn.refits = "Viele Passobjekte: Das könnte die App verlangsamen."
+  )
+
   
   # SWITCH ----
   if(length(grep("en", lang, ignore.case = T)) == 1){ ui.terms <- en }
   if(length(grep("fr", lang, ignore.case = T)) == 1){ ui.terms <- fr }
   if(length(grep("it", lang, ignore.case = T)) == 1){ ui.terms <- it }
-  if(length(grep("port", lang, ignore.case = T)) == 1 | lang == "pt"){
-    ui.terms <- pt
-  }
+  if(length(grep("port", lang, ignore.case = T)) == 1 | lang == "pt"){ ui.terms <- pt}
+  if(length(grep("de", lang, ignore.case = T)) == 1){ ui.terms <- de }
   
   
   ui.terms

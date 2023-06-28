@@ -533,7 +533,7 @@ Note that the parameters `add.x.square.labels`, `add.y.square.labels`, `location
 
 # Acknowledgments
 
-The `archeoViz` application and package is developed and maintained by Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and Thomas Perrin tested and supported the project in its early stage. Renata Araujo and Sara Giardino translated the application into Portuguese and Italian, respectively.
+The `archeoViz` application and package is developed and maintained by Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and Thomas Perrin tested and supported the project in its early stage. Renata Araujo, Sara Giardino, and Julian Laabs translated the application into Portuguese, Italian, and German respectively.
 
 # References
 

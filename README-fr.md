@@ -163,6 +163,8 @@ Shiny server d’*Huma Num*:
   - [`archeoViz` en
     anglais](https://analytics.huma-num.fr/archeoviz/en).
   - [`archeoViz` en
+    allemand](https://analytics.huma-num.fr/archeoviz/de).
+  - [`archeoViz` en
     italien](https://analytics.huma-num.fr/archeoviz/it).
   - [`archeoViz` en
     portugais](https://analytics.huma-num.fr/archeoviz/pt).
@@ -780,8 +782,8 @@ d’une restriction liée à la syntaxe URL).
 L’application et le package `archeoViz` sont développés et maintenus par
 Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, et
 Thomas Perrin ont testé et soutenu ce projet durant ses premières
-étapes. Renata Araujo et Sara Giardino ont traduit l’application
-respectivement en portugais et en italien.
+étapes. Renata Araujo, Sara Giardino et Julian Laabs ont traduit
+l’application respectivement en portugais, italien et allemand.
 
 # Références
 

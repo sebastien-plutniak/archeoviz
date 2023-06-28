@@ -546,7 +546,7 @@ L'URL suivante lance le jeu de données Bilzingsleben, en pré-réglant l'applic
 
 # Remerciements
 
-L'application et le package `archeoViz` sont développés et maintenus par Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, et Thomas Perrin ont testé et soutenu ce projet durant ses premières étapes. Renata Araujo et Sara Giardino ont traduit l'application respectivement en portugais et en italien.
+L'application et le package `archeoViz` sont développés et maintenus par Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, et Thomas Perrin ont testé et soutenu ce projet durant ses premières étapes. Renata Araujo, Sara Giardino et Julian Laabs ont traduit l'application respectivement en portugais, italien et allemand.
 
 # Références
 

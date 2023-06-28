@@ -152,6 +152,7 @@ application can be set with the `lang` parameter.
 Demonstration instances of the application are deployed on the *Huma
 Num* Shiny server:
 
+  - [`archeoViz` in German](https://analytics.huma-num.fr/archeoviz/de).
   - [`archeoViz` in
     English](https://analytics.huma-num.fr/archeoviz/en).
   - [`archeoViz` in French](https://analytics.huma-num.fr/archeoviz/fr).
@@ -734,8 +735,8 @@ syntax).
 The `archeoViz` application and package is developed and maintained by
 Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and
 Thomas Perrin tested and supported the project in its early stage.
-Renata Araujo and Sara Giardino translated the application into
-Portuguese and Italian, respectively.
+Renata Araujo, Sara Giardino, and Julian Laabs translated the
+application into Portuguese, Italian, and German respectively.
 
 # References
 

@@ -43,7 +43,8 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
           - [Exact Location: Plotted
             Objects](#exact-location-plotted-objects)
           - [Vague Location: Spits, Buckets, Sieved Objects, and
-            Errors](#vague-location-spits-buckets-sieved-objects-and-errors)
+            Recording
+            Errors](#vague-location-spits-buckets-sieved-objects-and-recording-errors)
       - [Refittings and Fabric
         Measurements](#refittings-and-fabric-measurements)
           - [Refittings](#refittings)
@@ -211,7 +212,7 @@ the individual location of objects on the field. In that case, the
 location are represented as points in `archeoViz` (triplets of x, y and
 z coordinates).
 
-### Vague Location: Spits, Buckets, Sieved Objects, and Errors
+### Vague Location: Spits, Buckets, Sieved Objects, and Recording Errors
 
 However, it is also common that x, y, z, coordinates by object are not
 available, for different reasons due to:
@@ -282,7 +283,7 @@ Three types of data can be loaded in `archeoViz`:
   - a “timeline” table (optional), with data about when each square of
     the site was excavated or surveyed.
 
-### Formatting data
+### Formatting Data
 
 The tables must be CSV files with the first row containing the column
 labels. Contents in HTML are allowed. This makes it possible, in
@@ -301,7 +302,7 @@ Formatting your data can be done:
     exports” tab). It is also possible to directly send the data to an
     online `archeoViz` instance.
 
-### Objects table
+### Objects Table
 
 A row describes a single object with the following mandatory fields:
 
@@ -344,14 +345,14 @@ The labels of the squares of the grid:
     order to add the missing labels (on the X and Y axes of the grid,
     respectively).
 
-### Refitting table
+### Refitting Table
 
 A data table with two columns can be uploaded for refitting data (CSV
 format). Each row must contain the unique identifiers of two refitting
 objects (corresponding to the values of the `id` column in the objects
 table).
 
-### Timeline table
+### Timeline Table
 
 A table (CSV format) can be uploaded about excavation history. Row gives
 the year when each grid square of the site was excavated or surveyed.
@@ -374,13 +375,13 @@ There are four ways to input data in `archeoViz`:
 4.  uploading data tables through URL parameters, when using an online
     instance of `archeoViz`.
 
-### Through the application interface
+### Through the Application Interface
 
 The three types of tables can be loaded in the “Input data” tab. The CSV
 separator (one of: comma, semicolon, tabulation) and the character used
 for decimal points (period or comma).
 
-### Generating random data
+### Generating Random Data
 
 Using randomly generated data is made possible for demonstration
 purposes. To activate this feature, set the slider in “Input data” to a
@@ -487,12 +488,14 @@ can significantly slow down the application.
 
 Several graphical outputs can be generated in `archeoViz`.
 
-  - The plots in The plots in the “3D plot”, “Map”, “Section X”, and
-    “Section Y” can be exported:
+  - The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” tabs
+    can be exported:
       - in SVG format (by clicking on the “camera” icon in the menu bar
         above the plot),
-      - in an interactive HTML format, by clicking on the “Export”
+      - as interactive plots in HTML format, by clicking on the “Export”
         button.
+  - The small map in the “Section X” and “Section Y” tabs can be
+    exported in SVG by clicking on the “Download Map” link.
   - The plan of the excavation chronology can be exported in SVG format
     by clicking on the “Download” button.
 
@@ -736,9 +739,9 @@ Portuguese and Italian, respectively.
 
 # References
 
-  - Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz.
-    Visualisation, Exploration, and Web Communication of Archaeological
-    Spatial Data”. v1.2.0, DOI:
+  - Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs.
+    2023. “archeoViz. Visualisation, Exploration, and Web Communication
+    of Archaeological Spatial Data”. v1.2.1, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution
     spatiale du mobilier archéologique : l’application archeoViz et son

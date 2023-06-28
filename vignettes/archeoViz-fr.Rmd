@@ -135,6 +135,7 @@ Des instances de démonstration de l'application sont déployées sur le Shiny s
 
 * [`archeoViz` en français](https://analytics.huma-num.fr/archeoviz/fr).
 * [`archeoViz` en anglais](https://analytics.huma-num.fr/archeoviz/en).
+* [`archeoViz` en allemand](https://analytics.huma-num.fr/archeoviz/de).
 * [`archeoViz` en italien](https://analytics.huma-num.fr/archeoviz/it).
 * [`archeoViz` en portugais](https://analytics.huma-num.fr/archeoviz/pt).
 
@@ -549,7 +550,7 @@ L'application et le package `archeoViz` sont développés et maintenus par Séba
 
 # Références
 
-* Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.0, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
+* Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.1, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
 * Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution spatiale du mobilier archéologique : l'application archeoViz et son portail web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”. *Bulletin de la Société préhistorique française*, 120(1), p. 70-74.
 
 

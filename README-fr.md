@@ -45,8 +45,8 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
         archeoViz](#spatial-information-in-archeoviz)
           - [Localisation exacte : les objets
             relevés](#localisation-exacte--les-objets-relevés)
-          - [Localisations vagues : passes, seaux, tamis et
-            erreurs](#localisations-vagues--passes-seaux-tamis-et-erreurs)
+          - [Localisations vagues : passes, seaux, tamis et erreurs
+            d’enregistement](#localisations-vagues--passes-seaux-tamis-et-erreurs-d-enregistrement)
       - [Remontages et mesures de
         fabrique](#remontages-et-mesures-de-fabrique)
           - [Remontages](#remontages)
@@ -223,7 +223,7 @@ Dans ce cas, dans `archeoViz`, localisation de ces objets sera
 visualisée par des points (des triplets de valeurs de coordonnées x, y,
 z).
 
-### Localisations vagues : passes, seaux, tamis et erreurs
+### Localisations vagues : passes, seaux, tamis et erreurs d’enregistement
 
 Toutefois, il est fréquent que les coordonnées x, y, z des objets ne
 soit pas disponible, pour différentes raisons:
@@ -523,6 +523,9 @@ Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
         barre de menu s’affichant au-dessus des visualisations;
       - en format HTML interactif, en cliquant sur le bouton “Exporter”
         dans la colonne droite de l’interface.
+  - Le plan miniature dans les onglets “Section X” et “Section Y” peut
+    être exporté au format SVG en cliquant sur le lien “Télécharger
+    plan”.
   - Le plan de la chronologie des fouilles peut être téléchargé au
     format SVG en cliquant sur le bouton “Télécharger”.
 
@@ -782,9 +785,9 @@ respectivement en portugais et en italien.
 
 # Références
 
-  - Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz.
-    Visualisation, Exploration, and Web Communication of Archaeological
-    Spatial Data”. v1.2.0, DOI:
+  - Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs.
+    2023. “archeoViz. Visualisation, Exploration, and Web Communication
+    of Archaeological Spatial Data”. v1.2.1, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution
     spatiale du mobilier archéologique : l’application archeoViz et son

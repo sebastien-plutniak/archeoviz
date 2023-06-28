@@ -20,7 +20,7 @@
                 <i>archeoViz</i> peut être utilisée localement ou déployée sur un serveur,
                 soit en chargeant des données via l'interface, soit en 
                 lançant l'application avec un jeu de donnée spécifique.
-                L'interface est disponible en anglais, français, italien et portugais.
+                L'interface est disponible en <a href=https://analytics.huma-num.fr/archeoviz/de target=_blank>allemand</a>, <a href=https://analytics.huma-num.fr/archeoviz/en target=_blank>anglais</a>, français, <a href=https://analytics.huma-num.fr/archeoviz/it target=_blank>italien</a> et <a href=https://analytics.huma-num.fr/archeoviz/pt target=_blank>portugais</a>.
                 </p>
                 Le package, sous licence libre, est publié sur le <a href=https://cran.r-project.org/package=archeoViz target=_blank>CRAN</a>. Son code source est aussi disponible sur <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a>."
   
@@ -43,7 +43,7 @@
                 <i>archeoViz</i> can be used locally or deployed on a server, 
                 either by allowing the user to load data through the interface
                 or by running the app with a specific data set.
-                The interface is available in English, French, Italian and Portuguese.
+                The interface is available in <a href=https://analytics.huma-num.fr/archeoviz/de target=_blank>German</a>, English, <a href=https://analytics.huma-num.fr/archeoviz/fr target=_blank>French</a>, <a href=https://analytics.huma-num.fr/archeoviz/it target=_blank>Italian</a>, and <a href=https://analytics.huma-num.fr/archeoviz/pt target=_blank>Portuguese</a>.
                 </p>
                 The package is published under a free license on the <a href=https://cran.r-project.org/package=archeoViz target=_blank>CRAN</a>. Its source code is also available on  <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a>."
   
@@ -57,7 +57,8 @@
                 </p>
                 <p>
                 Distribuído como um pacote R, 
-                o <i>archeoViz</i> pode ser usado localmente ou implantado em um servidor, seja carregando dados por meio da interface, seja iniciando o aplicativo com um conjunto de dados específico. A interface está disponível em inglês, francês, italiano, e português.
+                o <i>archeoViz</i> pode ser usado localmente ou implantado em um servidor, seja carregando dados por meio da interface, seja iniciando o aplicativo com um conjunto de dados específico. A interface está disponível em <a href=https://analytics.huma-num.fr/archeoviz/de target=_blank>alemão</a>
+<a href=https://analytics.huma-num.fr/archeoviz/en target=_blank>inglês</a>, <a href=https://analytics.huma-num.fr/archeoviz/fr target=_blank>francês</a>, <a href=https://analytics.huma-num.fr/archeoviz/it target=_blank>italiano</a>, e português.
                 </p>
                 O pacote, sob licença livre, é publicado na <a href=https://cran.r-project.org/package=archeoViz target=_blank>CRAN</a>. O seu código-fonte está também disponível no <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a>."
   
@@ -69,7 +70,7 @@
                 Offre <b>visualizzazioni</b> in 3D e 2D, genera <b>sezioni</b> e <b>carte</b> dei resti archeologici, consente di realizzare statistiche spaziali semplici (inviluppi convessi, superfici di regressione, stima kernel di densità 2D) e di visualizzare una cronologia interattiva degli scavi di un sito.
                 </p>
                 <p>
-                Distribuito come pacchetto R, <i>archeoViz</i> può essere utilizzato localmente o distribuito su un server, caricando i dati tramite l’interfaccia o lanciando l’applicazione con un insieme di dati specifico. L’interfaccia è disponibile in inglese, francese, italiano e portoghese.
+                Distribuito come pacchetto R, <i>archeoViz</i> può essere utilizzato localmente o distribuito su un server, caricando i dati tramite l’interfaccia o lanciando l’applicazione con un insieme di dati specifico. L’interfaccia è disponibile in <a href=https://analytics.huma-num.fr/archeoviz/de target=_blank>tedesco</a>, <a href=https://analytics.huma-num.fr/archeoviz/en target=_blank>inglese</a>, <a href=https://analytics.huma-num.fr/archeoviz/fr target=_blank>francese</a>, italiano e <a href=https://analytics.huma-num.fr/archeoviz/pt target=_blank>portoghese</a>.
                 </p>
                 Il pacchetto è open source e pubblicato su il <a href=https://cran.r-project.org/package=archeoViz target=_blank>CRAN</a> Il suo codice sorgente è disponibile anche su  <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a>."
    
@@ -92,8 +93,7 @@
                   <p>
                     Als R-Paket, kann <i>archeoViz</i> lokal mit eigenen Daten ausgeführt werden.
                     Oder Daten können Online über eine Eingabemaske eingeladen werden. Die 
-                    Eingabemaske ist derezit in Englisch, Französisch, Italienisch, Portugiesisch und 
-                    Deutsch verfügbar.
+                    Eingabemaske ist derezit in Deutsch, <a href=https://analytics.huma-num.fr/archeoviz/en target=_blank>Englisch</a>, <a href=https://analytics.huma-num.fr/archeoviz/fr target=_blank>Französisch</a>, <a href=https://analytics.huma-num.fr/archeoviz/it target=_blank>Italienisch</a> und <a href=https://analytics.huma-num.fr/archeoviz/pt target=_blank>Portugiesisch</a>  verfügbar.
                   </p>
                   <p>     
                     Das R-Paket wird unter einer GNU GPL-3 Lizenz auf dem Server 
@@ -437,6 +437,7 @@
 <p>Demonstration instances of the application are deployed on the <em>Huma Num</em> Shiny server:</p>
 <ul>
 <li><a href=https://analytics.huma-num.fr/archeoviz/en><code>archeoViz</code> in English</a>.</li>
+<li><a href=https://analytics.huma-num.fr/archeoviz/de><code>archeoViz</code> in German</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/fr><code>archeoViz</code> in French</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/it><code>archeoViz</code> in Italian</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/pt><code>archeoViz</code> in Portuguese</a>.</li>
@@ -717,11 +718,11 @@
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Anters%20at%20Bilzingsleben&amp;home.text=Many%20%3Cb%3Eantlers%3C/b%3E&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Antlers%20at%20Bilzingsleben&amp;home.text=Many%20<b>antlers</b>&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
 <p>Note that the parameters <code>add.x.square.labels</code>, <code>add.y.square.labels</code>, <code>location.mode</code>, and <code>class.values</code>, which accept simple or multiple values in the R interface (e.g., c(“value1”, “value2”)) only accept one value when set as URL parameters (this is a restriction due to the URL syntax).</p>
 <h1 id=acknowledgments>Acknowledgments</h1>
-<p>The <code>archeoViz</code> application and package is developed and maintained by Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and Thomas Perrin tested and supported the project in its early stage. Renata Araujo and Sara Giardino translated the application into Portuguese and Italian, respectively.</p>
+<p>The <code>archeoViz</code> application and package is developed and maintained by Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and Thomas Perrin tested and supported the project in its early stage. Renata Araujo, Sara Giardino, and Julian Laabs translated the application into Portuguese, Italian, and German, respectively.</p>
 <h1 id=references>References</h1>
 <ul>
-<li>Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.0, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
-<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique : l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
+<li>Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.1, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
+<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique : l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
 </ul>"
   
   
@@ -838,6 +839,7 @@ guidelines.fr <- "
 <ul>
 <li><a href=https://analytics.huma-num.fr/archeoviz/fr><code>archeoViz</code> en français</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/en><code>archeoViz</code> en anglais</a>.</li>
+<li><a href=https://analytics.huma-num.fr/archeoviz/de><code>archeoViz</code> en allemand</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/it><code>archeoViz</code> en italien</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/pt><code>archeoViz</code> en portugais</a>.</li>
 </ul>
@@ -1115,11 +1117,11 @@ guidelines.fr <- "
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Anters%20at%20Bilzingsleben&amp;home.text=Many%20%3Cb%3Eantlers%3C/b%3E&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Antlers%20at%20Bilzingsleben&amp;home.text=Many%20<b>antlers</b>&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
 <p>À noter que les paramètres <code>add.x.square.labels</code>, <code>add.y.square.labels</code>, <code>location.mode</code>, et <code>class.values</code>, qui admettent des valeurs simples ou multiples dans l’interface R (par ex. c(“value1”, “value2”)) n’admettent qu’une seule valeur lorsqu’employé comme paramètre d’URL (il s’agit d’une restriction liée à la syntaxe URL).</p>
 <h1 id=remerciements>Remerciements</h1>
-<p>L’application et le package <code>archeoViz</code> sont développés et maintenus par Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, et Thomas Perrin ont testé et soutenu ce projet durant ses premières étapes. Renata Araujo et Sara Giardino ont traduit l’application respectivement en portugais et en italien.</p>
+<p>L’application et le package <code>archeoViz</code> sont développés et maintenus par Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, et Thomas Perrin ont testé et soutenu ce projet durant ses premières étapes. Renata Araujo, Sara Giardino, Julian Laabs ont traduit l’application respectivement en portugais, italien, et allemand.</p>
 <h1 id=références>Références</h1>
 <ul>
-<li>Plutniak, Sébastien, Renata Araujo, Sara Giardino. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.0, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
-<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique : l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
+<li>Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.1, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
+<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique : l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
 </ul>
 "
   
@@ -1425,7 +1427,7 @@ guidelines.fr <- "
     tab.plot3d ="3D Ansicht",
     tab.map = "Karte",
     tab.tables = "Tabellen",
-    tab.timeline = "Chronologoie",
+    tab.timeline = "Chronologie",
     tab.reproducibility = "Reproduzierbarkeit",
     tab.guidelines = "Leitfaden",
     all = "ALLES",
@@ -1444,7 +1446,7 @@ guidelines.fr <- "
     input.objects = input.objects.de,
     input.refits = input.refits.de,
     input.timeline = input.timeline.de,
-    guidelines = guidelines.de,
+    guidelines = guidelines.en,
     separator = "Trennzeichen",
     decimal = "Dezimaltrenner",
     use.demo = "Generiere n Objecte:",

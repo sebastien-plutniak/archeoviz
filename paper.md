@@ -78,7 +78,7 @@ Third, regarding data publication and edition, `archeoViz` relates to centralise
 
 Since the 1960s, numerous attempts at building up standards and repositories were made in archaeology. All projects tended to collect as much data as possible and several independent databases existed with the same themes. The pitfalls of this centralised approach were addressed in the early 2000s with the development of the semantic web, ontologies, and linked open data technologies.
 
-`archeoViz` is designed along this the same line. Rather than collecting all data in the same place as in the centralised approach, `archeoViz` users create a particular instance of `archeoViz` for each dataset to visualise and communicate. These instances can be deployed on the server of their choice ((e.g., [shinyapps.io](https://www.shinyapps.io), [huma-num](https://huma-num.fr), or any other institutional or personal server). Nevertheless, `archeoViz` can be used in four ways, from purely local (on the user’s machine), to purely remote, assuming or not data publication on third-party repositories \autoref{fig:workflow}.
+`archeoViz` is designed along this the same line. Rather than collecting all data in the same place as in the centralised approach, `archeoViz` users create a particular instance of `archeoViz` for each dataset to visualise and communicate. These instances can be deployed on the server of their choice (e.g., [shinyapps.io](https://www.shinyapps.io), [huma-num](https://huma-num.fr), or any other institutional or personal server). Nevertheless, `archeoViz` can be used in four ways, from purely local (on the user’s machine), to purely remote, assuming or not data publication on third-party repositories \autoref{fig:workflow}.
 
 
 ![**The four ways to use `archeoViz`**: local (green solid line), remote and dynamic (dashed line), remote and static with data publication on a third party service (black solid line), remote and static without data publication (blue solid line). \label{fig:workflow}](joss-figures/workflow-en.png)
@@ -126,7 +126,7 @@ The data structure is kept as simple as possible, with (few) mandatory and some 
 
 # Research Using `archeoViz`
 
-So far, 37 datasets have been edited on the web using `archeoViz` instances. They include about 303,000 objects and 10,000 refitting relationships (between fragments of broken objects).
+So far, 40 datasets have been edited on the web using `archeoViz` instances. They include about 350,000 objects and 10,000 refitting relationships (between fragments of broken objects).
 To increase their discoverability and audience, the [*archeoViz portal*](https://analytics.huma-num.fr/archeoviz/home) gathers their references and metadata, and makes it possible to browse the list of instances with keywords and through a map.
  
 Interoperability between software tools is key to their diffusion and adoption. Currently a work in progress, one of the first achievements came with the `SEAHORS` package [@RoyerEtal2023] which can generate CSV files in the `archeoViz` format.
@@ -149,7 +149,7 @@ and spatial statistics use functions from the `cxhull` [@Laurent2023] and `mgcv`
 
 I thank 
 Anaïs Vignoles (co-maintainer of the archeoViz portal),
-Renata Araujo (Portuguese translation), Sara Giardino (Italian translation)
+Renata Araujo (Portuguese translation), Sara Giardino (Italian translation), Julian Laabs (German translation), 
 and the early users for their feedback and support: Astolfo Araujo, Jean-Pierre Chadelle, Elsa Defranoult, Solène Denis, Emmanuel Discamps, Mathieu Langlais, Maureen Le Doaré, Grégor Marchand, Jean-Claude Marquet, Alexandre Michel, Thomas Perrin, Anthony Sécher, Peter Tóth.
 Finally, I acknowledge the [tDAR](https://core.tdar.org) team at the [Center for Digital Archaeology](https://live-digant.ws.asu.edu), where this paper was written and the [SEADDA](https://www.seadda.eu) European COST action that funded this research stay.
 

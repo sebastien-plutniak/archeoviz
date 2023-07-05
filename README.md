@@ -10,7 +10,7 @@ estimation), and display an interactive *timeline* of an excavation.
 `archeoViz` can be used locally or deployed on a server, either by
 allowing the user to load data through the interface or by running the
 app with a specific data set. The app interface is available in English,
-French, Italian, and Portuguese.
+French, German, Italian, and Portuguese.
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively

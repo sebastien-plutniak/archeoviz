@@ -16,10 +16,7 @@ knitr::opts_chunk$set(
 
 
 
-
 `archeoViz` est une application dédiée à l'archéologie. Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques spatialisées. Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *cartes* des restes archéologiques, permet de réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une *chronologie* interactive des fouilles d'un site. `archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en français, anglais, allemand, italien, et portugais.
-
-
 
 
 - [**Installation**](#installation)
@@ -32,7 +29,7 @@ knitr::opts_chunk$set(
 - [**Utilisation**](#utilisation)
   - [L'information spatiale dans archeoViz](#spatial-information-in-archeoviz)
     - [Localisation exacte : les objets relevés](#localisation-exacte--les-objets-relevés)
-    - [Localisations vagues : passes, seaux, tamis et erreurs](#localisations-vagues--passes-seaux-tamis-et-erreurs)
+    - [Localisations vagues : passes, seaux, tamis et erreurs d'enregistement](#localisations-vagues--passes-seaux-tamis-et-erreurs-d-enregistrement)
   - [Remontages et mesures de fabrique](#remontages-et-mesures-de-fabrique)
       - [Remontages](#remontages)
       - [Mesures de fabrique](#mesures-de-fabrique)   
@@ -173,7 +170,7 @@ Les archéologues enregistrent la localisation des objets archéologique à diff
 L'utilisation d'un carroyage ou d'une “station totale” permet d'enregistrer la localisation individuelle des objets sur le terrain.
 Dans ce cas, dans  `archeoViz`, localisation de ces objets sera visualisée par des points (des triplets de valeurs de coordonnées x, y, z).
 
-### Localisations vagues : passes, seaux, tamis et erreurs
+### Localisations vagues : passes, seaux, tamis et erreurs d'enregistement
 
 Toutefois, il est fréquent que les coordonnées x, y, z des objets ne soit pas disponible, pour différentes raisons:
 
@@ -377,6 +374,7 @@ Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 * Les visualisations en 3D, en plan et en sections peuvent être exportées:
 	* au format SVG, en cliquant sur l'icône “appareil photo” de la barre de menu s'affichant au-dessus des visualisations;
 	* en format HTML interactif, en cliquant sur le bouton “Exporter” dans la colonne droite de l'interface.
+* Le plan miniature dans les onglets “Section X” et “Section Y” peut être exporté au format SVG en cliquant sur le lien “Télécharger plan”.
 * Le plan de la chronologie des fouilles peut être téléchargé au format SVG en cliquant sur le bouton “Télécharger”.
 
 ## Statistiques spatiales
@@ -385,11 +383,11 @@ Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 
 ### Surfaces de régression
 
-Dans l'onglet “Vue 3D”, cliquer sur “Calculer les surfaces” puis “Valider” affiche les surfaces de régression associées à chaque sous-ensemble de points  (couche), comportant au moins 100 points. Les surfaces sont calculées grâce au modèle additif généralisé implémenté dans le package  [`mgcv`](https://CRAN.R-project.org/package=mgcv).
+Dans l'onglet “Vue 3D”, cliquer sur “Calculer les surfaces” puis “Valider” affiche les surfaces de régression associées à chaque sous-ensemble de points (couche), comportant au moins 100 points. Les surfaces sont calculées grâce au modèle additif généralisé implémenté dans le package  [`mgcv`](https://CRAN.R-project.org/package=mgcv).
 
 ### Enveloppes convexes
 
-Cliquer sur “Calculer les enveloppes” puis “Valider”, dans l'onglet “Vue 3D”,  affiche les enveloppes convexes associées à chaque sous-ensemble de points  (couches), comportant au moins 20 points. Les enveloppes sont calculées en employant le package [`cxhull`](https://CRAN.R-project.org/package=cxhull).
+Cliquer sur “Calculer les enveloppes” puis “Valider”, dans l'onglet “Vue 3D”,  affiche les enveloppes convexes associées à chaque sous-ensemble de points (couches), comportant au moins 20 points. Les enveloppes sont calculées en employant le package [`cxhull`](https://CRAN.R-project.org/package=cxhull).
 
 ### Estimation 2D de densité par noyau
 
@@ -550,7 +548,17 @@ L'application et le package `archeoViz` sont développés et maintenus par Séba
 
 # Références
 
-* Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.1, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
+## Logiciels 
+* Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.2, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
+* Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal: Dissemination of Spatial Archaeological Datasets](https://hal.science/hal-04156271), portail web, https://analytics.huma-num.fr/archeoviz/home.
+
+## Articles
+
+* Plutniak, Sébastien. Submitted. “archeoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. *Journal of Open Source Software*.
 * Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution spatiale du mobilier archéologique : l'application archeoViz et son portail web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”. *Bulletin de la Société préhistorique française*, 120(1), p. 70-74.
 
+## Présentations
+
+* Plutniak, Sébastien. 2023. “[Fostering the Publication of Spatial Archaeological Data: a Decentralized Approach. The archeoViz Web Application and its Portal](https://hal.science/hal-04146410)”, Slides of a presentation at the University of Florida, Gainesville.
+* Plutniak, Sébastien, Anaïs Vignoles. 2023. “[L’application web / package archeoViz et son portail web. Une solution décentralisée d’éditorialisation de données archéologiques spatialisées](https://hal.science/hal-04070444), slides of a presentation at the SITRADA workshop, Paris.
 

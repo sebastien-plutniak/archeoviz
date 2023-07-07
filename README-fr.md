@@ -11,8 +11,8 @@ régression, estimation de densité par noyau en 2D), et de visualiser
 une *chronologie* interactive des fouilles d’un site. `archeoViz` peut
 être utilisée localement ou déployée sur un serveur, soit en chargeant
 des données via l’interface, soit en lançant l’application avec un jeu
-de donnée spécifique. L’interface est disponible en anglais, français,
-italien, et portugais.
+de donnée spécifique. L’interface est disponible en français, anglais,
+allemand, italien, et portugais.
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -787,12 +787,36 @@ l’application respectivement en portugais, italien et allemand.
 
 # Références
 
+## Logiciels
+
   - Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs.
     2023. “archeoViz. Visualisation, Exploration, and Web Communication
-    of Archaeological Spatial Data”. v1.2.1, DOI:
+    of Archaeological Spatial Data”. v1.2.2, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
+  - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
+    Dissemination of Spatial Archaeological
+    Datasets](https://hal.science/hal-04156271), portail web,
+    <https://analytics.huma-num.fr/archeoviz/home>.
+
+## Articles
+
+  - Plutniak, Sébastien. Submitted. “archeoViz: an R package for the
+    Visualisation, Exploration, and Web Communication of Archaeological
+    Spatial Data”. *Journal of Open Source Software*.
   - Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution
     spatiale du mobilier archéologique : l’application archeoViz et son
     portail
     web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”.
     *Bulletin de la Société préhistorique française*, 120(1), p. 70-74.
+
+## Présentations
+
+  - Plutniak, Sébastien. 2023. “[Fostering the Publication of Spatial
+    Archaeological Data: a Decentralized Approach. The archeoViz Web
+    Application and its Portal](https://hal.science/hal-04146410)”,
+    Slides of a presentation at the University of Florida, Gainesville.
+  - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[L’application web /
+    package archeoViz et son portail web. Une solution décentralisée
+    d’éditorialisation de données archéologiques
+    spatialisées](https://hal.science/hal-04070444), slides of a
+    presentation at the SITRADA workshop, Paris.

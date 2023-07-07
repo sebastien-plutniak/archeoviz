@@ -726,7 +726,7 @@
 <h2 id=software>Software</h2>
 <ul>
 <li>Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.1, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
-<li>Plutniak, Sébastien, Anaïs Vignoles. 2023. “<a href=https://hal.science/hal-04156271>The archeoViz Portal: Dissemination of Spatial Archaeological Datasets</a>, portail web, <a href=https://analytics.huma-num.fr/archeoviz/home class=uri>https://analytics.huma-num.fr/archeoviz/home</a>.</li>
+<li>Plutniak, Sébastien, Anaïs Vignoles. 2023. “<a href=https://hal.science/hal-04156271>The archeoViz Portal: Dissemination of Spatial Archaeological Datasets</a>”, web portal, <a href=https://analytics.huma-num.fr/archeoviz/home class=uri>https://analytics.huma-num.fr/archeoviz/home</a>.</li>
 </ul>
 <h2 id=papers>Papers</h2>
 <ul>
@@ -1138,7 +1138,7 @@ guidelines.fr <- "
 <h2 id=logiciels>Logiciels</h2>
 <ul>
 <li>Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.2, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
-<li>Plutniak, Sébastien, Anaïs Vignoles. 2023. “<a href=https://hal.science/hal-04156271>The archeoViz Portal: Dissemination of Spatial Archaeological Datasets</a>, portail web, <a href=https://analytics.huma-num.fr/archeoviz/home class=uri>https://analytics.huma-num.fr/archeoviz/home</a>.</li>
+<li>Plutniak, Sébastien, Anaïs Vignoles. 2023. “<a href=https://hal.science/hal-04156271>The archeoViz Portal: Dissemination of Spatial Archaeological Datasets</a>”, portail web, <a href=https://analytics.huma-num.fr/archeoviz/home class=uri>https://analytics.huma-num.fr/archeoviz/home</a>.</li>
 </ul>
 <h2 id=articles>Articles</h2>
 <ul>

@@ -748,7 +748,7 @@ application into Portuguese, Italian, and German respectively.
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
     Dissemination of Spatial Archaeological
-    Datasets](https://hal.science/hal-04156271), portail web,
+    Datasets](https://hal.science/hal-04156271)”, web portal,
     <https://analytics.huma-num.fr/archeoviz/home>.
 
 ## Papers

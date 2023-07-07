@@ -550,7 +550,7 @@ L'application et le package `archeoViz` sont développés et maintenus par Séba
 
 ## Logiciels 
 * Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.2.2, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
-* Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal: Dissemination of Spatial Archaeological Datasets](https://hal.science/hal-04156271), portail web, https://analytics.huma-num.fr/archeoviz/home.
+* Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal: Dissemination of Spatial Archaeological Datasets](https://hal.science/hal-04156271)”, portail web, https://analytics.huma-num.fr/archeoviz/home.
 
 ## Articles
 

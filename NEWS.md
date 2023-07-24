@@ -1,9 +1,10 @@
 
-# archeoViz 1.2.2
-Released: 2023-07-24
+# archeoViz 1.3.0
+Released: 2023-07-25
 
-* The 'Tables' tab is renammed 'Statistics'
+* The 'Tables' tab is renammed 'Statistics'.
 * Add export links to third-party applications (the Seriograph and Archeofrag applications) in the 'Statistics' tab.
+* Add a 'table.export' parameter.
 
 # archeoViz 1.2.1
 Released: 2023-06-28

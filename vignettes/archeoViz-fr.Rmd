@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 `archeoViz` est une application dédiée à l'archéologie. Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques spatialisées. Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *cartes* des restes archéologiques, permet de réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une *chronologie* interactive des fouilles d'un site. `archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en français, anglais, allemand, italien, et portugais.
 
 
+
 - [**Installation**](#installation)
   - [Locale](#locale)
   - [Distante](#distante)
@@ -54,7 +55,7 @@ knitr::opts_chunk$set(
      - [Enveloppes convexes](#enveloppes-convexes)
      - [Estimation 2D de densité par noyau](#estimation-2d-de-densité-par-noyau)
 - [**Reproductibilité**](#reproductibilité)  
-- [**Exports depuis et vers des applications tiers**](#exports-depuis-et-vers-des-applications-tiers)
+- [**Exports depuis et vers des applications tierces**](#exports-depuis-et-vers-des-applications-tierces)
     - [Export depuis archeoViz](#export-depuis-archeoviz)
     - [Import vers archeoViz](#import-vers-archeoviz)
 - [**Paramètres avancés**](#paramètres-avancés)  
@@ -407,7 +408,7 @@ L'estimation bidimensionnelle de densité par noyau est calculée avec la foncti
 * Dans l'onglet “Reproductibilité”, une commande R est générée dynamiquement, tenant compte du paramétrage de l'application réalisé par l'utilisateur en agissant avec l'interface graphique.
 * Dans un usage plus avancé, les paramètres d'URL permettent de paramétrer une instance en ligne de l'application avec des paramètres d'intérêt et de la communiquer l'ensemble en envoyant l'URL à un tiers.
 
-## Exports depuis et vers des applications tiers
+## Exports depuis et vers des applications tierces
 
 `archeoViz` a été conçu comme l'une des pièces d'un écosystème numérique décentralisé pour les données et analyses archéologiques.
 Dans cette approche, les fonctionnalités sont distribuées entre de multiples applications interconenctées, plutôt que concentrées dans un petit nombre de systèmes.
@@ -512,7 +513,7 @@ archeoViz(run.plots = FALSE)
 ### Contrôle des formats d'export
 
 * **html.export**: TRUE ou FALSE. Afficher ou non les boutons permettant d'exporter les visualisations en format HTML interactif.
-* **table.export**: TRUE ou FALSE. Permettre ou non le transfert des données à des [applications tiers](#exports-depuis-et-vers-des-applications-tiers) dans l'onglet “Statistiques”.
+* **table.export**: TRUE ou FALSE. Permettre ou non le transfert des données à des [applications tierces](#exports-depuis-et-vers-des-applications-tierces) dans l'onglet “Statistiques”.
 
 ### Paramètres URL
 

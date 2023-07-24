@@ -224,7 +224,15 @@ ui <- shinyUI(
                    )) # end colums, end fluidrow  
           ), # end tabPanel
 
-          tabPanel(.term_switcher("tab.tables"),  #  tables ----
+          tabPanel(.term_switcher("tab.statistics"),  #  statistics ----
+                   fluidRow(
+                     column(6,
+                            uiOutput("export.header"),
+                            uiOutput("run.seriograph"),
+                            uiOutput("run.archeofrag"),
+                            br()
+                     )
+                   ),
                    fluidRow(
                      column(6,
                             h4(.term_switcher("tab.variable.loc")),

@@ -74,10 +74,15 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
           - [Convex Hulls](#convex-hulls)
           - [2D Kernel Density](#2d-kernel-density)
   - [**Reproducibility**](#reproducibility)
+  - [**Exports from and to Third-party
+    Applications**](#exports-from-and-to-third-party-applications)
+      - [Export from archeoViz](#export-from-archeoviz)
+      - [Import to archeoViz](#import-to-archeoviz)
   - [**Advanced Parameters**](#advanced-parameters)
       - [Square Grid](#square-grid)
       - [Parameter Presetting](#parameter-presetting)
       - [Reactive Plot Display](#reactive-plot-display)
+      - [Control Export Formats](#control-export-formats)
       - [URL parameters](#url-parameters)
   - [**Acknowledgments**](#acknowledgments)
   - [**References**](#references)
@@ -544,6 +549,47 @@ the result of interactions with the application.
     an online instance of the application parameters of interest and to
     communicate it by sending the URL.
 
+## Exports from and to Third-party Applications
+
+`archeoViz` was designed as one of the building blocks of a
+decentralised digital ecosystem for archaeological data and analysis. In
+this perspective, features and functions are distributed in multiple
+interconnected applications, rather than concentrated into few systems.
+Consequently, data can be exported and imported between `archeoViz` and
+other web-based applications. Note that, so far, the export
+functionalities are only available when using online `archeoViz`
+instances.
+
+### Export from archeoViz
+
+[*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag)
+is an R package and web application to assess and evaluate the
+distinctions betwen archaeological spatial units (e.g. layers) based on
+the analysis of refitting relationships between fragments of objects.
+The web version of the application includes methods to measure the
+cohesion and admixture of spatial units, and compare it to simulated
+data. If an instance of `archeoViz` is launched with [refitting
+data](#refittings), then this data can be analysed with `archeofrag`
+from the `Statistics` tab.
+
+The [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/)
+is a web application (part of the
+[SPARTAAS](https://spartaas.gitpages.huma-num.fr/) collection) to
+visualise changes in the quantitative distribution of artefacts types in
+ordered or unordered series of spatial units. If an online instance of
+`archeoViz` is launched with a data set with at least 2 different values
+for the `layers` variable and 2 different values for the `object_type`
+variable, then this data can be analysed with the `Seriograph`
+application from the `Statistics` tab.
+
+### Import to archeoViz
+
+[*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) is a web
+application and R package to visualise the spatial distribution of
+archaeological remains. As mentioned [\#formatting-data](above), SEAHORS
+can be used to import, reshape, and send a data set to an online
+instance of the `archeoViz` application.
+
 ## Advanced parameters
 
 The `archeoViz()` function can be set with multiple optional parameters,
@@ -575,7 +621,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
           camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
-          run.plots = FALSE, html.export = TRUE
+          run.plots = FALSE, html.export = TRUE, table.export = TRUE
           )
 ```
 
@@ -660,13 +706,17 @@ archeoViz(run.plots = FALSE)
 ```
 
   - **run.plots**: TRUE or FALSE. Whether to immediately compute and
-    show plots (without requiring the user to click on the buttons in
-    the interface).
+    show plots (without requiring the user to click on the “Refresh”
+    button).
 
-### HTML export
+### Control Export Formats
 
   - **html.export** : TRUE or FALSE. Whether or not to allow figures to
     be exported as interactive HTML widgets.
+  - **table.export**: TRUE or FALSE. Allow or disallow data transfer to
+    [third-party
+    applications](#exports-from-and-to-third-party-applications) in the
+    “Statistics” tab.
 
 ### URL parameters
 
@@ -690,7 +740,7 @@ URL parameters. Supported parameters include:
 (The following parameters are not supported in the current version:
 `map.z.val`, `sectionX.x.val`, `sectionX.y.val`, `sectionY.x.val`,
 `sectionY.y.val`, `lang`, `set.theme`, `camera.center`, `camera.eye`,
-`html.export`.)
+`html.export`, `table.export`.)
 
 The parameters must be written using the URL syntax
 (?param1=value\&param2=value2) and have the same type of values than
@@ -767,9 +817,9 @@ application into Portuguese, Italian, and German respectively.
   - Plutniak, Sébastien. 2023. “[Fostering the Publication of Spatial
     Archaeological Data: a Decentralized Approach. The archeoViz Web
     Application and its Portal](https://hal.science/hal-04146410)”,
-    support d’une présentation à l’University of Florida, Gainesville.
+    slides of a presentation at the University of Florida, Gainesville.
   - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[L’application web /
     package archeoViz et son portail web. Une solution décentralisée
     d’éditorialisation de données archéologiques
-    spatialisées](https://hal.science/hal-04070444), support d’une
-    présentation à l’atelier SITRADA, Paris.
+    spatialisées](https://hal.science/hal-04070444), slides of a
+    presentation at the SITRADA workshop, Paris.

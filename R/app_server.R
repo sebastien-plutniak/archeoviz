@@ -166,7 +166,9 @@ app_server <- function(input, output, session) {
   refitting.df <- reactive({
     req(objects.dataset)
     
-    refits <- list("refits.2d" = data.frame(), "refits.3d" = data.frame())
+    refits <- list("refits.2d" = data.frame(),
+                   "refits.3d" = data.frame(),
+                   "raw" = data.frame())
     
     query <- shiny::parseQueryString(session$clientData$url_search)
     
@@ -184,7 +186,7 @@ app_server <- function(input, output, session) {
       refits <- .do_refits_preprocessing(refits, objects.dataset())
     }
     
-    refits # an empty data.frame or a list with two dataframes
+    refits # an empty data.frame or a list with three dataframes
   })  
   
   # Objects preprocessing: ----
@@ -1401,6 +1403,176 @@ app_server <- function(input, output, session) {
     req(timeline.map.plot())
     downloadButton("download.timeline.map", .term_switcher("download"))
   })
+  
+  # Exports ----
+  
+  
+  # : seriograph   ----
+  
+  seriograph.table <- reactive({
+    req(input$class.variable, objects.subdataset)
+    
+    if( (Sys.getenv('SHINY_PORT') == "") |
+        (! getShinyOption("table.export")) ){ return() }
+    
+    dataset <- objects.subdataset()
+    
+    df <- table(dataset$layer,
+                eval(parse(text = paste0("dataset$", input$class.variable))))
+    
+    if(dim(df)[1] == 1 | dim(df)[2] == 1){ return() }
+    
+    df <- as.matrix(df)
+    as.data.frame.matrix(df)
+  })
+  
+  
+  output$download.seriograph <- downloadHandler(
+    filename = "seriograph.csv",
+    content = function(file) {
+      write.csv(seriograph.table(), file, row.names = TRUE)
+    }
+  )
+  
+  
+  seriograph.url <- reactive({
+    req(seriograph.table())
+    
+    data.url <- session$registerDataObj(name = "table",
+                                        data = seriograph.table(),
+                                        filterFunc = function(data, req) { 
+                                          httpResponse(200, "text/csv",
+                                            write.csv(data, row.names = TRUE)
+                                          )
+                                        })
+    object.id <- gsub(".*w=(.*)&nonce.*", "\\1", data.url)
+    
+    data.url <- paste0(session$clientData$url_protocol, "//",
+                       session$clientData$url_hostname,
+                       session$clientData$url_pathname,
+                       "_w_", object.id, 
+                       "/session/", session$token, "/download/download.seriograph")
+    
+    paste0("https://analytics.huma-num.fr/ModAthom/seriograph/?data=", data.url)
+  })
+
+  
+  # seriograph link
+  output$run.seriograph <- renderUI({
+    req(seriograph.url())
+    
+    tagList(
+      "> ", .term_switcher("export.to"),
+      actionLink("run.seriograph",
+                 label = "Seriograph",
+                 onclick = paste("window.open('",
+                                 seriograph.url(), "', '_blank')")),
+    "(", .term_switcher("download"),
+    downloadLink("download.seriograph", " CSV"),  ")"
+    )
+  })
+  
+  # : archeofrag ----
+  
+  archeofrag.tables <- reactive({
+    req(input$class.variable, objects.dataset(), refitting.df())
+  
+    if( (Sys.getenv('SHINY_PORT') == "") |
+        (! getShinyOption("table.export")) ){ return() }
+    
+    refits.df <- refitting.df()[[3]]
+    
+    if(nrow(refits.df) == 0){return()}
+    
+    dataset <- objects.dataset()
+    dataset <- dataset[, c("id", "layer")]
+    
+    refits.df <- refits.df[refits.df[,1] %in% dataset[,1], ]
+    refits.df <- refits.df[refits.df[,2] %in% dataset[,1], ]
+    
+    list("edges" = refits.df, "objects" = dataset)
+  })
+  
+  
+  output$download.archeofrag.edges <- downloadHandler(
+    filename = "archeofrag-edges.csv",
+    content = function(file) {
+      write.csv(archeofrag.tables()[[1]], file, row.names = FALSE)
+    }
+  )
+  output$download.archeofrag.nodes <- downloadHandler(
+    filename = "archeofrag-nodes.csv",
+    content = function(file) {
+      write.csv(archeofrag.tables()[[2]], file, row.names = FALSE)
+    }
+  )
+  
+  
+  archeofrag.url <- reactive({
+    req(archeofrag.tables())
+    # edges
+    edges.url <- session$registerDataObj(name = "table",
+                                         data = archeofrag.tables()[[1]],
+                                         filterFunc = function(data, req) { 
+                                           httpResponse(200, "text/csv",
+                                            write.csv(data, row.names=FALSE)
+                                           )
+                                         })
+    object.id2 <- gsub(".*w=(.*)&nonce.*", "\\1", edges.url)
+    
+    edges.url <- paste0(session$clientData$url_protocol, "//",
+                        session$clientData$url_hostname,
+                        session$clientData$url_pathname,
+                        "_w_", object.id2, 
+                        "/session/", session$token, "/download/download.archeofrag.edges")
+    
+    # nodes 
+      nodes.url <- session$registerDataObj(name = "table",
+                                           data = archeofrag.tables()[[2]],
+                                           filterFunc = function(data, req) { 
+                                             httpResponse(200, "text/csv",
+                                                          write.csv(data, row.names = FALSE)
+                                             )
+                                           })
+      object.id <- gsub(".*w=(.*)&nonce.*", "\\1", nodes.url)
+      
+      nodes.url <- paste0(session$clientData$url_protocol, "//",
+                          session$clientData$url_hostname,
+                          session$clientData$url_pathname,
+                          "_w_", object.id, 
+                          "/session/", session$token, "/download/download.archeofrag.nodes")
+    
+    paste0("https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag/?objects=", nodes.url, "&relations=", edges.url)
+  })
+  
+  output$run.archeofrag <- renderUI({
+    req(archeofrag.url())
+    
+    tagList(
+      "> ", .term_switcher("export.to"),
+      actionLink("run.archeofrag",
+                 label = "Archeofrag",
+                 onclick = paste("window.open('",
+                                 archeofrag.url(), "', '_blank')")),
+      "    (", .term_switcher("download"),
+      downloadLink("download.archeofrag.edges", " CSV-1"),
+      ", ",
+      downloadLink("download.archeofrag.nodes", " CSV-2"),
+      ")"
+    )
+  })
+  
+  
+  # : Export ui header ----
+  output$export.header <- renderUI({
+    if(
+      ( (Sys.getenv('SHINY_PORT') != "") & # only if remote use of the app 
+        ( getShinyOption("table.export")) ) &
+      ( isTruthy(seriograph.table) | isTruthy(archeofrag.tables) ) ){
+      h4(.term_switcher("header.export.data"))
+    } else{  return() }
+  })
+  
   
   #  Reproducibility ----
   

@@ -11,7 +11,7 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                       sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
                       sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
                       camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25), 
-                      run.plots = FALSE, html.export = TRUE
+                      run.plots = FALSE, html.export = TRUE, table.export = TRUE
                       ){
   
   
@@ -78,7 +78,8 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                "ui.terms"    = ui.terms,
                "background.col" = background.col,
                "run.plots" = run.plots,
-               "html.export" = html.export)
+               "html.export" = html.export,
+               "table.export" = table.export)
   
   shinyApp(ui = app_ui, server = app_server)
 }

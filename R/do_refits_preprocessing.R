@@ -1,7 +1,9 @@
 .do_refits_preprocessing <- function(refits, dataset){
   # remove duplicated refits if any:
-  refits.2d <- refits[! duplicated(t(apply(refits[c(1, 2), ], 1, sort))), ]
+  refits <- refits[! duplicated(t(apply(refits[c(1, 2), ], 1, sort))), ]
+  
   # refitting data for 2D plots:
+  refits.2d <- refits
   colnames(refits.2d) <- c("from", "to")
   dataset <- dataset[, c("id", "x", "y", "z")]
   
@@ -20,7 +22,7 @@
   refits.3d$id.internal <- paste0(refits.3d[,1], refits.3d[,2])
 	
 	# output:
-	list("refits.2d" = refits.2d, "refits.3d" = refits.3d)
+	list("refits.2d" = refits.2d, "refits.3d" = refits.3d, "raw" = refits)
 }
 
 

@@ -158,7 +158,7 @@ ui <- shinyUI(
                    )) # end colums, end fluidrow                   
           ), # end tabPanel
 
-          tabPanel("Section X",  # section X ----
+          tabPanel(.term_switcher("tab.section.x"),  # section X ----
                    fluidRow(
                      column(10,
                             uiOutput("sliderXx"),
@@ -191,7 +191,7 @@ ui <- shinyUI(
                    )) # end colums, end fluidrow   
           ), # end tabPanel
 
-          tabPanel("Section Y",  #section Y ----
+          tabPanel(.term_switcher("tab.section.x"),  #section Y ----
                    fluidRow(
                      column(10,
                             uiOutput("sliderYx"),

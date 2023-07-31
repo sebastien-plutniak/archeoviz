@@ -144,7 +144,7 @@ archeoViz(objects.df = NULL,   # data.frame with data about the objects
           timeline.df = NULL,  # optional data.frame for the excavation timeline
           title = NULL,        # title of the site / data set
           home.text = NULL,    # HTML content to display on the home page
-          lang = "en"          # interface language ("en": English, "fr": French, "it": Italian, "pt": Portuguese)
+          lang = "en"          # interface language ("de": German, "en": English, "fr": French, "it": Italian, "pt": Portuguese)
           set.theme = "cosmo") # graphic theme for the Shiny interface
 ```
 

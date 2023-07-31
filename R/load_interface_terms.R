@@ -814,7 +814,7 @@ guidelines.fr <- "
 </ul></li>
 </ul></li>
 <li><a href=#reproductibilit\\\\u00e9><strong>Reproductibilit\\\\u00e9</strong></a></li>
-<li><a href=#exports-depuis-et-vers-des-applications-tierces><strong>Exports depuis et vers des applications tierces</strong></a>
+<li><a href=#exports-depuis-et-vers-des-applications-tiers><strong>Exports depuis et vers des applications tiers</strong></a>
 <ul>
 <li><a href=#export-depuis-archeoviz>Export depuis archeoViz</a></li>
 <li><a href=#import-vers-archeoviz>Import vers archeoViz</a></li>
@@ -1041,7 +1041,7 @@ guidelines.fr <- "
 <li>Dans l\\\\u2019onglet \\\\u201cReproductibilit\\\\u00e9\\\\u201d, une commande R est g\\\\u00e9n\\\\u00e9r\\\\u00e9e dynamiquement, tenant compte du param\\\\u00e9trage de l\\\\u2019application r\\\\u00e9alis\\\\u00e9 par l\\\\u2019utilisateur en agissant avec l\\\\u2019interface graphique.</li>
 <li>Dans un usage plus avanc\\\\u00e9, les param\\\\u00e8tres d\\\\u2019URL permettent de param\\\\u00e9trer une instance en ligne de l\\\\u2019application avec des param\\\\u00e8tres d\\\\u2019int\\\\u00e9r\\\\u00eat et de la communiquer l\\\\u2019ensemble en envoyant l\\\\u2019URL \\\\u00e0 un tiers.</li>
 </ul>
-<h2 id=exports-depuis-et-vers-des-applications-tierces>Exports depuis et vers des applications tierces</h2>
+<h2 id=exports-depuis-et-vers-des-applications-tiers>Exports depuis et vers des applications tiers</h2>
 <p><code>archeoViz</code> a \\\\u00e9t\\\\u00e9 con\\\\u00e7u comme l\\\\u2019une des pi\\\\u00e8ces d\\\\u2019un \\\\u00e9cosyst\\\\u00e8me num\\\\u00e9rique d\\\\u00e9centralis\\\\u00e9 pour les donn\\\\u00e9es et analyses arch\\\\u00e9ologiques. Dans cette approche, les fonctionnalit\\\\u00e9s sont distribu\\\\u00e9es entre de multiples applications interconenct\\\\u00e9es, plut\\\\u00f4t que concentr\\\\u00e9es dans un petit nombre de syst\\\\u00e8mes. Par cons\\\\u00e9quent, les donn\\\\u00e9es peuvent \\\\u00eatre export\\\\u00e9es et import\\\\u00e9es entre <code>archeoViz</code> et d\\\\u2019autres applications web. Notez que, jusqu\\\\u2019ici, les fonctionnalit\\\\u00e9s d\\\\u2019export ne sont disponibles que dans le cas d\\\\u2019instances <code>archeoViz</code> d\\\\u00e9ploy\\\\u00e9es en ligne.</p>
 <h3 id=export-depuis-archeoviz>Export depuis archeoViz</h3>
 <p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> est un package R et une application web permettant d\\\\u2019estimer et d\\\\u2019\\\\u00e9valuer les distinctions entre unit\\\\u00e9s spatiales arch\\\\u00e9ologiques (par ex. des couches) \\\\u00e0 partir de l\\\\u2019analyse des relations de remontage entre fragments d\\\\u2019objets. La version web de l\\\\u2019application int\\\\u00e8gre des m\\\\u00e9thodes pour mesurer la coh\\\\u00e9sion et le m\\\\u00e9lange d\\\\u2019unit\\\\u00e9s spatiales et de les comparer \\\\u00e0 des donn\\\\u00e9es simul\\\\u00e9es. Lorsqu\\\\u2019une instance d\\\\u2019<code>archeoViz</code> est execut\\\\u00e9e avec des <a href=#tableau-des-remontages>donn\\\\u00e9es de remontage</a>, alors ces donn\\\\u00e9es peuvent \\\\u00eatre analys\\\\u00e9es avec <code>archeofrag</code> \\\\u00e0 partir de l\\\\u2019onglet \\\\u201cStatistiques\\\\u201d.</p>
@@ -1122,7 +1122,7 @@ guidelines.fr <- "
 <h3 id=contr\\\\u00f4le-des-formats-dexport>Contr\\\\u00f4le des formats d\\\\u2019export</h3>
 <ul>
 <li><strong>html.export</strong>: TRUE ou FALSE. Afficher ou non les boutons permettant d\\\\u2019exporter les visualisations en format HTML interactif.</li>
-<li><strong>table.export</strong>: TRUE ou FALSE. Permettre ou non le transfert des donn\\\\u00e9es \\\\u00e0 des <a href=#exports-depuis-et-vers-des-applications-tierces>applications tierces</a> dans l\\\\u2019onglet \\\\u201cStatistiques\\\\u201d.</li>
+<li><strong>table.export</strong>: TRUE ou FALSE. Permettre ou non le transfert des donn\\\\u00e9es \\\\u00e0 des <a href=#exports-depuis-et-vers-des-applications-tiers>applications tiers</a> dans l\\\\u2019onglet \\\\u201cStatistiques\\\\u201d.</li>
 </ul>
 <h3 id=param\\\\u00e8tres-url>Param\\\\u00e8tres URL</h3>
 <p>Une instance <code>archeoViz</code> deploy\\\\u00e9e en ligne sur un serveur peut \\\\u00eatre param\\\\u00e9tr\\\\u00e9e en ajustant les param\\\\u00e8tres de l\\\\u2019URL. Les param\\\\u00e8tres accept\\\\u00e9s support\\\\u00e9s:</p>
@@ -1187,6 +1187,8 @@ guidelines.fr <- "
     tab.input = "Donn\\\\u00e9es",
     tab.plot3d ="Vue 3D",
     tab.map = "Plan",
+    tab.section.x = "Section X",
+    tab.section.y = "Section Y",
     tab.statistics = "Statistiques",
     tab.timeline = "Chronologie",
     tab.reproducibility = "Reproductibilit\\\\u00e9",
@@ -1262,6 +1264,8 @@ guidelines.fr <- "
     tab.input = "Input data",
     tab.plot3d ="3D plot",
     tab.map = "Map",
+    tab.section.x = "Section X",
+    tab.section.y = "Section Y",
     tab.statistics = "Statistics",
     tab.timeline = "Timeline",
     tab.reproducibility = "Reproducibility",
@@ -1336,6 +1340,8 @@ guidelines.fr <- "
     tab.input = "Dados",
     tab.plot3d ="Visualiza\\\\u00e7\\\\u00e3o 3D",
     tab.map = "Mapa",
+    tab.section.x = "Perfil X",
+    tab.section.y = "Perfil Y",
     tab.statistics = "Estat\\\\u00edsticas",
     tab.timeline = "Cronologia",
     tab.reproducibility = "Reprodutibilidade",
@@ -1411,6 +1417,8 @@ guidelines.fr <- "
     tab.input = "Dati",
     tab.plot3d = "Vista 3D",
     tab.map = "Mappa",
+    tab.section.x = "Sezione X",
+    tab.section.y = "Sezione Y",
     tab.statistics = "Statistiche",
     tab.timeline = "Cronologia",
     tab.reproducibility = "Riproducibilit\\\\u00e0",
@@ -1486,6 +1494,8 @@ guidelines.fr <- "
     tab.input = "Dateneingabe",
     tab.plot3d ="3D Ansicht",
     tab.map = "Karte",
+    tab.section.x = "Profile X",
+    tab.section.y = "Profile Y",
     tab.statistics = "Statistiken",
     tab.timeline = "Chronologie",
     tab.reproducibility = "Reproduzierbarkeit",

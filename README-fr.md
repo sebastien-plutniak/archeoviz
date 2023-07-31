@@ -150,7 +150,7 @@ archeoViz(objects.df = NULL,   # data.frame pour les objets
                                # par couche ("by.layer") ou "by.variable"
           title = NULL,        # titre du site / du jeu de données
           home.text = NULL,    # contenu HTML à afficher sur la page d'accueil
-          lang = "fr"          # langue de l'interface ("en": Anglais, "fr": Français, "it": Italien "pt": Portugais)
+          lang = "fr"          # langue de l'interface ("de": Allemand, "en": Anglais, "fr": Français, "it": Italien "pt": Portugais)
           set.theme = "cosmo") # thème graphique de l'interface Shiny
 ```
 

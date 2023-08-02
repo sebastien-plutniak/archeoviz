@@ -434,9 +434,16 @@ app_server <- function(input, output, session) {
                         "dims" = "xz")
   })
   
+  # goTables button
+  goTables <- reactive({
+    req(input$class.values, objects.dataset())
+    if( (input$goButton > 0) | getShinyOption("run.plots")  ){
+      TRUE
+    } else { return() }
+  })
   
   # : by variable ----
-  by.variable.table <- reactive({
+  by.variable.table <- eventReactive(goTables(), {
     req(input$class.variable, input$class.values, objects.subdataset)
     dataset <- objects.subdataset()
     
@@ -447,7 +454,7 @@ app_server <- function(input, output, session) {
                                           rownames = T, digits=0)
   
   # : by layer ----
-  by.layer.table <- reactive({
+  by.layer.table <- eventReactive(goTables(), {
     req(input$class.variable, input$class.values, objects.subdataset)
     dataset <- objects.subdataset()
     
@@ -1310,8 +1317,8 @@ app_server <- function(input, output, session) {
                      .term_switcher("fuzzy"),
                      .term_switcher("show.uncertainty"))
     }
-    loc.selection <- .term_switcher(tolower(unique(df$location_mode)[1]))
-    loc.selection <- tolower(unique(df$location_mode)[1])
+    
+    loc.selection <- tolower(sort(unique(df$location_mode))[1])
     if( ! is.null(getShinyOption("params")$location)){
       loc.selection <- getShinyOption("params")$location
     }

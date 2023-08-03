@@ -13,8 +13,8 @@
         param.value <- as.logical(param.value)}
       if(param == "square.size") {param.value <- as.integer(param.value)}
       
-      param.value[is.character(param.value)] <- paste0("\"", 
-                                                       param.value[is.character(param.value)], "\"")
+      param.value[is.character(param.value)] <- paste0("'", 
+                                                       param.value[is.character(param.value)], "'")
       
       paste0("<span style=\"color: Darkblue;\">", param, "</span>", "=", param.value)
     }
@@ -28,7 +28,7 @@
   
   # dynamic parameters: ----
   reactive.params <- reactive.params[ ! sapply(reactive.params, is.null) ]
-  reactive.params <- reactive.params[ ! reactive.params %in%  c("", "\"\"") ]
+  reactive.params <- reactive.params[ ! reactive.params %in%  c("", "\"\"", '') ]
   
   names.list2 <- paste0("<span style=\"color: Darkblue;\">", names(reactive.params), "</span>")
   reactive.params <- paste0(names.list2, "=", reactive.params)

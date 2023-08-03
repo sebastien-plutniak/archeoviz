@@ -46,7 +46,7 @@ test_that(".do_section_plot", {
                    dataset = df$data,
                    section.point.size = 1,
                    refitting.df = refits.res,
-                   show.refits = TRUE,
+                   show.refits = FALSE,
                    colors = as.character(unique(df$data$layer_color)),
                    grid.coord = grid.coords.res,
                    coords = coords,

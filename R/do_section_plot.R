@@ -59,8 +59,10 @@
     refitting.df <- refitting.df$refits.2d
     
     # subset refitting data set:
-    sel <- (refitting.df[, 1] %in% section.df$id) & (refitting.df[, 2] %in% section.df$id)
+    sel <- (refitting.df[, 1] %in% section.df$id) | (refitting.df[, 2] %in% section.df$id)
     refitting.df <- refitting.df[which(sel), ]
+    
+    refitting.df <- .do_lines_colors(refitting.df, section.df, "group.variable")
 
     # define values for the x axis:
     refitting.df$x  <- eval(parse(text = paste0("refitting.df$", xaxis)))
@@ -70,7 +72,9 @@
                                     x = ~x, xend = ~xend,
                                     y = ~z, yend = ~zend,
                                  data = refitting.df,
-                                 color = I("red"), showlegend=F,
+                                 color = ~group.variable,
+                                 colors = colors,
+                                 showlegend=F,
                                  line = list(width=1),
                                  hoverinfo = "skip",
                                  inherit = F)

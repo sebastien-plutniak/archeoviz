@@ -15,6 +15,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           map.z.val = NULL, map.density = "no", map.refits = NULL,
           plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL,
           plot3d.refits = NULL,
+          point.size = 2,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
           camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
@@ -45,6 +46,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{plot3d.hulls}{logical. At the launch of the app, whether to compute and show convex hulls in the 3D plot.}
   \item{plot3d.surfaces}{logical. At the launch of the app, whether to compute and show regression in the 3D plot.}
   \item{plot3d.refits}{logical. At the launch of the app, whether to show refits on the 3D section plot.}
+  \item{point.size}{integer. At the launch of the app, size of the points in the plots.}
   \item{sectionX.x.val}{double. At the launch of the app, minimal and maximal X coordinates values to display in the X section plot, e.g. c(10, 20).}
   \item{sectionX.y.val}{double. At the launch of the app, minimal and maximal Y coordinates values to display in the X section plot, e.g. c(10, 20).}
   \item{sectionX.refits}{logical. At the launch of the app, whether to show refits in the X section plot.}

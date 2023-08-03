@@ -120,8 +120,7 @@ ui <- shinyUI(
                             checkboxInput("plot3d.hulls", .term_switcher("hulls"),
                                           value = getShinyOption("params")$plot3d.hulls ),
                             uiOutput("show.3d.refits"),
-                            sliderInput("point.size", .term_switcher("point.size"), width="100%", sep = "",
-                                        min=1, max=5, value=2, step=1),
+                            uiOutput("plot3d.point.size"),
                             uiOutput("ratio3D"), 
                             uiOutput("download.button.html.export.3d")
                      )  # end column
@@ -145,9 +144,7 @@ ui <- shinyUI(
                             br(), br(),
                             uiOutput("density_selector"),
                             uiOutput("show.map.refits"),
-                            sliderInput("map.point.size", .term_switcher("point.size"),
-                                        width="100%", sep = "",
-                                        min=1, max=10, value=2, step=1),
+                            uiOutput("map.point.size"),
                             uiOutput("download.button.html.export.map")
                             )#end column
                    ), #end fluid row
@@ -173,9 +170,7 @@ ui <- shinyUI(
                      ),
                      column(3, align="center",
                             uiOutput("show.sectionX.refits"),
-                            sliderInput("sectionX.point.size", .term_switcher("point.size"),
-                                        width="100%", sep = "",
-                                        min=1, max=10, value=5, step=1),
+                            uiOutput("sectionX.point.size"),
                             downloadLink("downloadMinimapX", 
                                          paste(.term_switcher("download"),
                                                tolower(.term_switcher("tab.map"))) ),
@@ -206,9 +201,7 @@ ui <- shinyUI(
                      ),
                      column(3, align="center",
                             uiOutput("show.sectionY.refits"),
-                            sliderInput("sectionY.point.size", .term_switcher("point.size"),
-                                        width="100%", sep = "",
-                                        min=1, max=10, value=5, step=1),
+                            uiOutput("sectionY.point.size"),
                             downloadLink("downloadMinimapY", 
                                          paste(.term_switcher("download"),
                                                tolower(.term_switcher("tab.map"))) ),

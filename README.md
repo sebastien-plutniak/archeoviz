@@ -580,13 +580,13 @@ from the `Statistics` tab. See an example
 
 The [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/)
 is a web application (part of the
-[SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/) collection) to
-visualise changes in the quantitative distribution of artefacts types in
-ordered or unordered series of spatial units. If an online instance of
-`archeoViz` is launched with a data set with at least 2 different values
-for the `layers` variable and 2 different values for the `object_type`
-variable, then this data can be analysed with the `Seriograph`
-application from the `Statistics` tab. See an example
+[SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/) collection)
+to visualise changes in the quantitative distribution of artefacts types
+in ordered or unordered series of spatial units. If an online instance
+of `archeoViz` is launched with a data set with at least 2 different
+values for the `layers` variable and 2 different values for the
+`object_type` variable, then this data can be analysed with the
+`Seriograph` application from the `Statistics` tab. See an example
 [here](https://analytics.huma-num.fr/archeoviz/poeymau).
 
 ### Import to archeoViz
@@ -803,9 +803,9 @@ respectively.
 
 ## Software
 
-  - Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs.
-    2023. “archeoViz. Visualisation, Exploration, and Web Communication
-    of Archaeological Spatial Data”. v1.3.0, DOI:
+  - Plutniak, Sébastien, Renata Araujo, Nicolas Delsol, Sara Giardino,
+    Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web
+    Communication of Archaeological Spatial Data”. v1.3.1, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
     Dissemination of Spatial Archaeological

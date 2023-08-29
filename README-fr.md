@@ -14,24 +14,6 @@ des données via l’interface, soit en lançant l’application avec un jeu
 de donnée spécifique. L’interface est disponible en français, anglais,
 allemand, italien, et portugais.
 
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![R](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml/badge.svg)](https://github.com/sebastien-plutniak/archeoviz/actions/workflows/r.yml)
-[![codecov](https://codecov.io/gh/sebastien-plutniak/archeoviz/branch/main/graph/badge.svg?token=6QKYVKISCT)](https://app.codecov.io/gh/sebastien-plutniak/archeoviz)
-[![archeoViz status
-badge](https://sebastien-plutniak.r-universe.dev/badges/archeoViz)](https://sebastien-plutniak.r-universe.dev/archeoViz)
-[![status](https://joss.theoj.org/papers/ec7d14809161bb21d0e258742e64f131/status.svg)](https://joss.theoj.org/papers/ec7d14809161bb21d0e258742e64f131)
-[![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
-[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/sebastien-plutniak/archeoviz)](https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://github.com/sebastien-plutniak/archeoviz)
-[![CRAN
-Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
-[![CRAN
-Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.org/package=archeoViz)
-
   - [**Installation**](#installation)
       - [Locale](#locale)
       - [Distante](#distante)
@@ -80,7 +62,7 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
             noyau](#estimation-2d-de-densité-par-noyau)
   - [**Reproductibilité**](#reproductibilité)  
   - [**Exports depuis et vers des applications
-    tiers**](#exports-depuis-et-vers-des-applications-tiers)
+    tierces**](#exports-depuis-et-vers-des-applications-tierces)
       - [Export depuis archeoViz](#export-depuis-archeoviz)
       - [Import vers archeoViz](#import-vers-archeoviz)
   - [**Paramètres avancés**](#paramètres-avancés)
@@ -92,6 +74,9 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
       - [Paramètres URL](#paramètres-url)
   - [**Remerciements**](#remerciements)
   - [**Références**](#références)
+      - [Logiciels](#logiciels)
+      - [Articles](#articles)
+      - [Présentations](#présentations)
 
 # Installation
 
@@ -150,7 +135,7 @@ archeoViz(objects.df = NULL,   # data.frame pour les objets
                                # par couche ("by.layer") ou "by.variable"
           title = NULL,        # titre du site / du jeu de données
           home.text = NULL,    # contenu HTML à afficher sur la page d'accueil
-          lang = "fr"          # langue de l'interface ("de": Allemand, "en": Anglais, "fr": Français, "it": Italien "pt": Portugais)
+          lang = "fr"          # langue de l'interface ("de": Allemand, "en": Anglais, "fr": Français, "it": Italien "pt": Portugais, "es": Espagnol)
           set.theme = "cosmo") # thème graphique de l'interface Shiny
 ```
 
@@ -169,6 +154,8 @@ Shiny server d’*Huma Num*:
     anglais](https://analytics.huma-num.fr/archeoviz/en).
   - [`archeoViz` en
     allemand](https://analytics.huma-num.fr/archeoviz/de).
+  - [`archeoViz` en
+    espagnol](https://analytics.huma-num.fr/archeoviz/es).
   - [`archeoViz` en
     italien](https://analytics.huma-num.fr/archeoviz/it).
   - [`archeoViz` en
@@ -586,7 +573,7 @@ l’application.
     paramètres d’intérêt et de la communiquer l’ensemble en envoyant
     l’URL à un tiers.
 
-## Exports depuis et vers des applications tiers
+## Exports depuis et vers des applications tierces
 
 `archeoViz` a été conçu comme l’une des pièces d’un écosystème numérique
 décentralisé pour les données et analyses archéologiques. Dans cette
@@ -609,7 +596,8 @@ pour mesurer la cohésion et le mélange d’unités spatiales et de les
 comparer à des données simulées. Lorsqu’une instance d’`archeoViz` est
 executée avec des [données de remontage](#tableau-des-remontages), alors
 ces données peuvent être analysées avec `archeofrag` à partir de
-l’onglet “Statistiques”.
+l’onglet “Statistiques”. Cf. cet
+[exemple](https://analytics.huma-num.fr/archeoviz/grotte16).
 
 Le [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/)
 est une application web (inclues dans la collection
@@ -620,16 +608,17 @@ instance d’`archeoViz` est executée avec un jeu de données contenant au
 moins 2 valeurs différentes pour la variable `layers` et 2 valeurs
 différentes pour la variable `object_type`, alors ces données peuvent
 être analysées avec l’application `Seriograph` à partir de l’onglet
-“Statistiques”.
+“Statistiques”. Cf. cet
+[exemple](https://analytics.huma-num.fr/archeoviz/poeymau).
 
 ### Import vers archeoViz
 
 [*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) est une
 application web et un package R permettant de visualiser la distribution
-spatiale d’objets archéologiques. Comme indiqué
-[\#formatting-](ci-dessus), SEAHORS peut être employé pour importer,
-transformer, et transmettre un jeu de donnée à une instance en ligne
-d’`archeoViz`.
+spatiale d’objets archéologiques. Comme indiqué [ci
+dessus](#formater-des-données), *SEAHORS* peut être employé pour
+importer, transformer, et transmettre un jeu de donnée à une instance en
+ligne d’`archeoViz`.
 
 ## Paramètres avancés
 
@@ -658,6 +647,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           default.group = "by.layer", location.mode = NULL,
           map.z.val = NULL, map.density = "no", map.refits = NULL,
           plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          point.size = 2,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
           camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
@@ -727,6 +717,8 @@ archeoViz(class.variable = NULL, class.values = NULL,
     visualisation 3D.
   - **plot3d.refits**: TRUE ou FALSE. Au lancement de l’application,
     afficher ou non les remontages dans la visualisation 3D.
+  - **point.size**: entier. Au lancement de l’application, taille des
+    points dans les visualisations.
   - **sectionX.x.val**: numérique. Au lancement de l’application,
     valeurs minimale et maximale des coordonnées X à présélectionner
     dans la visualisation en section X.
@@ -766,8 +758,8 @@ archeoViz(run.plots = FALSE)
     permettant d’exporter les visualisations en format HTML interactif.
   - **table.export**: TRUE ou FALSE. Permettre ou non le transfert des
     données à des [applications
-    tiers](#exports-depuis-et-vers-des-applications-tiers) dans l’onglet
-    “Statistiques”.
+    tierces](#exports-depuis-et-vers-des-applications-tierces) dans
+    l’onglet “Statistiques”.
 
 ### Paramètres URL
 
@@ -791,7 +783,7 @@ supportés:
 
 (Les paramètres suivants ne sont pas supportés dans la version actuelle
 de l’application: `map.z.val`, `sectionX.x.val`, `sectionX.y.val`,
-`sectionY.x.val`, `sectionY.y.val`, `lang`, `set.theme`,
+`sectionY.x.val`, `sectionY.y.val`, `point.size`, `lang`, `set.theme`,
 `camera.center`, `camera.eye`, `html.export`, `table.export`.)
 
 Les paramètres doivent être écris en respectant la syntaxe URL
@@ -836,8 +828,9 @@ d’une restriction liée à la syntaxe URL).
 L’application et le package `archeoViz` sont développés et maintenus par
 Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, et
 Thomas Perrin ont testé et soutenu ce projet durant ses premières
-étapes. Renata Araujo, Sara Giardino et Julian Laabs ont traduit
-l’application respectivement en portugais, italien et allemand.
+étapes. Renata Araujo, Sara Giardino, Julian Laabs et Nicolas Delsol
+ont traduit l’application respectivement en portugais, italien,
+allemand, et espagnol.
 
 # Références
 
@@ -845,7 +838,7 @@ l’application respectivement en portugais, italien et allemand.
 
   - Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs.
     2023. “archeoViz. Visualisation, Exploration, and Web Communication
-    of Archaeological Spatial Data”. v1.2.2, DOI:
+    of Archaeological Spatial Data”. v1.3.0, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
     Dissemination of Spatial Archaeological

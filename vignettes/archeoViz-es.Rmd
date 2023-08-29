@@ -1,0 +1,583 @@
+---
+title: "archeoViz. Visualización, exploración  y comunicación web de datos espaciales arqueológicos"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{archeoViz. Visualización, exploración  y comunicación web de datos espaciales arqueológicos}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+
+`archeoViz` es una aplicación empaquetada de R Shiny para la *visualización*, *exploración* y *comunicación* web de datos espaciales arqueológicos. Incluye *visualizaciones* 3D y 2D interactivas, puede generar *secciones* transversales y *mapas* de los restos, puede ejecutar *estadísticas espaciales* básicas (casco convexo, superficies de regresión, estimación de densidad de kernel 2D) y mostrar una línea de tiempo interactiva de una excavación. `archeoViz` se puede usar localmente o implementar en un servidor, ya sea permitiendo que el usuario cargue datos a través de la interfaz o ejecutando la aplicación con un conjunto de datos específico. La interfaz de la aplicación está disponible en inglés, francés, alemán, italiano, portugués y español.
+
+
+ 
+ 
+
+
+- [**Instalación**](#instalación)
+  - [Uso local](#uso-local)
+  - [Uso distante](#uso-distante)
+  - [Demonstración](#demonstración)
+- [**Recomendaciones comunitarias**](#recomendaciones-comunitarias)
+  - [Reportar errores](#reportar-errores)
+  - [Sugerir cambios](#sugerir-cambios)
+- [**Uso**](#uso)
+  - [Información espacial en archeoViz](#información-espacial-en-archeoviz)
+    - [Ubicación exacta: objetos trazados](#ubicación-exacta-objetos-trazados)
+    - [Ubicación vaga: niveles arbitrários, baldes, objetos tamizados y errores de registro](#ubicación-vaga-niveles-arbitrários-baldes-objetos-tamizados-y-errores-de-registro)
+  - [Remontajes y medidas de fábrica](#remontajes-y-medidas-de-fábrica)
+      - [Remontajes](#remontajes)
+      - [Medidas de fábrica](#medidas-de-fábrica)  
+  - [Formato de datos](#formato-de-datos)
+     - [Formatear datos](#formatear-datos)
+     - [Tabla de objetos](#tabla-de-objetos)
+     - [Tabla de remontajes](#tabla-de-remontajes)
+     - [Tabla cronológica](#tabla-cronológica)
+  - [Cargar datos](#cargar-datos)
+     - [A través de la interfaz de la aplicación](#a-través-de-la-interfaz-de-la-aplicación)
+     - [Generación de datos aleatorios](#generación-de-datos-aleatorios)
+     - [A través de los parámetros de la función R](#a-través-de-los-parámetros-de-la-función-r)
+     - [A través de parámetros de URL](#a-través-de-parámetros-de-url)
+  - [Subconfiguración de datos](#subconfiguración-de-datos)
+     - [Por modo de ubicación](#por-modo-de-ubicación)
+     - [Por capa o categoría de objeto](#por-capa-o-categoría-de-objeto)
+  - [Visualización interactiva](#visualización-interactiva)
+    - [Características generales](#características-generales)
+    - [Visualización de la incertidumbre espacial](#visualización-de-la-incertidumbre-espacial)
+    - [Salidas gráficas](#salidas-gráficas)
+  - [Estadísticas espaciales](#estadísticas-espaciales)
+     - [Superficies de regresión](#superficies-de-regresión)
+     - [Cascos convexos](#cascos-convexos)
+     - [Densidad de kernel 2D](#densidad-de-kernel-2d)
+- [**Reproducibilidad**](#reproducibilidad)  
+- [**Exportaciones desde y hacia aplicaciones de terceros**](#exportaciones-desde-y-hacia-aplicaciones-de-terceros)
+    - [Exportar desde archeoViz](#exportar-desde-archeoviz)
+    - [Importar a archeoViz](#importar-a-archeoviz)
+- [**Parámetros avanzados**](#parámetros-avanzados)
+  - [Cuadrícula](#cuadrícula)
+  - [Preajuste de parámetros](#preajuste-de-parámetros)
+  - [Visualización de gráficos reactivos](#visualización-de-gráficos-reactivos)
+  - [Controlar los formatos de exportación](#controlar-los-formatos-de-exportación)
+  - [Parámetros de URL](#parámetros-de-url)
+- [**Agradecimientos**](#agradecimientos)
+- [**Referencias**](#referencias)
+  - [Software](#software)
+  - [Articulos](#articulos)
+  - [Presentationes](#presentationes)
+ 
+ 
+# Instalación
+
+`archeoViz` se puede utilizar de dos maneras:
+
+* localmente, en la máquina del usuario
+* de forma remota, después de implementar la aplicación en un servidor distante
+
+
+## Uso local
+
+El paquete se puede instalar desde CRAN con:
+
+```r
+install.packages("archeoViz")
+```
+
+La versión de desarrollo está disponible en *GitHub* y se puede instalar con:
+
+
+```r
+# install.packages("devtools")
+devtools::install_github("sebastien-plutniak/archeoviz")
+```
+
+Luego, cargue el paquete e inicie la aplicación con:
+
+```r
+library(archeoViz)
+archeoViz()
+```
+
+## Uso distante
+
+Para implementar  `archeoViz` en su servidor Shiny, primero descargue y descomprima el paquete:
+
+```{r, eval=FALSE}
+# configure el directorio de trabajo en su servidor Shiny:
+setwd(dir = "/some/path/")
+# descargar el package:
+download.file(url = "https://github.com/sebastien-plutniak/archeoviz/archive/master.zip",
+              destfile = "archeoviz.zip")
+# unzip:
+unzip(zipfile = "archeoviz.zip")
+```
+
+Luego, abre `https://<your-shiny-server>/archeoviz-main`.
+
+Para configurar la aplicación con tus datos y preferencias, edita el archivo `app.R`, ubicado en la raíz del directorio:
+
+```{r, eval=FALSE}
+archeoViz(objects.df = NULL,   # data.frame con datos sobre los objetos
+          refits.df = NULL,    # data.frame opcional para reinstalar datos
+          timeline.df = NULL,  # data.frame opcional para la cronología de excavación
+          default.group =NULL, # méthode de groupement des données,
+                               # par couche ("by.layer") ou "by.variable"
+          title = NULL,        # titulo del sitio / data set
+          home.text = NULL,    # Contenido HTML para mostrar en la página de inicio
+          lang = "fr"          # lenguaje de interfaz ("en": Inglés, "fr": Francés, "it": Italiano, "pt": Portugués, "es": Español)
+          set.theme = "cosmo") # tema gráfico para la interfaz Shiny
+```
+
+Los valores posibles para el parámetro `set.theme` se ilustran en esta [página](https://rstudio.github.io/shinythemes/). El idioma de la aplicación se puede configurar con el parámetro lang.
+
+## Demostración
+
+Las instancias de demostración de la aplicación se implementan en el servidor *Huma Num* Shiny:
+
+* [`archeoViz` en francés](https://analytics.huma-num.fr/archeoviz/fr).
+* [`archeoViz` en inglés](https://analytics.huma-num.fr/archeoviz/en).
+* [`archeoViz` en alemán](https://analytics.huma-num.fr/archeoviz/de).
+* [`archeoViz` en italiano](https://analytics.huma-num.fr/archeoviz/it).
+* [`archeoViz` en portugués](https://analytics.huma-num.fr/archeoviz/pt).
+* [`archeoViz` en español](https://analytics.huma-num.fr/archeoviz/es).
+
+Los casos de uso reales se presentan en el [*archeoViz Portal*](https://analytics.huma-num.fr/archeoviz/home).
+
+# Recomendaciones comunitarias
+
+## Reportar errores
+
+Si encuentra un error, complete un [*issue*](https://github.com/sebastien-plutniak/archeoviz/issues) con todos los detalles necesarios para reproducirlo.
+
+## Suggerir cambios
+
+Sugerencias de cambios a archeoViz son bienvenidas. Estas solicitudes pueden referirse a funciones adicionales, cambios en la documentación, ejemplos adicionales, nuevas características, etc. Se puede hacer llenando un [issue](https://github.com/sebastien-plutniak/archeoviz/issues) y, aún mejor, usando un *pull requests* y el modelo de [Fork and Pull](https://docs.github.com/articles/about-pull-requests) de GitHub.
+
+
+# Uso
+
+Teniendo restos arqueológicos de un sitio determinado, `archeoViz` está diseñado para reducir las barreras técnicas para cumplir tres objetivos:
+
+* exploración espacial básica y generación de informes gráficos sencillos;
+* publicación previa rápida de datos arqueológicos, destinada a la comunidad científica;
+* implementación rápida de una herramienta de visualización y comunicación destinada a un público más amplio.
+
+
+Además, `archeoViz` es un recurso pedagógico adecuado para enseñar análisis espacial en arqueología, estructuración de datos, ciencia abierta y flujo de trabajo reproducible.
+
+N.B.: en consecuencia, `archeoViz` no pretende reemplazar herramientas de análisis más sofisticadas (por ejemplo, GIS, paquetes estadísticos, etc.)
+
+## Información espacial en archeoViz
+
+Los arqueólogos registran la ubicación de los objetos arqueológicos en diferentes escalas y granularidades. En consecuencia, utilizan diferentes conceptos geométricos para representar la ubicación.
+
+### Ubicación Exacta: Objetos Trazados
+
+El uso de coordenadas de cuadrícula o “estación total” electrónica permite registrar la ubicación individual de los objetos en el campo. En ese caso, la ubicación se representa como puntos en `archeoViz` (tripletes de coordenadas x, y, z).
+
+### Ubicación vaga: niveles arbitrários, baldes, objetos tamizados y errores de registro
+
+Sin embargo, también es común que las coordenadas x, y, z, por objeto no estén disponibles, por diferentes motivos debido a:
+
+* errores de registro, pérdida de información, lo que resulta en la necesidad de reemplazar uno de varios valores de coordenadas por rangos (por ejemplo, falta un valor X para un objeto y se reemplaza por los valores X mínimo y máximo del cuadrado donde se encuentra este objeto). fue encontrado);
+* elección del método (p. ej., excavación realizada y registrada utilizando asadores de profundidad arbitraria, objetos tamizados, etc.).
+
+En todos estos casos, tenemos que lidiar con la ubicación imprecisa, cuando los objetos no se pueden ubicar como puntos sino que se encuentran en algún lugar entre rangos de coordenadas. La ubicación imprecisa puede afectar a una, dos o tres dimensiones espaciales (las coordenadas x, y, z, respectivamente).
+
+
+
+## Remontajes y medición de fábrica
+
+### Remontajes 
+
+Los remontajes suelen ser registrados por los arqueólogos de dos maneras:
+
+1. por conjuntos de objetos de remontajes: usando una tabla de dos columnas, donde una fila corresponde a un **objeto**. La primera columna almacena la identificación única del objeto y la segunda columna almacena la identificación del conjunto de objetos al que pertenece este objeto.
+2. reensamblando relaciones: usando una tabla de dos columnas, donde una fila corresponde a una **relación**. La primera columna almacena la identificación única del primer objeto y la segunda columna almacena la identificación única del segundo objeto.
+
+Aunque la segunda estructura de datos es más precisa, la primera se usa con más frecuencia.
+
+`archeoViz` procesa y representa las dos estructuras de datos de dos maneras:
+
+* los conjuntos de objetos de remontajes deben describirse usando una columna específica en la tabla `objects.df` (p. ej., `object_refits\) y están representados por el color de los puntos en los gráficos ( como cualquier otra variable);
+* las relaciones de remontajes deben describirse usando la tabla `refits.df` y se visualizan como segmentos que conectan los objetos de remontaje en las parcelas.
+
+ 
+
+### Medición de fábrica
+
+Hasta ahora `archeoViz` no maneja correctamente las mediciones de fábrica. Sin embargo, el proceso utilizado para representar remontajes también se puede adaptar y utilizar para representar las mediciones de fábrica. Esto requiere distorsionar la estructura de datos de la siguiente manera:
+
+* suponiendo que las mediciones de fábrica se registraron con dos mediciones en cada objeto (y no con mediciones de inmersión y hundimiento),
+* diferentes valores id únicos deben ser dados a los dos puntos, y las dos mediciones se procesan como si fueran dos objetos reensamblados.
+
+Vea un ejemplo de este método [aquí](https://analytics.huma-num.fr/archeoviz/shuidonggou2).
+
+
+## Formato de datos
+
+Se pueden cargar tres tipos de datos en `archeoViz`:
+
+* una tabla de “objetos” (obligatoria), con datos sobre los objetos;
+* una tabla de “remontajes” (opcional), con datos sobre los objetos de reacondicionamiento;
+* una tabla de “cronología” (opcional), con datos sobre cuándo se excavó o midió cada cuadrado del sitio.
+
+### Formatear datos
+
+Las tablas deben ser archivos CSV con la primera fila que contiene las etiquetas de las columnas. Se permiten contenidos en HTML. Esto hace posible, en particular, agregar enlaces a recursos externos (por ejemplo, a identificadores permanentes de objetos en otras bases de datos, o a identificadores de conceptos en ontologías / tesauros estándar, etc.).
+
+El formateo de sus datos se puede hacer:
+
+* ya sea usando un editor de hojas de cálculo en su máquina para generar archivos CSV;
+* o, para la tabla de objetos , usando la aplicación [*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) para cargue sus datos, defina las variables (en la pestaña “Cargar datos”) y expórtelos al formato archeoViz (en la pestaña “Tabla” / “exportaciones archeoViz”). También es posible enviar directamente los datos a una instancia `archeoViz` en línea.
+
+
+### Tabla de objetos
+
+Una fila describe un solo objeto con los siguientes campos obligatorios:
+
+* **id**: *valor alfanumérico*, identificador único del objeto
+* **xmin**: *valor numérico*, coordenada del objeto en el eje X (en cm)
+* **ymin**: *valor numérico*, coordenada del objeto en el eje Y (en cm)
+* **zmin**: *valor numérico*, coordenada del objeto en el eje Z (valor de profundidad positivo en cm)
+* **layer**: *valor alfanumério*, identificador de la capa del objeto
+* **object_type**: *valeur alphanumérique*, categoría del objeto
+
+Además, los campos opcionales son posibles, incluidos:
+
+* **square_x**: *valor alfanumérico*, identificador del cuadrado en el eje X
+* **square_y**: *valor alfanumérico*, identificador del cuadrado en el eje Y
+* **year**: *valor numérico*, año en que se excavó el objeto
+* **xmax**: *valor numérico*, cuando la ubicación X del objeto está incluida en un rango de coordenadas X
+* **ymax**: *valor numérico*, cuando la ubicación Y del objeto está incluida en un rango de coordenadas Y
+* **zmax**: *valor numérico*, cuando la ubicación Z del objeto está incluida en un rango de coordenadas Z
+* **object_edit**: número ilimitado de variables adicionales que describen el objeto (los nombres de campo deben comenzar con object_ y tener diferentes sufijos)
+
+Las etiquetas de los cuadrados de la cuadrícula:
+
+* están ordenados alfanuméricamente; 
+* no se muestran para evitar visualizaciones erróneas, si el número de etiquetas no corresponde exactamente al número total de cuadrados de 100 cm que se pueden definir en el rango de coordenadas mínimas y máximas contenidas en las variables xmin e ymin;
+* se puede completar con los parámetros `add.x.square.labels` y `add.y.square.labels` de `archeoViz()` para agregar las etiquetas que faltan (en los ejes X e Y de la cuadrícula, respectivamente).
+
+
+### Mesa de montaje
+
+Se puede cargar una tabla de datos con dos columnas para reajustar los datos (formato CSV). Cada fila debe contener los identificadores únicos de dos objetos de reacondicionamiento (correspondientes a los valores de la columna `id` en la tabla de objetos).
+
+
+### Tabla de línea de tiempo
+
+Se puede cargar una tabla (formato CSV) sobre el historial de excavaciones. La fila indica el año en que se excavó o midió cada cuadrado de la cuadrícula del sitio. Esta tabla debe incluir las siguientes variables:
+
+* **year**: *valor numérico*, el año de excavación
+* **square_x**: *valor alfanumérico*, identificador del cuadrado excavado en el eje X
+* **square_y**: *valor alfanumérico*, identificador del cuadrado excavado en el eje Y
+    
+    
+## Cargar datos
+
+Hay cuatro formas de ingresar datos en `archeoViz`:
+
+
+1. cargar tablas de datos a través de la pestaña “Cargar datos”,
+2. generar datos aleatorios en la pestaña “Cargar datos”;
+3. cargar tablas de datos a través de los parámetros de la función `archeoViz`, en la interfaz R;
+4. cargar tablas de datos a través de parámetros de URL, cuando se usa una instancia en línea de `archeoViz`.
+
+
+### A través de la interfaz de la aplicación
+
+Los tres tipos de tablas se pueden cargar en la pestaña “Cargar datos”. El separador CSV (uno de: coma, punto y coma, tabulación) y el carácter utilizado para los puntos decimales (punto o coma).
+
+
+### Generando Datos Aleatorios
+
+El uso de datos generados aleatoriamente es posible con fines de demostración. Para activar esta función, configure el control deslizante en “Cargar datos” a un valor superior a 0 (establecer el valor nuevamente en 0 desactiva la función). Se genera un conjunto de datos de “objetos”, un conjunto de datos de “remontajes” y un conjunto de datos de “cronología”, lo que permite probar todas las funcionalidades de `archeoViz`.
+
+
+### A través de los parámetros de la función R
+
+La función de inicio de archeoViz (`archeoViz()`) se puede ejecutar sin parámetros
+
+```{r, eval=FALSE}
+archeoViz()
+```
+
+o usando los parámetros `objects.df`, `refits.df` o `timeline.df` para ingresar datos.marcos sobre los objetos arqueológicos , las relaciones de remontajes entre estos objetos y la cronología de la excavación, respectivamente.
+
+```{r, eval=FALSE}
+archeoViz(objects.df = NULL,  # data.frame con datos sobre los objetos
+          refits.df = NULL,   # data.frame para reacondicionar objetos
+          timeline.df = NULL) # data.frame opcional para la cronología de excavación
+```
+
+### A través de parámetros de URL
+
+La URL de una instancia en línea de `archeoViz` puede incluir los parámetros:
+
+* `objects.df=`
+* `refits.df=`` 
+* `timeline.df=`
+
+cuyos valores deben ser la URL de un archivo CSV respetando el formato archeoViz descrito anteriormente. Por ejemplo:
+https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv
+
+
+
+## Configuración secundaria de datos
+
+Una vez que se cargan los datos, se puede realizar una subselección de los datos en el menú del lado izquierdo. La agrupación se puede realizar cruzando los siguientes parámetros: el modo de ubicación, las capas y la categoría del objeto. 
+
+### Por Modo de ubicación
+
+Si todos los objetos tienen una ubicación exacta o una ubicación vaga, no se propone ninguna opción. Sin embargo, si el conjunto de datos incluye una ubicación tanto exacta como imprecisa, es posible seleccionar solo una de estas opciones o ambas.
+
+
+### Por capa o categoría de objeto
+
+Los datos se pueden agrupar de dos maneras: ya sea según su capa o según la variable “object_” seleccionada. Esta opción determina los colores de los puntos en los gráficos 3D y 2D y cómo agrupar los puntos al calcular cascos convexos y superficies de regresión 3D. Los subconjuntos se pueden definir por categorías de objetos, utilizando los campos “variable” y “valures”. Una vez que se selecciona uno de los “object_type” (u otras posibles variables “object_”), sus valores aparecen a continuación y se pueden seleccionar usando las casillas de verificación. La selección debe validarse haciendo clic en el botón “Validar”. Esta selección determina los datos que se mostrarán en los gráficos y tablas.
+
+
+
+## Visualización interactiva
+
+### Características generales
+
+Los gráficos en las pestañas “Gráfico 3D”, “Mapa”, “Sección X” y “Sección Y” se generan utilizando [`plotly`](https://CRAN.R-project.org/package=plotly/).
+Todos los gráficos son dinámicos e incluyen una barra de menú encima del gráfico con varias opciones (generar un archivo de imagen, hacer zoom, mover la vista, etc.). Consulte los detalles en el sitio web [`plotly`](http://plotly.github.io/getting-to-know-the-plotly-modebar/).
+
+Al hacer clic en el elemento de una leyenda, se modifica la visualización:
+
+* un simple clic en un elemento activa/desactiva su visualización;
+* un doble clic en un elemento solo muestra este elemento (otro doble clic lo cancela).
+
+Esta función permite elegir qué capas se muestran. Además, se puede establecer el tamaño de los puntos y si se deben representar o no las relaciones de reposición.
+
+Finalmente, al hacer clic en un punto, se muestra información sobre ese punto en la tabla debajo del gráfico.
+
+### Visualización de la incertidumbre espacial
+
+En `archeoViz`, se hace una distinción entre ubicación exacta (dada como coordenadas x, y, z) y ubicaciones vagas (dada como rangos de coordenadas). Se pueden mostrar ambos tipos de ubicaciones. La incertidumbre de las ubicaciones vagas se puede visualizar representando objetos no como puntos sino como líneas, planos y volúmenes (si se dan rangos de coordenadas para una, dos o tres dimensiones espaciales, respectivamente). Tenga en cuenta que esta función consume muchos recursos y su uso con demasiados datos puede ralentizar significativamente la aplicación.
+
+### Salidas gráficas
+
+Se pueden generar varios resultados gráficos en`archeoViz`.
+
+* Los gráficos en las pestañas “Gráfico 3D”, “Mapa“, “Sección X” y “Sección Y” se pueden exportar: 
+	* en formato SVG (haciendo clic en el ícono de “cámara” en la barra de menú sobre el gráfico),
+    * como gráficos interactivos en formato HTML, haciendo clic en el botón “Exportar“.
+* El pequeño mapa en las pestañas “Sección X” y “Sección Y” se puede exportar en SVG haciendo clic en el enlace “Descargar mapa“.
+* El plano de la cronología de la excavación se puede exportar en formato SVG haciendo clic en el botón “Descargar“.
+
+## Estadísticas espaciales
+
+`archeoViz` incluye algunas funcionalidades de análisis espacial, destinadas a un uso básico y exploratorio.
+
+### Superficies de regresión
+
+En la pestaña “Gráfico 3D“, al hacer clic en “Calcular superficies” y “Validar” se muestra la superficie de regresión asociada con cada capa (con al menos 100 puntos). Las superficies se calculan utilizando el modelo aditivo generalizado implementado en el paquete [`mgcv`](https://CRAN.R-project.org/package=mgcv).
+
+### Cascos convexos
+
+En la pestaña “Gráfico 3D“, al hacer clic en “Calcular cascos” y “Validar” se muestra el casco convexo asociado con cada capa (con al menos 20 puntos). Los cascos convexos se calculan usando el paquete[`cxhull`](https://CRAN.R-project.org/package=cxhull).
+
+### densidad kernel 2D
+
+En la pestaña “Mapa“, al marcar la casilla “Calcular densidad” y hacer clic en “Validar” se genera un mapa con líneas de contorno que muestran la densidad de los puntos. La densidad se puede calcular para todos los puntos juntos o por capa (con al menos 30 puntos). La densidad del núcleo 2D se calcula con la función  `kde2d` del paquete  [`MASS`](https://CRAN.R-project.org/package=MASS) (a través de  [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)).
+
+
+## Reproducibilidad
+
+`archeoViz` es, por definición, una aplicación interactiva. Sin embargo, varias características garantizan la reproducibilidad y comunicabilidad del resultado de las interacciones con la aplicación.
+
+* La visualización 3D se puede exportar en un formato independiente HTML interactivo, teniendo en cuenta la selección de datos realizada por el usuario.
+* En la pestaña “Reproducibilidad”, se genera dinámicamente un comando R, teniendo en cuenta la configuración actual de la aplicación realizada por el usuario.
+* En un uso más avanzado, los parámetros de URL permiten configurar una instancia en línea de los parámetros de interés de la aplicación y comunicarla mediante el envío de la URL.
+
+
+## Exportaciones desde y hacia aplicaciones de terceros
+
+`archeoViz` fue diseñado como uno de los componentes básicos de un ecosistema digital descentralizado para datos y análisis arqueológicos. En esta perspectiva, las características y funciones se distribuyen en múltiples aplicaciones interconectadas, en lugar de concentrarse en unos pocos sistemas. En consecuencia, los datos se pueden exportar e importar entre `archeoViz` y otras aplicaciones basadas en la web. Tenga en cuenta que, hasta ahora, las funcionalidades de exportación solo están disponibles cuando se utilizan instancias `archeoViz` en línea.
+
+
+### Exportar desde archeoViz
+
+[*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag) es un paquete R y una aplicación web para evaluar y evaluar las distinciones entre unidades espaciales arqueológicas (por ejemplo, capas) basado en el análisis de las relaciones de remontajes entre fragmentos de objetos. La versión web de la aplicación incluye métodos para medir la cohesión y la mezcla de unidades espaciales y compararlas con datos simulados. Si se inicia una instancia de `archeoViz` con [datos de remontaje](#tableau-des-remontages), estos datos se pueden analizar con `archeofrag` de la pestaña “Statistics”. Cf. este  [ejemplo](https://analytics.huma-num.fr/archeoviz/grotte16).
+
+El [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) es una aplicación web (parte del  [*SPARTAAS*](https://spartaas.gitpages.huma-num.fr/r-package/)) collection) para visualizar cambios en la distribución cuantitativa de tipos de artefactos en series ordenadas o desordenadas de unidades espaciales. Si se inicia una instancia en línea de archeoViz con un conjunto de datos con al menos 2 valores diferentes para la variable `layers` y 2 valores diferentes para `object_type` entonces estos datos se pueden analizar con la aplicación `Seriograph` desde la pestaña “Statistics”.
+Cf. este [ejemplo](https://analytics.huma-num.fr/archeoviz/poeymau).
+
+### Importar a archeoViz
+
+[*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) es una aplicación web y paquete R para visualizar la distribución espacial de restos arqueológicos. Como  [se mencionó](#formatear-datos), *SEAHORS* se puede usar para importar, remodelar y enviar un conjunto de datos a una instancia en línea de la aplicación `archeoViz`.
+
+## Parámetros avanzados
+
+La función `archeoViz()` se puede configurar con múltiples parámetros opcionales, relacionados con:
+
+* os datos de entrada (ya detallados [arriba](#a-través-de-los-parámetros-de-la-función-r)),
+* el contenido de la página de inicio (ya detallado [arriba](#uso-distante)),
+* la [cuadrícula](#cuadrícula),
+* la [preconfiguración](#preajuste-de-parámetros) de los parámetros que se pueden configurar a través de la interfaz de la aplicación
+* el [comportamiento reactivo](#visualización-de-gráficos-reactivos) de la aplicación con respecto a la generación de gráficos,
+* [export HTML](##controlar-los-formatos-de-exportación),
+* los [parámetros de URL](#parámetros-de-url).
+
+
+
+```{r, eval=FALSE}
+archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
+          title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
+          square.size = 100, reverse.axis.values = NULL, reverse.square.names = NULL,
+          add.x.square.labels = NULL, add.y.square.labels = NULL,
+          class.variable = NULL, class.values = NULL,
+          default.group = "by.layer", location.mode = NULL,
+          map.z.val = NULL, map.density = "no", map.refits = NULL,
+          plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          point.size = 2,
+          sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+          sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+          camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
+          run.plots = FALSE, html.export = TRUE, table.export =TRUE
+          )
+```
+
+### Cuadrícula
+
+```{r, eval=FALSE}
+archeoViz(square.size = 100,
+          reverse.axis.values = NULL, reverse.square.names = NULL,
+          add.x.square.labels = NULL, add.y.square.labels = NULL
+          )
+```
+
+* **square.size** : *numérico*. Tamaño (ancho y alto) en centímetros de los cuadrados en el sistema de cuadrícula. El valor predeterminado es 100 cm.
+* **reverse.axis.values** : caractères. Nombre del eje o ejes a invertir (cualquier combinación de “x”, “y”, “z”).
+* **reverse.square.names** : *carácter*. Nombre del eje o ejes para los que invertir el orden de las etiquetas cuadradas (cualquier combinación de “x”, “y”, “z”).
+* **add.x.square.labels** : *carácter*. Etiquetas cuadradas adicionales para el eje “x”.
+* **add.y.square.labels** : *carácter*.  Etiquetas cuadradas adicionales para el eje “y”.
+
+### Preajuste de parámetros
+
+```{r, eval=FALSE}
+archeoViz(class.variable = NULL, class.values = NULL,
+		  default.group = "by.layer", location.mode = NULL,
+		  map.z.val = NULL, map.density = "no", map.refits = NULL,
+		  plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+		  sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+		  sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+		  camera.center = NULL, camera.eye = NULL
+          )
+```
+
+* **class.variable**: *carácter*. Al iniciar la aplicación, nombre de la variable a preseleccionar.
+* **class.values**: *carácter*. vector de caracteres. Al iniciar la aplicación, nombres de los valores para preseleccionar.
+* **default.group**: *carácter*. carácter. Al iniciar la aplicación, ajuste preestablecido de la variable utilizada para agrupar datos (una de “by.layer” o “by.variable”).
+* **location.mode**: *carácter*. Al iniciar la aplicación, ajuste preestablecido de los métodos de ubicación (cualquier combinación de “exact”, “fuzzy”, “show.uncertainty”).
+* **map.z.val**: numérico. Valores mínimos y máximos de las coordenadas Z para mostrar en el gráfico del mapa.
+* **map.density**: *carácter*. Al iniciar la aplicación, si desea calcular y mostrar los contornos de densidad en el gráfico del mapa (uno de “no”, “overall”, “by.variable”).
+* **map.refits**: TRUE o FALSE. Ya sea para mostrar remontaje en el gráfico del mapa.
+* **plot3d.hulls**: TRUE o FALSE. Al iniciar la aplicación, si calcular y mostrar cascos convexos en el gráfico 3D.
+* **plot3d.surfaces**: TRUE o FALSE. Al iniciar la aplicación, si calcular y mostrar la regresión en el gráfico 3D.
+* **plot3d.refits**: TRUE o FALSE. Al iniciar la aplicación, si mostrar remontaje en el gráfico de sección 3D.
+* **point.size**: *numérico*. Al iniciar la aplicación, el tamaño de los puntos en las visualizaciones.
+* **sectionX.x.val**: *numérico*. Al iniciar la aplicación, los valores mínimos y máximos de las coordenadas X se mostrarán en el gráfico de la sección X.
+* **sectionX.y.val**: *numérico*. Al iniciar la aplicación, los valores mínimos y máximos de las coordenadas Y se mostrarán en el gráfico de la sección Y.
+* **sectionX.refits**: TRUE o FALSE. Al iniciar la aplicación, si se muestran los remontajes en el gráfico de la sección X.
+* **sectionY.x.val**: *numérico*. Al iniciar la aplicación, los valores mínimos y máximos de las coordenadas X se mostrarán en el gráfico de la sección Y.
+* **sectionY.y.val**: *numérico*. Al iniciar la aplicación, los valores mínimos y máximos de las coordenadas Y se mostrarán en el gráfico de la sección Y.
+* **sectionY.refits**: TRUE o FALSE. Al iniciar la aplicación, si se muestran los reacondicionamientos en el gráfico de la sección Y.
+* **camera.center**: *numérico*. En el gráfico 3D, coordenadas del punto al que mira la cámara (valores predeterminados: x=0, y=0, z=0).
+* **camera.eye**: *numérico*. En el gráfico 3D, las coordenadas de la posición de la cámara (valores predeterminados: x=1,25, y=1,25, z=1,25).
+
+
+### Visualización de gráficos reactivos
+
+```{r, eval=FALSE}
+archeoViz(run.plots = FALSE)
+```
+
+* **run.plots**: TRUE o FALSE. Si calcular y mostrar gráficos inmediatamente (sin requerir que el usuario haga clic en el botón “Actualizar”).
+
+### Controlar los formatos de exportación
+
+* **html.export**: TRUE o FALSE. Si permitir o no que las figuras se exporten como widgets HTML interactivos.
+* **table.export**: TRUE o FALSE. Permita o no permita la transferencia de datos a [aplicaciones de terceros](#exportaciones-desde-y-hacia-aplicaciones-de-terceros) en la pestaña “Estadísticas”.
+
+
+### Parámetros de URL
+
+Una instancia de `archeoViz` implementada en línea en un servidor se puede configurar con parámetros de URL. Los parámetros admitidos incluyen:
+
+
+* `objects.df`, `refits.df`, `timeline.df`
+* `title`, `home.text`
+* `reverse.axis.values`, `reverse.square.names`
+* `square.size`
+* `add.x.square.labels`, `add.y.square.labels`
+* `class.variable`, `class.values`
+* `default.group`
+* `location.mode`
+* `map.density`, `map.refits`
+* `plot3d.hulls`, `plot3d.surfaces`, `plot3d.refits`
+* `sectionX.refits`
+* `sectionY.refits`
+* `run.plots`
+
+(Los siguientes parámetros no son compatibles con la versión actual: `map.z.val`, `sectionX.x.val`, `sectionX.y.val`, `sectionY.x.val`, `sectionY.y.val`, `point.size`, `lang`, `set.theme`, `camera.center`, `camera.eye`, `html.export`, `table.export`.)
+
+Los parámetros deben escribirse usando la sintaxis de URL (?param1=value&param2=value2) y tener el mismo tipo de valores que cuando se usan en la interfaz de R. Por ejemplo, la siguiente URL inicia una instancia de archeoViz utilizando el conjunto de datos  [Bilzingsleben](https://zenodo.org/record/8003880):
+
+https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv
+
+Esta URL hace lo mismo, pero también incluye la tabla de reacondicionamiento (parámetro `&refits.df=`) y activa la visualización de las relaciones de reacondicionamiento en los gráficos 3D y de mapa:
+
+https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&plot3d.refits=TRUE&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv
+
+La siguiente URL inicia el conjunto de datos de Bilzingsleben, preconfigurando la aplicación para:
+
+1. agrupa los puntos por variable (parámetro `default.group`, con valor `by.variable` en lugar de `by.layer`)
+2. selecciona solo las “Astas” (parámetro `class.values`)
+3. redefine el tamaño de la cuadrícula (parámetro `square.size`, 500 cm en lugar del valor predeterminado de 100 cm)
+4. habilitar la visualización inmediata de los gráficos (parámetro `run.plots`)
+5. modifica el título de la página (parámetro `title`)
+6. modifica el contenido de la página de inicio con contenidos HTML básicos (parámetro `home.txt`)
+
+[https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Antlers%20at%20Bilzingsleben&home.text=Many%20<b>antlers</b>&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Anters%20at%20Bilzingsleben&home.text=Many%20<b>antlers</b>&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
+ 
+ 
+Tenga en cuenta que los parámetros  `add.x.square.labels`, `add.y.square.labels`, `location.mode`, et `class.values`, que aceptan valores simples o múltiples en la interfaz de R (p. ej., c(“value1”, “value2”)) solo aceptan un valor cuando se establecen como parámetros de URL (esta es una restricción debido a la sintaxis de la URL).
+
+
+
+
+
+# Agradecimientos
+
+La aplicación y el paquete `archeoViz` son desarrollados y mantenidos por Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet y Thomas Perrin probaron y apoyaron el proyecto en su etapa inicial. Renata Araujo, Sara Giardino, Julian Laabs, y Nicolas Delsol tradujeron la aplicación al portugués, italiano, alemán, y español respectivamente.
+
+# Referencias
+
+## Software 
+
+* Plutniak, Sébastien, Renata Araujo, Nicolas Delsol, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.3.1, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
+* Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal: Dissemination of Spatial Archaeological Datasets](https://hal.science/hal-04156271)”, portail web, https://analytics.huma-num.fr/archeoviz/home.
+
+## Articulos
+
+* Plutniak, Sébastien. Submitted. “archeoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. *Journal of Open Source Software*.
+* Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution spatiale du mobilier archéologique : l'application archeoViz et son portail web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”. *Bulletin de la Société préhistorique française*, 120(1), p. 70-74.
+
+## Presentationes
+
+* Plutniak, Sébastien. 2023. “[Fostering the Publication of Spatial Archaeological Data: a Decentralized Approach. The archeoViz Web Application and its Portal](https://hal.science/hal-04146410)”, support d'une présentation à l'University of Florida, Gainesville.
+* Plutniak, Sébastien, Anaïs Vignoles. 2023. “[L’application web / package archeoViz et son portail web. Une solution décentralisée d’éditorialisation de données archéologiques spatialisées](https://hal.science/hal-04070444), support d'une présentation à l'atelier SITRADA, Paris.
+

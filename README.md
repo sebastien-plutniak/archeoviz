@@ -10,7 +10,7 @@ estimation), and display an interactive *timeline* of an excavation.
 `archeoViz` can be used locally or deployed on a server, either by
 allowing the user to load data through the interface or by running the
 app with a specific data set. The app interface is available in English,
-French, German, Italian, and Portuguese.
+French, German, Italian, Portuguese, and Spanish.
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -86,6 +86,9 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
       - [URL parameters](#url-parameters)
   - [**Acknowledgments**](#acknowledgments)
   - [**References**](#references)
+      - [Software](#Software)
+      - [Papers](#papers)
+      - [Presentations](#presentations)
 
 # Installation
 
@@ -144,7 +147,7 @@ archeoViz(objects.df = NULL,   # data.frame with data about the objects
           timeline.df = NULL,  # optional data.frame for the excavation timeline
           title = NULL,        # title of the site / data set
           home.text = NULL,    # HTML content to display on the home page
-          lang = "en"          # interface language ("de": German, "en": English, "fr": French, "it": Italian, "pt": Portuguese)
+          lang = "en"          # interface language ("de": German, "en": English, "fr": French, "it": Italian, "pt": Portuguese, "es": Spanish)
           set.theme = "cosmo") # graphic theme for the Shiny interface
 ```
 
@@ -161,6 +164,8 @@ Num* Shiny server:
   - [`archeoViz` in
     English](https://analytics.huma-num.fr/archeoviz/en).
   - [`archeoViz` in French](https://analytics.huma-num.fr/archeoviz/fr).
+  - [`archeoViz` in
+    Spanish](https://analytics.huma-num.fr/archeoviz/es).
   - [`archeoViz` in
     Italian](https://analytics.huma-num.fr/archeoviz/it).
   - [`archeoViz` in
@@ -570,23 +575,25 @@ The web version of the application includes methods to measure the
 cohesion and admixture of spatial units, and compare it to simulated
 data. If an instance of `archeoViz` is launched with [refitting
 data](#refittings), then this data can be analysed with `archeofrag`
-from the `Statistics` tab.
+from the `Statistics` tab. See an example
+[here](https://analytics.huma-num.fr/archeoviz/grotte16).
 
 The [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/)
 is a web application (part of the
-[SPARTAAS](https://spartaas.gitpages.huma-num.fr/) collection) to
+[SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/) collection) to
 visualise changes in the quantitative distribution of artefacts types in
 ordered or unordered series of spatial units. If an online instance of
 `archeoViz` is launched with a data set with at least 2 different values
 for the `layers` variable and 2 different values for the `object_type`
 variable, then this data can be analysed with the `Seriograph`
-application from the `Statistics` tab.
+application from the `Statistics` tab. See an example
+[here](https://analytics.huma-num.fr/archeoviz/poeymau).
 
 ### Import to archeoViz
 
 [*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) is a web
 application and R package to visualise the spatial distribution of
-archaeological remains. As mentioned [\#formatting-data](above), SEAHORS
+archaeological remains. As mentioned [above](#formatting-data), SEAHORS
 can be used to import, reshape, and send a data set to an online
 instance of the `archeoViz` application.
 
@@ -618,6 +625,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           default.group = "by.layer", location.mode = NULL,
           map.z.val = NULL, map.density = "no", map.refits = NULL,
           plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          point.size = 2,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
           camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
@@ -682,6 +690,8 @@ archeoViz(class.variable = NULL, class.values = NULL,
     whether to compute and show regression in the 3D plot.
   - **plot3d.refits**: TRUE or FALSE. At the launch of the app, whether
     to show refits on the 3D section plot.
+  - **point.size**: integer. At the launch of the app, size of the
+    points in the plots.
   - **sectionX.x.val**: numerical. At the launch of the app, minimal and
     maximal X coordinates values to display in the X section plot.
   - **sectionX.y.val**: numerical. At the launch of the app, minimal and
@@ -738,9 +748,9 @@ URL parameters. Supported parameters include:
   - `run.plots`
 
 (The following parameters are not supported in the current version:
-`map.z.val`, `sectionX.x.val`, `sectionX.y.val`, `sectionY.x.val`,
-`sectionY.y.val`, `lang`, `set.theme`, `camera.center`, `camera.eye`,
-`html.export`, `table.export`.)
+`map.z.val`, `sectionX.x.val`, `point.size`, `sectionX.y.val`,
+`sectionY.x.val`, `sectionY.y.val`, `lang`, `set.theme`,
+`camera.center`, `camera.eye`, `html.export`, `table.export`.)
 
 The parameters must be written using the URL syntax
 (?param1=value\&param2=value2) and have the same type of values than
@@ -785,8 +795,9 @@ syntax).
 The `archeoViz` application and package is developed and maintained by
 Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and
 Thomas Perrin tested and supported the project in its early stage.
-Renata Araujo, Sara Giardino, and Julian Laabs translated the
-application into Portuguese, Italian, and German respectively.
+Renata Araujo, Sara Giardino, Julian Laabs, and Nicolas Delsol
+translated the application into Portuguese, Italian, German, and Spanish
+respectively.
 
 # References
 
@@ -794,7 +805,7 @@ application into Portuguese, Italian, and German respectively.
 
   - Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs.
     2023. “archeoViz. Visualisation, Exploration, and Web Communication
-    of Archaeological Spatial Data”. v1.2.1, DOI:
+    of Archaeological Spatial Data”. v1.3.0, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
     Dissemination of Spatial Archaeological

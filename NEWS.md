@@ -1,8 +1,10 @@
 # archeoViz 1.3.1
-Released: 2023-08-
+Released: 2023-08-29
 
-* refits lines are now colored based on the selected variable and values (same as the points).
-* add the 'point.size' parameter to set the size of the points in the plots.
+* Refits lines are colored based on the selected variable and values (same as the points).
+* Add the 'point.size' parameter to set the size of the points in the plots.
+* Fix issues in the refreshing of the plots / the 'run.plots' argument.
+* Add linguistic support for Spanish.
 
 # archeoViz 1.3.0
 Released: 2023-07-25

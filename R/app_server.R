@@ -125,6 +125,7 @@ app_server <- function(input, output, session) {
   })
   
   timeline.data <- reactive({
+    
     objects.df <- objects.dataset()
     
     query <- shiny::parseQueryString(session$clientData$url_search)
@@ -265,6 +266,7 @@ app_server <- function(input, output, session) {
   
   # : coords min/max coordinates ----
   coords.min.max <- reactive({
+    
     .do_coords_minmax(objects.dataset(),
                       square.size = getShinyOption("square.size"),
                       reverse.axis.values = getShinyOption("reverse.axis.values"))
@@ -1489,10 +1491,10 @@ app_server <- function(input, output, session) {
     
     refits.df <- refitting.df()[[3]]
     
-    if(nrow(refits.df) == 0){return()}
-    
     dataset <- objects.dataset()
     dataset <- dataset[, c("id", "layer")]
+    
+    if( (nrow(refits.df) == 0) | (length(unique(dataset$layer)) < 2) ){return()}
     
     refits.df <- refits.df[refits.df[,1] %in% dataset[,1], ]
     refits.df <- refits.df[refits.df[,2] %in% dataset[,1], ]
@@ -1622,6 +1624,7 @@ app_server <- function(input, output, session) {
   #  Timeline ----
   #  : main timeline ----
   timeline.map.plot <- reactive({
+    
     req(timeline.data)
     
     time.df <- timeline.data()

@@ -1,6 +1,8 @@
 do_map_plot <- function(site.map, planZ.df, map.point.size, color.var, col,
                         map.density, map.refits, refitting.df){
   
+  .data <- NULL
+  
   map <- site.map +
     geom_point(data = planZ.df,
                aes(x = .data[["x"]], y = .data[["y"]],

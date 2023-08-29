@@ -2,13 +2,13 @@ citHeader("To cite archeoViz in publications use:")
 
 bibentry(
    bibtype  = "manual",
-   author = "Plutniak, Sébastien and Araujo, Renata and Giardino, Sara and Laabs, Julian",
+   author = "Plutniak, Sébastien and Araujo, Renata and Delsol, Nicolas and Giardino, Sara and Laabs, Julian",
    title  = "archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data",
    year   = "2023",
-   Note   = "R package version 1.2.1",
+   Note   = "R package version 1.3.1",
    doi    = "10.5281/zenodo.7682227",
    url    = "https://cran.r-project.org/package=archeoViz", 
-   textVersion = "Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs (2023). archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data. v1.2.0, https://cran.r-project.org/package=archeoViz, DOI: 10.5281/zenodo.7460193"
+   textVersion = "Plutniak, Sébastien, Renata Araujo, Nicolas Delsol, Sara Giardino, Julian Laabs (2023). archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Excavation Data. v1.3.1, https://cran.r-project.org/package=archeoViz, DOI: 10.5281/zenodo.7460193"
 )
 
 citFooter("This free open-source software implements academic research by the authors and co-workers. If you use it, please support the project by citing the appropriate journal articles.")

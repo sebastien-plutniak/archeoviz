@@ -102,7 +102,29 @@
                     <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a> 
                       verf\\\\u00fcgbar.
                   </p>"
-
+  # : es ----
+  welcome.es <- "<h1>Bienvenidos en <i>archeoViz</i> !</h1>
+                <p><i>archeoViz</i> es una aplicaci\\\\u00f3n dedicada al arqueolog\\\\u00eda.
+                Permite <b>visualizar</b>, <b>explorar</b> de manera interactiva, y 
+                presentar y <b>comunicar</b> datos arqueol\\\\u00f3gicos de campo r\\\\u00e1pidamente en la web.
+                </p>
+                <p>
+                Ofrece <b>visualizaciones</b> en 3D y 2D,
+                genera <b>perfiles estratigr\\\\u00e1ficos</b> y <b>mapas</b> de los vestigios arqueol\\\\u00f3gicos,
+                permite correr <b>estad\\\\u00edsticas espaciales</b> sencillas
+                (cascos convexos, superficies de regresi\\\\u00f3n, estimaci\\\\u00f3n de densidad por n\\\\u00facleo en 2D), 
+                y visualizar una <b>cronolog\\\\u00eda</b> interactiva de las excavaciones de un sitio.
+                </p>
+                <p>
+                Distribuida como un paquete R, 
+                <i>archeoViz</i> se puede usar localmente o implementada en un servidor,
+                sea cargando los datos trav\\\\u00e9s de la interfaz, o
+                 iniciando la aplicaci\\\\u00f3n con un conjunto de datos espec\\\\u00edfico.
+                La interfaz est\\\\u00e1 disponible en <a href=https://analytics.huma-num.fr/archeoviz/de target=_blank>alem\\\\u00e1n</a>, <a href=https://analytics.huma-num.fr/archeoviz/en target=_blank>ingl\\\\u00e9s</a>, franc\\\\u00e9s, <a href=https://analytics.huma-num.fr/archeoviz/it target=_blank>italiano</a>, <a href=https://analytics.huma-num.fr/archeoviz/pt target=_blank>portugu\\\\u00e9s</a>, y <a href=https://analytics.huma-num.fr/archeoviz/es target=_blank>espa\\\\u00f1ol</a>.
+                </p>
+                El paquete, bajo licencia libre, est\\\\u00e1 publicado en <a href=https://cran.r-project.org/package=archeoViz target=_blank>CRAN</a>. Su c\\\\u00f3digo fuente tambi\\\\u00e9n est\\\\u00e1 disponible en <a href=https://github.com/sebastien-plutniak/archeoviz target=_blank>github</a>."
+  
+  
   
   # Input objects ----
   # :  fr ----
@@ -225,6 +247,29 @@
       </ul>
       </p>"
 
+# :  es ----
+  input.objects.es <- 
+    "<p>
+    Se necesita una tabla bajo el formato csv. Cada l\\\\u00ednea describe un objeto, incluyendo los siguientes campos obligatorios:
+    <ul>
+      <li> <b>id</b> : <i>valor alfanum\\\\u00e9rico</i>, identificador \\\\u00fanico del objeto </li>
+      <li> <b>xmin</b> : <i>valor num\\\\u00e9rico</i>, coordenada del objeto en el eje X (en cm)</li>
+      <li> <b>ymin</b> : <i>valor num\\\\u00e9rico</i>, coordenada del objeto en el eje Y (en cm)</li>
+      <li> <b>zmin</b> : <i>valor num\\\\u00e9rico</i>, coordenada del objeto en el eje Z (valor de profundidad en cm)</li>
+      <li> <b>layer</b> : <i>valor alfanum\\\\u00e9rico</i>, identificador de capa del objeto</li>
+      <li> <b>object_type</b> : <i>valor alfanum\\\\u00e9rico</i>, categor\\\\u00eda del objeto</li>
+    </ul>
+    Adem\\\\u00e1s, otros campos opcionales son posibles, incluyendo:
+    <ul>
+      <li> <b>square_x</b> : <i>valor alfanum\\\\u00e9rico</i>, identificador del cuadrado del objeto en el eje X</li>
+      <li> <b>square_y</b> : <i>valor alfanum\\\\u00e9rico</i>, identificador del cuadrado del objeto en el eje Y</li>
+      <li> <b>year</b> : <i>valor num\\\\u00e9rico</i>, a\\\\u00f1o de excavaci\\\\u00f3n del objeto</li>
+      <li> <b>xmax</b> : <i>valor num\\\\u00e9rico</i>, cuando la ubicaci\\\\u00f3n del objeto en X est\\\\u00e1 comprendida en un rango de coordenadas</li>
+      <li> <b>ymax</b> : <i>valor num\\\\u00e9rico</i>, cuando la ubicaci\\\\u00f3n del objeto en Y est\\\\u00e1 comprendida en un rango de coordenadas</li>
+      <li> <b>zmax</b> : <i>valor num\\\\u00e9rico</i>, cuando la ubicaci\\\\u00f3n del objeto en Z est\\\\u00e1 comprendida en un rango de coordenadas</li>
+      <li> <b>object<i>_edit</i></b>: n\\\\u00famero ilimitado de variables adicionales que describen el objeto (los nombres de las columnas debem empezar con `objeto_` y tener sufijos diferentes)</li>
+    </ul>
+    </p>"
 
   # Input refits ----
   input.refits.fr <- 
@@ -255,6 +300,10 @@
     Jede Zeile muss die eindeutigen Kennungen von zwei Passobjekten enthalten (entsprechend den Werten der Spalte 'ID' in der Objekttabelle).
     </p>"   
 
+  input.refits.es <- 
+    "<p>
+    Una tabla de dos columnas puede ser cargada para los remontajes entre objetos (formato csv). Cada l\\\\u00ednea debe contener los identificadores \\\\u00fanicos de los dos objetos vinculados en una relaci\\\\u00f3n de remontaje (corespondiendo con los valores de la columna `id` de la tabla de objetos).
+    </p>"
   
   # Input timeline ----
   input.timeline.fr <- 
@@ -308,6 +357,16 @@
     </ul>
     </p>"  
   
+      input.timeline.es <- 
+    "<p>
+      Opcionalmente, se puede cargar una tabla (csv) con detalles sobre la conducta de la excavaci\\\\u00f3n. Cada l\\\\u00ednea describe un cuadrado de la excavaci\\\\u00f3n y contiene las informaciones siguientes:
+    <ul>
+    <li> <b>year</b>: <i>valor num\\\\u00e9rico</i>, a\\\\u00f1o de excavaci\\\\u00f3n</li>
+    <li> <b>square_x</b>: <i>valor alfanum\\\\u00e9rico</i>, identificador del cuadrado en el eje X</li>
+    <li> <b>square_y</b>: <i>valor alfanum\\\\u00e9rico</i>, identificador del cuadrado en el eje Y</li>
+    </ul>
+    </p>"
+  
   
   # reproducibility ----
   reproducibility.fr <- "<h1>Reproductibilit\\\\u00e9</h1>
@@ -323,14 +382,16 @@
                          <p>Per riprodurre le impostazioni attuali, eseguire archeoViz con il seguente comando R (regolare i parametri \\\\u201cobjects.df\\\\u201d e \\\\u201crefits.df\\\\u201d in base ai propri dati):</p>"
 
   reproducibility.de <- "<h1>Reproduzierbarkeit</h1>
-                         <p>Um Ihre aktuellen Einstellungen zu reproduzieren, f\\\\u00fchren Sie <i>archeoViz</i> mit dem folgenden R-Befehl aus (passen Sie die Parameter 'objects.df' und 'refits.df' an Ihre Bed\\\\u00fcrfnisse an):  </p>"    
+                         <p>Um Ihre aktuellen Einstellungen zu reproduzieren, f\\\\u00fchren Sie <i>archeoViz</i> mit dem folgenden R-Befehl aus (passen Sie die Parameter \\\\u201cobjects.df\\\\u201d und \\\\u201crefits.df\\\\u201d an Ihre Bed\\\\u00fcrfnisse an):  </p>"    
 
+  reproducibility.es <- "<h1>Reprodutibilidad</h1>
+                         <p>Para reproducir su configuraci\\\\u00f3n actual, ejecute <i>archeoViz</i> con el siguiente comando R (ajuste los par\\\\u00e1metros \\\\u201cobjects.df\\\\u201d y \\\\u201crefits.df\\\\u201d a sus datos):</p>"
   
   # guidelines ----
   # : en ----
   guidelines.en <- "
 <h1 id=archeoviz>archeoViz</h1>
-<p><code>archeoViz</code> is a packaged R Shiny application for the <em>visualisation</em>, <em>exploration</em>, and web <em>communication</em> of archaeological spatial data. It includes interactive 3D and 2D <em>visualisations</em>, can generate <em>cross sections</em> and <em>maps</em> of the remains, can run basic <em>spatial statistics</em> methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive <em>timeline</em> of an excavation. <code>archeoViz</code> can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The app interface is available in English, French, German, Italian, and Portuguese.</p>
+<p><code>archeoViz</code> is a packaged R Shiny application for the <em>visualisation</em>, <em>exploration</em>, and web <em>communication</em> of archaeological spatial data. It includes interactive 3D and 2D <em>visualisations</em>, can generate <em>cross sections</em> and <em>maps</em> of the remains, can run basic <em>spatial statistics</em> methods (convex hull, regression surfaces, 2D kernel density estimation), and display an interactive <em>timeline</em> of an excavation. <code>archeoViz</code> can be used locally or deployed on a server, either by allowing the user to load data through the interface or by running the app with a specific data set. The app interface is available in English, French, German, Italian, Portuguese, and Spanish.</p>
 <ul>
 <li><a href=#installation><strong>Installation</strong></a>
 <ul>
@@ -402,7 +463,12 @@
 <li><a href=#url-parameters>URL parameters</a></li>
 </ul></li>
 <li><a href=#acknowledgments><strong>Acknowledgments</strong></a></li>
-<li><a href=#references><strong>References</strong></a></li>
+<li><a href=#references><strong>References</strong></a>
+<ul>
+<li><a href=#Software>Software</a></li>
+<li><a href=#papers>Papers</a></li>
+<li><a href=#presentations>Presentations</a></li>
+</ul></li>
 </ul>
 <h1 id=installation>Installation</h1>
 <p><code>archeoViz</code> can be used in two ways:</p>
@@ -436,7 +502,7 @@
 <a class=sourceLine id=cb5-3 data-line-number=3>          <span class=dt>timeline.df =</span> <span class=ot>NULL</span>,  <span class=co># optional data.frame for the excavation timeline</span></a>
 <a class=sourceLine id=cb5-4 data-line-number=4>          <span class=dt>title =</span> <span class=ot>NULL</span>,        <span class=co># title of the site / data set</span></a>
 <a class=sourceLine id=cb5-5 data-line-number=5>          <span class=dt>home.text =</span> <span class=ot>NULL</span>,    <span class=co># HTML content to display on the home page</span></a>
-<a class=sourceLine id=cb5-6 data-line-number=6>          <span class=dt>lang =</span> <span class=st>&quot;en&quot;</span>          <span class=co># interface language (&quot;en&quot;: English, &quot;fr&quot;: French, &quot;it&quot;: Italian, &quot;pt&quot;: Portuguese)</span></a>
+<a class=sourceLine id=cb5-6 data-line-number=6>          <span class=dt>lang =</span> <span class=st>&quot;en&quot;</span>          <span class=co># interface language (&quot;de&quot;: German, &quot;en&quot;: English, &quot;fr&quot;: French, &quot;it&quot;: Italian, &quot;pt&quot;: Portuguese, &quot;es&quot;: Spanish)</span></a>
 <a class=sourceLine id=cb5-7 data-line-number=7>          <span class=dt>set.theme =</span> <span class=st>&quot;cosmo&quot;</span>) <span class=co># graphic theme for the Shiny interface</span></a></code></pre></div>
 <p>The possible values for the <code>set.theme</code> parameter are illustrated on <a href=https://rstudio.github.io/shinythemes/>this page</a>. The language of the application can be set with the <code>lang</code> parameter.</p>
 <h2 id=demonstration>Demonstration</h2>
@@ -445,6 +511,7 @@
 <li><a href=https://analytics.huma-num.fr/archeoviz/de><code>archeoViz</code> in German</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/en><code>archeoViz</code> in English</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/fr><code>archeoViz</code> in French</a>.</li>
+<li><a href=https://analytics.huma-num.fr/archeoviz/es><code>archeoViz</code> in Spanish</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/it><code>archeoViz</code> in Italian</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/pt><code>archeoViz</code> in Portuguese</a>.</li>
 </ul>
@@ -618,10 +685,10 @@
 <h2 id=exports-from-and-to-third-party-applications>Exports from and to Third-party Applications</h2>
 <p><code>archeoViz</code> was designed as one of the building blocks of a decentralised digital ecosystem for archaeological data and analysis. In this perspective, features and functions are distributed in multiple interconnected applications, rather than concentrated into few systems. Consequently, data can be exported and imported between <code>archeoViz</code> and other web-based applications. Note that, so far, the export functionalities are only available when using online <code>archeoViz</code> instances.</p>
 <h3 id=export-from-archeoviz>Export from archeoViz</h3>
-<p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> is an R package and web application to assess and evaluate the distinctions betwen archaeological spatial units (e.g. layers) based on the analysis of refitting relationships between fragments of objects. The web version of the application includes methods to measure the cohesion and admixture of spatial units, and compare it to simulated data. If an instance of <code>archeoViz</code> is launched with <a href=#refittings>refitting data</a>, then this data can be analysed with <code>archeofrag</code> from the <code>Statistics</code> tab.</p>
-<p>The <a href=https://analytics.huma-num.fr/ModAthom/seriograph/><em>Seriograph</em></a> is a web application (part of the <a href=https://spartaas.gitpages.huma-num.fr/>SPARTAAS</a> collection) to visualise changes in the quantitative distribution of artefacts types in ordered or unordered series of spatial units. If an online instance of <code>archeoViz</code> is launched with a data set with at least 2 different values for the <code>layers</code> variable and 2 different values for the <code>object_type</code> variable, then this data can be analysed with the <code>Seriograph</code> application from the <code>Statistics</code> tab.</p>
+<p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> is an R package and web application to assess and evaluate the distinctions betwen archaeological spatial units (e.g. layers) based on the analysis of refitting relationships between fragments of objects. The web version of the application includes methods to measure the cohesion and admixture of spatial units, and compare it to simulated data. If an instance of <code>archeoViz</code> is launched with <a href=#refittings>refitting data</a>, then this data can be analysed with <code>archeofrag</code> from the <code>Statistics</code> tab. See an example <a href=https://analytics.huma-num.fr/archeoviz/grotte16>here</a>.</p>
+<p>The <a href=https://analytics.huma-num.fr/ModAthom/seriograph/><em>Seriograph</em></a> is a web application (part of the <a href=https://spartaas.gitpages.huma-num.fr/r-package>SPARTAAS</a> collection) to visualise changes in the quantitative distribution of artefacts types in ordered or unordered series of spatial units. If an online instance of <code>archeoViz</code> is launched with a data set with at least 2 different values for the <code>layers</code> variable and 2 different values for the <code>object_type</code> variable, then this data can be analysed with the <code>Seriograph</code> application from the <code>Statistics</code> tab. See an example <a href=https://analytics.huma-num.fr/archeoviz/poeymau>here</a>.</p>
 <h3 id=import-to-archeoviz>Import to archeoViz</h3>
-<p><a href=https://aurelienroyer.shinyapps.io/Seahors/><em>SEAHORS</em></a> is a web application and R package to visualise the spatial distribution of archaeological remains. As mentioned <a href=above>#formatting-data</a>, SEAHORS can be used to import, reshape, and send a data set to an online instance of the <code>archeoViz</code> application.</p>
+<p><a href=https://aurelienroyer.shinyapps.io/Seahors/><em>SEAHORS</em></a> is a web application and R package to visualise the spatial distribution of archaeological remains. As mentioned <a href=#formatting-data>above</a>, SEAHORS can be used to import, reshape, and send a data set to an online instance of the <code>archeoViz</code> application.</p>
 <h2 id=advanced-parameters>Advanced parameters</h2>
 <p>The <code>archeoViz()</code> function can be set with multiple optional parameters, related to:</p>
 <ul>
@@ -643,11 +710,12 @@
 <a class=sourceLine id=cb8-6 data-line-number=6>          <span class=dt>default.group =</span> <span class=st>&quot;by.layer&quot;</span>, <span class=dt>location.mode =</span> <span class=ot>NULL</span>,</a>
 <a class=sourceLine id=cb8-7 data-line-number=7>          <span class=dt>map.z.val =</span> <span class=ot>NULL</span>, <span class=dt>map.density =</span> <span class=st>&quot;no&quot;</span>, <span class=dt>map.refits =</span> <span class=ot>NULL</span>,</a>
 <a class=sourceLine id=cb8-8 data-line-number=8>          <span class=dt>plot3d.ratio =</span> <span class=dv>1</span>, <span class=dt>plot3d.hulls =</span> <span class=ot>NULL</span>, <span class=dt>plot3d.surfaces =</span> <span class=ot>NULL</span>, <span class=dt>plot3d.refits =</span> <span class=ot>NULL</span>,</a>
-<a class=sourceLine id=cb8-9 data-line-number=9>          <span class=dt>sectionX.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.refits =</span> <span class=ot>NULL</span>, </a>
-<a class=sourceLine id=cb8-10 data-line-number=10>          <span class=dt>sectionY.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.refits =</span> <span class=ot>NULL</span>,</a>
-<a class=sourceLine id=cb8-11 data-line-number=11>          <span class=dt>camera.center =</span> <span class=kw>c</span>(<span class=dv>0</span>, <span class=dv>0</span>, <span class=dv>0</span>), <span class=dt>camera.eye =</span> <span class=kw>c</span>(<span class=fl>1.25</span>, <span class=fl>1.25</span>, <span class=fl>1.25</span>),</a>
-<a class=sourceLine id=cb8-12 data-line-number=12>          <span class=dt>run.plots =</span> <span class=ot>FALSE</span>, <span class=dt>html.export =</span> <span class=ot>TRUE</span>, <span class=dt>table.export =</span> <span class=ot>TRUE</span></a>
-<a class=sourceLine id=cb8-13 data-line-number=13>          )</a></code></pre></div>
+<a class=sourceLine id=cb8-9 data-line-number=9>          <span class=dt>point.size =</span> <span class=dv>2</span>,</a>
+<a class=sourceLine id=cb8-10 data-line-number=10>          <span class=dt>sectionX.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.refits =</span> <span class=ot>NULL</span>, </a>
+<a class=sourceLine id=cb8-11 data-line-number=11>          <span class=dt>sectionY.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.refits =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-12 data-line-number=12>          <span class=dt>camera.center =</span> <span class=kw>c</span>(<span class=dv>0</span>, <span class=dv>0</span>, <span class=dv>0</span>), <span class=dt>camera.eye =</span> <span class=kw>c</span>(<span class=fl>1.25</span>, <span class=fl>1.25</span>, <span class=fl>1.25</span>),</a>
+<a class=sourceLine id=cb8-13 data-line-number=13>          <span class=dt>run.plots =</span> <span class=ot>FALSE</span>, <span class=dt>html.export =</span> <span class=ot>TRUE</span>, <span class=dt>table.export =</span> <span class=ot>TRUE</span></a>
+<a class=sourceLine id=cb8-14 data-line-number=14>          )</a></code></pre></div>
 <h3 id=square-grid>Square grid</h3>
 <div class=sourceCode id=cb9><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb9-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>square.size =</span> <span class=dv>100</span>,</a>
 <a class=sourceLine id=cb9-2 data-line-number=2>          <span class=dt>reverse.axis.values =</span> <span class=ot>NULL</span>, <span class=dt>reverse.square.names =</span> <span class=ot>NULL</span>,</a>
@@ -680,6 +748,7 @@
 <li><strong>plot3d.hulls</strong>: TRUE or FALSE. At the launch of the app, whether to compute and show convex hulls in the 3D plot.</li>
 <li><strong>plot3d.surfaces</strong>: TRUE or FALSE. At the launch of the app, whether to compute and show regression in the 3D plot.</li>
 <li><strong>plot3d.refits</strong>: TRUE or FALSE. At the launch of the app, whether to show refits on the 3D section plot.</li>
+<li><strong>point.size</strong>: integer. At the launch of the app, size of the points in the plots.</li>
 <li><strong>sectionX.x.val</strong>: numerical. At the launch of the app, minimal and maximal X coordinates values to display in the X section plot.</li>
 <li><strong>sectionX.y.val</strong>: numerical. At the launch of the app, minimal and maximal Y coordinates values to display in the X section plot.</li>
 <li><strong>sectionX.refits</strong>: TRUE or FALSE. At the launch of the app, whether to show refits in the X section plot.</li>
@@ -716,7 +785,7 @@
 <li><code>sectionY.refits</code></li>
 <li><code>run.plots</code></li>
 </ul>
-<p>(The following parameters are not supported in the current version: <code>map.z.val</code>, <code>sectionX.x.val</code>, <code>sectionX.y.val</code>, <code>sectionY.x.val</code>, <code>sectionY.y.val</code>, <code>lang</code>, <code>set.theme</code>, <code>camera.center</code>, <code>camera.eye</code>, <code>html.export</code>, <code>table.export</code>.)</p>
+<p>(The following parameters are not supported in the current version: <code>map.z.val</code>, <code>sectionX.x.val</code>, <code>point.size</code>, <code>sectionX.y.val</code>, <code>sectionY.x.val</code>, <code>sectionY.y.val</code>, <code>lang</code>, <code>set.theme</code>, <code>camera.center</code>, <code>camera.eye</code>, <code>html.export</code>, <code>table.export</code>.)</p>
 <p>The parameters must be written using the URL syntax (?param1=value&amp;param2=value2) and have the same type of values than when used in the R interface. For example, the following URL launches an <code>archeoViz</code> instance using the <a href=https://zenodo.org/record/8003880>Bilzingsleben</a> dataset:</p>
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv class=uri>https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
 <p>This URL does the same, but also includes the refitting table (parameter <code>&amp;refits.df=</code>) and set the activate the display of the refitting relationships in the 3D and map plots:</p>
@@ -733,22 +802,22 @@
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Anters%20at%20Bilzingsleben&amp;home.text=Many%20%3Cb%3Eantlers%3C/b%3E&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Antlers%20at%20Bilzingsleben&amp;home.text=Many%20<b>antlers</b>&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
 <p>Note that the parameters <code>add.x.square.labels</code>, <code>add.y.square.labels</code>, <code>location.mode</code>, and <code>class.values</code>, which accept simple or multiple values in the R interface (e.g., c(\\\\u201cvalue1\\\\u201d, \\\\u201cvalue2\\\\u201d)) only accept one value when set as URL parameters (this is a restriction due to the URL syntax).</p>
 <h1 id=acknowledgments>Acknowledgments</h1>
-<p>The <code>archeoViz</code> application and package is developed and maintained by S\\\\u00e9bastien Plutniak. Arthur Coulon, Sol\\\\u00e8ne Denis, Olivier Marlet, and Thomas Perrin tested and supported the project in its early stage. Renata Araujo, Sara Giardino, and Julian Laabs translated the application into Portuguese, Italian, and German respectively.</p>
+<p>The <code>archeoViz</code> application and package is developed and maintained by S\\\\u00e9bastien Plutniak. Arthur Coulon, Sol\\\\u00e8ne Denis, Olivier Marlet, and Thomas Perrin tested and supported the project in its early stage. Renata Araujo, Sara Giardino, Julian Laabs, and Nicolas Delsol translated the application into Portuguese, Italian, German, and Spanish respectively.</p>
 <h1 id=references>References</h1>
 <h2 id=software>Software</h2>
 <ul>
-<li>Plutniak, S\\\\u00e9bastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. \\\\u201carcheoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. v1.2.1, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
-<li>Plutniak, S\\\\u00e9bastien, Anaïs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04156271>The archeoViz Portal: Dissemination of Spatial Archaeological Datasets</a>\\\\u201d, web portal, <a href=https://analytics.huma-num.fr/archeoviz/home class=uri>https://analytics.huma-num.fr/archeoviz/home</a>.</li>
+<li>Plutniak, S\\\\u00e9bastien, Renata Araujo, Nicolas Delsol, Sara Giardino, Julian Laabs. 2023. \\\\u201carcheoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. v1.3.1, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
+<li>Plutniak, S\\\\u00e9bastien, Ana\\\\u00efs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04156271>The archeoViz Portal: Dissemination of Spatial Archaeological Datasets</a>\\\\u201d, web portal, <a href=https://analytics.huma-num.fr/archeoviz/home class=uri>https://analytics.huma-num.fr/archeoviz/home</a>.</li>
 </ul>
 <h2 id=papers>Papers</h2>
 <ul>
 <li>Plutniak, S\\\\u00e9bastien. Submitted. \\\\u201carcheoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. <em>Journal of Open Source Software</em>.</li>
-<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique : l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
+<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique : l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=presentations>Presentations</h2>
 <ul>
 <li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://hal.science/hal-04146410>Fostering the Publication of Spatial Archaeological Data: a Decentralized Approach. The archeoViz Web Application and its Portal</a>\\\\u201d, slides of a presentation at the University of Florida, Gainesville.</li>
-<li>Plutniak, S\\\\u00e9bastien, Anaïs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04070444>L\\\\u2019application web / package archeoViz et son portail web. Une solution d\\\\u00e9centralis\\\\u00e9e d\\\\u2019\\\\u00e9ditorialisation de donn\\\\u00e9es arch\\\\u00e9ologiques spatialis\\\\u00e9es</a>, slides of a presentation at the SITRADA workshop, Paris.</li>
+<li>Plutniak, S\\\\u00e9bastien, Ana\\\\u00efs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04070444>L\\\\u2019application web / package archeoViz et son portail web. Une solution d\\\\u00e9centralis\\\\u00e9e d\\\\u2019\\\\u00e9ditorialisation de donn\\\\u00e9es arch\\\\u00e9ologiques spatialis\\\\u00e9es</a>, slides of a presentation at the SITRADA workshop, Paris.</li>
 </ul>
 "
   
@@ -814,7 +883,7 @@ guidelines.fr <- "
 </ul></li>
 </ul></li>
 <li><a href=#reproductibilit\\\\u00e9><strong>Reproductibilit\\\\u00e9</strong></a></li>
-<li><a href=#exports-depuis-et-vers-des-applications-tiers><strong>Exports depuis et vers des applications tiers</strong></a>
+<li><a href=#exports-depuis-et-vers-des-applications-tierces><strong>Exports depuis et vers des applications tierces</strong></a>
 <ul>
 <li><a href=#export-depuis-archeoviz>Export depuis archeoViz</a></li>
 <li><a href=#import-vers-archeoviz>Import vers archeoViz</a></li>
@@ -828,7 +897,12 @@ guidelines.fr <- "
 <li><a href=#param\\\\u00e8tres-url>Param\\\\u00e8tres URL</a></li>
 </ul></li>
 <li><a href=#remerciements><strong>Remerciements</strong></a></li>
-<li><a href=#r\\\\u00e9f\\\\u00e9rences><strong>R\\\\u00e9f\\\\u00e9rences</strong></a></li>
+<li><a href=#r\\\\u00e9f\\\\u00e9rences><strong>R\\\\u00e9f\\\\u00e9rences</strong></a>
+<ul>
+<li><a href=#logiciels>Logiciels</a></li>
+<li><a href=#articles>Articles</a></li>
+<li><a href=#pr\\\\u00e9sentations>Pr\\\\u00e9sentations</a></li>
+</ul></li>
 </ul>
 <h1 id=installation>Installation</h1>
 <p><code>archeoViz</code> peut \\\\u00eatre employ\\\\u00e9e de deux mani\\\\u00e8res:</p>
@@ -863,7 +937,7 @@ guidelines.fr <- "
 <a class=sourceLine id=cb5-5 data-line-number=5>                               <span class=co># par couche (&quot;by.layer&quot;) ou &quot;by.variable&quot;</span></a>
 <a class=sourceLine id=cb5-6 data-line-number=6>          <span class=dt>title =</span> <span class=ot>NULL</span>,        <span class=co># titre du site / du jeu de donn\\\\u00e9es</span></a>
 <a class=sourceLine id=cb5-7 data-line-number=7>          <span class=dt>home.text =</span> <span class=ot>NULL</span>,    <span class=co># contenu HTML \\\\u00e0 afficher sur la page d'accueil</span></a>
-<a class=sourceLine id=cb5-8 data-line-number=8>          <span class=dt>lang =</span> <span class=st>&quot;fr&quot;</span>          <span class=co># langue de l'interface (&quot;en&quot;: Anglais, &quot;fr&quot;: Fran\\\\u00e7ais, &quot;it&quot;: Italien &quot;pt&quot;: Portugais)</span></a>
+<a class=sourceLine id=cb5-8 data-line-number=8>          <span class=dt>lang =</span> <span class=st>&quot;fr&quot;</span>          <span class=co># langue de l'interface (&quot;de&quot;: Allemand, &quot;en&quot;: Anglais, &quot;fr&quot;: Fran\\\\u00e7ais, &quot;it&quot;: Italien &quot;pt&quot;: Portugais, &quot;es&quot;: Espagnol)</span></a>
 <a class=sourceLine id=cb5-9 data-line-number=9>          <span class=dt>set.theme =</span> <span class=st>&quot;cosmo&quot;</span>) <span class=co># th\\\\u00e8me graphique de l'interface Shiny</span></a></code></pre></div>
 <p>Les valeurs possibles pour le param\\\\u00e8tre <code>set.theme</code> sont illustr\\\\u00e9es sur <a href=https://rstudio.github.io/shinythemes/>cette page</a>. La langue de l\\\\u2019application peut \\\\u00eatre d\\\\u00e9finie avec le param\\\\u00e8tre <code>lang</code>.</p>
 <h2 id=d\\\\u00e9monstration>D\\\\u00e9monstration</h2>
@@ -872,6 +946,7 @@ guidelines.fr <- "
 <li><a href=https://analytics.huma-num.fr/archeoviz/fr><code>archeoViz</code> en fran\\\\u00e7ais</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/en><code>archeoViz</code> en anglais</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/de><code>archeoViz</code> en allemand</a>.</li>
+<li><a href=https://analytics.huma-num.fr/archeoviz/es><code>archeoViz</code> en espagnol</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/it><code>archeoViz</code> en italien</a>.</li>
 <li><a href=https://analytics.huma-num.fr/archeoviz/pt><code>archeoViz</code> en portugais</a>.</li>
 </ul>
@@ -1041,13 +1116,13 @@ guidelines.fr <- "
 <li>Dans l\\\\u2019onglet \\\\u201cReproductibilit\\\\u00e9\\\\u201d, une commande R est g\\\\u00e9n\\\\u00e9r\\\\u00e9e dynamiquement, tenant compte du param\\\\u00e9trage de l\\\\u2019application r\\\\u00e9alis\\\\u00e9 par l\\\\u2019utilisateur en agissant avec l\\\\u2019interface graphique.</li>
 <li>Dans un usage plus avanc\\\\u00e9, les param\\\\u00e8tres d\\\\u2019URL permettent de param\\\\u00e9trer une instance en ligne de l\\\\u2019application avec des param\\\\u00e8tres d\\\\u2019int\\\\u00e9r\\\\u00eat et de la communiquer l\\\\u2019ensemble en envoyant l\\\\u2019URL \\\\u00e0 un tiers.</li>
 </ul>
-<h2 id=exports-depuis-et-vers-des-applications-tiers>Exports depuis et vers des applications tiers</h2>
+<h2 id=exports-depuis-et-vers-des-applications-tierces>Exports depuis et vers des applications tierces</h2>
 <p><code>archeoViz</code> a \\\\u00e9t\\\\u00e9 con\\\\u00e7u comme l\\\\u2019une des pi\\\\u00e8ces d\\\\u2019un \\\\u00e9cosyst\\\\u00e8me num\\\\u00e9rique d\\\\u00e9centralis\\\\u00e9 pour les donn\\\\u00e9es et analyses arch\\\\u00e9ologiques. Dans cette approche, les fonctionnalit\\\\u00e9s sont distribu\\\\u00e9es entre de multiples applications interconenct\\\\u00e9es, plut\\\\u00f4t que concentr\\\\u00e9es dans un petit nombre de syst\\\\u00e8mes. Par cons\\\\u00e9quent, les donn\\\\u00e9es peuvent \\\\u00eatre export\\\\u00e9es et import\\\\u00e9es entre <code>archeoViz</code> et d\\\\u2019autres applications web. Notez que, jusqu\\\\u2019ici, les fonctionnalit\\\\u00e9s d\\\\u2019export ne sont disponibles que dans le cas d\\\\u2019instances <code>archeoViz</code> d\\\\u00e9ploy\\\\u00e9es en ligne.</p>
 <h3 id=export-depuis-archeoviz>Export depuis archeoViz</h3>
-<p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> est un package R et une application web permettant d\\\\u2019estimer et d\\\\u2019\\\\u00e9valuer les distinctions entre unit\\\\u00e9s spatiales arch\\\\u00e9ologiques (par ex. des couches) \\\\u00e0 partir de l\\\\u2019analyse des relations de remontage entre fragments d\\\\u2019objets. La version web de l\\\\u2019application int\\\\u00e8gre des m\\\\u00e9thodes pour mesurer la coh\\\\u00e9sion et le m\\\\u00e9lange d\\\\u2019unit\\\\u00e9s spatiales et de les comparer \\\\u00e0 des donn\\\\u00e9es simul\\\\u00e9es. Lorsqu\\\\u2019une instance d\\\\u2019<code>archeoViz</code> est execut\\\\u00e9e avec des <a href=#tableau-des-remontages>donn\\\\u00e9es de remontage</a>, alors ces donn\\\\u00e9es peuvent \\\\u00eatre analys\\\\u00e9es avec <code>archeofrag</code> \\\\u00e0 partir de l\\\\u2019onglet \\\\u201cStatistiques\\\\u201d.</p>
-<p>Le <a href=https://analytics.huma-num.fr/ModAthom/seriograph/><em>Seriograph</em></a> est une application web (inclues dans la collection <a href=https://spartaas.gitpages.huma-num.fr/>SPARTAAS</a>) pour visualiser des changements quantitatifs dans la distribution de types d\\\\u2019artefacts dans des s\\\\u00e9ries ordonn\\\\u00e9es ou non-ordonn\\\\u00e9es d\\\\u2019unit\\\\u00e9s spatiales. Lorsqu\\\\u2019une instance d\\\\u2019<code>archeoViz</code> est execut\\\\u00e9e avec un jeu de donn\\\\u00e9es contenant au moins 2 valeurs diff\\\\u00e9rentes pour la variable <code>layers</code> et 2 valeurs diff\\\\u00e9rentes pour la variable <code>object_type</code>, alors ces donn\\\\u00e9es peuvent \\\\u00eatre analys\\\\u00e9es avec l\\\\u2019application <code>Seriograph</code> \\\\u00e0 partir de l\\\\u2019onglet \\\\u201cStatistiques\\\\u201d.</p>
+<p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> est un package R et une application web permettant d\\\\u2019estimer et d\\\\u2019\\\\u00e9valuer les distinctions entre unit\\\\u00e9s spatiales arch\\\\u00e9ologiques (par ex. des couches) \\\\u00e0 partir de l\\\\u2019analyse des relations de remontage entre fragments d\\\\u2019objets. La version web de l\\\\u2019application int\\\\u00e8gre des m\\\\u00e9thodes pour mesurer la coh\\\\u00e9sion et le m\\\\u00e9lange d\\\\u2019unit\\\\u00e9s spatiales et de les comparer \\\\u00e0 des donn\\\\u00e9es simul\\\\u00e9es. Lorsqu\\\\u2019une instance d\\\\u2019<code>archeoViz</code> est execut\\\\u00e9e avec des <a href=#tableau-des-remontages>donn\\\\u00e9es de remontage</a>, alors ces donn\\\\u00e9es peuvent \\\\u00eatre analys\\\\u00e9es avec <code>archeofrag</code> \\\\u00e0 partir de l\\\\u2019onglet \\\\u201cStatistiques\\\\u201d. Cf. cet <a href=https://analytics.huma-num.fr/archeoviz/grotte16>exemple</a>.</p>
+<p>Le <a href=https://analytics.huma-num.fr/ModAthom/seriograph/><em>Seriograph</em></a> est une application web (inclues dans la collection <a href=https://spartaas.gitpages.huma-num.fr/r-package/>SPARTAAS</a>) pour visualiser des changements quantitatifs dans la distribution de types d\\\\u2019artefacts dans des s\\\\u00e9ries ordonn\\\\u00e9es ou non-ordonn\\\\u00e9es d\\\\u2019unit\\\\u00e9s spatiales. Lorsqu\\\\u2019une instance d\\\\u2019<code>archeoViz</code> est execut\\\\u00e9e avec un jeu de donn\\\\u00e9es contenant au moins 2 valeurs diff\\\\u00e9rentes pour la variable <code>layers</code> et 2 valeurs diff\\\\u00e9rentes pour la variable <code>object_type</code>, alors ces donn\\\\u00e9es peuvent \\\\u00eatre analys\\\\u00e9es avec l\\\\u2019application <code>Seriograph</code> \\\\u00e0 partir de l\\\\u2019onglet \\\\u201cStatistiques\\\\u201d. Cf. cet <a href=https://analytics.huma-num.fr/archeoviz/poeymau>exemple</a>.</p>
 <h3 id=import-vers-archeoviz>Import vers archeoViz</h3>
-<p><a href=https://aurelienroyer.shinyapps.io/Seahors/><em>SEAHORS</em></a> est une application web et un package R permettant de visualiser la distribution spatiale d\\\\u2019objets arch\\\\u00e9ologiques. Comme indiqu\\\\u00e9 <a href=ci-dessus>#formatting-</a>, SEAHORS peut \\\\u00eatre employ\\\\u00e9 pour importer, transformer, et transmettre un jeu de donn\\\\u00e9e \\\\u00e0 une instance en ligne d\\\\u2019<code>archeoViz</code>.</p>
+<p><a href=https://aurelienroyer.shinyapps.io/Seahors/><em>SEAHORS</em></a> est une application web et un package R permettant de visualiser la distribution spatiale d\\\\u2019objets arch\\\\u00e9ologiques. Comme indiqu\\\\u00e9 <a href=#formater-des-donn\\\\u00e9es>ci dessus</a>, <em>SEAHORS</em> peut \\\\u00eatre employ\\\\u00e9 pour importer, transformer, et transmettre un jeu de donn\\\\u00e9e \\\\u00e0 une instance en ligne d\\\\u2019<code>archeoViz</code>.</p>
 <h2 id=param\\\\u00e8tres-avanc\\\\u00e9s>Param\\\\u00e8tres avanc\\\\u00e9s</h2>
 <p>La fonction <code>archeoViz()</code> admet de nombreux param\\\\u00e8tres optionnels, relatifs aux:</p>
 <ul>
@@ -1068,11 +1143,12 @@ guidelines.fr <- "
 <a class=sourceLine id=cb8-6 data-line-number=6>          <span class=dt>default.group =</span> <span class=st>&quot;by.layer&quot;</span>, <span class=dt>location.mode =</span> <span class=ot>NULL</span>,</a>
 <a class=sourceLine id=cb8-7 data-line-number=7>          <span class=dt>map.z.val =</span> <span class=ot>NULL</span>, <span class=dt>map.density =</span> <span class=st>&quot;no&quot;</span>, <span class=dt>map.refits =</span> <span class=ot>NULL</span>,</a>
 <a class=sourceLine id=cb8-8 data-line-number=8>          <span class=dt>plot3d.ratio =</span> <span class=dv>1</span>, <span class=dt>plot3d.hulls =</span> <span class=ot>NULL</span>, <span class=dt>plot3d.surfaces =</span> <span class=ot>NULL</span>, <span class=dt>plot3d.refits =</span> <span class=ot>NULL</span>,</a>
-<a class=sourceLine id=cb8-9 data-line-number=9>          <span class=dt>sectionX.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.refits =</span> <span class=ot>NULL</span>, </a>
-<a class=sourceLine id=cb8-10 data-line-number=10>          <span class=dt>sectionY.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.refits =</span> <span class=ot>NULL</span>,</a>
-<a class=sourceLine id=cb8-11 data-line-number=11>          <span class=dt>camera.center =</span> <span class=kw>c</span>(<span class=dv>0</span>, <span class=dv>0</span>, <span class=dv>0</span>), <span class=dt>camera.eye =</span> <span class=kw>c</span>(<span class=fl>1.25</span>, <span class=fl>1.25</span>, <span class=fl>1.25</span>),</a>
-<a class=sourceLine id=cb8-12 data-line-number=12>          <span class=dt>run.plots =</span> <span class=ot>FALSE</span>, <span class=dt>html.export =</span> <span class=ot>TRUE</span>, <span class=dt>table.export =</span><span class=ot>TRUE</span></a>
-<a class=sourceLine id=cb8-13 data-line-number=13>          )</a></code></pre></div>
+<a class=sourceLine id=cb8-9 data-line-number=9>          <span class=dt>point.size =</span> <span class=dv>2</span>,</a>
+<a class=sourceLine id=cb8-10 data-line-number=10>          <span class=dt>sectionX.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.refits =</span> <span class=ot>NULL</span>, </a>
+<a class=sourceLine id=cb8-11 data-line-number=11>          <span class=dt>sectionY.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.refits =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-12 data-line-number=12>          <span class=dt>camera.center =</span> <span class=kw>c</span>(<span class=dv>0</span>, <span class=dv>0</span>, <span class=dv>0</span>), <span class=dt>camera.eye =</span> <span class=kw>c</span>(<span class=fl>1.25</span>, <span class=fl>1.25</span>, <span class=fl>1.25</span>),</a>
+<a class=sourceLine id=cb8-13 data-line-number=13>          <span class=dt>run.plots =</span> <span class=ot>FALSE</span>, <span class=dt>html.export =</span> <span class=ot>TRUE</span>, <span class=dt>table.export =</span><span class=ot>TRUE</span></a>
+<a class=sourceLine id=cb8-14 data-line-number=14>          )</a></code></pre></div>
 <h3 id=carroyage>Carroyage</h3>
 <div class=sourceCode id=cb9><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb9-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>square.size =</span> <span class=dv>100</span>,</a>
 <a class=sourceLine id=cb9-2 data-line-number=2>          <span class=dt>reverse.axis.values =</span> <span class=ot>NULL</span>, <span class=dt>reverse.square.names =</span> <span class=ot>NULL</span>,</a>
@@ -1105,6 +1181,7 @@ guidelines.fr <- "
 <li><strong>plot3d.hulls</strong>: TRUE ou FALSE. Au lancement de l\\\\u2019application, calculer et afficher ou non les enveloppes convexes dans la visualisation 3D.</li>
 <li><strong>plot3d.surfaces</strong>: TRUE ou FALSE. Au lancement de l\\\\u2019application, calculer et afficher ou non les surfaces de r\\\\u00e9gression dans la visualisation 3D.</li>
 <li><strong>plot3d.refits</strong>: TRUE ou FALSE. Au lancement de l\\\\u2019application, afficher ou non les remontages dans la visualisation 3D.</li>
+<li><strong>point.size</strong>: entier. Au lancement de l\\\\u2019application, taille des points dans les visualisations.</li>
 <li><strong>sectionX.x.val</strong>: num\\\\u00e9rique. Au lancement de l\\\\u2019application, valeurs minimale et maximale des coordonn\\\\u00e9es X \\\\u00e0 pr\\\\u00e9s\\\\u00e9lectionner dans la visualisation en section X.</li>
 <li><strong>sectionX.y.val</strong>: num\\\\u00e9rique. Au lancement de l\\\\u2019application, valeurs minimale et maximale des coordonn\\\\u00e9es Y \\\\u00e0 pr\\\\u00e9s\\\\u00e9lectionner dans la visualisation en section X.</li>
 <li><strong>sectionX.refits</strong>: TRUE ou FALSE. Au lancement de l\\\\u2019application, afficher ou non les remontages dans la visualisation en section X.</li>
@@ -1122,7 +1199,7 @@ guidelines.fr <- "
 <h3 id=contr\\\\u00f4le-des-formats-dexport>Contr\\\\u00f4le des formats d\\\\u2019export</h3>
 <ul>
 <li><strong>html.export</strong>: TRUE ou FALSE. Afficher ou non les boutons permettant d\\\\u2019exporter les visualisations en format HTML interactif.</li>
-<li><strong>table.export</strong>: TRUE ou FALSE. Permettre ou non le transfert des donn\\\\u00e9es \\\\u00e0 des <a href=#exports-depuis-et-vers-des-applications-tiers>applications tiers</a> dans l\\\\u2019onglet \\\\u201cStatistiques\\\\u201d.</li>
+<li><strong>table.export</strong>: TRUE ou FALSE. Permettre ou non le transfert des donn\\\\u00e9es \\\\u00e0 des <a href=#exports-depuis-et-vers-des-applications-tierces>applications tierces</a> dans l\\\\u2019onglet \\\\u201cStatistiques\\\\u201d.</li>
 </ul>
 <h3 id=param\\\\u00e8tres-url>Param\\\\u00e8tres URL</h3>
 <p>Une instance <code>archeoViz</code> deploy\\\\u00e9e en ligne sur un serveur peut \\\\u00eatre param\\\\u00e9tr\\\\u00e9e en ajustant les param\\\\u00e8tres de l\\\\u2019URL. Les param\\\\u00e8tres accept\\\\u00e9s support\\\\u00e9s:</p>
@@ -1141,7 +1218,7 @@ guidelines.fr <- "
 <li><code>sectionY.refits</code></li>
 <li><code>run.plots</code></li>
 </ul>
-<p>(Les param\\\\u00e8tres suivants ne sont pas support\\\\u00e9s dans la version actuelle de l\\\\u2019application: <code>map.z.val</code>, <code>sectionX.x.val</code>, <code>sectionX.y.val</code>, <code>sectionY.x.val</code>, <code>sectionY.y.val</code>, <code>lang</code>, <code>set.theme</code>, <code>camera.center</code>, <code>camera.eye</code>, <code>html.export</code>, <code>table.export</code>.)</p>
+<p>(Les param\\\\u00e8tres suivants ne sont pas support\\\\u00e9s dans la version actuelle de l\\\\u2019application: <code>map.z.val</code>, <code>sectionX.x.val</code>, <code>sectionX.y.val</code>, <code>sectionY.x.val</code>, <code>sectionY.y.val</code>, <code>point.size</code>, <code>lang</code>, <code>set.theme</code>, <code>camera.center</code>, <code>camera.eye</code>, <code>html.export</code>, <code>table.export</code>.)</p>
 <p>Les param\\\\u00e8tres doivent \\\\u00eatre \\\\u00e9cris en respectant la syntaxe URL (?param1=value&amp;param2=value2) et avoir le m\\\\u00eame type de valeurs que dans leur usage dans l\\\\u2019interface R. Par exemple, l\\\\u2019URL suivante lance une instance <code>archeoViz</code> \\\\u00e0 partir du tableau principal du jeu de donn\\\\u00e9es <a href=https://zenodo.org/record/8003880>Bilzingsleben</a>:</p>
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv class=uri>https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
 <p>Cette URL fait de m\\\\u00eame, mais inclut \\\\u00e9galement le tableau des remontages (param\\\\u00e8tre <code>&amp;refits.df=</code>) et active l\\\\u2019affichage imm\\\\u00e9diat des relations de remontage dans le graphique 3D et le plan:</p>
@@ -1158,25 +1235,458 @@ guidelines.fr <- "
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Anters%20at%20Bilzingsleben&amp;home.text=Many%20%3Cb%3Eantlers%3C/b%3E&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Antlers%20at%20Bilzingsleben&amp;home.text=Many%20<b>antlers</b>&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
 <p>\\\\u00c0 noter que les param\\\\u00e8tres <code>add.x.square.labels</code>, <code>add.y.square.labels</code>, <code>location.mode</code>, et <code>class.values</code>, qui admettent des valeurs simples ou multiples dans l\\\\u2019interface R (par ex. c(\\\\u201cvalue1\\\\u201d, \\\\u201cvalue2\\\\u201d)) n\\\\u2019admettent qu\\\\u2019une seule valeur lorsqu\\\\u2019employ\\\\u00e9 comme param\\\\u00e8tre d\\\\u2019URL (il s\\\\u2019agit d\\\\u2019une restriction li\\\\u00e9e \\\\u00e0 la syntaxe URL).</p>
 <h1 id=remerciements>Remerciements</h1>
-<p>L\\\\u2019application et le package <code>archeoViz</code> sont d\\\\u00e9velopp\\\\u00e9s et maintenus par S\\\\u00e9bastien Plutniak. Arthur Coulon, Sol\\\\u00e8ne Denis, Olivier Marlet, et Thomas Perrin ont test\\\\u00e9 et soutenu ce projet durant ses premi\\\\u00e8res \\\\u00e9tapes. Renata Araujo, Sara Giardino et Julian Laabs ont traduit l\\\\u2019application respectivement en portugais, italien et allemand.</p>
+<p>L\\\\u2019application et le package <code>archeoViz</code> sont d\\\\u00e9velopp\\\\u00e9s et maintenus par S\\\\u00e9bastien Plutniak. Arthur Coulon, Sol\\\\u00e8ne Denis, Olivier Marlet, et Thomas Perrin ont test\\\\u00e9 et soutenu ce projet durant ses premi\\\\u00e8res \\\\u00e9tapes. Renata Araujo, Sara Giardino, Julian Laabs et Nicolas Delsol ont traduit l\\\\u2019application respectivement en portugais, italien, allemand, et espagnol.</p>
 <h1 id=r\\\\u00e9f\\\\u00e9rences>R\\\\u00e9f\\\\u00e9rences</h1>
 <h2 id=logiciels>Logiciels</h2>
 <ul>
-<li>Plutniak, S\\\\u00e9bastien, Renata Araujo, Sara Giardino, Julian Laabs. 2023. \\\\u201carcheoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. v1.2.2, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
-<li>Plutniak, S\\\\u00e9bastien, Anaïs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04156271>The archeoViz Portal: Dissemination of Spatial Archaeological Datasets</a>\\\\u201d, portail web, <a href=https://analytics.huma-num.fr/archeoviz/home class=uri>https://analytics.huma-num.fr/archeoviz/home</a>.</li>
+<li>Plutniak, S\\\\u00e9bastien, Renata Araujo, Nicolas Delsol, Sara Giardino, Julian Laabs. 2023. \\\\u201carcheoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. v1.3.1, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
+<li>Plutniak, S\\\\u00e9bastien, Ana\\\\u00efs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04156271>The archeoViz Portal: Dissemination of Spatial Archaeological Datasets</a>\\\\u201d, portail web, <a href=https://analytics.huma-num.fr/archeoviz/home class=uri>https://analytics.huma-num.fr/archeoviz/home</a>.</li>
 </ul>
 <h2 id=articles>Articles</h2>
 <ul>
 <li>Plutniak, S\\\\u00e9bastien. Submitted. \\\\u201carcheoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. <em>Journal of Open Source Software</em>.</li>
-<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique : l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
+<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique : l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=pr\\\\u00e9sentations>Pr\\\\u00e9sentations</h2>
 <ul>
 <li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://hal.science/hal-04146410>Fostering the Publication of Spatial Archaeological Data: a Decentralized Approach. The archeoViz Web Application and its Portal</a>\\\\u201d, support d\\\\u2019une pr\\\\u00e9sentation \\\\u00e0 l\\\\u2019University of Florida, Gainesville.</li>
-<li>Plutniak, S\\\\u00e9bastien, Anaïs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04070444>L\\\\u2019application web / package archeoViz et son portail web. Une solution d\\\\u00e9centralis\\\\u00e9e d\\\\u2019\\\\u00e9ditorialisation de donn\\\\u00e9es arch\\\\u00e9ologiques spatialis\\\\u00e9es</a>, support d\\\\u2019une pr\\\\u00e9sentation \\\\u00e0 l\\\\u2019atelier SITRADA, Paris.</li>
+<li>Plutniak, S\\\\u00e9bastien, Ana\\\\u00efs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04070444>L\\\\u2019application web / package archeoViz et son portail web. Une solution d\\\\u00e9centralis\\\\u00e9e d\\\\u2019\\\\u00e9ditorialisation de donn\\\\u00e9es arch\\\\u00e9ologiques spatialis\\\\u00e9es</a>, support d\\\\u2019une pr\\\\u00e9sentation \\\\u00e0 l\\\\u2019atelier SITRADA, Paris.</li>
 </ul>
 "
+
   
+#  : fr ----
+guidelines.es <- "
+<h1 id=archeoviz>archeoViz</h1>
+<p><code>archeoViz</code> es una aplicaci\\\\u00f3n empaquetada de R Shiny para la <em>visualizaci\\\\u00f3n</em>, <em>exploraci\\\\u00f3n</em> y <em>comunicaci\\\\u00f3n</em> web de datos espaciales arqueol\\\\u00f3gicos. Incluye <em>visualizaciones</em> 3D y 2D interactivas, puede generar <em>secciones</em> transversales y <em>mapas</em> de los restos, puede ejecutar <em>estad\\\\u00edsticas espaciales</em> b\\\\u00e1sicas (casco convexo, superficies de regresi\\\\u00f3n, estimaci\\\\u00f3n de densidad de kernel 2D) y mostrar una l\\\\u00ednea de tiempo interactiva de una excavaci\\\\u00f3n. <code>archeoViz</code> se puede usar localmente o implementar en un servidor, ya sea permitiendo que el usuario cargue datos a trav\\\\u00e9s de la interfaz o ejecutando la aplicaci\\\\u00f3n con un conjunto de datos espec\\\\u00edfico. La interfaz de la aplicaci\\\\u00f3n est\\\\u00e1 disponible en ingl\\\\u00e9s, franc\\\\u00e9s, alem\\\\u00e1n, italiano, portugu\\\\u00e9s y espa\\\\u00f1ol.</p>
+<ul>
+<li><a href=#instalaci\\\\u00f3n><strong>Instalaci\\\\u00f3n</strong></a>
+<ul>
+<li><a href=#uso-local>Uso local</a></li>
+<li><a href=#uso-distante>Uso distante</a></li>
+<li><a href=#demonstraci\\\\u00f3n>Demonstraci\\\\u00f3n</a></li>
+</ul></li>
+<li><a href=#recomendaciones-comunitarias><strong>Recomendaciones comunitarias</strong></a>
+<ul>
+<li><a href=#reportar-errores>Reportar errores</a></li>
+<li><a href=#sugerir-cambios>Sugerir cambios</a></li>
+</ul></li>
+<li><a href=#uso><strong>Uso</strong></a>
+<ul>
+<li><a href=#informaci\\\\u00f3n-espacial-en-archeoviz>Informaci\\\\u00f3n espacial en archeoViz</a>
+<ul>
+<li><a href=#ubicaci\\\\u00f3n-exacta-objetos-trazados>Ubicaci\\\\u00f3n exacta: objetos trazados</a></li>
+<li><a href=#ubicaci\\\\u00f3n-vaga-niveles-arbitr\\\\u00e1rios-baldes-objetos-tamizados-y-errores-de-registro>Ubicaci\\\\u00f3n vaga: niveles arbitr\\\\u00e1rios, baldes, objetos tamizados y errores de registro</a></li>
+</ul></li>
+<li><a href=#remontajes-y-medidas-de-f\\\\u00e1brica>Remontajes y medidas de f\\\\u00e1brica</a>
+<ul>
+<li><a href=#remontajes>Remontajes</a></li>
+<li><a href=#medidas-de-f\\\\u00e1brica>Medidas de f\\\\u00e1brica</a></li>
+</ul></li>
+<li><a href=#formato-de-datos>Formato de datos</a>
+<ul>
+<li><a href=#formatear-datos>Formatear datos</a></li>
+<li><a href=#tabla-de-objetos>Tabla de objetos</a></li>
+<li><a href=#tabla-de-remontajes>Tabla de remontajes</a></li>
+<li><a href=#tabla-cronol\\\\u00f3gica>Tabla cronol\\\\u00f3gica</a></li>
+</ul></li>
+<li><a href=#cargar-datos>Cargar datos</a>
+<ul>
+<li><a href=#a-trav\\\\u00e9s-de-la-interfaz-de-la-aplicaci\\\\u00f3n>A trav\\\\u00e9s de la interfaz de la aplicaci\\\\u00f3n</a></li>
+<li><a href=#generaci\\\\u00f3n-de-datos-aleatorios>Generaci\\\\u00f3n de datos aleatorios</a></li>
+<li><a href=#a-trav\\\\u00e9s-de-los-par\\\\u00e1metros-de-la-funci\\\\u00f3n-r>A trav\\\\u00e9s de los par\\\\u00e1metros de la funci\\\\u00f3n R</a></li>
+<li><a href=#a-trav\\\\u00e9s-de-par\\\\u00e1metros-de-url>A trav\\\\u00e9s de par\\\\u00e1metros de URL</a></li>
+</ul></li>
+<li><a href=#subconfiguraci\\\\u00f3n-de-datos>Subconfiguraci\\\\u00f3n de datos</a>
+<ul>
+<li><a href=#por-modo-de-ubicaci\\\\u00f3n>Por modo de ubicaci\\\\u00f3n</a></li>
+<li><a href=#por-capa-o-categor\\\\u00eda-de-objeto>Por capa o categor\\\\u00eda de objeto</a></li>
+</ul></li>
+<li><a href=#visualizaci\\\\u00f3n-interactiva>Visualizaci\\\\u00f3n interactiva</a>
+<ul>
+<li><a href=#caracter\\\\u00edsticas-generales>Caracter\\\\u00edsticas generales</a></li>
+<li><a href=#visualizaci\\\\u00f3n-de-la-incertidumbre-espacial>Visualizaci\\\\u00f3n de la incertidumbre espacial</a></li>
+<li><a href=#salidas-gr\\\\u00e1ficas>Salidas gr\\\\u00e1ficas</a></li>
+</ul></li>
+<li><a href=#estad\\\\u00edsticas-espaciales>Estad\\\\u00edsticas espaciales</a>
+<ul>
+<li><a href=#superficies-de-regresi\\\\u00f3n>Superficies de regresi\\\\u00f3n</a></li>
+<li><a href=#cascos-convexos>Cascos convexos</a></li>
+<li><a href=#densidad-de-kernel-2d>Densidad de kernel 2D</a></li>
+</ul></li>
+</ul></li>
+<li><a href=#reproducibilidad><strong>Reproducibilidad</strong></a></li>
+<li><a href=#exportaciones-desde-y-hacia-aplicaciones-de-terceros><strong>Exportaciones desde y hacia aplicaciones de terceros</strong></a>
+<ul>
+<li><a href=#exportar-desde-archeoviz>Exportar desde archeoViz</a></li>
+<li><a href=#importar-a-archeoviz>Importar a archeoViz</a></li>
+</ul></li>
+<li><a href=#par\\\\u00e1metros-avanzados><strong>Par\\\\u00e1metros avanzados</strong></a>
+<ul>
+<li><a href=#cuadr\\\\u00edcula>Cuadr\\\\u00edcula</a></li>
+<li><a href=#preajuste-de-par\\\\u00e1metros>Preajuste de par\\\\u00e1metros</a></li>
+<li><a href=#visualizaci\\\\u00f3n-de-gr\\\\u00e1ficos-reactivos>Visualizaci\\\\u00f3n de gr\\\\u00e1ficos reactivos</a></li>
+<li><a href=#controlar-los-formatos-de-exportaci\\\\u00f3n>Controlar los formatos de exportaci\\\\u00f3n</a></li>
+<li><a href=#par\\\\u00e1metros-de-url>Par\\\\u00e1metros de URL</a></li>
+</ul></li>
+<li><a href=#agradecimientos><strong>Agradecimientos</strong></a></li>
+<li><a href=#referencias><strong>Referencias</strong></a>
+<ul>
+<li><a href=#software>Software</a></li>
+<li><a href=#articulos>Articulos</a></li>
+<li><a href=#presentationes>Presentationes</a></li>
+</ul></li>
+</ul>
+<h1 id=instalaci\\\\u00f3n>Instalaci\\\\u00f3n</h1>
+<p><code>archeoViz</code> se puede utilizar de dos maneras:</p>
+<ul>
+<li>localmente, en la m\\\\u00e1quina del usuario</li>
+<li>de forma remota, despu\\\\u00e9s de implementar la aplicaci\\\\u00f3n en un servidor distante</li>
+</ul>
+<h2 id=uso-local>Uso local</h2>
+<p>El paquete se puede instalar desde CRAN con:</p>
+<div class=sourceCode id=cb1><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb1-1 data-line-number=1><span class=kw>install.packages</span>(<span class=st>&quot;archeoViz&quot;</span>)</a></code></pre></div>
+<p>La versi\\\\u00f3n de desarrollo est\\\\u00e1 disponible en <em>GitHub</em> y se puede instalar con:</p>
+<div class=sourceCode id=cb2><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb2-1 data-line-number=1><span class=co># install.packages(&quot;devtools&quot;)</span></a>
+<a class=sourceLine id=cb2-2 data-line-number=2>devtools<span class=op>::</span><span class=kw>install_github</span>(<span class=st>&quot;sebastien-plutniak/archeoviz&quot;</span>)</a></code></pre></div>
+<p>Luego, cargue el paquete e inicie la aplicaci\\\\u00f3n con:</p>
+<div class=sourceCode id=cb3><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb3-1 data-line-number=1><span class=kw>library</span>(archeoViz)</a>
+<a class=sourceLine id=cb3-2 data-line-number=2><span class=kw>archeoViz</span>()</a></code></pre></div>
+<h2 id=uso-distante>Uso distante</h2>
+<p>Para implementar <code>archeoViz</code> en su servidor Shiny, primero descargue y descomprima el paquete:</p>
+<div class=sourceCode id=cb4><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb4-1 data-line-number=1><span class=co># configure el directorio de trabajo en su servidor Shiny:</span></a>
+<a class=sourceLine id=cb4-2 data-line-number=2><span class=kw>setwd</span>(<span class=dt>dir =</span> <span class=st>&quot;/some/path/&quot;</span>)</a>
+<a class=sourceLine id=cb4-3 data-line-number=3><span class=co># descargar el package:</span></a>
+<a class=sourceLine id=cb4-4 data-line-number=4><span class=kw>download.file</span>(<span class=dt>url =</span> <span class=st>&quot;https://github.com/sebastien-plutniak/archeoviz/archive/master.zip&quot;</span>,</a>
+<a class=sourceLine id=cb4-5 data-line-number=5>              <span class=dt>destfile =</span> <span class=st>&quot;archeoviz.zip&quot;</span>)</a>
+<a class=sourceLine id=cb4-6 data-line-number=6><span class=co># unzip:</span></a>
+<a class=sourceLine id=cb4-7 data-line-number=7><span class=kw>unzip</span>(<span class=dt>zipfile =</span> <span class=st>&quot;archeoviz.zip&quot;</span>)</a></code></pre></div>
+<p>Luego, abre <code>https://&lt;your-shiny-server&gt;/archeoviz-main</code>.</p>
+<p>Para configurar la aplicaci\\\\u00f3n con tus datos y preferencias, edita el archivo <code>app.R</code>, ubicado en la ra\\\\u00edz del directorio:</p>
+<div class=sourceCode id=cb5><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb5-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>objects.df =</span> <span class=ot>NULL</span>,   <span class=co># data.frame con datos sobre los objetos</span></a>
+<a class=sourceLine id=cb5-2 data-line-number=2>          <span class=dt>refits.df =</span> <span class=ot>NULL</span>,    <span class=co># data.frame opcional para reinstalar datos</span></a>
+<a class=sourceLine id=cb5-3 data-line-number=3>          <span class=dt>timeline.df =</span> <span class=ot>NULL</span>,  <span class=co># data.frame opcional para la cronolog\\\\u00eda de excavaci\\\\u00f3n</span></a>
+<a class=sourceLine id=cb5-4 data-line-number=4>          <span class=dt>default.group =</span><span class=ot>NULL</span>, <span class=co># m\\\\u00e9thode de groupement des donn\\\\u00e9es,</span></a>
+<a class=sourceLine id=cb5-5 data-line-number=5>                               <span class=co># par couche (&quot;by.layer&quot;) ou &quot;by.variable&quot;</span></a>
+<a class=sourceLine id=cb5-6 data-line-number=6>          <span class=dt>title =</span> <span class=ot>NULL</span>,        <span class=co># titulo del sitio / data set</span></a>
+<a class=sourceLine id=cb5-7 data-line-number=7>          <span class=dt>home.text =</span> <span class=ot>NULL</span>,    <span class=co># Contenido HTML para mostrar en la p\\\\u00e1gina de inicio</span></a>
+<a class=sourceLine id=cb5-8 data-line-number=8>          <span class=dt>lang =</span> <span class=st>&quot;fr&quot;</span>          <span class=co># lenguaje de interfaz (&quot;en&quot;: Ingl\\\\u00e9s, &quot;fr&quot;: Franc\\\\u00e9s, &quot;it&quot;: Italiano, &quot;pt&quot;: Portugu\\\\u00e9s, &quot;es&quot;: Espa\\\\u00f1ol)</span></a>
+<a class=sourceLine id=cb5-9 data-line-number=9>          <span class=dt>set.theme =</span> <span class=st>&quot;cosmo&quot;</span>) <span class=co># tema gr\\\\u00e1fico para la interfaz Shiny</span></a></code></pre></div>
+<p>Los valores posibles para el par\\\\u00e1metro <code>set.theme</code> se ilustran en esta <a href=https://rstudio.github.io/shinythemes/>p\\\\u00e1gina</a>. El idioma de la aplicaci\\\\u00f3n se puede configurar con el par\\\\u00e1metro lang.</p>
+<h2 id=demostraci\\\\u00f3n>Demostraci\\\\u00f3n</h2>
+<p>Las instancias de demostraci\\\\u00f3n de la aplicaci\\\\u00f3n se implementan en el servidor <em>Huma Num</em> Shiny:</p>
+<ul>
+<li><a href=https://analytics.huma-num.fr/archeoviz/fr><code>archeoViz</code> en franc\\\\u00e9s</a>.</li>
+<li><a href=https://analytics.huma-num.fr/archeoviz/en><code>archeoViz</code> en ingl\\\\u00e9s</a>.</li>
+<li><a href=https://analytics.huma-num.fr/archeoviz/de><code>archeoViz</code> en alem\\\\u00e1n</a>.</li>
+<li><a href=https://analytics.huma-num.fr/archeoviz/it><code>archeoViz</code> en italiano</a>.</li>
+<li><a href=https://analytics.huma-num.fr/archeoviz/pt><code>archeoViz</code> en portugu\\\\u00e9s</a>.</li>
+<li><a href=https://analytics.huma-num.fr/archeoviz/es><code>archeoViz</code> en espa\\\\u00f1ol</a>.</li>
+</ul>
+<p>Los casos de uso reales se presentan en el <a href=https://analytics.huma-num.fr/archeoviz/home><em>archeoViz Portal</em></a>.</p>
+<h1 id=recomendaciones-comunitarias>Recomendaciones comunitarias</h1>
+<h2 id=reportar-errores>Reportar errores</h2>
+<p>Si encuentra un error, complete un <a href=https://github.com/sebastien-plutniak/archeoviz/issues><em>issue</em></a> con todos los detalles necesarios para reproducirlo.</p>
+<h2 id=suggerir-cambios>Suggerir cambios</h2>
+<p>Sugerencias de cambios a archeoViz son bienvenidas. Estas solicitudes pueden referirse a funciones adicionales, cambios en la documentaci\\\\u00f3n, ejemplos adicionales, nuevas caracter\\\\u00edsticas, etc. Se puede hacer llenando un <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> y, a\\\\u00fan mejor, usando un <em>pull requests</em> y el modelo de <a href=https://docs.github.com/articles/about-pull-requests>Fork and Pull</a> de GitHub.</p>
+<h1 id=uso>Uso</h1>
+<p>Teniendo restos arqueol\\\\u00f3gicos de un sitio determinado, <code>archeoViz</code> est\\\\u00e1 dise\\\\u00f1ado para reducir las barreras t\\\\u00e9cnicas para cumplir tres objetivos:</p>
+<ul>
+<li>exploraci\\\\u00f3n espacial b\\\\u00e1sica y generaci\\\\u00f3n de informes gr\\\\u00e1ficos sencillos;</li>
+<li>publicaci\\\\u00f3n previa r\\\\u00e1pida de datos arqueol\\\\u00f3gicos, destinada a la comunidad cient\\\\u00edfica;</li>
+<li>implementaci\\\\u00f3n r\\\\u00e1pida de una herramienta de visualizaci\\\\u00f3n y comunicaci\\\\u00f3n destinada a un p\\\\u00fablico m\\\\u00e1s amplio.</li>
+</ul>
+<p>Adem\\\\u00e1s, <code>archeoViz</code> es un recurso pedag\\\\u00f3gico adecuado para ense\\\\u00f1ar an\\\\u00e1lisis espacial en arqueolog\\\\u00eda, estructuraci\\\\u00f3n de datos, ciencia abierta y flujo de trabajo reproducible.</p>
+<p>N.B.: en consecuencia, <code>archeoViz</code> no pretende reemplazar herramientas de an\\\\u00e1lisis m\\\\u00e1s sofisticadas (por ejemplo, GIS, paquetes estad\\\\u00edsticos, etc.)</p>
+<h2 id=informaci\\\\u00f3n-espacial-en-archeoviz>Informaci\\\\u00f3n espacial en archeoViz</h2>
+<p>Los arque\\\\u00f3logos registran la ubicaci\\\\u00f3n de los objetos arqueol\\\\u00f3gicos en diferentes escalas y granularidades. En consecuencia, utilizan diferentes conceptos geom\\\\u00e9tricos para representar la ubicaci\\\\u00f3n.</p>
+<h3 id=ubicaci\\\\u00f3n-exacta-objetos-trazados>Ubicaci\\\\u00f3n Exacta: Objetos Trazados</h3>
+<p>El uso de coordenadas de cuadr\\\\u00edcula o \\\\u201cestaci\\\\u00f3n total\\\\u201d electr\\\\u00f3nica permite registrar la ubicaci\\\\u00f3n individual de los objetos en el campo. En ese caso, la ubicaci\\\\u00f3n se representa como puntos en <code>archeoViz</code> (tripletes de coordenadas x, y, z).</p>
+<h3 id=ubicaci\\\\u00f3n-vaga-niveles-arbitr\\\\u00e1rios-baldes-objetos-tamizados-y-errores-de-registro>Ubicaci\\\\u00f3n vaga: niveles arbitr\\\\u00e1rios, baldes, objetos tamizados y errores de registro</h3>
+<p>Sin embargo, tambi\\\\u00e9n es com\\\\u00fan que las coordenadas x, y, z, por objeto no est\\\\u00e9n disponibles, por diferentes motivos debido a:</p>
+<ul>
+<li>errores de registro, p\\\\u00e9rdida de informaci\\\\u00f3n, lo que resulta en la necesidad de reemplazar uno de varios valores de coordenadas por rangos (por ejemplo, falta un valor X para un objeto y se reemplaza por los valores X m\\\\u00ednimo y m\\\\u00e1ximo del cuadrado donde se encuentra este objeto). fue encontrado);</li>
+<li>elecci\\\\u00f3n del m\\\\u00e9todo (p. ej., excavaci\\\\u00f3n realizada y registrada utilizando asadores de profundidad arbitraria, objetos tamizados, etc.).</li>
+</ul>
+<p>En todos estos casos, tenemos que lidiar con la ubicaci\\\\u00f3n imprecisa, cuando los objetos no se pueden ubicar como puntos sino que se encuentran en alg\\\\u00fan lugar entre rangos de coordenadas. La ubicaci\\\\u00f3n imprecisa puede afectar a una, dos o tres dimensiones espaciales (las coordenadas x, y, z, respectivamente).</p>
+<h2 id=remontajes-y-medici\\\\u00f3n-de-f\\\\u00e1brica>Remontajes y medici\\\\u00f3n de f\\\\u00e1brica</h2>
+<h3 id=remontajes>Remontajes</h3>
+<p>Los remontajes suelen ser registrados por los arque\\\\u00f3logos de dos maneras:</p>
+<ol>
+<li>por conjuntos de objetos de remontajes: usando una tabla de dos columnas, donde una fila corresponde a un <strong>objeto</strong>. La primera columna almacena la identificaci\\\\u00f3n \\\\u00fanica del objeto y la segunda columna almacena la identificaci\\\\u00f3n del conjunto de objetos al que pertenece este objeto.</li>
+<li>reensamblando relaciones: usando una tabla de dos columnas, donde una fila corresponde a una <strong>relaci\\\\u00f3n</strong>. La primera columna almacena la identificaci\\\\u00f3n \\\\u00fanica del primer objeto y la segunda columna almacena la identificaci\\\\u00f3n \\\\u00fanica del segundo objeto.</li>
+</ol>
+<p>Aunque la segunda estructura de datos es m\\\\u00e1s precisa, la primera se usa con m\\\\u00e1s frecuencia.</p>
+<p><code>archeoViz</code> procesa y representa las dos estructuras de datos de dos maneras:</p>
+<ul>
+<li>los conjuntos de objetos de remontajes deben describirse usando una columna espec\\\\u00edfica en la tabla <code>objects.df</code> (p. ej., `object_refits) y est\\\\u00e1n representados por el color de los puntos en los gr\\\\u00e1ficos ( como cualquier otra variable);</li>
+<li>las relaciones de remontajes deben describirse usando la tabla <code>refits.df</code> y se visualizan como segmentos que conectan los objetos de remontaje en las parcelas.</li>
+</ul>
+<h3 id=medici\\\\u00f3n-de-f\\\\u00e1brica>Medici\\\\u00f3n de f\\\\u00e1brica</h3>
+<p>Hasta ahora <code>archeoViz</code> no maneja correctamente las mediciones de f\\\\u00e1brica. Sin embargo, el proceso utilizado para representar remontajes tambi\\\\u00e9n se puede adaptar y utilizar para representar las mediciones de f\\\\u00e1brica. Esto requiere distorsionar la estructura de datos de la siguiente manera:</p>
+<ul>
+<li>suponiendo que las mediciones de f\\\\u00e1brica se registraron con dos mediciones en cada objeto (y no con mediciones de inmersi\\\\u00f3n y hundimiento),</li>
+<li>diferentes valores id \\\\u00fanicos deben ser dados a los dos puntos, y las dos mediciones se procesan como si fueran dos objetos reensamblados.</li>
+</ul>
+<p>Vea un ejemplo de este m\\\\u00e9todo <a href=https://analytics.huma-num.fr/archeoviz/shuidonggou2>aqu\\\\u00ed</a>.</p>
+<h2 id=formato-de-datos>Formato de datos</h2>
+<p>Se pueden cargar tres tipos de datos en <code>archeoViz</code>:</p>
+<ul>
+<li>una tabla de \\\\u201cobjetos\\\\u201d (obligatoria), con datos sobre los objetos;</li>
+<li>una tabla de \\\\u201cremontajes\\\\u201d (opcional), con datos sobre los objetos de reacondicionamiento;</li>
+<li>una tabla de \\\\u201ccronolog\\\\u00eda\\\\u201d (opcional), con datos sobre cu\\\\u00e1ndo se excav\\\\u00f3 o midi\\\\u00f3 cada cuadrado del sitio.</li>
+</ul>
+<h3 id=formatear-datos>Formatear datos</h3>
+<p>Las tablas deben ser archivos CSV con la primera fila que contiene las etiquetas de las columnas. Se permiten contenidos en HTML. Esto hace posible, en particular, agregar enlaces a recursos externos (por ejemplo, a identificadores permanentes de objetos en otras bases de datos, o a identificadores de conceptos en ontolog\\\\u00edas / tesauros est\\\\u00e1ndar, etc.).</p>
+<p>El formateo de sus datos se puede hacer:</p>
+<ul>
+<li>ya sea usando un editor de hojas de c\\\\u00e1lculo en su m\\\\u00e1quina para generar archivos CSV;</li>
+<li>o, para la tabla de objetos , usando la aplicaci\\\\u00f3n <a href=https://aurelienroyer.shinyapps.io/Seahors/><em>SEAHORS</em></a> para cargue sus datos, defina las variables (en la pesta\\\\u00f1a \\\\u201cCargar datos\\\\u201d) y exp\\\\u00f3rtelos al formato archeoViz (en la pesta\\\\u00f1a \\\\u201cTabla\\\\u201d / \\\\u201cexportaciones archeoViz\\\\u201d). Tambi\\\\u00e9n es posible enviar directamente los datos a una instancia <code>archeoViz</code> en l\\\\u00ednea.</li>
+</ul>
+<h3 id=tabla-de-objetos>Tabla de objetos</h3>
+<p>Una fila describe un solo objeto con los siguientes campos obligatorios:</p>
+<ul>
+<li><strong>id</strong>: <em>valor alfanum\\\\u00e9rico</em>, identificador \\\\u00fanico del objeto</li>
+<li><strong>xmin</strong>: <em>valor num\\\\u00e9rico</em>, coordenada del objeto en el eje X (en cm)</li>
+<li><strong>ymin</strong>: <em>valor num\\\\u00e9rico</em>, coordenada del objeto en el eje Y (en cm)</li>
+<li><strong>zmin</strong>: <em>valor num\\\\u00e9rico</em>, coordenada del objeto en el eje Z (valor de profundidad positivo en cm)</li>
+<li><strong>layer</strong>: <em>valor alfanum\\\\u00e9rio</em>, identificador de la capa del objeto</li>
+<li><strong>object_type</strong>: <em>valeur alphanum\\\\u00e9rique</em>, categor\\\\u00eda del objeto</li>
+</ul>
+<p>Adem\\\\u00e1s, los campos opcionales son posibles, incluidos:</p>
+<ul>
+<li><strong>square_x</strong>: <em>valor alfanum\\\\u00e9rico</em>, identificador del cuadrado en el eje X</li>
+<li><strong>square_y</strong>: <em>valor alfanum\\\\u00e9rico</em>, identificador del cuadrado en el eje Y</li>
+<li><strong>year</strong>: <em>valor num\\\\u00e9rico</em>, a\\\\u00f1o en que se excav\\\\u00f3 el objeto</li>
+<li><strong>xmax</strong>: <em>valor num\\\\u00e9rico</em>, cuando la ubicaci\\\\u00f3n X del objeto est\\\\u00e1 incluida en un rango de coordenadas X</li>
+<li><strong>ymax</strong>: <em>valor num\\\\u00e9rico</em>, cuando la ubicaci\\\\u00f3n Y del objeto est\\\\u00e1 incluida en un rango de coordenadas Y</li>
+<li><strong>zmax</strong>: <em>valor num\\\\u00e9rico</em>, cuando la ubicaci\\\\u00f3n Z del objeto est\\\\u00e1 incluida en un rango de coordenadas Z</li>
+<li><strong>object_edit</strong>: n\\\\u00famero ilimitado de variables adicionales que describen el objeto (los nombres de campo deben comenzar con object_ y tener diferentes sufijos)</li>
+</ul>
+<p>Las etiquetas de los cuadrados de la cuadr\\\\u00edcula:</p>
+<ul>
+<li>est\\\\u00e1n ordenados alfanum\\\\u00e9ricamente;</li>
+<li>no se muestran para evitar visualizaciones err\\\\u00f3neas, si el n\\\\u00famero de etiquetas no corresponde exactamente al n\\\\u00famero total de cuadrados de 100 cm que se pueden definir en el rango de coordenadas m\\\\u00ednimas y m\\\\u00e1ximas contenidas en las variables xmin e ymin;</li>
+<li>se puede completar con los par\\\\u00e1metros <code>add.x.square.labels</code> y <code>add.y.square.labels</code> de <code>archeoViz()</code> para agregar las etiquetas que faltan (en los ejes X e Y de la cuadr\\\\u00edcula, respectivamente).</li>
+</ul>
+<h3 id=mesa-de-montaje>Mesa de montaje</h3>
+<p>Se puede cargar una tabla de datos con dos columnas para reajustar los datos (formato CSV). Cada fila debe contener los identificadores \\\\u00fanicos de dos objetos de reacondicionamiento (correspondientes a los valores de la columna <code>id</code> en la tabla de objetos).</p>
+<h3 id=tabla-de-l\\\\u00ednea-de-tiempo>Tabla de l\\\\u00ednea de tiempo</h3>
+<p>Se puede cargar una tabla (formato CSV) sobre el historial de excavaciones. La fila indica el a\\\\u00f1o en que se excav\\\\u00f3 o midi\\\\u00f3 cada cuadrado de la cuadr\\\\u00edcula del sitio. Esta tabla debe incluir las siguientes variables:</p>
+<ul>
+<li><strong>year</strong>: <em>valor num\\\\u00e9rico</em>, el a\\\\u00f1o de excavaci\\\\u00f3n</li>
+<li><strong>square_x</strong>: <em>valor alfanum\\\\u00e9rico</em>, identificador del cuadrado excavado en el eje X</li>
+<li><strong>square_y</strong>: <em>valor alfanum\\\\u00e9rico</em>, identificador del cuadrado excavado en el eje Y</li>
+</ul>
+<h2 id=cargar-datos>Cargar datos</h2>
+<p>Hay cuatro formas de ingresar datos en <code>archeoViz</code>:</p>
+<ol>
+<li>cargar tablas de datos a trav\\\\u00e9s de la pesta\\\\u00f1a \\\\u201cCargar datos\\\\u201d,</li>
+<li>generar datos aleatorios en la pesta\\\\u00f1a \\\\u201cCargar datos\\\\u201d;</li>
+<li>cargar tablas de datos a trav\\\\u00e9s de los par\\\\u00e1metros de la funci\\\\u00f3n <code>archeoViz</code>, en la interfaz R;</li>
+<li>cargar tablas de datos a trav\\\\u00e9s de par\\\\u00e1metros de URL, cuando se usa una instancia en l\\\\u00ednea de <code>archeoViz</code>.</li>
+</ol>
+<h3 id=a-trav\\\\u00e9s-de-la-interfaz-de-la-aplicaci\\\\u00f3n>A trav\\\\u00e9s de la interfaz de la aplicaci\\\\u00f3n</h3>
+<p>Los tres tipos de tablas se pueden cargar en la pesta\\\\u00f1a \\\\u201cCargar datos\\\\u201d. El separador CSV (uno de: coma, punto y coma, tabulaci\\\\u00f3n) y el car\\\\u00e1cter utilizado para los puntos decimales (punto o coma).</p>
+<h3 id=generando-datos-aleatorios>Generando Datos Aleatorios</h3>
+<p>El uso de datos generados aleatoriamente es posible con fines de demostraci\\\\u00f3n. Para activar esta funci\\\\u00f3n, configure el control deslizante en \\\\u201cCargar datos\\\\u201d a un valor superior a 0 (establecer el valor nuevamente en 0 desactiva la funci\\\\u00f3n). Se genera un conjunto de datos de \\\\u201cobjetos\\\\u201d, un conjunto de datos de \\\\u201cremontajes\\\\u201d y un conjunto de datos de \\\\u201ccronolog\\\\u00eda\\\\u201d, lo que permite probar todas las funcionalidades de <code>archeoViz</code>.</p>
+<h3 id=a-trav\\\\u00e9s-de-los-par\\\\u00e1metros-de-la-funci\\\\u00f3n-r>A trav\\\\u00e9s de los par\\\\u00e1metros de la funci\\\\u00f3n R</h3>
+<p>La funci\\\\u00f3n de inicio de archeoViz (<code>archeoViz()</code>) se puede ejecutar sin par\\\\u00e1metros</p>
+<div class=sourceCode id=cb6><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb6-1 data-line-number=1><span class=kw>archeoViz</span>()</a></code></pre></div>
+<p>o usando los par\\\\u00e1metros <code>objects.df</code>, <code>refits.df</code> o <code>timeline.df</code> para ingresar datos.marcos sobre los objetos arqueol\\\\u00f3gicos , las relaciones de remontajes entre estos objetos y la cronolog\\\\u00eda de la excavaci\\\\u00f3n, respectivamente.</p>
+<div class=sourceCode id=cb7><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb7-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>objects.df =</span> <span class=ot>NULL</span>,  <span class=co># data.frame con datos sobre los objetos</span></a>
+<a class=sourceLine id=cb7-2 data-line-number=2>          <span class=dt>refits.df =</span> <span class=ot>NULL</span>,   <span class=co># data.frame para reacondicionar objetos</span></a>
+<a class=sourceLine id=cb7-3 data-line-number=3>          <span class=dt>timeline.df =</span> <span class=ot>NULL</span>) <span class=co># data.frame opcional para la cronolog\\\\u00eda de excavaci\\\\u00f3n</span></a></code></pre></div>
+<h3 id=a-trav\\\\u00e9s-de-par\\\\u00e1metros-de-url>A trav\\\\u00e9s de par\\\\u00e1metros de URL</h3>
+<p>La URL de una instancia en l\\\\u00ednea de <code>archeoViz</code> puede incluir los par\\\\u00e1metros:</p>
+<ul>
+<li><code>objects.df=</code></li>
+<li>`refits.df=``</li>
+<li><code>timeline.df=</code></li>
+</ul>
+<p>cuyos valores deben ser la URL de un archivo CSV respetando el formato archeoViz descrito anteriormente. Por ejemplo: <a href=https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv class=uri>https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
+<h2 id=configuraci\\\\u00f3n-secundaria-de-datos>Configuraci\\\\u00f3n secundaria de datos</h2>
+<p>Una vez que se cargan los datos, se puede realizar una subselecci\\\\u00f3n de los datos en el men\\\\u00fa del lado izquierdo. La agrupaci\\\\u00f3n se puede realizar cruzando los siguientes par\\\\u00e1metros: el modo de ubicaci\\\\u00f3n, las capas y la categor\\\\u00eda del objeto.</p>
+<h3 id=por-modo-de-ubicaci\\\\u00f3n>Por Modo de ubicaci\\\\u00f3n</h3>
+<p>Si todos los objetos tienen una ubicaci\\\\u00f3n exacta o una ubicaci\\\\u00f3n vaga, no se propone ninguna opci\\\\u00f3n. Sin embargo, si el conjunto de datos incluye una ubicaci\\\\u00f3n tanto exacta como imprecisa, es posible seleccionar solo una de estas opciones o ambas.</p>
+<h3 id=por-capa-o-categor\\\\u00eda-de-objeto>Por capa o categor\\\\u00eda de objeto</h3>
+<p>Los datos se pueden agrupar de dos maneras: ya sea seg\\\\u00fan su capa o seg\\\\u00fan la variable \\\\u201cobject_\\\\u201d seleccionada. Esta opci\\\\u00f3n determina los colores de los puntos en los gr\\\\u00e1ficos 3D y 2D y c\\\\u00f3mo agrupar los puntos al calcular cascos convexos y superficies de regresi\\\\u00f3n 3D. Los subconjuntos se pueden definir por categor\\\\u00edas de objetos, utilizando los campos \\\\u201cvariable\\\\u201d y \\\\u201cvalures\\\\u201d. Una vez que se selecciona uno de los \\\\u201cobject_type\\\\u201d (u otras posibles variables \\\\u201cobject_\\\\u201d), sus valores aparecen a continuaci\\\\u00f3n y se pueden seleccionar usando las casillas de verificaci\\\\u00f3n. La selecci\\\\u00f3n debe validarse haciendo clic en el bot\\\\u00f3n \\\\u201cValidar\\\\u201d. Esta selecci\\\\u00f3n determina los datos que se mostrar\\\\u00e1n en los gr\\\\u00e1ficos y tablas.</p>
+<h2 id=visualizaci\\\\u00f3n-interactiva>Visualizaci\\\\u00f3n interactiva</h2>
+<h3 id=caracter\\\\u00edsticas-generales>Caracter\\\\u00edsticas generales</h3>
+<p>Los gr\\\\u00e1ficos en las pesta\\\\u00f1as \\\\u201cGr\\\\u00e1fico 3D\\\\u201d, \\\\u201cMapa\\\\u201d, \\\\u201cSecci\\\\u00f3n X\\\\u201d y \\\\u201cSecci\\\\u00f3n Y\\\\u201d se generan utilizando <a href=https://CRAN.R-project.org/package=plotly/><code>plotly</code></a>. Todos los gr\\\\u00e1ficos son din\\\\u00e1micos e incluyen una barra de men\\\\u00fa encima del gr\\\\u00e1fico con varias opciones (generar un archivo de imagen, hacer zoom, mover la vista, etc.). Consulte los detalles en el sitio web <a href=http://plotly.github.io/getting-to-know-the-plotly-modebar/><code>plotly</code></a>.</p>
+<p>Al hacer clic en el elemento de una leyenda, se modifica la visualizaci\\\\u00f3n:</p>
+<ul>
+<li>un simple clic en un elemento activa/desactiva su visualizaci\\\\u00f3n;</li>
+<li>un doble clic en un elemento solo muestra este elemento (otro doble clic lo cancela).</li>
+</ul>
+<p>Esta funci\\\\u00f3n permite elegir qu\\\\u00e9 capas se muestran. Adem\\\\u00e1s, se puede establecer el tama\\\\u00f1o de los puntos y si se deben representar o no las relaciones de reposici\\\\u00f3n.</p>
+<p>Finalmente, al hacer clic en un punto, se muestra informaci\\\\u00f3n sobre ese punto en la tabla debajo del gr\\\\u00e1fico.</p>
+<h3 id=visualizaci\\\\u00f3n-de-la-incertidumbre-espacial>Visualizaci\\\\u00f3n de la incertidumbre espacial</h3>
+<p>En <code>archeoViz</code>, se hace una distinci\\\\u00f3n entre ubicaci\\\\u00f3n exacta (dada como coordenadas x, y, z) y ubicaciones vagas (dada como rangos de coordenadas). Se pueden mostrar ambos tipos de ubicaciones. La incertidumbre de las ubicaciones vagas se puede visualizar representando objetos no como puntos sino como l\\\\u00edneas, planos y vol\\\\u00famenes (si se dan rangos de coordenadas para una, dos o tres dimensiones espaciales, respectivamente). Tenga en cuenta que esta funci\\\\u00f3n consume muchos recursos y su uso con demasiados datos puede ralentizar significativamente la aplicaci\\\\u00f3n.</p>
+<h3 id=salidas-gr\\\\u00e1ficas>Salidas gr\\\\u00e1ficas</h3>
+<p>Se pueden generar varios resultados gr\\\\u00e1ficos en<code>archeoViz</code>.</p>
+<ul>
+<li>Los gr\\\\u00e1ficos en las pesta\\\\u00f1as \\\\u201cGr\\\\u00e1fico 3D\\\\u201d, \\\\u201cMapa\\\\u201c, \\\\u201cSecci\\\\u00f3n X\\\\u201d y \\\\u201cSecci\\\\u00f3n Y\\\\u201d se pueden exportar:
+<ul>
+<li>en formato SVG (haciendo clic en el \\\\u00edcono de \\\\u201cc\\\\u00e1mara\\\\u201d en la barra de men\\\\u00fa sobre el gr\\\\u00e1fico),</li>
+<li>como gr\\\\u00e1ficos interactivos en formato HTML, haciendo clic en el bot\\\\u00f3n \\\\u201cExportar\\\\u201c.</li>
+</ul></li>
+<li>El peque\\\\u00f1o mapa en las pesta\\\\u00f1as \\\\u201cSecci\\\\u00f3n X\\\\u201d y \\\\u201cSecci\\\\u00f3n Y\\\\u201d se puede exportar en SVG haciendo clic en el enlace \\\\u201cDescargar mapa\\\\u201c.</li>
+<li>El plano de la cronolog\\\\u00eda de la excavaci\\\\u00f3n se puede exportar en formato SVG haciendo clic en el bot\\\\u00f3n \\\\u201cDescargar\\\\u201c.</li>
+</ul>
+<h2 id=estad\\\\u00edsticas-espaciales>Estad\\\\u00edsticas espaciales</h2>
+<p><code>archeoViz</code> incluye algunas funcionalidades de an\\\\u00e1lisis espacial, destinadas a un uso b\\\\u00e1sico y exploratorio.</p>
+<h3 id=superficies-de-regresi\\\\u00f3n>Superficies de regresi\\\\u00f3n</h3>
+<p>En la pesta\\\\u00f1a \\\\u201cGr\\\\u00e1fico 3D\\\\u201c, al hacer clic en \\\\u201cCalcular superficies\\\\u201d y \\\\u201cValidar\\\\u201d se muestra la superficie de regresi\\\\u00f3n asociada con cada capa (con al menos 100 puntos). Las superficies se calculan utilizando el modelo aditivo generalizado implementado en el paquete <a href=https://CRAN.R-project.org/package=mgcv><code>mgcv</code></a>.</p>
+<h3 id=cascos-convexos>Cascos convexos</h3>
+<p>En la pesta\\\\u00f1a \\\\u201cGr\\\\u00e1fico 3D\\\\u201c, al hacer clic en \\\\u201cCalcular cascos\\\\u201d y \\\\u201cValidar\\\\u201d se muestra el casco convexo asociado con cada capa (con al menos 20 puntos). Los cascos convexos se calculan usando el paquete<a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a>.</p>
+<h3 id=densidad-kernel-2d>densidad kernel 2D</h3>
+<p>En la pesta\\\\u00f1a \\\\u201cMapa\\\\u201c, al marcar la casilla \\\\u201cCalcular densidad\\\\u201d y hacer clic en \\\\u201cValidar\\\\u201d se genera un mapa con l\\\\u00edneas de contorno que muestran la densidad de los puntos. La densidad se puede calcular para todos los puntos juntos o por capa (con al menos 30 puntos). La densidad del n\\\\u00facleo 2D se calcula con la funci\\\\u00f3n <code>kde2d</code> del paquete <a href=https://CRAN.R-project.org/package=MASS><code>MASS</code></a> (a trav\\\\u00e9s de <a href=https://CRAN.R-project.org/package=ggplot2><code>ggplot2</code></a>).</p>
+<h2 id=reproducibilidad>Reproducibilidad</h2>
+<p><code>archeoViz</code> es, por definici\\\\u00f3n, una aplicaci\\\\u00f3n interactiva. Sin embargo, varias caracter\\\\u00edsticas garantizan la reproducibilidad y comunicabilidad del resultado de las interacciones con la aplicaci\\\\u00f3n.</p>
+<ul>
+<li>La visualizaci\\\\u00f3n 3D se puede exportar en un formato independiente HTML interactivo, teniendo en cuenta la selecci\\\\u00f3n de datos realizada por el usuario.</li>
+<li>En la pesta\\\\u00f1a \\\\u201cReproducibilidad\\\\u201d, se genera din\\\\u00e1micamente un comando R, teniendo en cuenta la configuraci\\\\u00f3n actual de la aplicaci\\\\u00f3n realizada por el usuario.</li>
+<li>En un uso m\\\\u00e1s avanzado, los par\\\\u00e1metros de URL permiten configurar una instancia en l\\\\u00ednea de los par\\\\u00e1metros de inter\\\\u00e9s de la aplicaci\\\\u00f3n y comunicarla mediante el env\\\\u00edo de la URL.</li>
+</ul>
+<h2 id=exportaciones-desde-y-hacia-aplicaciones-de-terceros>Exportaciones desde y hacia aplicaciones de terceros</h2>
+<p><code>archeoViz</code> fue dise\\\\u00f1ado como uno de los componentes b\\\\u00e1sicos de un ecosistema digital descentralizado para datos y an\\\\u00e1lisis arqueol\\\\u00f3gicos. En esta perspectiva, las caracter\\\\u00edsticas y funciones se distribuyen en m\\\\u00faltiples aplicaciones interconectadas, en lugar de concentrarse en unos pocos sistemas. En consecuencia, los datos se pueden exportar e importar entre <code>archeoViz</code> y otras aplicaciones basadas en la web. Tenga en cuenta que, hasta ahora, las funcionalidades de exportaci\\\\u00f3n solo est\\\\u00e1n disponibles cuando se utilizan instancias <code>archeoViz</code> en l\\\\u00ednea.</p>
+<h3 id=exportar-desde-archeoviz>Exportar desde archeoViz</h3>
+<p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> es un paquete R y una aplicaci\\\\u00f3n web para evaluar y evaluar las distinciones entre unidades espaciales arqueol\\\\u00f3gicas (por ejemplo, capas) basado en el an\\\\u00e1lisis de las relaciones de remontajes entre fragmentos de objetos. La versi\\\\u00f3n web de la aplicaci\\\\u00f3n incluye m\\\\u00e9todos para medir la cohesi\\\\u00f3n y la mezcla de unidades espaciales y compararlas con datos simulados. Si se inicia una instancia de <code>archeoViz</code> con <a href=#tableau-des-remontages>datos de remontaje</a>, estos datos se pueden analizar con <code>archeofrag</code> de la pesta\\\\u00f1a \\\\u201cStatistics\\\\u201d. Cf. este <a href=https://analytics.huma-num.fr/archeoviz/grotte16>ejemplo</a>.</p>
+<p>El <a href=https://analytics.huma-num.fr/ModAthom/seriograph/><em>Seriograph</em></a> es una aplicaci\\\\u00f3n web (parte del <a href=https://spartaas.gitpages.huma-num.fr/r-package/><em>SPARTAAS</em></a>) collection) para visualizar cambios en la distribuci\\\\u00f3n cuantitativa de tipos de artefactos en series ordenadas o desordenadas de unidades espaciales. Si se inicia una instancia en l\\\\u00ednea de archeoViz con un conjunto de datos con al menos 2 valores diferentes para la variable <code>layers</code> y 2 valores diferentes para <code>object_type</code> entonces estos datos se pueden analizar con la aplicaci\\\\u00f3n <code>Seriograph</code> desde la pesta\\\\u00f1a \\\\u201cStatistics\\\\u201d. Cf. este <a href=https://analytics.huma-num.fr/archeoviz/poeymau>ejemplo</a>.</p>
+<h3 id=importar-a-archeoviz>Importar a archeoViz</h3>
+<p><a href=https://aurelienroyer.shinyapps.io/Seahors/><em>SEAHORS</em></a> es una aplicaci\\\\u00f3n web y paquete R para visualizar la distribuci\\\\u00f3n espacial de restos arqueol\\\\u00f3gicos. Como <a href=#formatear-datos>se mencion\\\\u00f3</a>, <em>SEAHORS</em> se puede usar para importar, remodelar y enviar un conjunto de datos a una instancia en l\\\\u00ednea de la aplicaci\\\\u00f3n <code>archeoViz</code>.</p>
+<h2 id=par\\\\u00e1metros-avanzados>Par\\\\u00e1metros avanzados</h2>
+<p>La funci\\\\u00f3n <code>archeoViz()</code> se puede configurar con m\\\\u00faltiples par\\\\u00e1metros opcionales, relacionados con:</p>
+<ul>
+<li>os datos de entrada (ya detallados <a href=#a-trav\\\\u00e9s-de-los-par\\\\u00e1metros-de-la-funci\\\\u00f3n-r>arriba</a>),</li>
+<li>el contenido de la p\\\\u00e1gina de inicio (ya detallado <a href=#uso-distante>arriba</a>),</li>
+<li>la <a href=#cuadr\\\\u00edcula>cuadr\\\\u00edcula</a>,</li>
+<li>la <a href=#preajuste-de-par\\\\u00e1metros>preconfiguraci\\\\u00f3n</a> de los par\\\\u00e1metros que se pueden configurar a trav\\\\u00e9s de la interfaz de la aplicaci\\\\u00f3n</li>
+<li>el <a href=#visualizaci\\\\u00f3n-de-gr\\\\u00e1ficos-reactivos>comportamiento reactivo</a> de la aplicaci\\\\u00f3n con respecto a la generaci\\\\u00f3n de gr\\\\u00e1ficos,</li>
+<li><a href=##controlar-los-formatos-de-exportaci\\\\u00f3n>export HTML</a>,</li>
+<li>los <a href=#par\\\\u00e1metros-de-url>par\\\\u00e1metros de URL</a>.</li>
+</ul>
+<!-- end list -->
+
+<div class=sourceCode id=cb8><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb8-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>objects.df=</span><span class=ot>NULL</span>, <span class=dt>refits.df=</span><span class=ot>NULL</span>, <span class=dt>timeline.df=</span><span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-2 data-line-number=2>          <span class=dt>title=</span><span class=ot>NULL</span>, <span class=dt>home.text=</span><span class=ot>NULL</span>, <span class=dt>lang=</span><span class=st>&quot;en&quot;</span>, <span class=dt>set.theme=</span><span class=st>&quot;cosmo&quot;</span>,</a>
+<a class=sourceLine id=cb8-3 data-line-number=3>          <span class=dt>square.size =</span> <span class=dv>100</span>, <span class=dt>reverse.axis.values =</span> <span class=ot>NULL</span>, <span class=dt>reverse.square.names =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-4 data-line-number=4>          <span class=dt>add.x.square.labels =</span> <span class=ot>NULL</span>, <span class=dt>add.y.square.labels =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-5 data-line-number=5>          <span class=dt>class.variable =</span> <span class=ot>NULL</span>, <span class=dt>class.values =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-6 data-line-number=6>          <span class=dt>default.group =</span> <span class=st>&quot;by.layer&quot;</span>, <span class=dt>location.mode =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-7 data-line-number=7>          <span class=dt>map.z.val =</span> <span class=ot>NULL</span>, <span class=dt>map.density =</span> <span class=st>&quot;no&quot;</span>, <span class=dt>map.refits =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-8 data-line-number=8>          <span class=dt>plot3d.ratio =</span> <span class=dv>1</span>, <span class=dt>plot3d.hulls =</span> <span class=ot>NULL</span>, <span class=dt>plot3d.surfaces =</span> <span class=ot>NULL</span>, <span class=dt>plot3d.refits =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-9 data-line-number=9>          <span class=dt>point.size =</span> <span class=dv>2</span>,</a>
+<a class=sourceLine id=cb8-10 data-line-number=10>          <span class=dt>sectionX.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.refits =</span> <span class=ot>NULL</span>, </a>
+<a class=sourceLine id=cb8-11 data-line-number=11>          <span class=dt>sectionY.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.refits =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb8-12 data-line-number=12>          <span class=dt>camera.center =</span> <span class=kw>c</span>(<span class=dv>0</span>, <span class=dv>0</span>, <span class=dv>0</span>), <span class=dt>camera.eye =</span> <span class=kw>c</span>(<span class=fl>1.25</span>, <span class=fl>1.25</span>, <span class=fl>1.25</span>),</a>
+<a class=sourceLine id=cb8-13 data-line-number=13>          <span class=dt>run.plots =</span> <span class=ot>FALSE</span>, <span class=dt>html.export =</span> <span class=ot>TRUE</span>, <span class=dt>table.export =</span><span class=ot>TRUE</span></a>
+<a class=sourceLine id=cb8-14 data-line-number=14>          )</a></code></pre></div>
+<h3 id=cuadr\\\\u00edcula>Cuadr\\\\u00edcula</h3>
+<div class=sourceCode id=cb9><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb9-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>square.size =</span> <span class=dv>100</span>,</a>
+<a class=sourceLine id=cb9-2 data-line-number=2>          <span class=dt>reverse.axis.values =</span> <span class=ot>NULL</span>, <span class=dt>reverse.square.names =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb9-3 data-line-number=3>          <span class=dt>add.x.square.labels =</span> <span class=ot>NULL</span>, <span class=dt>add.y.square.labels =</span> <span class=ot>NULL</span></a>
+<a class=sourceLine id=cb9-4 data-line-number=4>          )</a></code></pre></div>
+<ul>
+<li><strong>square.size</strong> : <em>num\\\\u00e9rico</em>. Tama\\\\u00f1o (ancho y alto) en cent\\\\u00edmetros de los cuadrados en el sistema de cuadr\\\\u00edcula. El valor predeterminado es 100 cm.</li>
+<li><strong>reverse.axis.values</strong> : caract\\\\u00e8res. Nombre del eje o ejes a invertir (cualquier combinaci\\\\u00f3n de \\\\u201cx\\\\u201d, \\\\u201cy\\\\u201d, \\\\u201cz\\\\u201d).</li>
+<li><strong>reverse.square.names</strong> : <em>car\\\\u00e1cter</em>. Nombre del eje o ejes para los que invertir el orden de las etiquetas cuadradas (cualquier combinaci\\\\u00f3n de \\\\u201cx\\\\u201d, \\\\u201cy\\\\u201d, \\\\u201cz\\\\u201d).</li>
+<li><strong>add.x.square.labels</strong> : <em>car\\\\u00e1cter</em>. Etiquetas cuadradas adicionales para el eje \\\\u201cx\\\\u201d.</li>
+<li><strong>add.y.square.labels</strong> : <em>car\\\\u00e1cter</em>. Etiquetas cuadradas adicionales para el eje \\\\u201cy\\\\u201d.</li>
+</ul>
+<h3 id=preajuste-de-par\\\\u00e1metros>Preajuste de par\\\\u00e1metros</h3>
+<div class=sourceCode id=cb10><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb10-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>class.variable =</span> <span class=ot>NULL</span>, <span class=dt>class.values =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb10-2 data-line-number=2>          <span class=dt>default.group =</span> <span class=st>&quot;by.layer&quot;</span>, <span class=dt>location.mode =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb10-3 data-line-number=3>          <span class=dt>map.z.val =</span> <span class=ot>NULL</span>, <span class=dt>map.density =</span> <span class=st>&quot;no&quot;</span>, <span class=dt>map.refits =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb10-4 data-line-number=4>          <span class=dt>plot3d.hulls =</span> <span class=ot>NULL</span>, <span class=dt>plot3d.surfaces =</span> <span class=ot>NULL</span>, <span class=dt>plot3d.refits =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb10-5 data-line-number=5>          <span class=dt>sectionX.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionX.refits =</span> <span class=ot>NULL</span>, </a>
+<a class=sourceLine id=cb10-6 data-line-number=6>          <span class=dt>sectionY.x.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.y.val =</span> <span class=ot>NULL</span>, <span class=dt>sectionY.refits =</span> <span class=ot>NULL</span>,</a>
+<a class=sourceLine id=cb10-7 data-line-number=7>          <span class=dt>camera.center =</span> <span class=ot>NULL</span>, <span class=dt>camera.eye =</span> <span class=ot>NULL</span></a>
+<a class=sourceLine id=cb10-8 data-line-number=8>          )</a></code></pre></div>
+<ul>
+<li><strong>class.variable</strong>: <em>car\\\\u00e1cter</em>. Al iniciar la aplicaci\\\\u00f3n, nombre de la variable a preseleccionar.</li>
+<li><strong>class.values</strong>: <em>car\\\\u00e1cter</em>. vector de caracteres. Al iniciar la aplicaci\\\\u00f3n, nombres de los valores para preseleccionar.</li>
+<li><strong>default.group</strong>: <em>car\\\\u00e1cter</em>. car\\\\u00e1cter. Al iniciar la aplicaci\\\\u00f3n, ajuste preestablecido de la variable utilizada para agrupar datos (una de \\\\u201cby.layer\\\\u201d o \\\\u201cby.variable\\\\u201d).</li>
+<li><strong>location.mode</strong>: <em>car\\\\u00e1cter</em>. Al iniciar la aplicaci\\\\u00f3n, ajuste preestablecido de los m\\\\u00e9todos de ubicaci\\\\u00f3n (cualquier combinaci\\\\u00f3n de \\\\u201cexact\\\\u201d, \\\\u201cfuzzy\\\\u201d, \\\\u201cshow.uncertainty\\\\u201d).</li>
+<li><strong>map.z.val</strong>: num\\\\u00e9rico. Valores m\\\\u00ednimos y m\\\\u00e1ximos de las coordenadas Z para mostrar en el gr\\\\u00e1fico del mapa.</li>
+<li><strong>map.density</strong>: <em>car\\\\u00e1cter</em>. Al iniciar la aplicaci\\\\u00f3n, si desea calcular y mostrar los contornos de densidad en el gr\\\\u00e1fico del mapa (uno de \\\\u201cno\\\\u201d, \\\\u201coverall\\\\u201d, \\\\u201cby.variable\\\\u201d).</li>
+<li><strong>map.refits</strong>: TRUE o FALSE. Ya sea para mostrar remontaje en el gr\\\\u00e1fico del mapa.</li>
+<li><strong>plot3d.hulls</strong>: TRUE o FALSE. Al iniciar la aplicaci\\\\u00f3n, si calcular y mostrar cascos convexos en el gr\\\\u00e1fico 3D.</li>
+<li><strong>plot3d.surfaces</strong>: TRUE o FALSE. Al iniciar la aplicaci\\\\u00f3n, si calcular y mostrar la regresi\\\\u00f3n en el gr\\\\u00e1fico 3D.</li>
+<li><strong>plot3d.refits</strong>: TRUE o FALSE. Al iniciar la aplicaci\\\\u00f3n, si mostrar remontaje en el gr\\\\u00e1fico de secci\\\\u00f3n 3D.</li>
+<li><strong>point.size</strong>: <em>num\\\\u00e9rico</em>. Al iniciar la aplicaci\\\\u00f3n, el tama\\\\u00f1o de los puntos en las visualizaciones.</li>
+<li><strong>sectionX.x.val</strong>: <em>num\\\\u00e9rico</em>. Al iniciar la aplicaci\\\\u00f3n, los valores m\\\\u00ednimos y m\\\\u00e1ximos de las coordenadas X se mostrar\\\\u00e1n en el gr\\\\u00e1fico de la secci\\\\u00f3n X.</li>
+<li><strong>sectionX.y.val</strong>: <em>num\\\\u00e9rico</em>. Al iniciar la aplicaci\\\\u00f3n, los valores m\\\\u00ednimos y m\\\\u00e1ximos de las coordenadas Y se mostrar\\\\u00e1n en el gr\\\\u00e1fico de la secci\\\\u00f3n Y.</li>
+<li><strong>sectionX.refits</strong>: TRUE o FALSE. Al iniciar la aplicaci\\\\u00f3n, si se muestran los remontajes en el gr\\\\u00e1fico de la secci\\\\u00f3n X.</li>
+<li><strong>sectionY.x.val</strong>: <em>num\\\\u00e9rico</em>. Al iniciar la aplicaci\\\\u00f3n, los valores m\\\\u00ednimos y m\\\\u00e1ximos de las coordenadas X se mostrar\\\\u00e1n en el gr\\\\u00e1fico de la secci\\\\u00f3n Y.</li>
+<li><strong>sectionY.y.val</strong>: <em>num\\\\u00e9rico</em>. Al iniciar la aplicaci\\\\u00f3n, los valores m\\\\u00ednimos y m\\\\u00e1ximos de las coordenadas Y se mostrar\\\\u00e1n en el gr\\\\u00e1fico de la secci\\\\u00f3n Y.</li>
+<li><strong>sectionY.refits</strong>: TRUE o FALSE. Al iniciar la aplicaci\\\\u00f3n, si se muestran los reacondicionamientos en el gr\\\\u00e1fico de la secci\\\\u00f3n Y.</li>
+<li><strong>camera.center</strong>: <em>num\\\\u00e9rico</em>. En el gr\\\\u00e1fico 3D, coordenadas del punto al que mira la c\\\\u00e1mara (valores predeterminados: x=0, y=0, z=0).</li>
+<li><strong>camera.eye</strong>: <em>num\\\\u00e9rico</em>. En el gr\\\\u00e1fico 3D, las coordenadas de la posici\\\\u00f3n de la c\\\\u00e1mara (valores predeterminados: x=1,25, y=1,25, z=1,25).</li>
+</ul>
+<h3 id=visualizaci\\\\u00f3n-de-gr\\\\u00e1ficos-reactivos>Visualizaci\\\\u00f3n de gr\\\\u00e1ficos reactivos</h3>
+<div class=sourceCode id=cb11><pre class=sourceCode r><code class=sourceCode r><a class=sourceLine id=cb11-1 data-line-number=1><span class=kw>archeoViz</span>(<span class=dt>run.plots =</span> <span class=ot>FALSE</span>)</a></code></pre></div>
+<ul>
+<li><strong>run.plots</strong>: TRUE o FALSE. Si calcular y mostrar gr\\\\u00e1ficos inmediatamente (sin requerir que el usuario haga clic en el bot\\\\u00f3n \\\\u201cActualizar\\\\u201d).</li>
+</ul>
+<h3 id=controlar-los-formatos-de-exportaci\\\\u00f3n>Controlar los formatos de exportaci\\\\u00f3n</h3>
+<ul>
+<li><strong>html.export</strong>: TRUE o FALSE. Si permitir o no que las figuras se exporten como widgets HTML interactivos.</li>
+<li><strong>table.export</strong>: TRUE o FALSE. Permita o no permita la transferencia de datos a <a href=#exportaciones-desde-y-hacia-aplicaciones-de-terceros>aplicaciones de terceros</a> en la pesta\\\\u00f1a \\\\u201cEstad\\\\u00edsticas\\\\u201d.</li>
+</ul>
+<h3 id=par\\\\u00e1metros-de-url>Par\\\\u00e1metros de URL</h3>
+<p>Una instancia de <code>archeoViz</code> implementada en l\\\\u00ednea en un servidor se puede configurar con par\\\\u00e1metros de URL. Los par\\\\u00e1metros admitidos incluyen:</p>
+<ul>
+<li><code>objects.df</code>, <code>refits.df</code>, <code>timeline.df</code></li>
+<li><code>title</code>, <code>home.text</code></li>
+<li><code>reverse.axis.values</code>, <code>reverse.square.names</code></li>
+<li><code>square.size</code></li>
+<li><code>add.x.square.labels</code>, <code>add.y.square.labels</code></li>
+<li><code>class.variable</code>, <code>class.values</code></li>
+<li><code>default.group</code></li>
+<li><code>location.mode</code></li>
+<li><code>map.density</code>, <code>map.refits</code></li>
+<li><code>plot3d.hulls</code>, <code>plot3d.surfaces</code>, <code>plot3d.refits</code></li>
+<li><code>sectionX.refits</code></li>
+<li><code>sectionY.refits</code></li>
+<li><code>run.plots</code></li>
+</ul>
+<p>(Los siguientes par\\\\u00e1metros no son compatibles con la versi\\\\u00f3n actual: <code>map.z.val</code>, <code>sectionX.x.val</code>, <code>sectionX.y.val</code>, <code>sectionY.x.val</code>, <code>sectionY.y.val</code>, <code>point.size</code>, <code>lang</code>, <code>set.theme</code>, <code>camera.center</code>, <code>camera.eye</code>, <code>html.export</code>, <code>table.export</code>.)</p>
+<p>Los par\\\\u00e1metros deben escribirse usando la sintaxis de URL (?param1=value&amp;param2=value2) y tener el mismo tipo de valores que cuando se usan en la interfaz de R. Por ejemplo, la siguiente URL inicia una instancia de archeoViz utilizando el conjunto de datos <a href=https://zenodo.org/record/8003880>Bilzingsleben</a>:</p>
+<p><a href=https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv class=uri>https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
+<p>Esta URL hace lo mismo, pero tambi\\\\u00e9n incluye la tabla de reacondicionamiento (par\\\\u00e1metro <code>&amp;refits.df=</code>) y activa la visualizaci\\\\u00f3n de las relaciones de reacondicionamiento en los gr\\\\u00e1ficos 3D y de mapa:</p>
+<p><a href=https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&amp;plot3d.refits=TRUE&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&amp;refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv class=uri>https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&amp;plot3d.refits=TRUE&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&amp;refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv</a></p>
+<p>La siguiente URL inicia el conjunto de datos de Bilzingsleben, preconfigurando la aplicaci\\\\u00f3n para:</p>
+<ol>
+<li>agrupa los puntos por variable (par\\\\u00e1metro <code>default.group</code>, con valor <code>by.variable</code> en lugar de <code>by.layer</code>)</li>
+<li>selecciona solo las \\\\u201cAstas\\\\u201d (par\\\\u00e1metro <code>class.values</code>)</li>
+<li>redefine el tama\\\\u00f1o de la cuadr\\\\u00edcula (par\\\\u00e1metro <code>square.size</code>, 500 cm en lugar del valor predeterminado de 100 cm)</li>
+<li>habilitar la visualizaci\\\\u00f3n inmediata de los gr\\\\u00e1ficos (par\\\\u00e1metro <code>run.plots</code>)</li>
+<li>modifica el t\\\\u00edtulo de la p\\\\u00e1gina (par\\\\u00e1metro <code>title</code>)</li>
+<li>modifica el contenido de la p\\\\u00e1gina de inicio con contenidos HTML b\\\\u00e1sicos (par\\\\u00e1metro <code>home.txt</code>)</li>
+</ol>
+<p><a href=https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Anters%20at%20Bilzingsleben&amp;home.text=Many%20%3Cb%3Eantlers%3C/b%3E&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Antlers%20at%20Bilzingsleben&amp;home.text=Many%20<b>antlers</b>&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
+<p>Tenga en cuenta que los par\\\\u00e1metros <code>add.x.square.labels</code>, <code>add.y.square.labels</code>, <code>location.mode</code>, et <code>class.values</code>, que aceptan valores simples o m\\\\u00faltiples en la interfaz de R (p. ej., c(\\\\u201cvalue1\\\\u201d, \\\\u201cvalue2\\\\u201d)) solo aceptan un valor cuando se establecen como par\\\\u00e1metros de URL (esta es una restricci\\\\u00f3n debido a la sintaxis de la URL).</p>
+<h1 id=agradecimientos>Agradecimientos</h1>
+<p>La aplicaci\\\\u00f3n y el paquete <code>archeoViz</code> son desarrollados y mantenidos por S\\\\u00e9bastien Plutniak. Arthur Coulon, Sol\\\\u00e8ne Denis, Olivier Marlet y Thomas Perrin probaron y apoyaron el proyecto en su etapa inicial. Renata Araujo, Sara Giardino, Julian Laabs, y Nicolas Delsol tradujeron la aplicaci\\\\u00f3n al portugu\\\\u00e9s, italiano, alem\\\\u00e1n, y espa\\\\u00f1ol respectivamente.</p>
+<h1 id=referencias>Referencias</h1>
+<h2 id=software>Software</h2>
+<ul>
+<li>Plutniak, S\\\\u00e9bastien, Renata Araujo, Nicolas Delsol, Sara Giardino, Julian Laabs. 2023. \\\\u201carcheoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. v1.3.1, DOI: <a href=https://doi.org/10.5281/zenodo.7460193>10.5281/zenodo.7460193</a>.</li>
+<li>Plutniak, S\\\\u00e9bastien, Ana\\\\u00efs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04156271>The archeoViz Portal: Dissemination of Spatial Archaeological Datasets</a>\\\\u201d, portail web, <a href=https://analytics.huma-num.fr/archeoviz/home class=uri>https://analytics.huma-num.fr/archeoviz/home</a>.</li>
+</ul>
+<h2 id=articulos>Articulos</h2>
+<ul>
+<li>Plutniak, S\\\\u00e9bastien. Submitted. \\\\u201carcheoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. <em>Journal of Open Source Software</em>.</li>
+<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique : l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
+</ul>
+<h2 id=presentationes>Presentationes</h2>
+<ul>
+<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://hal.science/hal-04146410>Fostering the Publication of Spatial Archaeological Data: a Decentralized Approach. The archeoViz Web Application and its Portal</a>\\\\u201d, support d\\\\u2019une pr\\\\u00e9sentation \\\\u00e0 l\\\\u2019University of Florida, Gainesville.</li>
+<li>Plutniak, S\\\\u00e9bastien, Ana\\\\u00efs Vignoles. 2023. \\\\u201c<a href=https://hal.science/hal-04070444>L\\\\u2019application web / package archeoViz et son portail web. Une solution d\\\\u00e9centralis\\\\u00e9e d\\\\u2019\\\\u00e9ditorialisation de donn\\\\u00e9es arch\\\\u00e9ologiques spatialis\\\\u00e9es</a>, support d\\\\u2019une pr\\\\u00e9sentation \\\\u00e0 l\\\\u2019atelier SITRADA, Paris.</li>
+</ul>
+"  
   
   # LIST ----
   # : fr ----
@@ -1562,6 +2072,83 @@ guidelines.fr <- "
     notif.warn.refits = "Viele Passobjekte: Das k\\\\u00f6nnte die App verlangsamen."
   )
 
+ # : es ----
+  es <- list(  
+    welcome = welcome.es,
+    reproducibility = reproducibility.es,
+    tab.home = "Inicio",
+    tab.input = "Datos",
+    tab.plot3d ="Visualizaci\\\\u00f3n 3D",
+    tab.map = "Mapa",
+    tab.section.x = "Perfil X",
+    tab.section.y = "Perfil Y",
+    tab.statistics = "Estad\\\\u00edsticas",
+    tab.timeline = "Cronolog\\\\u00eda",
+    tab.reproducibility = "Reproducibilidad",
+    tab.guidelines = "Ayuda",
+    all = "TODO",
+    download = "Descargar",
+    export = "Exportar (html)",
+    location = "Modo de ubicaci\\\\u00f3n",
+    values = "Valores",
+    validate = "Validar la selecci\\\\u00f3n",
+    refresh = "Actualizar",
+    header.3d.options = "Opciones de visualizaci\\\\u00f3n 3D",
+    header.objects.table = "Cargar tabela de objetos",
+    header.simul.data = "Generar datos de demostraciones simuladas",
+    header.refits.table = "Cargar tabla de remontajes",
+    header.timeline.table = "Cargar tabla de cronolog\\\\u00eda de excavaci\\\\u00f3n",
+    header.export.data = "Enviar datos a aplicaciones externas",
+    export.to = "Enviar para",
+    choose.csv = "Selecione un archivo csv",
+    input.objects = input.objects.es,
+    input.refits = input.refits.es,
+    input.timeline = input.timeline.es,
+    guidelines = guidelines.es,
+    separator = "Separador",
+    decimal = "Decimales",
+    use.demo = "Simular objetos",
+    surfaces = "Calcular superf\\\\u00edcies",
+    hulls = "Calcular cascos",
+    refits = "Mostrar remontajes",
+    point.size = "Tama\\\\u00f1o de los puntos",
+    ratio = "Ratio vertical",
+    density = "Calcular densidad",
+    density.no = "Ninguna",
+    density.all.layers = "Todas las capas",
+    overall = "General",
+    by.layer = "Por capa",
+    by.variable = "Por variable",
+    tab.variable.loc = "N\\\\u00famero de objetos por variable e modo de ubicaci\\\\u00f3n",
+    tab.layer.loc = "N\\\\u00famero de objetos por capa e modo de ubicaci\\\\u00f3n",
+    exact = "Exacto",
+    fuzzy = "Vago",
+    depth = "Profundidad",
+    group = "Agrupar datos",
+    through = "con",
+    total = "Total",
+    objects = "objetos",
+    year = "a\\\\u00f1o",
+    variable = "Variable",
+    show.uncertainty = "Mostrar incertidumbre",
+    linear.uncertainty = "incertidumbre lineal",
+    planar.uncertainty = "incertidumbre planar",
+    volume.uncertainty = "incertidumbre volum\\\\u00e9trica",
+    linear = "Lineal",
+    planar = "Planar",
+    volume = "Volum\\\\u00e9trica",
+    click.on.point = "Haga clic en un punto para obtener m\\\\u00e1s informaci\\\\u00f3n",
+    notif.objects.ok = "Archivo de objetos ok!",
+    notif.objects.not.ok = "Error.Faltan algunos campos obligatorios. Por favor revise el archivo.",
+    notif.no.data = "No hay datos en estos rangos.",
+    notif.tick.value = "Marque al menos un valor (en el men\\\\u00fa del lado izquierdo).",
+    notif.error.coords.type = "Los valores xmin, ymin o zmin no son num\\\\u00e9ricos y se han convertido (posiblemente con p\\\\u00e9rdida).",
+    notif.error.identifier = "Algunos de los identificadores \\\\u00fanicos de los objetos est\\\\u00e1n duplicados.",
+    notif.warn.obj.removed = "Se han eliminado los objetos con coordenadas incompletas..",
+    notif.warn.uncertainty = "Muchos objetos con ubicaci\\\\u00f3n incierta: podr\\\\u00eda ralentizar la aplicaci\\\\u00f3n.",
+    notif.warn.refits = "Muchos remontajes: podr\\\\u00eda ralentizar la aplicaci\\\\u00f3n."
+  )
+  
   
   # SWITCH ----
   if(length(grep("en", lang, ignore.case = T)) == 1){ ui.terms <- en }
@@ -1569,6 +2156,7 @@ guidelines.fr <- "
   if(length(grep("it", lang, ignore.case = T)) == 1){ ui.terms <- it }
   if(length(grep("port", lang, ignore.case = T)) == 1 | lang == "pt"){ ui.terms <- pt}
   if(length(grep("de", lang, ignore.case = T)) == 1){ ui.terms <- de }
+  if(length(grep("es", lang, ignore.case = T)) == 1){ ui.terms <- es }
   
   
   ui.terms

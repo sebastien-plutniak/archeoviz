@@ -1,6 +1,6 @@
 app_server <- function(input, output, session) {
   .data <- NULL
-
+  
   # retrieve parameters from URL ----
   observe({
     query <- shiny::parseQueryString(session$clientData$url_search)
@@ -48,7 +48,7 @@ app_server <- function(input, output, session) {
           )))
         }
       }
-
+      
       # coerce to logical values:
       sel <- param.list %in% c("TRUE", "FALSE", "T", "F")
       param.list[ sel ] <- as.logical(param.list[ sel ])
@@ -56,7 +56,7 @@ app_server <- function(input, output, session) {
       shinyOptions("params" =  param.list)
     }
   }, priority=10)
-    
+  
   
   
   # Interface ----
@@ -225,7 +225,7 @@ app_server <- function(input, output, session) {
     showNotification(.term_switcher(result$notif.text),
                      type = result$notif.type, duration = 10)
     if(result$notif.type == "error") return(NULL)
-
+    
     result$data
   })
   
@@ -649,7 +649,7 @@ app_server <- function(input, output, session) {
     
     # : add refits lines  ----
     plot3d.refits <- sum(c(input$plot3d.refits,
-                          getShinyOption("params")$plot3d.refits))
+                           getShinyOption("params")$plot3d.refits))
     if( plot3d.refits > 0 ){
       refitting.df <- refitting.df()
       refitting.df <- refitting.df$refits.3d
@@ -795,7 +795,7 @@ app_server <- function(input, output, session) {
     } # end if("show.uncertainty" %in% input$location)
     
     
-    # : add surfaces ####
+    # : add surfaces ----
     if(sum(input$plot3d.surfaces) > 0){
       
       # filter the layers for which a regression surfaces must be computed:
@@ -822,14 +822,18 @@ app_server <- function(input, output, session) {
     
     # :  add convex hull ####
     if(input$plot3d.hulls){
-      # filter the layers for which a convex hull must be computed:
-      subsets <- table(dataset$group.variable) 
-      subsets <- names(subsets[subsets > 19])
       
       # compute hulls:
-      mesh.list <- lapply(subsets, function(x) 
-        .get_cxhull_model(df=dataset,
-                          var=group.variable(), 
+      
+      hulls.selection <- input$hulls.selection
+      # for first launch (with run.plot=T) :
+      if(is.null(hulls.selection)){ 
+        hulls.selection <- hulls.list()$hull.selected
+      }
+      
+      mesh.list <- lapply(hulls.selection, function(x) 
+        .get_cxhull_model(df = dataset,
+                          var = group.variable(), 
                           value = x))
       # add convex hull mesh:
       for(i in seq_len(length(mesh.list)) ){
@@ -868,7 +872,7 @@ app_server <- function(input, output, session) {
     
     # camera settings:
     camera.values <- list()
-
+    
     center.xyz <- getShinyOption("params")$camera.center
     camera.values$center <- list(x = center.xyz[1],
                                  y = center.xyz[2], z = center.xyz[3])
@@ -991,7 +995,7 @@ app_server <- function(input, output, session) {
     } else{
       sectionY.point.size <- input$sectionY.point.size
     }
-
+    
     # sel <- (dataset$y >= input$sectionY.y.val[1] & dataset$y <= input$sectionY.y.val[2]) &
     #   (dataset$x >= input$sectionY.x.val[1] & dataset$x <= input$sectionY.x.val[2])
     
@@ -1023,7 +1027,7 @@ app_server <- function(input, output, session) {
       htmlwidgets::saveWidget(sectionYplot(), file = file3)
     }
   )
- # : Map plot ----
+  # : Map plot ----
   map <- eventReactive(input$goButtonZ, {
     req(init.values)   
     
@@ -1209,7 +1213,7 @@ app_server <- function(input, output, session) {
   # })
   
   # : Object values  ----
-  output$class.values <- renderUI({
+  class.values <- reactive({
     # times <- input$reset_input # reset selection
     # actionButton("reset_input", "Reset values"),
     req(objects.dataset, input$class.variable)
@@ -1232,12 +1236,14 @@ app_server <- function(input, output, session) {
     } else {
       selected.value <- input$class.values
     }
-    
-    div( 
-      checkboxGroupInput("class.values", .term_switcher("values"),
-                         c(.term_switcher("all"), sort(values)),
-                         selected = selected.value )
-    )
+    list("values" = values, "selected.value" = selected.value)
+  })
+  
+  output$class.values <- renderUI({
+    checkboxGroupInput("class.values", .term_switcher("values"),
+                       c(.term_switcher("all"), 
+                         sort(class.values()$values)),
+                       selected = class.values()$selected.value )
   })
   
   # : Group  selector ----
@@ -1347,6 +1353,39 @@ app_server <- function(input, output, session) {
     }
   })
   
+  # : Hull selector  ----
+  hulls.list <- reactive({
+    
+    if( sum(input$plot3d.hulls, getShinyOption("params")$plot3d.hulls) == 0){
+      return()
+    }
+    
+    # hulls can be computed only for subgroups of data with at least 19 points
+    dataset <- objects.subdataset()
+    hull.values <- table(dataset$group.variable) 
+    hull.values <- names(hull.values[hull.values > 19])
+    
+    hull.selected <- hull.values
+    
+    value <- getShinyOption("params")$hulls.class.values
+    if( ! is.null(value) ){
+      if(sum(value %in% hull.values) > 0 ){
+        hull.selected <- value
+      }
+    }
+    
+    list("hull.values" = hull.values, "hull.selected" = hull.selected)
+  })
+  
+  output$select.hulls <- renderUI({
+    req(hulls.list())
+    checkboxGroupInput("hulls.selection", 
+                       .term_switcher("selection"),
+                       hulls.list()$hull.values,
+                       selected = hulls.list()$hull.selected
+    )
+  })
+  
   # : button html export 3D  ----
   output$download.button.html.export.3d <- renderUI({
     if(getShinyOption("html.export")){
@@ -1451,7 +1490,7 @@ app_server <- function(input, output, session) {
                                         data = seriograph.table(),
                                         filterFunc = function(data, req) { 
                                           httpResponse(200, "text/csv",
-                                            write.csv(data, row.names = TRUE)
+                                                       write.csv(data, row.names = TRUE)
                                           )
                                         })
     object.id <- gsub(".*w=(.*)&nonce.*", "\\1", data.url)
@@ -1464,7 +1503,7 @@ app_server <- function(input, output, session) {
     
     paste0("https://analytics.huma-num.fr/ModAthom/seriograph/?data=", data.url)
   })
-
+  
   
   # seriograph link
   output$run.seriograph <- renderUI({
@@ -1476,8 +1515,8 @@ app_server <- function(input, output, session) {
                  label = "Seriograph",
                  onclick = paste("window.open('",
                                  seriograph.url(), "', '_blank')")),
-    "(", .term_switcher("download"),
-    downloadLink("download.seriograph", " CSV"),  ")"
+      "(", .term_switcher("download"),
+      downloadLink("download.seriograph", " CSV"),  ")"
     )
   })
   
@@ -1485,7 +1524,7 @@ app_server <- function(input, output, session) {
   
   archeofrag.tables <- reactive({
     req(input$class.variable, objects.dataset(), refitting.df())
-  
+    
     if( (Sys.getenv('SHINY_PORT') == "") |
         (! getShinyOption("table.export")) ){ return() }
     
@@ -1524,7 +1563,7 @@ app_server <- function(input, output, session) {
                                          data = archeofrag.tables()[[1]],
                                          filterFunc = function(data, req) { 
                                            httpResponse(200, "text/csv",
-                                            write.csv(data, row.names=FALSE)
+                                                        write.csv(data, row.names=FALSE)
                                            )
                                          })
     object.id2 <- gsub(".*w=(.*)&nonce.*", "\\1", edges.url)
@@ -1536,20 +1575,20 @@ app_server <- function(input, output, session) {
                         "/session/", session$token, "/download/download.archeofrag.edges")
     
     # nodes 
-      nodes.url <- session$registerDataObj(name = "table",
-                                           data = archeofrag.tables()[[2]],
-                                           filterFunc = function(data, req) { 
-                                             httpResponse(200, "text/csv",
-                                                          write.csv(data, row.names = FALSE)
-                                             )
-                                           })
-      object.id <- gsub(".*w=(.*)&nonce.*", "\\1", nodes.url)
-      
-      nodes.url <- paste0(session$clientData$url_protocol, "//",
-                          session$clientData$url_hostname,
-                          session$clientData$url_pathname,
-                          "_w_", object.id, 
-                          "/session/", session$token, "/download/download.archeofrag.nodes")
+    nodes.url <- session$registerDataObj(name = "table",
+                                         data = archeofrag.tables()[[2]],
+                                         filterFunc = function(data, req) { 
+                                           httpResponse(200, "text/csv",
+                                                        write.csv(data, row.names = FALSE)
+                                           )
+                                         })
+    object.id <- gsub(".*w=(.*)&nonce.*", "\\1", nodes.url)
+    
+    nodes.url <- paste0(session$clientData$url_protocol, "//",
+                        session$clientData$url_hostname,
+                        session$clientData$url_pathname,
+                        "_w_", object.id, 
+                        "/session/", session$token, "/download/download.archeofrag.nodes")
     
     paste0("https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag/?objects=", nodes.url, "&relations=", edges.url)
   })
@@ -1597,25 +1636,26 @@ app_server <- function(input, output, session) {
     }
     
     reactive.params <- list("home.text" = "' '",
-                         "add.x.square.labels" = getShinyOption("add.x.square.labels"),
-                         "add.y.square.labels" = getShinyOption("add.y.square.labels"),
-                         "class.variable" = paste0("'", input$class.variable, "'"),
-                         "class.values" = class.values, 
-                         "default.group" = paste0("'", input$group.selection, "'"),
-                         "location.mode" = paste0("'", input$location, "'"),
-                         "map.z.val" = input$map.z.val,
-                         "map.density" = paste0("'", input$map.density, "'"),
-                         "map.refits" = input$map.refits,
-                         "plot3d.ratio" = input$plot3d.ratio,
-                         "plot3d.hulls" = input$plot3d.hulls,
-                         "plot3d.surfaces" = input$plot3d.surfaces,
-                         "plot3d.refits" = input$plot3d.refits,
-                         "sectionX.x.val" = input$sectionX.x.val,
-                         "sectionX.y.val" = input$sectionX.y.val,
-                         "sectionX.refits" = input$sectionX.refits,
-                         "sectionY.x.val" = input$sectionY.x.val,
-                         "sectionY.y.val" = input$sectionY.y.val,
-                         "sectionY.refits" = input$sectionY.refits
+                            "add.x.square.labels" = getShinyOption("add.x.square.labels"),
+                            "add.y.square.labels" = getShinyOption("add.y.square.labels"),
+                            "class.variable" = paste0("'", input$class.variable, "'"),
+                            "class.values" = class.values, 
+                            "default.group" = paste0("'", input$group.selection, "'"),
+                            "location.mode" = paste0("'", input$location, "'"),
+                            "map.z.val" = input$map.z.val,
+                            "map.density" = paste0("'", input$map.density, "'"),
+                            "map.refits" = input$map.refits,
+                            "plot3d.ratio" = input$plot3d.ratio,
+                            "plot3d.hulls" = input$plot3d.hulls,
+                            "hulls.class.values" = input$hulls.selection,
+                            "plot3d.surfaces" = input$plot3d.surfaces,
+                            "plot3d.refits" = input$plot3d.refits,
+                            "sectionX.x.val" = input$sectionX.x.val,
+                            "sectionX.y.val" = input$sectionX.y.val,
+                            "sectionX.refits" = input$sectionX.refits,
+                            "sectionY.x.val" = input$sectionY.x.val,
+                            "sectionY.y.val" = input$sectionY.y.val,
+                            "sectionY.refits" = input$sectionY.refits
     )
     
     .do_r_command(reactive.params, refitting.df())

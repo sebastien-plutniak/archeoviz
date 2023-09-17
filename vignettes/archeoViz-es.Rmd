@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 
 
-`archeoViz` es una aplicación empaquetada de R Shiny para la *visualización*, *exploración* y *comunicación* web de datos espaciales arqueológicos. Incluye *visualizaciones* 3D y 2D interactivas, puede generar *secciones* transversales y *mapas* de los restos, puede ejecutar *estadísticas espaciales* básicas (casco convexo, superficies de regresión, estimación de densidad de kernel 2D) y mostrar una línea de tiempo interactiva de una excavación. `archeoViz` se puede usar localmente o implementar en un servidor, ya sea permitiendo que el usuario cargue datos a través de la interfaz o ejecutando la aplicación con un conjunto de datos específico. La interfaz de la aplicación está disponible en inglés, francés, alemán, italiano, portugués y español.
+`archeoViz` es una aplicación empaquetada de R Shiny para la *visualización*, *exploración* y *comunicación* web de datos espaciales arqueológicos. Incluye *visualizaciones* 3D y 2D interactivas, puede generar *secciones* transversales y *mapas* de los restos, puede ejecutar *estadísticas espaciales* básicas (casco convexo, superficies de regresión, estimación de densidad de kernel 2D) y mostrar una línea de tiempo interactiva de una excavación. `archeoViz` se puede usar localmente o implementar en un servidor, ya sea permitiendo que el usuario cargue datos a través de la interfaz o ejecutando la aplicación con un conjunto de datos específico. La interfaz de la aplicación está disponible en alemán, español, italiano, inglés, francés, portugués, y rumano.
 
 
  
@@ -32,11 +32,13 @@ knitr::opts_chunk$set(
   - [Sugerir cambios](#sugerir-cambios)
 - [**Uso**](#uso)
   - [Información espacial en archeoViz](#información-espacial-en-archeoviz)
-    - [Ubicación exacta: objetos trazados](#ubicación-exacta-objetos-trazados)
-    - [Ubicación vaga: niveles arbitrários, baldes, objetos tamizados y errores de registro](#ubicación-vaga-niveles-arbitrários-baldes-objetos-tamizados-y-errores-de-registro)
-  - [Remontajes y medidas de fábrica](#remontajes-y-medidas-de-fábrica)
+    - [Puntos, ubicación exacta: objetos trazados](#puntos-ubicación-exacta-objetos-trazados)
+    - [Puntos, ubicación vaga: niveles arbitrários, baldes, objetos tamizados y errores de registro](#puntos-ubicación-vaga-niveles-arbitrários-baldes-objetos-tamizados-y-errores-de-registro)
+    - [Líneas](#líneas)
+    - [Superficies](#superficies)
+  - [Remontajes y medición de fábrica](#remontajes-y-medición-de-fábrica)
       - [Remontajes](#remontajes)
-      - [Medidas de fábrica](#medidas-de-fábrica)  
+      - [Medición de fábrica](#medición-de-fábrica)  
   - [Formato de datos](#formato-de-datos)
      - [Formatear datos](#formatear-datos)
      - [Tabla de objetos](#tabla-de-objetos)
@@ -73,6 +75,7 @@ knitr::opts_chunk$set(
   - [Software](#software)
   - [Articulos](#articulos)
   - [Presentationes](#presentationes)
+  - [Sitios web](#sitios-web)
  
  
 # Instalación
@@ -148,6 +151,7 @@ Las instancias de demostración de la aplicación se implementan en el servidor 
 * [`archeoViz` en italiano](https://analytics.huma-num.fr/archeoviz/it).
 * [`archeoViz` en portugués](https://analytics.huma-num.fr/archeoviz/pt).
 * [`archeoViz` en español](https://analytics.huma-num.fr/archeoviz/es).
+* [`archeoViz` en rumano](https://analytics.huma-num.fr/archeoviz/ro).
 
 Los casos de uso reales se presentan en el [*archeoViz Portal*](https://analytics.huma-num.fr/archeoviz/home).
 
@@ -179,11 +183,11 @@ N.B.: en consecuencia, `archeoViz` no pretende reemplazar herramientas de análi
 
 Los arqueólogos registran la ubicación de los objetos arqueológicos en diferentes escalas y granularidades. En consecuencia, utilizan diferentes conceptos geométricos para representar la ubicación.
 
-### Ubicación Exacta: Objetos Trazados
+### Puntos, ubicación exacta: objetos trazados
 
 El uso de coordenadas de cuadrícula o “estación total” electrónica permite registrar la ubicación individual de los objetos en el campo. En ese caso, la ubicación se representa como puntos en `archeoViz` (tripletes de coordenadas x, y, z).
 
-### Ubicación vaga: niveles arbitrários, baldes, objetos tamizados y errores de registro
+### Puntos, ubicación vaga: niveles arbitrários, baldes, objetos tamizados y errores de registro
 
 Sin embargo, también es común que las coordenadas x, y, z, por objeto no estén disponibles, por diferentes motivos debido a:
 
@@ -192,6 +196,17 @@ Sin embargo, también es común que las coordenadas x, y, z, por objeto no esté
 
 En todos estos casos, tenemos que lidiar con la ubicación imprecisa, cuando los objetos no se pueden ubicar como puntos sino que se encuentran en algún lugar entre rangos de coordenadas. La ubicación imprecisa puede afectar a una, dos o tres dimensiones espaciales (las coordenadas x, y, z, respectivamente).
 
+Esta función también puede utilizarse para tener en cuenta la imprecisión de los instrumentos topográficos.
+
+
+### Líneas
+
+Las líneas son geometrías útiles para representar relaciones. En arqueología, pueden ser relaciones de [remontajes](#remontajes) entre fragmentos de objetos, orientación ([medición de fábrica](#medición-de-fábrica)), etc. 
+Las líneas se generan a partir de datos cargados como datos de reensamblaje, ya sea desde la pestaña “Datos” o utilizando el parámetro `refits.df` en la función `archeoViz()`.
+
+### Superficies
+
+Las superficies son geometrías útiles para representar niveles del terreno, zanjas, fosos, etc. En `archeoViz`, esto puede conseguirse definiendo un subconjunto de puntos que resuman la superficie deseada y activando después la visualización del [casco convexo](#cascos-convexos) de este subconjunto.
 
 
 ## Remontajes y medición de fábrica
@@ -324,7 +339,7 @@ archeoViz(objects.df = NULL,  # data.frame con datos sobre los objetos
 La URL de una instancia en línea de `archeoViz` puede incluir los parámetros:
 
 * `objects.df=`
-* `refits.df=`` 
+* `refits.df=`
 * `timeline.df=`
 
 cuyos valores deben ser la URL de un archivo CSV respetando el formato archeoViz descrito anteriormente. Por ejemplo:
@@ -387,7 +402,13 @@ En la pestaña “Gráfico 3D“, al hacer clic en “Calcular superficies” y 
 
 ### Cascos convexos
 
-En la pestaña “Gráfico 3D“, al hacer clic en “Calcular cascos” y “Validar” se muestra el casco convexo asociado con cada capa (con al menos 20 puntos). Los cascos convexos se calculan usando el paquete[`cxhull`](https://CRAN.R-project.org/package=cxhull).
+En la pestaña “Visualización 3D“, los cascos convexos se muestran:
+
+1. marcando la casilla “cascos convexos”,
+2. seleccionando, en el menú que aparece, los subconjuntos de puntos para los que deben calcularse los cascos,
+3. pulsando “Validar”.
+
+El casco convexo asociado con cada capa (con al menos 20 puntos) se muestran. Los cascos convexos se calculan usando el paquete[`cxhull`](https://CRAN.R-project.org/package=cxhull).
 
 ### densidad kernel 2D
 
@@ -428,7 +449,7 @@ La función `archeoViz()` se puede configurar con múltiples parámetros opciona
 * la [cuadrícula](#cuadrícula),
 * la [preconfiguración](#preajuste-de-parámetros) de los parámetros que se pueden configurar a través de la interfaz de la aplicación
 * el [comportamiento reactivo](#visualización-de-gráficos-reactivos) de la aplicación con respecto a la generación de gráficos,
-* [export HTML](##controlar-los-formatos-de-exportación),
+* [export HTML](#controlar-los-formatos-de-exportación),
 * los [parámetros de URL](#parámetros-de-url).
 
 
@@ -441,8 +462,8 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           class.variable = NULL, class.values = NULL,
           default.group = "by.layer", location.mode = NULL,
           map.z.val = NULL, map.density = "no", map.refits = NULL,
-          plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
-          point.size = 2,
+          plot3d.ratio = 1, plot3d.hulls = FALSE, hulls.class.values = NULL,
+          plot3d.surfaces = NULL, plot3d.refits = NULL, point.size = 2,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
           camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
@@ -486,6 +507,7 @@ archeoViz(class.variable = NULL, class.values = NULL,
 * **map.density**: *carácter*. Al iniciar la aplicación, si desea calcular y mostrar los contornos de densidad en el gráfico del mapa (uno de “no”, “overall”, “by.variable”).
 * **map.refits**: TRUE o FALSE. Ya sea para mostrar remontaje en el gráfico del mapa.
 * **plot3d.hulls**: TRUE o FALSE. Al iniciar la aplicación, si calcular y mostrar cascos convexos en el gráfico 3D.
+* **hulls.class.values**: *carácter*. Al iniciar la aplicación, los nombres de los subconjuntos de puntos para los que se calcularán los cascos convexos.
 * **plot3d.surfaces**: TRUE o FALSE. Al iniciar la aplicación, si calcular y mostrar la regresión en el gráfico 3D.
 * **plot3d.refits**: TRUE o FALSE. Al iniciar la aplicación, si mostrar remontaje en el gráfico de sección 3D.
 * **point.size**: *numérico*. Al iniciar la aplicación, el tamaño de los puntos en las visualizaciones.
@@ -562,13 +584,13 @@ Tenga en cuenta que los parámetros  `add.x.square.labels`, `add.y.square.labels
 
 # Agradecimientos
 
-La aplicación y el paquete `archeoViz` son desarrollados y mantenidos por Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet y Thomas Perrin probaron y apoyaron el proyecto en su etapa inicial. Renata Araujo, Sara Giardino, Julian Laabs, y Nicolas Delsol tradujeron la aplicación al portugués, italiano, alemán, y español respectivamente.
+La aplicación y el paquete `archeoViz` son desarrollados y mantenidos por Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet y Thomas Perrin probaron y apoyaron el proyecto en su etapa inicial. Renata Araujo, Laura Coltofean, Sara Giardino, Julian Laabs, y Nicolas Delsol tradujeron la aplicación al portugués, rumano, italiano, alemán, y español respectivamente.
 
 # Referencias
 
 ## Software 
 
-* Plutniak, Sébastien, Renata Araujo, Nicolas Delsol, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.3.1, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
+* Plutniak, Sébastien, Renata Araujo, Laura Coltofean, Nicolas Delsol, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.3.2, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
 * Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal: Dissemination of Spatial Archaeological Datasets](https://hal.science/hal-04156271)”, portail web, https://analytics.huma-num.fr/archeoviz/home.
 
 ## Articulos
@@ -578,6 +600,9 @@ La aplicación y el paquete `archeoViz` son desarrollados y mantenidos por Séba
 
 ## Presentationes
 
-* Plutniak, Sébastien. 2023. “[Fostering the Publication of Spatial Archaeological Data: a Decentralized Approach. The archeoViz Web Application and its Portal](https://hal.science/hal-04146410)”, support d'une présentation à l'University of Florida, Gainesville.
-* Plutniak, Sébastien, Anaïs Vignoles. 2023. “[L’application web / package archeoViz et son portail web. Une solution décentralisée d’éditorialisation de données archéologiques spatialisées](https://hal.science/hal-04070444), support d'une présentation à l'atelier SITRADA, Paris.
+* Plutniak, Sébastien. 2023. “[Fostering the Publication of Spatial Archaeological Data: a Decentralized Approach. The archeoViz Web Application and its Portal](https://hal.science/hal-04146410)”, diapositivas de una presentación en la Universidad de Florida, Gainesville.
+* Plutniak, Sébastien, Anaïs Vignoles. 2023. “[L’application web / package archeoViz et son portail web. Une solution décentralisée d’éditorialisation de données archéologiques spatialisées](https://hal.science/hal-04070444), diapositivas de una presentación en el SITRADA workshop, Paris.
 
+## Sitios web
+
+* El blog *archeoViz. Data visualization in archaeology. Re-use, visualization, dissemination of spatial data*: https://archeoviz.hypotheses.org

@@ -1,3 +1,9 @@
+# archeoViz 1.3.2
+Released: 2023-09-XX
+
+* In the 3D view, the subsets of points for which convex hulls are computed can be selected (using the graphic user interface or the 'hulls.class.values' parameter of the archeoViz() function).
+* Add linguistic support for Rumanian.
+
 # archeoViz 1.3.1
 Released: 2023-08-29
 

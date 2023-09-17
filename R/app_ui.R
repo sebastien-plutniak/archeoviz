@@ -109,27 +109,27 @@ ui <- shinyUI(
           tabPanel(.term_switcher("tab.plot3d"), # 3D plot ----
                    fluidRow(
                      column(10,
-                            plotly::plotlyOutput("plot3d",  width = "100%", height = 650)
+                            plotly::plotlyOutput("plot3d",  width = "100%", height = 650),
+                            p(.term_switcher("click.on.point")),
+                            uiOutput("plot3d.selection.tab"),
+                            br()
                      ),
                      column(2,
                             br(),
                             actionButton("goButton3D", .term_switcher("refresh")),
                             br(),
+                            br(),
+                            uiOutput("plot3d.point.size"),
+                            uiOutput("ratio3D"), 
+                            uiOutput("download.button.html.export.3d"),
+                            uiOutput("show.3d.refits"),
                             h4(.term_switcher("header.3d.options")),
                             uiOutput("show.surfaces"),
                             checkboxInput("plot3d.hulls", .term_switcher("hulls"),
                                           value = getShinyOption("params")$plot3d.hulls ),
-                            uiOutput("show.3d.refits"),
-                            uiOutput("plot3d.point.size"),
-                            uiOutput("ratio3D"), 
-                            uiOutput("download.button.html.export.3d")
+                            uiOutput("select.hulls")
                      )  # end column
                    ),  # end fluid row
-                   fluidRow(column(12,
-                     p(.term_switcher("click.on.point")),
-                     uiOutput("plot3d.selection.tab"),
-                     br()
-                   )) # end colums, end fluidrow
           ),      #end tabPanel
 
           tabPanel(.term_switcher("tab.map"),  # map ----

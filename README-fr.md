@@ -11,8 +11,8 @@ régression, estimation de densité par noyau en 2D), et de visualiser
 une *chronologie* interactive des fouilles d’un site. `archeoViz` peut
 être utilisée localement ou déployée sur un serveur, soit en chargeant
 des données via l’interface, soit en lançant l’application avec un jeu
-de donnée spécifique. L’interface est disponible en français, anglais,
-allemand, italien, et portugais.
+de donnée spécifique. L’interface est disponible en allemand, anglais,
+italien, français, portugais et roumain.
 
   - [**Installation**](#installation)
       - [Locale](#locale)
@@ -24,11 +24,14 @@ allemand, italien, et portugais.
       - [Soumettre une modification](#soumettre-une-modification)
   - [**Utilisation**](#utilisation)
       - [L’information spatiale dans
-        archeoViz](#spatial-information-in-archeoviz)
-          - [Localisation exacte : les objets
-            relevés](#localisation-exacte--les-objets-relevés)
-          - [Localisations vagues : passes, seaux, tamis et erreurs
-            d’enregistement](#localisations-vagues--passes-seaux-tamis-et-erreurs-d-enregistrement)
+        archeoViz](#linformation-spatiale-dans-archeoviz)
+          - [Points, localisation exacte : les objets
+            relevés](#points-localisation-exacte--les-objets-relevés)
+          - [Points, localisation vague : passes, seaux, tamis et
+            erreurs
+            d’enregistement](#points-localisation-vague--passes-seaux-tamis-et-erreurs-denregistement)
+          - [Lignes](#lignes)
+          - [Surfaces](#surfaces)
       - [Remontages et mesures de
         fabrique](#remontages-et-mesures-de-fabrique)
           - [Remontages](#remontages)
@@ -73,10 +76,11 @@ allemand, italien, et portugais.
       - [Contrôle des formats d’export](#contrôle-des-formats-d-export)
       - [Paramètres URL](#paramètres-url)
   - [**Remerciements**](#remerciements)
-  - [**Références**](#références)
+  - [**Références et ressources**](#références-et-ressources)
       - [Logiciels](#logiciels)
       - [Articles](#articles)
       - [Présentations](#présentations)
+      - [Sites web](#sites-web)
 
 # Installation
 
@@ -160,6 +164,8 @@ Shiny server d’*Huma Num*:
     italien](https://analytics.huma-num.fr/archeoviz/it).
   - [`archeoViz` en
     portugais](https://analytics.huma-num.fr/archeoviz/pt).
+  - [`archeoViz` en
+    roumain](https://analytics.huma-num.fr/archeoviz/ro).
 
 Des cas d’applications à divers sites archéologiques sont rassemblés sur
 le [*Portail archeoViz*](https://analytics.huma-num.fr/archeoviz/home).
@@ -209,7 +215,7 @@ Les archéologues enregistrent la localisation des objets archéologique à
 différentes échelles et granularité. En fonction de cela, ils utilisent
 différentes concepts géométriques pour représenter ces localisations.
 
-### Localisation exacte : les objets relevés
+### Points, localisation exacte : les objets relevés
 
 L’utilisation d’un carroyage ou d’une “station totale” permet
 d’enregistrer la localisation individuelle des objets sur le terrain.
@@ -217,7 +223,7 @@ Dans ce cas, dans `archeoViz`, localisation de ces objets sera
 visualisée par des points (des triplets de valeurs de coordonnées x, y,
 z).
 
-### Localisations vagues : passes, seaux, tamis et erreurs d’enregistement
+### Points, localisation vague : passes, seaux, tamis et erreurs d’enregistement
 
 Toutefois, il est fréquent que les coordonnées x, y, z des objets ne
 soit pas disponible, pour différentes raisons:
@@ -236,6 +242,27 @@ localisation des objets n’est pas connue univoquement mais se situe
 quelque part au sein d’intervalles de coordonnées. La localisation vague
 peut concerner une, deux, ou trois dimensions spatiales (respectivement
 les coordonnées x, y et z).
+
+Cette fonctionnalité peut également être employée pour tenir compte de
+l’imprécision des instruments de relevé.
+
+### Lignes
+
+Les lignes sont des géométries utiles pour représenter des relations. En
+archéologie, il peut s’agir de relations de [remontages](#remontages)
+entre fragments d’objets, d’orientation ([mesures de
+fabrique](#mesures-de-fabrique)), etc. Dans `archeoViz`, les lignes sont
+générées à partir des données chargées comme données de remontage, soit
+à partir de l’onglet “Données”, soit avec le paramètre `refits.df` de
+la fonction `archeoViz()`.
+
+### Surfaces
+
+Les surfaces sont des géométries utiles pour représenter des niveaux de
+sol, des tranchées, des fosses, etc. Dans `archeoViz`, ceci peut être
+réalisé, en définissant un sous-ensemble de points résumant la surface
+souhaitée, puis en affichant l’[enveloppe convexe](#enveloppes-convexes)
+de ce sous-ensemble.
 
 ## Remontages et mesures de fabrique
 
@@ -431,7 +458,7 @@ L’URL d’une instance `archeoViz` en ligne peut être complétée avec les
 paramètres:
 
   - `objects.df=`
-  - \`refits.df=\`\`
+  - `refits.df=`
   - `timeline.df=`
 
 prenant pour valeurs l’URL d’un fichier CSV respectant le format
@@ -538,10 +565,17 @@ dans le package [`mgcv`](https://CRAN.R-project.org/package=mgcv).
 
 ### Enveloppes convexes
 
-Cliquer sur “Calculer les enveloppes” puis “Valider”, dans l’onglet “Vue
-3D”, affiche les enveloppes convexes associées à chaque sous-ensemble de
-points (couches), comportant au moins 20 points. Les enveloppes sont
-calculées en employant le package
+Dans l’onglet “Vue 3D”, l’affichage des enveloppes convexes se réalise
+en:
+
+1.  cochant la case “Enveloppes convexes”,
+2.  sélectionnant, dans le menu qui s’affiche, les sous-ensembles de
+    points pour lesquels les enveloppes doivent être calculées,
+3.  appuyant sur “Valider”.
+
+Les enveloppes convexes associées à chaque sous-ensemble de points
+comportant au moins 20 points sont alors affichées. Le calcul des
+enveloppes est réalisé avec le package
 [`cxhull`](https://CRAN.R-project.org/package=cxhull).
 
 ### Estimation 2D de densité par noyau
@@ -601,14 +635,14 @@ l’onglet “Statistiques”. Cf. cet
 
 Le [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/)
 est une application web (inclues dans la collection
-[SPARTAAS](https://spartaas.gitpages.huma-num.fr/)) pour visualiser des
-changements quantitatifs dans la distribution de types d’artefacts dans
-des séries ordonnées ou non-ordonnées d’unités spatiales. Lorsqu’une
-instance d’`archeoViz` est executée avec un jeu de données contenant au
-moins 2 valeurs différentes pour la variable `layers` et 2 valeurs
-différentes pour la variable `object_type`, alors ces données peuvent
-être analysées avec l’application `Seriograph` à partir de l’onglet
-“Statistiques”. Cf. cet
+[SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/)) pour
+visualiser des changements quantitatifs dans la distribution de types
+d’artefacts dans des séries ordonnées ou non-ordonnées d’unités
+spatiales. Lorsqu’une instance d’`archeoViz` est executée avec un jeu de
+données contenant au moins 2 valeurs différentes pour la variable
+`layers` et 2 valeurs différentes pour la variable `object_type`, alors
+ces données peuvent être analysées avec l’application `Seriograph` à
+partir de l’onglet “Statistiques”. Cf. cet
 [exemple](https://analytics.huma-num.fr/archeoviz/poeymau).
 
 ### Import vers archeoViz
@@ -646,8 +680,8 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           class.variable = NULL, class.values = NULL,
           default.group = "by.layer", location.mode = NULL,
           map.z.val = NULL, map.density = "no", map.refits = NULL,
-          plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
-          point.size = 2,
+          plot3d.ratio = 1, plot3d.hulls = FALSE, hulls.class.values = NULL, 
+          plot3d.surfaces = NULL, plot3d.refits = NULL, point.size = 2,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
           camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
@@ -712,6 +746,9 @@ archeoViz(class.variable = NULL, class.values = NULL,
   - **plot3d.hulls**: TRUE ou FALSE. Au lancement de l’application,
     calculer et afficher ou non les enveloppes convexes dans la
     visualisation 3D.
+  - **hulls.class.values**: caractères. Au lancement de l’application,
+    noms des sous-ensembles de points pour lesquels calculer les
+    enveloppes convexes.
   - **plot3d.surfaces**: TRUE ou FALSE. Au lancement de l’application,
     calculer et afficher ou non les surfaces de régression dans la
     visualisation 3D.
@@ -764,8 +801,8 @@ archeoViz(run.plots = FALSE)
 ### Paramètres URL
 
 Une instance `archeoViz` deployée en ligne sur un serveur peut être
-paramétrée en ajustant les paramètres de l’URL. Les paramètres acceptés
-supportés:
+paramétrée en ajustant les paramètres de l’URL. Les paramètres supportés
+comprennent:
 
   - `objects.df`, `refits.df`, `timeline.df`
   - `title`, `home.text`
@@ -828,17 +865,18 @@ d’une restriction liée à la syntaxe URL).
 L’application et le package `archeoViz` sont développés et maintenus par
 Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, et
 Thomas Perrin ont testé et soutenu ce projet durant ses premières
-étapes. Renata Araujo, Sara Giardino, Julian Laabs et Nicolas Delsol
-ont traduit l’application respectivement en portugais, italien,
-allemand, et espagnol.
+étapes. Renata Araujo, Laura Coltofean, Sara Giardino, Julian Laabs et
+Nicolas Delsol ont traduit l’application respectivement en portugais,
+roumain, italien, allemand, et espagnol.
 
-# Références
+# Références et ressources
 
 ## Logiciels
 
-  - Plutniak, Sébastien, Renata Araujo, Sara Giardino, Julian Laabs.
-    2023. “archeoViz. Visualisation, Exploration, and Web Communication
-    of Archaeological Spatial Data”. v1.3.0, DOI:
+  - Plutniak, Sébastien, Renata Araujo, Laura Coltofean, Nicolas Delsol,
+    Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation,
+    Exploration, and Web Communication of Archaeological Spatial Data”.
+    v1.3.2, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
     Dissemination of Spatial Archaeological
@@ -867,3 +905,9 @@ allemand, et espagnol.
     d’éditorialisation de données archéologiques
     spatialisées](https://hal.science/hal-04070444), support d’une
     présentation à l’atelier SITRADA, Paris.
+
+## Sites web
+
+  - Le blog *archeoViz. Data visualization in archaeology. Re-use,
+    visualization, dissemination of spatial data*:
+    <https://archeoviz.hypotheses.org>

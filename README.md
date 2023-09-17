@@ -10,7 +10,7 @@ estimation), and display an interactive *timeline* of an excavation.
 `archeoViz` can be used locally or deployed on a server, either by
 allowing the user to load data through the interface or by running the
 app with a specific data set. The app interface is available in English,
-French, German, Italian, Portuguese, and Spanish.
+French, German, Italian, Portuguese, Romanian, and Spanish.
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -40,11 +40,13 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
   - [**Use**](#use)
       - [Spatial Information in
         archeoViz](#spatial-information-in-archeoviz)
-          - [Exact Location: Plotted
-            Objects](#exact-location-plotted-objects)
-          - [Vague Location: Spits, Buckets, Sieved Objects, and
+          - [Points, Exact Location: Plotted
+            Objects](#points-exact-location-plotted-objects)
+          - [Points, Vague Location: Spits, Buckets, Sieved Objects, and
             Recording
-            Errors](#vague-location-spits-buckets-sieved-objects-and-recording-errors)
+            Errors](#points-vague-location-spits-buckets-sieved-objects-and-recording-errors)
+          - [Lines](#lines)
+          - [Surfaces](#surfaces)
       - [Refittings and Fabric
         Measurements](#refittings-and-fabric-measurements)
           - [Refittings](#refittings)
@@ -89,6 +91,7 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
       - [Software](#Software)
       - [Papers](#papers)
       - [Presentations](#presentations)
+      - [Websites](#websites)
 
 # Installation
 
@@ -170,6 +173,7 @@ Num* Shiny server:
     Italian](https://analytics.huma-num.fr/archeoviz/it).
   - [`archeoViz` in
     Portuguese](https://analytics.huma-num.fr/archeoviz/pt).
+  - [`archeoViz` in Ruman](https://analytics.huma-num.fr/archeoviz/ro).
 
 Real use cases are presented on the [*archeoViz
 Portal*](https://analytics.huma-num.fr/archeoviz/home).
@@ -216,14 +220,15 @@ Archaeologists record the location of archaeological objects at
 different scales and granularity. Accordingly, they use different
 geometrical concepts to represent location.
 
-### Exact Location: Plotted Objects
+### Points, Exact Location: Plotted Objects
 
 Using grid coordinates or electronic “total station” enables recording
 the individual location of objects on the field. In that case, the
 location are represented as points in `archeoViz` (triplets of x, y and
-z coordinates).
+z
+coordinates).
 
-### Vague Location: Spits, Buckets, Sieved Objects, and Recording Errors
+### Points, Vague Location: Spits, Buckets, Sieved Objects, and Recording Errors
 
 However, it is also common that x, y, z, coordinates by object are not
 available, for different reasons due to:
@@ -239,6 +244,25 @@ In all these cases, we have to deal with vague location, when objects
 cannot be located as points but are somewhere between ranges of
 coordinates. Vague location can concern one, two, or the three spatial
 dimensions (the x, y, z coordinates, respectively).
+
+Note that this feature can also be used to deal with the imprecision of
+topographical instruments.
+
+### Lines
+
+Lines are useful geometries for representing relationships. In
+archaeology, these can be [refitting](#reffitings) relationships between
+object fragments, orientation ([fabric
+measurements](#fabric-measurements), etc. Lines are generated from data
+loaded as refitting data, either from the “Data” tab, or with the
+`refits.df` parameter of the `archeoViz()` function.
+
+### Surfaces
+
+Surfaces are useful geometries for representing ground levels, trenches,
+pits, etc. In `archeoViz`, this can be achieved by defining a subset of
+points summarising the desired surface, then displaying the [convex
+hull](#convex-hulls) of this subset.
 
 ## Refittings and Fabric Measurements
 
@@ -525,9 +549,15 @@ additive model implemented in the
 
 ### Convex hulls
 
-In the “3D plot” tab, clicking on “Compute hulls” and “Validate”
-displays the convex hull associated with each layer (with at least 20
-points). The convex hulls are computed using the
+In the “3D plot” tab,
+
+1.  activating the “Convex envelopes» box,
+2.  selecting, from the menu that appears, the subsets of points for
+    which convex hulls are to be calculated,
+3.  click on “Validate”.
+
+The convex hulls associated with each subsets (with at least 20 points)
+are displayed. The convex hulls are computed using the
 [`cxhull`](https://CRAN.R-project.org/package=cxhull) package.
 
 ### 2D kernel density
@@ -624,8 +654,8 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           class.variable = NULL, class.values = NULL,
           default.group = "by.layer", location.mode = NULL,
           map.z.val = NULL, map.density = "no", map.refits = NULL,
-          plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
-          point.size = 2,
+          plot3d.ratio = 1, plot3d.hulls = FALSE, hulls.class.values = NULL,
+          plot3d.surfaces = NULL, plot3d.refits = NULL, point.size = 2,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
           camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
@@ -686,6 +716,8 @@ archeoViz(class.variable = NULL, class.values = NULL,
     plot.
   - **plot3d.hulls**: TRUE or FALSE. At the launch of the app, whether
     to compute and show convex hulls in the 3D plot.
+  - **hulls.class.values**: character. At the launch of the app, names
+    of the points subsets for which to compute convex hulls.
   - **plot3d.surfaces**: TRUE or FALSE. At the launch of the app,
     whether to compute and show regression in the 3D plot.
   - **plot3d.refits**: TRUE or FALSE. At the launch of the app, whether
@@ -795,17 +827,18 @@ syntax).
 The `archeoViz` application and package is developed and maintained by
 Sébastien Plutniak. Arthur Coulon, Solène Denis, Olivier Marlet, and
 Thomas Perrin tested and supported the project in its early stage.
-Renata Araujo, Sara Giardino, Julian Laabs, and Nicolas Delsol
-translated the application into Portuguese, Italian, German, and Spanish
-respectively.
+Renata Araujo, Laura Coltofean, Sara Giardino, Julian Laabs, and Nicolas
+Delsol translated the application into Portuguese, Romanian, Italian,
+German, and Spanish respectively.
 
 # References
 
 ## Software
 
-  - Plutniak, Sébastien, Renata Araujo, Nicolas Delsol, Sara Giardino,
-    Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web
-    Communication of Archaeological Spatial Data”. v1.3.1, DOI:
+  - Plutniak, Sébastien, Renata Araujo, Laura Coltofean, Nicolas Delsol,
+    Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation,
+    Exploration, and Web Communication of Archaeological Spatial Data”.
+    v1.3.2, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
     Dissemination of Spatial Archaeological
@@ -834,3 +867,9 @@ respectively.
     d’éditorialisation de données archéologiques
     spatialisées](https://hal.science/hal-04070444), slides of a
     presentation at the SITRADA workshop, Paris.
+
+## Websites
+
+  - The *archeoViz. Data visualization in archaeology. Re-use,
+    visualization, dissemination of spatial data* blog:
+    <https://archeoviz.hypotheses.org>

@@ -6,9 +6,8 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                       class.variable = NULL, class.values = NULL,
                       default.group = "by.layer", location.mode = NULL,
                       map.z.val = NULL, map.density = "no", map.refits = NULL,
-                      plot3d.ratio = 1, plot3d.hulls = NULL, plot3d.surfaces = NULL,
-                      plot3d.refits = NULL,
-                      point.size = 2,
+                      plot3d.ratio = 1, plot3d.hulls = FALSE, hulls.class.values = NULL,
+                      plot3d.surfaces = NULL, plot3d.refits = NULL, point.size = 2,
                       sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
                       sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
                       camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25), 
@@ -23,8 +22,8 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
   }
   
   # : test lang ----
-  if( ! lang %in% c("de", "en", "fr", "it", "pt")){
-    stop("The 'lang' parameter must be one of 'de', 'en', 'fr', 'it, 'pt'.")
+  if( ! lang %in% c("de", "en", "fr", "it", "pt", "es", "ro")){
+    stop("The 'lang' parameter must be one of 'de', 'en', 'es', 'fr', 'it, 'pt', 'ro',.")
   }
   
   # : test square.size ----
@@ -57,7 +56,8 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
   params <- list("class.variable" = class.variable, "class.values" = class.values,
                  "default.group" = default.group, "location" = location.mode,
                  "map.z.val" = map.z.val, "map.density" = map.density, "map.refits" = map.refits, 
-                 "plot3d.ratio" = plot3d.ratio, "plot3d.hulls" = plot3d.hulls, "plot3d.surfaces" = plot3d.surfaces, "plot3d.refits" = plot3d.refits,
+                 "plot3d.ratio" = plot3d.ratio, "plot3d.hulls" = plot3d.hulls, "hulls.class.values" = hulls.class.values,
+                 "plot3d.surfaces" = plot3d.surfaces, "plot3d.refits" = plot3d.refits,
                  "sectionX.x.val" = sectionX.x.val, "sectionX.y.val" = sectionX.y.val, "sectionX.refits" = sectionX.refits,
                  "sectionY.x.val" = sectionY.x.val, "sectionY.y.val" = sectionY.y.val, "sectionY.refits" = sectionY.refits,
                  "point.size" = point.size,

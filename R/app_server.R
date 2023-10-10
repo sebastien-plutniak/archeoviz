@@ -1454,10 +1454,9 @@ app_server <- function(input, output, session) {
   
   # Exports ----
   
+  # : export table   ----
   
-  # : seriograph   ----
-  
-  seriograph.table <- reactive({
+  export.table <- reactive({
     req(input$class.variable, objects.subdataset)
     
     if( (Sys.getenv('SHINY_PORT') == "") |
@@ -1475,19 +1474,69 @@ app_server <- function(input, output, session) {
   })
   
   
-  output$download.seriograph <- downloadHandler(
-    filename = "seriograph.csv",
+  # : amado   ----
+  
+  # 1) amado handler
+  output$download.amado <- downloadHandler(
+    filename = "amado.csv",
     content = function(file) {
-      write.csv(seriograph.table(), file, row.names = TRUE)
+      write.csv(export.table(), file, row.names = TRUE)
     }
   )
   
+  # 2) amado url
+  amado.url <- reactive({
+    req(export.table())
+    
+    data <- export.table()
+    
+    data <- eval(parse(text = paste0(
+      "cbind('", shiny::getShinyOption("title"), "'= rownames(data), data)"
+      )))
+    
+    data <- cbind("archeoViz" = rownames(data), data)
+    data <- rbind(colnames(data), data)
+    
+    data <- apply(data, 2, paste0, collapse="%09")   # separate cells by tabs
+    data <- gsub(" ", "%20", data)                   # add spaces
+    data <- paste0(data, collapse = "%0A")           # encode lines
+    
+    paste0("https://app.ptm.huma-num.fr/amado/main.html?table=", data)
+  })
   
+  
+  # 3) amado download link
+  output$run.amado <- renderUI({
+    req(amado.url())
+    
+    tagList(
+      "> ", .term_switcher("export.to"),
+      actionLink("run.amado",
+                 label = "Amado (Seriation)",
+                 onclick = paste("window.open('",
+                                 amado.url(), "', '_blank')")),
+      "(", .term_switcher("download"),
+      downloadLink("download.amado", " CSV"),  ")"
+    )
+  })
+  
+  
+  # : seriograph   ----
+  
+  # 1) seriograph handler
+  output$download.seriograph <- downloadHandler(
+    filename = "seriograph.csv",
+    content = function(file) {
+      write.csv(export.table(), file, row.names = TRUE)
+    }
+  )
+  
+  # 2) seriograph url
   seriograph.url <- reactive({
-    req(seriograph.table())
+    req(export.table())
     
     data.url <- session$registerDataObj(name = "table",
-                                        data = seriograph.table(),
+                                        data = export.table(),
                                         filterFunc = function(data, req) { 
                                           httpResponse(200, "text/csv",
                                                        write.csv(data, row.names = TRUE)
@@ -1505,7 +1554,7 @@ app_server <- function(input, output, session) {
   })
   
   
-  # seriograph link
+  # 3) seriograph download link
   output$run.seriograph <- renderUI({
     req(seriograph.url())
     
@@ -1519,6 +1568,56 @@ app_server <- function(input, output, session) {
       downloadLink("download.seriograph", " CSV"),  ")"
     )
   })
+  
+  
+  # : explor-CA   ----
+  
+  # 1) explor.ca handler
+  output$download.explor.ca <- downloadHandler(
+    filename = "explor-ca.csv",
+    content = function(file) {
+      write.csv(export.table(), file, row.names = TRUE)
+    }
+  )
+  
+  # 2) explor.ca url
+  explor.ca.url <- reactive({
+    req(export.table())
+    
+    data.url <- session$registerDataObj(name = "table",
+                                        data = export.table(),
+                                        filterFunc = function(data, req) { 
+                                          httpResponse(200, "text/csv",
+                                                       write.csv(data, row.names = TRUE)
+                                          )
+                                        })
+    object.id <- gsub(".*w=(.*)&nonce.*", "\\1", data.url)
+    
+    data.url <- paste0(session$clientData$url_protocol, "//",
+                       session$clientData$url_hostname,
+                       session$clientData$url_pathname,
+                       "_w_", object.id, 
+                       "/session/", session$token, "/download/download.seriograph")
+    
+    paste0("https://analytics.huma-num.fr/Sebastien.Plutniak/explor-ca/?data=", data.url)
+  })
+  
+  
+  # 3) explor.ca download link
+  output$run.explor.ca <- renderUI({
+    req(explor.ca.url())
+    
+    tagList(
+      "> ", .term_switcher("export.to"),
+      actionLink("run.explor.ca",
+                 label = "explor (Correspondance Analysis)",
+                 onclick = paste("window.open('",
+                                 explor.ca.url(), "', '_blank')")),
+      "(", .term_switcher("download"),
+      downloadLink("download.explor.ca", " CSV"),  ")"
+    )
+  })
+  
   
   # : archeofrag ----
   
@@ -1616,7 +1715,7 @@ app_server <- function(input, output, session) {
     if(
       ( (Sys.getenv('SHINY_PORT') != "") & # only if remote use of the app 
         ( getShinyOption("table.export")) ) &
-      ( isTruthy(seriograph.table) | isTruthy(archeofrag.tables) ) ){
+      ( isTruthy(export.table) | isTruthy(archeofrag.tables) ) ){
       h4(.term_switcher("header.export.data"))
     } else{  return() }
   })

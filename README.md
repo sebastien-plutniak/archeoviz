@@ -4,13 +4,15 @@ archeoViz
 `archeoViz` is a packaged R Shiny application for the *visualisation*,
 *exploration*, and web *communication* of archaeological spatial data.
 It includes interactive 3D and 2D *visualisations*, can generate *cross
-sections* and *maps* of the remains, can run basic *spatial statistics*
-methods (convex hull, regression surfaces, 2D kernel density
-estimation), and display an interactive *timeline* of an excavation.
-`archeoViz` can be used locally or deployed on a server, either by
-allowing the user to load data through the interface or by running the
-app with a specific data set. The app interface is available in English,
-French, German, Italian, Portuguese, Romanian, and Spanish.
+sections* and *maps* of the remains, and display an interactive
+*timeline* of the work made in a site. Simple *spatial statistics* can
+be performed (convex hull, regression surfaces, 2D kernel density
+estimation), as well as *exporting data* to other online applications
+for more complex methods. `archeoViz` can be used locally or deployed on
+a server, either by allowing the user to load data through the interface
+or by running the app with a specific data set. The app interface is
+available in English, French, German, Italian, Portuguese, Romanian, and
+Spanish. Website: <https://archeoviz.hypotheses.org>.
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -549,15 +551,15 @@ additive model implemented in the
 
 ### Convex hulls
 
-In the “3D plot” tab,
+In the “3D plot” tab, convex hulls can be displayed as follows:
 
-1.  activating the “Convex envelopes» box,
-2.  selecting, from the menu that appears, the subsets of points for
-    which convex hulls are to be calculated,
+1.  tick the “Convex hulls” box,
+2.  select, from the menu that appears, the subsets of points for which
+    convex hulls are to be calculated,
 3.  click on “Validate”.
 
-The convex hulls associated with each subsets (with at least 20 points)
-are displayed. The convex hulls are computed using the
+Convex hulls associated with each subsets with at least 20 points are
+displayed. The convex hulls are computed using the
 [`cxhull`](https://CRAN.R-project.org/package=cxhull) package.
 
 ### 2D kernel density
@@ -597,6 +599,11 @@ instances.
 
 ### Export from archeoViz
 
+Data can be exported to other online applications from `archeoViz`
+“Statistics” tab. Some exports are possible only for specific types of
+data or if a minimum number of values is
+satisfied.
+
 [*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag)
 is an R package and web application to assess and evaluate the
 distinctions betwen archaeological spatial units (e.g. layers) based on
@@ -604,9 +611,8 @@ the analysis of refitting relationships between fragments of objects.
 The web version of the application includes methods to measure the
 cohesion and admixture of spatial units, and compare it to simulated
 data. If an instance of `archeoViz` is launched with [refitting
-data](#refittings), then this data can be analysed with `archeofrag`
-from the `Statistics` tab. See an example
-[here](https://analytics.huma-num.fr/archeoviz/grotte16).
+data](#refittings), then this data can be analysed with `archeofrag`.
+See an example [here](https://analytics.huma-num.fr/archeoviz/grotte16).
 
 The [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/)
 is a web application (part of the
@@ -616,8 +622,24 @@ in ordered or unordered series of spatial units. If an online instance
 of `archeoViz` is launched with a data set with at least 2 different
 values for the `layers` variable and 2 different values for the
 `object_type` variable, then this data can be analysed with the
-`Seriograph` application from the `Statistics` tab. See an example
+`Seriograph` application. See an example
 [here](https://analytics.huma-num.fr/archeoviz/poeymau).
+
+[*Amado*](https://app.ptm.huma-num.fr/amado/) is an on-line application
+for analyzing contingency tables. It is possible to export a table
+cross-referencing the values of the selected variable (by default,
+`object_type`) and the values of the variable `layer`. `Amado` allows
+you to manually reorder rows and columns, and perform automatic
+seriations and classifications. See an example
+[here](https://analytics.huma-num.fr/archeoviz/tai).
+
+[*explor*](https://cran.r-project.org/package=explor) is an R Shiny / R
+package application for interactively exploring the results of
+multi-dimensional analyses. `explor` has been adapted to run a
+Correspondence analysis on a contingency table intersecting the values
+of the selected variable (by default, `object_type`) and the values of
+the variable `layer`. See an example
+[here](https://analytics.huma-num.fr/archeoviz/tai).
 
 ### Import to archeoViz
 

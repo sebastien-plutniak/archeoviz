@@ -15,10 +15,8 @@ knitr::opts_chunk$set(
 ```
 
 
-
-`archeoViz` est une application dédiée à l'archéologie. Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques spatialisées. Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *cartes* des restes archéologiques, permet de réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D), et de visualiser une *chronologie* interactive des fouilles d'un site. `archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en allemand, anglais, italien, français, portugais et roumain.
-
-
+`archeoViz` est une application dédiée à l'archéologie. Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques spatialisées. 
+Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *cartes* du mobilier archéologique, permet de visualiser la *chronologie* des travaux sur un site. Il est possible d'y réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D) ainsi que d'*exporter des données* vers d'autres applications en ligne pour l'exécution de méthodes plus complexes. `archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en allemand, anglais, italien, français, portugais et roumain. Page web: https://archeoviz.hypotheses.org.
 
 
 
@@ -341,7 +339,7 @@ L'URL d'une instance `archeoViz` en ligne peut être complétée avec les param�
 
 prenant pour valeurs l'URL d'un fichier CSV respectant le format `archeoViz` décrit ci-dessus.
 Par exemple: 
-https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv
+[https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
 
 
 
@@ -446,10 +444,19 @@ Par conséquent, les données peuvent être exportées et importées entre  `arc
 
 ### Export depuis archeoViz
 
-[*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag) est un package R et une application web permettant d'estimer et d'évaluer les  distinctions entre unités spatiales archéologiques (par ex. des couches) à partir de l'analyse des relations de remontage entre fragments d'objets. La  version web de l'application intègre des méthodes pour mesurer la cohésion et le mélange d'unités spatiales et de les comparer à des données simulées. Lorsqu'une instance d'`archeoViz` est executée avec des [données de remontage](#tableau-des-remontages), alors ces données peuvent être analysées avec `archeofrag` à partir de l'onglet “Statistiques”. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/grotte16).
+À partir de l'onglet “Statistiques” d'`archeoViz`, il est possible d'exporter les données vers d'autres applications en ligne. La possibilité de certains exports est conditionnée au type de données ou à la satisfaction d'un nombre minimal de valeurs.
+
+
+[*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag) est un package R et une application web permettant d'estimer et d'évaluer les  distinctions entre unités spatiales archéologiques (par ex. des couches) à partir de l'analyse des relations de remontage entre fragments d'objets. La  version web de l'application intègre des méthodes pour mesurer la cohésion et le mélange d'unités spatiales et de les comparer à des données simulées. Lorsqu'une instance d'`archeoViz` est executée avec des [données de remontage](#tableau-des-remontages), alors ces données peuvent être exportées vers `archeofrag`. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/grotte16).
 
 Le [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) est une application web (inclues dans la collection  [SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/)) pour visualiser des changements quantitatifs dans la distribution de types d'artefacts dans des séries ordonnées ou non-ordonnées d'unités spatiales. 
-Lorsqu'une instance d'`archeoViz` est executée avec un jeu de données contenant au moins 2 valeurs différentes pour la variable `layers` et 2 valeurs différentes pour la variable `object_type`,  alors ces données peuvent être analysées avec l'application `Seriograph` à partir de l'onglet “Statistiques”. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/poeymau).
+Lorsqu'une instance d'`archeoViz` est executée avec un jeu de données contenant au moins 2 valeurs différentes pour la variable `layers` et 2 valeurs différentes pour la variable `object_type`, alors ces données peuvent être analysées avec l'application `Seriograph`. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/poeymau).
+
+
+[*Amado*](https://app.ptm.huma-num.fr/amado/) est une application en ligne permettant d'analyser des tableaux de contingence. Il est possible d'exporter un tableau croisant les valeurs de la variable sélectionnée (par défaut, `object_type`) et les valeurs de la variable `layer`. `Amado` permet de réordonner manuellement les lignes et les colonnes et d'exécuter des sériations et classifications automatiques. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/tai).
+
+[*explor*](https://cran.r-project.org/package=explor) est une application R Shiny / package R permettant d'explorer interactivement les résultats d'analyses multidimensionnelles. `explor` a été adapté pour exécuter une analyse factorielle des correspondances sur un tableau de contingence croisant les valeurs de la variable sélectionnée (par défaut, `object_type`) et les valeurs de la variable `layer`.  Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/tai).
+
 
 ### Import vers archeoViz
 
@@ -571,11 +578,11 @@ Les paramètres doivent être écris en respectant la syntaxe URL (?param1=value
 Par exemple,
 l'URL suivante lance une instance `archeoViz` à partir du tableau principal du jeu de données [Bilzingsleben](https://zenodo.org/record/8003880):
 
-https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv
+[https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
 
 Cette URL fait de même, mais inclut également le tableau des remontages (paramètre `&refits.df=`) et active l'affichage immédiat des relations de remontage dans le graphique 3D et le plan:
 
-https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&plot3d.refits=TRUE&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv
+[https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&plot3d.refits=TRUE&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv](https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&plot3d.refits=TRUE&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv)
 
 L'URL suivante lance le jeu de données Bilzingsleben, en pré-réglant l'application telle que:
 

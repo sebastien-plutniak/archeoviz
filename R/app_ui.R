@@ -219,10 +219,12 @@ ui <- shinyUI(
 
           tabPanel(.term_switcher("tab.statistics"),  #  statistics ----
                    fluidRow(
-                     column(6,
+                     column(12,
                             uiOutput("export.header"),
                             uiOutput("run.seriograph"),
+                            uiOutput("run.amado"),
                             uiOutput("run.archeofrag"),
+                            uiOutput("run.explor.ca"),
                             br()
                      )
                    ),

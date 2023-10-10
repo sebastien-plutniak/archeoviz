@@ -5,14 +5,17 @@ archeoViz
 *visualiser*, d’*explorer* interactivement, et d’exposer et
 *communiquer* rapidement sur le web des données archéologiques
 spatialisées. Elle propose des *visualisations* en 3D et 2D, génère des
-*coupes* et des *cartes* des restes archéologiques, permet de réaliser
+*coupes* et des *cartes* du mobilier archéologique, permet de visualiser
+la *chronologie* des travaux sur un site. Il est possible d’y réaliser
 des *statistiques spatiales* simples (enveloppes convexes, surfaces de
-régression, estimation de densité par noyau en 2D), et de visualiser
-une *chronologie* interactive des fouilles d’un site. `archeoViz` peut
-être utilisée localement ou déployée sur un serveur, soit en chargeant
-des données via l’interface, soit en lançant l’application avec un jeu
-de donnée spécifique. L’interface est disponible en allemand, anglais,
-italien, français, portugais et roumain.
+régression, estimation de densité par noyau en 2D) ainsi que
+d’*exporter des données* vers d’autres applications en ligne pour
+l’exécution de méthodes plus complexes. `archeoViz` peut être
+utilisée localement ou déployée sur un serveur, soit en chargeant des
+données via l’interface, soit en lançant l’application avec un jeu de
+donnée spécifique. L’interface est disponible en allemand, anglais,
+italien, français, portugais et roumain. Page web:
+<https://archeoviz.hypotheses.org>.
 
   - [**Installation**](#installation)
       - [Locale](#locale)
@@ -616,10 +619,15 @@ applications interconenctées, plutôt que concentrées dans un petit
 nombre de systèmes. Par conséquent, les données peuvent être exportées
 et importées entre `archeoViz` et d’autres applications web. Notez que,
 jusqu’ici, les fonctionnalités d’export ne sont disponibles que dans le
-cas d’instances `archeoViz` déployées en
-ligne.
+cas d’instances `archeoViz` déployées en ligne.
 
 ### Export depuis archeoViz
+
+À partir de l’onglet “Statistiques” d’`archeoViz`, il est possible
+d’exporter les données vers d’autres applications en ligne. La
+possibilité de certains exports est conditionnée au type de données ou à
+la satisfaction d’un nombre minimal de
+valeurs.
 
 [*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag)
 est un package R et une application web permettant d’estimer et
@@ -629,8 +637,7 @@ fragments d’objets. La version web de l’application intègre des méthodes
 pour mesurer la cohésion et le mélange d’unités spatiales et de les
 comparer à des données simulées. Lorsqu’une instance d’`archeoViz` est
 executée avec des [données de remontage](#tableau-des-remontages), alors
-ces données peuvent être analysées avec `archeofrag` à partir de
-l’onglet “Statistiques”. Cf. cet
+ces données peuvent être exportées vers `archeofrag`. Cf. cet
 [exemple](https://analytics.huma-num.fr/archeoviz/grotte16).
 
 Le [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/)
@@ -641,9 +648,24 @@ d’artefacts dans des séries ordonnées ou non-ordonnées d’unités
 spatiales. Lorsqu’une instance d’`archeoViz` est executée avec un jeu de
 données contenant au moins 2 valeurs différentes pour la variable
 `layers` et 2 valeurs différentes pour la variable `object_type`, alors
-ces données peuvent être analysées avec l’application `Seriograph` à
-partir de l’onglet “Statistiques”. Cf. cet
-[exemple](https://analytics.huma-num.fr/archeoviz/poeymau).
+ces données peuvent être analysées avec l’application `Seriograph`. Cf.
+cet [exemple](https://analytics.huma-num.fr/archeoviz/poeymau).
+
+[*Amado*](https://app.ptm.huma-num.fr/amado/) est une application en
+ligne permettant d’analyser des tableaux de contingence. Il est possible
+d’exporter un tableau croisant les valeurs de la variable sélectionnée
+(par défaut, `object_type`) et les valeurs de la variable `layer`.
+`Amado` permet de réordonner manuellement les lignes et les colonnes et
+d’exécuter des sériations et classifications automatiques. Cf. cet
+[exemple](https://analytics.huma-num.fr/archeoviz/tai).
+
+[*explor*](https://cran.r-project.org/package=explor) est une
+application R Shiny / package R permettant d’explorer interactivement
+les résultats d’analyses multidimensionnelles. `explor` a été adapté
+pour exécuter une analyse factorielle des correspondances sur un tableau
+de contingence croisant les valeurs de la variable sélectionnée (par
+défaut, `object_type`) et les valeurs de la variable `layer`. Cf. cet
+[exemple](https://analytics.huma-num.fr/archeoviz/tai).
 
 ### Import vers archeoViz
 

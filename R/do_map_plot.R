@@ -1,5 +1,5 @@
 do_map_plot <- function(site.map, planZ.df, map.point.size, color.var, col,
-                        map.density, map.refits, refitting.df){
+                        map.density, map.refits, refitting.df, grid.legend){
   
   .data <- NULL
   
@@ -72,9 +72,20 @@ do_map_plot <- function(site.map, planZ.df, map.point.size, color.var, col,
                                    "location_mode", "object_type"),
                   source = "B") 
   
-  plotly::config(map,
+  map <-plotly::config(map,
                  displaylogo = FALSE,  
                  toImageButtonOptions = list(format = "svg",
                                              filename = "archeoviz-map",
                                              width = 600, height = 600))
+  layout(map,                 # add grid legend:     
+         annotations = list(list(
+           xref="paper", yref="paper",
+           x = 0, y = 0,
+           font = list(size = 12),
+           text = grid.legend,
+           xanchor = "left",
+           xshift = 0, yshift = 0,
+           showarrow = F,
+           opacity = 1 )) # end annotation)
+  )
 }

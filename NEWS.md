@@ -1,8 +1,9 @@
 # archeoViz 1.3.3
 Released: 2023-xx-xx
 
-* Add an export function to the 'expor' application for correspondance analysis
-* Add an export function to the 'amado' application for matrix seriation
+* Add an export function to the 'expor' application for correspondance analysis.
+* Add an export function to the 'amado' application for matrix seriation.
+* Mention the dimensions of the grid squares on the plots.
 
 # archeoViz 1.3.2
 Released: 2023-09-17

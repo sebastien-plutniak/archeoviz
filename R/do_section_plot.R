@@ -1,6 +1,7 @@
 .do_section_plot <- function(selection, dataset, section.point.size,
-                             refitting.df, show.refits, 
-                             colors, grid.coord, coords, axis.labels, xaxis,
+                             refitting.df, show.refits, colors, 
+                             grid.legend, grid.coord, coords, 
+                             axis.labels, xaxis,
                              reverse.axis.values=""){
    # data check: ----
   section.df <- dataset[selection, ]
@@ -106,8 +107,18 @@
                                   zeroline = T,
                                   range = c(coords$zmax, coords$zmin),
                                   scaleanchor="x"
-                     )
-                     )
+                     ),
+                     annotations = list(list(
+                       xref="paper", yref="paper",
+                       x= 0, y = 0,
+                       text = grid.legend,
+                       xanchor = "left",
+                       xshift = 10, yshift = 10,
+                       showarrow = F,
+                       opacity = 1
+                     )) # end annotation
+                     
+                     ) # end layout
   
   section
 }

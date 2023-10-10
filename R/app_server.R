@@ -264,6 +264,16 @@ app_server <- function(input, output, session) {
   
   # Coordinate system ----
   
+  # : grid legend ----
+  scale.value <- getShinyOption("square.size") / 100
+  scale.unit <- " m"
+  if(scale.value < 1){
+    scale.value <- scale.value * 100
+    scale.unit <- " cm"
+  }
+  grid.legend <- paste0(.term_switcher("grid"), ": ",
+                        scale.value, " x ", scale.value, scale.unit)
+  
   # : coords min/max coordinates ----
   coords.min.max <- reactive({
     
@@ -883,6 +893,14 @@ app_server <- function(input, output, session) {
     fig <- layout(fig,
                   paper_bgcolor = getShinyOption("background.col"), 
                   plot_bgcolor =  getShinyOption("background.col"),
+                  annotations = list(list(
+                    showarrow = F,
+                    x = 0, y = 0, z = 0,
+                    text = grid.legend,
+                    xanchor = "left",
+                    xshift = 0,
+                    opacity = 1
+                  )),
                   scene = list(
                     xaxis = list(title = 'X',
                                  tickmode = "array",
@@ -956,6 +974,7 @@ app_server <- function(input, output, session) {
                      show.refits = section.x.refits,
                      colors = colors.list(),
                      grid.coord = grid.coordy(),
+                     grid.legend = grid.legend,
                      coords = coords.min.max(),
                      axis.labels = axis.labels(),
                      xaxis = "x",
@@ -1010,6 +1029,7 @@ app_server <- function(input, output, session) {
                      show.refits = section.y.refits, 
                      colors = colors.list(), 
                      grid.coord = grid.coordx(),
+                     grid.legend = grid.legend,
                      coords = coords.min.max(),
                      axis.labels = axis.labels(), 
                      xaxis = "y",
@@ -1060,7 +1080,7 @@ app_server <- function(input, output, session) {
     do_map_plot(site.map(), planZ.df,
                 map.point.size, color.var, col,
                 input$map.density,
-                map.refits, refitting.df())
+                map.refits, refitting.df(), grid.legend)
     
   }, ignoreNULL = ( ! getShinyOption("run.plots"))
   )   # end eventReactive

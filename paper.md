@@ -15,7 +15,7 @@ authors:
 affiliations:
  - name: CNRS, CITERES-LAT, Université de Tours, Tours, France
    index: 1
-date: 2 June 2023
+date: 30 October 2023
 bibliography: paper.bib
 toccolor: teal
 citecolor: teal
@@ -33,11 +33,11 @@ output:
 
 # Summary
 
-`archeoViz` is an R Shiny application for the visualisation, interactive exploration, and web communication of archaeological spatial data  [@Plutniak2023archeoviz1.2.1], [@Plutniak2023bspf]. It generates interactive 3D plots, 2D cross sections and 2D maps of archaeological objects and their refitting relationships, computes basic spatial analysis methods (convex hull, regression surfaces, 2D kernel density estimation), and displays excavation timelines. This application is designed as the building block of a decentralised web edition network for archaeological data: 1) users can deploy `archeoViz` instances specific to their datasets on the server of their choice; 2) the *archeoViz portal*, a companion online application, references and documents with metadata these `archeoViz` instances, increasing their discoverability and audience on the web, both for scientists and the general audience interested in archaeology. It can also be used as an educational resource to introduce learners to spatial analysis, data formats, reproducible workflow, open science, and computational archaeology.
+`archeoViz` is an R Shiny application for the visualisation, interactive exploration, and web communication of archaeological spatial data  [@Plutniak2023archeoviz1.3.2], [@Plutniak2023bspf]. It generates interactive 3D plots, 2D cross sections and 2D maps of archaeological objects and their refitting relationships, and display an interactive timeline of the work made in a site. Spatial statistics methods can be applied (convex hull, regression surfaces, 2D kernel density estimation) and data can be directly exported to other online applications to run other methods. This application is designed as the building block of a decentralised web edition network for archaeological data: 1) users can deploy `archeoViz` instances specific to their datasets on the server of their choice; 2) the *archeoViz portal*, a companion online application, references and documents with metadata these `archeoViz` instances, increasing their discoverability and audience on the web, both for scientists and the general audience interested in archaeology. It can also be used as an educational resource to introduce learners to spatial analysis, data formats, reproducible workflow, open science, and computational archaeology.
 
 # Statement of Need
 
-For more than a century, archaeologists have generated coordinated data during fieldwork. However, the results of these efforts are generally kept in inaccessible notebooks and hard drives, or –in the best cases– analysed and summarised as figures in publications, without providing the original data. Recent literature stressed that the lack of
+For more than a century, archaeologists have generated spatially coordinated data during fieldwork. However, the results of these efforts are generally kept in inaccessible notebooks and hard drives, or –in the best cases– analysed and summarised as figures in publications, without providing the original data. Recent literature stressed that the lack of
 
 1. accessible and handy tools,
 2. training in data management,
@@ -45,7 +45,7 @@ For more than a century, archaeologists have generated coordinated data during f
 4. recognition related to data publishing 
 
 are factors explaining the insufficient availability of field archaeological data [@SelhoferGeser2015], [@Bernard2019].
-Given the reluctance of archaeologists to publish data, `archeoViz` indirectly fosters data publication by demonstrating reuse, from the case of spatial archaeological data at the site level [@Plutniak2023archeoviz1.1.1], [@Plutniak2023bspf].
+Given the reluctance of archaeologists to publish data, `archeoViz` indirectly fosters data publication by demonstrating reuse, from the case of spatial archaeological data at the site level [@Plutniak2023archeoviz1.3.2], [@Plutniak2023bspf].
 
 Its minimal and multilingual interface (viz. issue 1) and the simple data structure it requires (viz. issues 2, 3) make it handy to use and fast to deploy on the web. This contributes to promoting datasets as citable scientific outputs and also provides recognition to their creators (viz. issue 4).
 
@@ -69,8 +69,8 @@ Second, `archeoViz` is a lightweight, complementary alternative to more complex 
 
 ## Online Data Repositories
 
-Third, regarding data publication and versioning, `archeoViz` relates to centralised web repositories that include visualisation features, e.g. [`arkeoGIS`](https://arkeogis.org) [@Bernard2019], [`BDA`](https://bda.huma-num.fr) [@Perrin2019], and [`Field`](https://field.dainst.org/project). It differs in being a stand-alone application, in focusing on intra-site data, and in taking into account the third spatial dimension.
-`archeoViz` is designed as the building block of a decentralised web edition network for archaeological data, made of as many `archeoViz` instances as there are datasets.
+Third, regarding data publication and versioning, `archeoViz` relates to web repositories that include visualisation features, e.g. [`arkeoGIS`](https://arkeogis.org) [@Bernard2019], [`BDA`](https://bda.huma-num.fr) [@Perrin2019], [`Field`](https://field.dainst.org/project), and [`CyberSW`](https://cybersw.org). It differs in being a stand-alone application, in focusing on intra-site data and the representation of individual archaeological objects, and in taking into account the third spatial dimension.
+Unlike these centralised repositories, `archeoViz` is designed as the building block of a decentralised web edition network for archaeological data, made of as many `archeoViz` instances as there are datasets.
 
 
 
@@ -99,6 +99,7 @@ These functionalities include:
 	* 2D map plot
 	* 2D section plot on the X axis
 	* 2D section plot on the Y axis
+* Summary statistics and data export to third-party applications	
 * Reproducibility features, i.e. automatic generation of the command line to reproduce the current setting of the application
 * Timeline of the findings discovery
 * Guidelines for the application
@@ -126,17 +127,24 @@ The data structure is kept as simple as possible, with (few) mandatory and some 
 
 # Research Using `archeoViz`
 
-So far, 40 datasets have been edited on the web using `archeoViz` instances. They include about 350,000 objects and 10,000 refitting relationships (between fragments of broken objects).
+So far, 42 datasets have been edited on the web using `archeoViz` instances. They include about 360,000 objects and 10,000 refitting relationships (between fragments of broken objects).
 To increase their discoverability and audience, the [*archeoViz portal*](https://analytics.huma-num.fr/archeoviz/home) gathers their references and metadata, and makes it possible to browse the list of instances with keywords and through a map.
  
-Interoperability between software tools is key to their diffusion and adoption. Currently a work in progress, one of the first achievements came with the `SEAHORS` package [@RoyerEtal2023] which can generate CSV files in the `archeoViz` format.
+Interoperability between software tools is key to their diffusion and adoption. 
+The `SEAHORS` package [@RoyerEtal2023] can generate CSV files in the `archeoViz` format and send them to an online `archeoViz` instance.
+Data can be exported from `archeoViz` to 
 
+* the `[archeofrag](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag/)` application for refitting analysis
+* the `[seriograph](https://spartaas.gitpages.huma-num.fr/r-package/)` application for seriation
+* an [online instance](https://analytics.huma-num.fr/Sebastien.Plutniak/explor-ca/) of the `explor`, R package / Shiny application for correspondence analysis
+* the `[AMADO online](https://app.ptm.huma-num.fr/amado/)` application, for seriation and classification.
 
 
 # Resources and Examples
 
 `archeoViz` is available on [CRAN](https://cran.r-project.org/package=archeoViz) and the code of the development version is available on [Github](https://github.com/sebastien-plutniak/archeoviz/). 
 Documentation is made available embedded in the application (`Guidelines` tab) and as [Vignette](https://cran.r-project.org/web/packages/archeoviz/vignettes/archeoviz-vignette.html).
+A [website](https://archeoviz.hypotheses.org) presents the application in a less technical way.
 Users can receive news and find support by subscribing to the [archeoViz mailing list](https://listes.services.cnrs.fr/wws/info/archeoviz-users). 
 Multiple use cases can be browsed through the [`archeoViz portal`](https://analytics.huma-num.fr/archeoviz/home), that are also referenced in the [HAL.science](https://hal.science/ARCHEOVIZ) repository.
 
@@ -149,7 +157,7 @@ and spatial statistics use functions from the `cxhull` [@Laurent2023] and `mgcv`
 
 I thank 
 Anaïs Vignoles (co-maintainer of the archeoViz portal),
-Renata Araujo (Portuguese translation), Sara Giardino (Italian translation), Julian Laabs (German translation), 
+Renata Araujo (Portuguese translation), Laura Coltofean (Romanian translation), Nicolas Delsol (Spanish translation), Sara Giardino (Italian translation), Julian Laabs (German translation), 
 and the early users for their feedback and support: Astolfo Araujo, Jean-Pierre Chadelle, Elsa Defranoult, Solène Denis, Emmanuel Discamps, Mathieu Langlais, Maureen Le Doaré, Grégor Marchand, Jean-Claude Marquet, Alexandre Michel, Thomas Perrin, Anthony Sécher, Peter Tóth.
 Finally, I acknowledge the [tDAR](https://core.tdar.org) team at the [Center for Digital Archaeology](https://live-digant.ws.asu.edu), where this paper was written and the [SEADDA](https://www.seadda.eu) European COST action that funded this research stay.
 

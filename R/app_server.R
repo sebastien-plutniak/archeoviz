@@ -1532,11 +1532,11 @@ app_server <- function(input, output, session) {
     tagList(
       "> ", .term_switcher("export.to"),
       actionLink("run.amado",
-                 label = "Amado (Seriation)",
+                 label = "AMADO online",
                  onclick = paste("window.open('",
                                  amado.url(), "', '_blank')")),
       "(", .term_switcher("download"),
-      downloadLink("download.amado", " CSV"),  ")"
+      downloadLink("download.amado", " CSV"),  ") for seriation and classification"
     )
   })
   
@@ -1585,7 +1585,7 @@ app_server <- function(input, output, session) {
                  onclick = paste("window.open('",
                                  seriograph.url(), "', '_blank')")),
       "(", .term_switcher("download"),
-      downloadLink("download.seriograph", " CSV"),  ")"
+      downloadLink("download.seriograph", " CSV"),  ") for seriation."
     )
   })
   

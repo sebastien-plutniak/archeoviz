@@ -33,7 +33,7 @@ output:
 
 # Summary
 
-`archeoViz` is an R Shiny application for the visualisation, interactive exploration, and web communication of archaeological spatial data  [@Plutniak2023archeoviz1.1.1], [@Plutniak2023bspf]. It generates interactive 3D plots, 2D cross sections and 2D maps of archaeological objects and their refitting relationships, computes basic spatial analysis methods (convex hull, regression surfaces, 2D kernel density estimation), and displays excavation timelines. This application is designed as the building block of a decentralised web edition network for archaeological data: 1) users can deploy `archeoViz` instances specific to their datasets on the server of their choice; 2) the *archeoViz portal*, a companion online application, references and documents with metadata these `archeoViz` instances, increasing their discoverability and audience on the web, both for scientists and the general audience interested in archaeology. It can also be used as an educational resource to introduce learners to spatial analysis, data formats, reproducible workflow, open science, and computational archaeology.
+`archeoViz` is an R Shiny application for the visualisation, interactive exploration, and web communication of archaeological spatial data  [@Plutniak2023archeoviz1.2.1], [@Plutniak2023bspf]. It generates interactive 3D plots, 2D cross sections and 2D maps of archaeological objects and their refitting relationships, computes basic spatial analysis methods (convex hull, regression surfaces, 2D kernel density estimation), and displays excavation timelines. This application is designed as the building block of a decentralised web edition network for archaeological data: 1) users can deploy `archeoViz` instances specific to their datasets on the server of their choice; 2) the *archeoViz portal*, a companion online application, references and documents with metadata these `archeoViz` instances, increasing their discoverability and audience on the web, both for scientists and the general audience interested in archaeology. It can also be used as an educational resource to introduce learners to spatial analysis, data formats, reproducible workflow, open science, and computational archaeology.
 
 # Statement of Need
 
@@ -47,13 +47,13 @@ For more than a century, archaeologists have generated coordinated data during f
 are factors explaining the insufficient availability of field archaeological data [@SelhoferGeser2015], [@Bernard2019].
 Given the reluctance of archaeologists to publish data, `archeoViz` indirectly fosters data publication by demonstrating reuse, from the case of spatial archaeological data at the site level [@Plutniak2023archeoviz1.1.1], [@Plutniak2023bspf].
 
-Its minimal and multilingual interface (viz. issue 1) and the simple data structure it requires (viz. issues 2, 3) make it handy to use and fast to deploy on the web. This contributes to promoting datasets as citable scientific outputs and also provided recognition to their creators (viz. issue 4).
+Its minimal and multilingual interface (viz. issue 1) and the simple data structure it requires (viz. issues 2, 3) make it handy to use and fast to deploy on the web. This contributes to promoting datasets as citable scientific outputs and also provides recognition to their creators (viz. issue 4).
 
 # State of the Field
 
 ## Archaeological Visualisation Software
 
-First, `archeoViz` is related to other archaeological visualisation software, relying on similar technologies. However, this software differs with regard to their specialisations and are available in various formats as scripts, applications, or packages:
+First, `archeoViz` is related to other archaeological visualisation software relying on similar technologies. However, this software differs with regard to their specialisations and are available in various formats as scripts, applications, or packages:
 
 * Dataset-specific scripts or web applications:
 	* Shannon McPherron's R Shiny [`Plot it`](https://www.oldstoneage.com) application (unpublished), 
@@ -69,7 +69,7 @@ Second, `archeoViz` is a lightweight, complementary alternative to more complex 
 
 ## Online Data Repositories
 
-Third, regarding data publication and edition, `archeoViz` relates to centralised web repositories that include visualisation features, e.g. [`arkeoGIS`](https://arkeogis.org) [@Bernard2019], [`BDA`](https://bda.huma-num.fr) [@Perrin2019], and [`Field`](https://field.dainst.org/project). It differs in being a stand-alone application, in focusing on intra-site data, and in taking into account the third spatial dimension.
+Third, regarding data publication and versioning, `archeoViz` relates to centralised web repositories that include visualisation features, e.g. [`arkeoGIS`](https://arkeogis.org) [@Bernard2019], [`BDA`](https://bda.huma-num.fr) [@Perrin2019], and [`Field`](https://field.dainst.org/project). It differs in being a stand-alone application, in focusing on intra-site data, and in taking into account the third spatial dimension.
 `archeoViz` is designed as the building block of a decentralised web edition network for archaeological data, made of as many `archeoViz` instances as there are datasets.
 
 

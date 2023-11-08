@@ -15,7 +15,7 @@ authors:
 affiliations:
  - name: CNRS, CITERES-LAT, Université de Tours, Tours, France
    index: 1
-date: 30 October 2023
+date: 8 November 2023
 bibliography: paper.bib
 toccolor: teal
 citecolor: teal
@@ -120,24 +120,24 @@ The data structure is kept as simple as possible, with (few) mandatory and some 
 | 1  | A        | 1        |  50  |  54  |  66  |  70  |  20  |      |   1   |  lithic     |   biface       | 
 | 2  | B        | 2        | 130  |      | 144  |      |  30  |  35  |   2a  |  fauna      |   deer antler  | 
 
-: \normalsize Example of an input CSV file. Mandatory variables are in bold type. 'max' coordinates are for objects inaccurately located within a range.  An unlimited number of variables named using the “object_” prefix can be added. \label{tab:input}
+: \normalsize Example of an input CSV file. Mandatory variables are in bold type. “max” coordinates are for objects inaccurately located within a range.  An unlimited number of variables named using the “object_” prefix can be added. \label{tab:input}
 
 \normalsize
 
 
 # Research Using `archeoViz`
 
-So far, 42 datasets have been edited on the web using `archeoViz` instances. They include about 360,000 objects and 10,000 refitting relationships (between fragments of broken objects).
+So far, 43 datasets have been edited on the web using `archeoViz` instances. They include about 370,000 objects and 11,000 refitting relationships (between fragments of broken objects).
 To increase their discoverability and audience, the [*archeoViz portal*](https://analytics.huma-num.fr/archeoviz/home) gathers their references and metadata, and makes it possible to browse the list of instances with keywords and through a map.
  
 Interoperability between software tools is key to their diffusion and adoption. 
 The `SEAHORS` package [@RoyerEtal2023] can generate CSV files in the `archeoViz` format and send them to an online `archeoViz` instance.
 Data can be exported from `archeoViz` to 
 
-* the `[archeofrag](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag/)` application for refitting analysis
-* the `[seriograph](https://spartaas.gitpages.huma-num.fr/r-package/)` application for seriation
+* the [`archeofrag`](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag/) application for refitting analysis
+* the [`seriograph`](https://spartaas.gitpages.huma-num.fr/r-package/) application for seriation
 * an [online instance](https://analytics.huma-num.fr/Sebastien.Plutniak/explor-ca/) of the `explor`, R package / Shiny application for correspondence analysis
-* the `[AMADO online](https://app.ptm.huma-num.fr/amado/)` application, for seriation and classification.
+* the [`AMADO online`](https://app.ptm.huma-num.fr/amado/) application, for seriation and classification.
 
 
 # Resources and Examples

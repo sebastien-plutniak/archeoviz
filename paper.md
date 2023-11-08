@@ -87,7 +87,7 @@ Since the 1960s, numerous attempts at building up standards and repositories wer
   
 ## Interface and Functionalities
 
-The `archeoViz` interface has two parts (\autoref{fig:interface}):
+The `archeoViz` interface is available in several languages, namely English, Italian, French, German, Spanish, Portuguese, and Romanian. This interface has two parts (\autoref{fig:interface}):
 
 * a left-side menu  with options for data sub-selections
 * a right-side panel with tabs to display the results of the functionalities.
@@ -136,15 +136,15 @@ Data can be exported from `archeoViz` to
 
 * the [`archeofrag`](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag/) application for refitting analysis
 * the [`seriograph`](https://spartaas.gitpages.huma-num.fr/r-package/) application for seriation
-* an [online instance](https://analytics.huma-num.fr/Sebastien.Plutniak/explor-ca/) of the `explor`, R package / Shiny application for correspondence analysis
+* an [online instance](https://analytics.huma-num.fr/Sebastien.Plutniak/explor-ca/) of the `explor` R package / Shiny application for correspondence analysis
 * the [`AMADO online`](https://app.ptm.huma-num.fr/amado/) application, for seriation and classification.
 
 
 # Resources and Examples
 
 `archeoViz` is available on [CRAN](https://cran.r-project.org/package=archeoViz) and the code of the development version is available on [Github](https://github.com/sebastien-plutniak/archeoviz/). 
-Documentation is made available embedded in the application (`Guidelines` tab) and as [Vignette](https://cran.r-project.org/web/packages/archeoviz/vignettes/archeoviz-vignette.html).
-A [website](https://archeoviz.hypotheses.org) presents the application in a less technical way.
+Documentation is made available embedded in the application (`Guidelines` tab) and as [Vignettes](https://cran.r-project.org/web/packages/archeoviz/vignettes/archeoviz-vignette.html), in English, French, and Spanish.
+A website presents the application in a less technical way, [https://archeoviz.hypotheses.org](https://archeoviz.hypotheses.org).
 Users can receive news and find support by subscribing to the [archeoViz mailing list](https://listes.services.cnrs.fr/wws/info/archeoviz-users). 
 Multiple use cases can be browsed through the [`archeoViz portal`](https://analytics.huma-num.fr/archeoviz/home), that are also referenced in the [HAL.science](https://hal.science/ARCHEOVIZ) repository.
 

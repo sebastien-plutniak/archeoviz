@@ -146,7 +146,7 @@ Data can be exported from `archeoViz` to
 Documentation is made available embedded in the application (`Guidelines` tab) and as [Vignettes](https://cran.r-project.org/web/packages/archeoviz/vignettes/archeoviz-vignette.html), in English, French, and Spanish.
 A website presents the application in a less technical way, [https://archeoviz.hypotheses.org](https://archeoviz.hypotheses.org).
 Users can receive news and find support by subscribing to the [archeoViz mailing list](https://listes.services.cnrs.fr/wws/info/archeoviz-users). 
-Multiple use cases can be browsed through the [`archeoViz portal`](https://analytics.huma-num.fr/archeoviz/home), that are also referenced in the [HAL.science](https://hal.science/ARCHEOVIZ) repository.
+Multiple use cases can be browsed through the [*archeoViz portal*](https://analytics.huma-num.fr/archeoviz/home), that are also referenced in the [HAL.science](https://hal.science/ARCHEOVIZ) and [Isidore](https://isidore.science/a/maintainers_archeoviz_platform) repositories.
 
 # Acknowledgements
 

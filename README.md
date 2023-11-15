@@ -39,6 +39,7 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
   - [**Community Guidelines**](#community-guidelines)
       - [Reporting Bugs](#reporting-bugs)
       - [Suggesting Changes](#suggesting-changes)
+      - [Translation](#translation)
   - [**Use**](#use)
       - [Spatial Information in
         archeoViz](#spatial-information-in-archeoviz)
@@ -196,6 +197,15 @@ examples, new features, etc. They can be made by filling an
 [issue](https://github.com/sebastien-plutniak/archeoviz/issues) and,
 even better, using pull requests and the [GitHub Fork and Pull
 model](https://docs.github.com/articles/about-pull-requests).
+
+## Translation
+
+In the development of `archeoViz`, particular attention is paid to
+multilingualism. The application interface is available in several
+languages and translations into additional languages are welcome. To do
+so, please edit this
+[file](https://github.com/sebastien-plutniak/archeoviz/blob/main/R/load_interface_terms_utf8.R)
+and submit a pull request.
 
 # Use
 
@@ -625,9 +635,9 @@ values for the `layers` variable and 2 different values for the
 `Seriograph` application. See an example
 [here](https://analytics.huma-num.fr/archeoviz/poeymau).
 
-[*Amado*](https://app.ptm.huma-num.fr/amado/) is an on-line application
-for analyzing contingency tables. It is possible to export a table
-cross-referencing the values of the selected variable (by default,
+[*Amado online*](https://app.ptm.huma-num.fr/amado/) is an on-line
+application for analyzing contingency tables. It is possible to export a
+table cross-referencing the values of the selected variable (by default,
 `object_type`) and the values of the variable `layer`. `Amado` allows
 you to manually reorder rows and columns, and perform automatic
 seriations and classifications. See an example

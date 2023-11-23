@@ -1,15 +1,15 @@
 # archeoViz 1.3.3
-Released: 2023-xx-xx
+Released: 2023-11-23
 
 * Add an export function to the 'expor' application for correspondance analysis.
 * Add an export function to the 'amado' application for matrix seriation.
-* Mention the dimensions of the grid squares on the plots.
+* grid squares dimensions are displayed on plots.
 
 # archeoViz 1.3.2
 Released: 2023-09-17
 
 * In the 3D view, the subsets of points for which convex hulls are computed can be selected (using the graphic user interface or the 'hulls.class.values' parameter of the archeoViz() function).
-* Add linguistic support for Rumanian.
+* Add linguistic support for Romanian.
 
 # archeoViz 1.3.1
 Released: 2023-08-29

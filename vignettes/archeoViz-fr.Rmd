@@ -15,8 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 
-`archeoViz` est une application dédiée à l'archéologie. Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques spatialisées. 
-Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *cartes* du mobilier archéologique, permet de visualiser la *chronologie* des travaux sur un site. Il est possible d'y réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D) ainsi que d'*exporter des données* vers d'autres applications en ligne pour l'exécution de méthodes plus complexes. `archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en  chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en allemand, anglais, italien, français, portugais et roumain. Page web: https://archeoviz.hypotheses.org.
+`archeoViz` est une application dédiée à l'archéologie. Elle permet de *visualiser*, d'*explorer* interactivement, et d'exposer et *communiquer* rapidement sur le web des données archéologiques spatialisées. Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *cartes* du mobilier archéologique, permet de visualiser la *chronologie* des travaux sur un site. Il est possible d'y réaliser des *statistiques spatiales* simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D) ainsi que d'*exporter des données* vers d'autres applications en ligne pour appliquer des méthodes plus complexes. `archeoViz` peut être utilisée localement ou déployée sur un serveur, soit en chargeant des données via l'interface, soit en lançant l'application avec un jeu de donnée spécifique. L'interface est disponible en allemand, anglais, italien, français, portugais et roumain. Page web: https://archeoviz.hypotheses.org.
 
 
 
@@ -27,6 +26,7 @@ Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *car
 - [**Recommandations communautaires**](#recommandations-communautaires)
   - [Signaler un bug](#signaler-un-bug)
   - [Soumettre une modification](#soumettre-une-modification)
+  - [Traduire](#traduire)
 - [**Utilisation**](#utilisation)
   - [L'information spatiale dans archeoViz](#linformation-spatiale-dans-archeoviz)
     - [Points, localisation exacte : les objets relevés](#points-localisation-exacte--les-objets-relevés)
@@ -52,7 +52,7 @@ Elle propose des *visualisations* en 3D et 2D, génère des *coupes* et des *car
   - [Visualisations interactives](#visualisations-interactives)
     - [Généralités](#généralités)
     - [Sorties graphiques](#sorties-graphiques)
-    - [Visualisation de l'incertitude spatiale](#visualisation-de-l-incertitude spatiale)    
+    - [Visualisation de l'incertitude spatiale](#visualisation-de-l-incertitude-spatiale)    
   - [Statistiques spatiales](#statistiques-spatiales)  
      - [Surfaces de régression](#surfaces-de-régression)
      - [Enveloppes convexes](#enveloppes-convexes)
@@ -160,6 +160,10 @@ Si vous rencontrez un bug, ouvrez une [*issue*](https://github.com/sebastien-plu
 Les suggestions de modifications sont bienvenues.
 Les demandes peuvent concerner des fonctions additionnelles, des modifications dans la documentation, des exemples additionnels, de nouvelles fonctionnalités, etc.
 Elles peuvent être faites en ouvrant une [issue](https://github.com/sebastien-plutniak/archeoviz/issues) ou, mieux encore, en employant une  *pull requests* et le modèle GitHub [ Fork and Pull](https://docs.github.com/articles/about-pull-requests).
+
+## Traduire
+
+Un soin particulier est accordé au multilinguisme. L'interface de l'application est disponible en plusieurs langues et les traduction dans des langues supplémentaires sont bienvenues. Pour cela, éditez ce [fichier](https://github.com/sebastien-plutniak/archeoviz/blob/main/R/load_interface_terms_utf8.R) et soumettez une *pull request*.
 
 
 # Utilisation
@@ -453,7 +457,7 @@ Le [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) est une ap
 Lorsqu'une instance d'`archeoViz` est executée avec un jeu de données contenant au moins 2 valeurs différentes pour la variable `layers` et 2 valeurs différentes pour la variable `object_type`, alors ces données peuvent être analysées avec l'application `Seriograph`. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/poeymau).
 
 
-[*Amado*](https://app.ptm.huma-num.fr/amado/) est une application en ligne permettant d'analyser des tableaux de contingence. Il est possible d'exporter un tableau croisant les valeurs de la variable sélectionnée (par défaut, `object_type`) et les valeurs de la variable `layer`. `Amado` permet de réordonner manuellement les lignes et les colonnes et d'exécuter des sériations et classifications automatiques. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/tai).
+[*Amado online*](https://app.ptm.huma-num.fr/amado/) est une application en ligne permettant d'analyser des tableaux de contingence. Il est possible d'exporter un tableau croisant les valeurs de la variable sélectionnée (par défaut, `object_type`) et les valeurs de la variable `layer`. `Amado` permet de réordonner manuellement les lignes et les colonnes et d'exécuter des sériations et classifications automatiques. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/tai).
 
 [*explor*](https://cran.r-project.org/package=explor) est une application R Shiny / package R permettant d'explorer interactivement les résultats d'analyses multidimensionnelles. `explor` a été adapté pour exécuter une analyse factorielle des correspondances sur un tableau de contingence croisant les valeurs de la variable sélectionnée (par défaut, `object_type`) et les valeurs de la variable `layer`.  Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/tai).
 

@@ -515,6 +515,7 @@
 <ul>
 <li><a href=#reporting-bugs>Reporting Bugs</a></li>
 <li><a href=#suggesting-changes>Suggesting Changes</a></li>
+<li><a href=#translation>Translation</a></li>
 </ul></li>
 <li><a href=#use><strong>Use</strong></a>
 <ul>
@@ -637,6 +638,8 @@
 <p>If you encounter a bug, please fill an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> with all the details needed to reproduce it.</p>
 <h2 id=suggesting-changes>Suggesting changes</h2>
 <p>Suggestions of changes to <code>archeoViz</code> are welcome. These requests may concern additional functions, changes to documentation, additional examples, new features, etc. They can be made by filling an <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> and, even better, using pull requests and the <a href=https://docs.github.com/articles/about-pull-requests>GitHub Fork and Pull model</a>.</p>
+<h2 id=translation>Translation</h2>
+<p>In the development of <code>archeoViz</code>, particular attention is paid to multilingualism. The application interface is available in several languages and translations into additional languages are welcome. To do so, please edit this <a href=https://github.com/sebastien-plutniak/archeoviz/blob/main/R/load_interface_terms_utf8.R>file</a> and submit a pull request.</p>
 <h1 id=use>Use</h1>
 <p>Having archaeological remains from a given site, <code>archeoViz</code> is designed to lower the technical barriers to fulfill three objectives:</p>
 <ul>
@@ -815,7 +818,7 @@
 <p>Data can be exported to other online applications from <code>archeoViz</code> “Statistics” tab. Some exports are possible only for specific types of data or if a minimum number of values is satisfied.</p>
 <p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> is an R package and web application to assess and evaluate the distinctions betwen archaeological spatial units (e.g. layers) based on the analysis of refitting relationships between fragments of objects. The web version of the application includes methods to measure the cohesion and admixture of spatial units, and compare it to simulated data. If an instance of <code>archeoViz</code> is launched with <a href=#refittings>refitting data</a>, then this data can be analysed with <code>archeofrag</code>. See an example <a href=https://analytics.huma-num.fr/archeoviz/grotte16>here</a>.</p>
 <p>The <a href=https://analytics.huma-num.fr/ModAthom/seriograph/><em>Seriograph</em></a> is a web application (part of the <a href=https://spartaas.gitpages.huma-num.fr/r-package/>SPARTAAS</a> collection) to visualise changes in the quantitative distribution of artefacts types in ordered or unordered series of spatial units. If an online instance of <code>archeoViz</code> is launched with a data set with at least 2 different values for the <code>layers</code> variable and 2 different values for the <code>object_type</code> variable, then this data can be analysed with the <code>Seriograph</code> application. See an example <a href=https://analytics.huma-num.fr/archeoviz/poeymau>here</a>.</p>
-<p><a href=https://app.ptm.huma-num.fr/amado/><em>Amado</em></a> is an on-line application for analyzing contingency tables. It is possible to export a table cross-referencing the values of the selected variable (by default, <code>object_type</code>) and the values of the variable <code>layer</code>. <code>Amado</code> allows you to manually reorder rows and columns, and perform automatic seriations and classifications. See an example <a href=https://analytics.huma-num.fr/archeoviz/tai>here</a>.</p>
+<p><a href=https://app.ptm.huma-num.fr/amado/><em>Amado online</em></a> is an on-line application for analyzing contingency tables. It is possible to export a table cross-referencing the values of the selected variable (by default, <code>object_type</code>) and the values of the variable <code>layer</code>. <code>Amado</code> allows you to manually reorder rows and columns, and perform automatic seriations and classifications. See an example <a href=https://analytics.huma-num.fr/archeoviz/tai>here</a>.</p>
 <p><a href=https://cran.r-project.org/package=explor><em>explor</em></a> is an R Shiny / R package application for interactively exploring the results of multi-dimensional analyses. <code>explor</code> has been adapted to run a Correspondence analysis on a contingency table intersecting the values of the selected variable (by default, <code>object_type</code>) and the values of the variable <code>layer</code>. See an example <a href=https://analytics.huma-num.fr/archeoviz/tai>here</a>.</p>
 <h3 id=import-to-archeoviz>Import to archeoViz</h3>
 <p><a href=https://aurelienroyer.shinyapps.io/Seahors/><em>SEAHORS</em></a> is a web application and R package to visualise the spatial distribution of archaeological remains. As mentioned <a href=#formatting-data>above</a>, SEAHORS can be used to import, reshape, and send a data set to an online instance of the <code>archeoViz</code> application.</p>
@@ -943,7 +946,7 @@
 <h2 id=papers>Papers</h2>
 <ul>
 <li>Plutniak, Sébastien. Submitted. “archeoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. <em>Journal of Open Source Software</em>.</li>
-<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique : l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
+<li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier archéologique : l’application archeoViz et son portail web</a>”. <em>Bulletin de la Société préhistorique française</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=presentations>Presentations</h2>
 <ul>
@@ -960,7 +963,7 @@
 #  : fr ----
 guidelines.fr <- "
 <h1 id=archeoviz>archeoViz</h1>
-<p><code>archeoViz</code> est une application dédiée à l’archéologie. Elle permet de <em>visualiser</em>, d’<em>explorer</em> interactivement, et d’exposer et <em>communiquer</em> rapidement sur le web des données archéologiques spatialisées. Elle propose des <em>visualisations</em> en 3D et 2D, génère des <em>coupes</em> et des <em>cartes</em> du mobilier archéologique, permet de visualiser la <em>chronologie</em> des travaux sur un site. Il est possible d’y réaliser des <em>statistiques spatiales</em> simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D) ainsi que d’<em>exporter des données</em> vers d’autres applications en ligne pour l’exécution de méthodes plus complexes. <code>archeoViz</code> peut être utilisée localement ou déployée sur un serveur, soit en chargeant des données via l’interface, soit en lançant l’application avec un jeu de donnée spécifique. L’interface est disponible en allemand, anglais, italien, français, portugais et roumain. Page web: <a href=https://archeoviz.hypotheses.org class=uri>https://archeoviz.hypotheses.org</a>.</p>
+<p><code>archeoViz</code> est une application dédiée à l’archéologie. Elle permet de <em>visualiser</em>, d’<em>explorer</em> interactivement, et d’exposer et <em>communiquer</em> rapidement sur le web des données archéologiques spatialisées. Elle propose des <em>visualisations</em> en 3D et 2D, génère des <em>coupes</em> et des <em>cartes</em> du mobilier archéologique, permet de visualiser la <em>chronologie</em> des travaux sur un site. Il est possible d’y réaliser des <em>statistiques spatiales</em> simples (enveloppes convexes, surfaces de régression, estimation de densité par noyau en 2D) ainsi que d’<em>exporter des données</em> vers d’autres applications en ligne pour appliquer des méthodes plus complexes. <code>archeoViz</code> peut être utilisée localement ou déployée sur un serveur, soit en chargeant des données via l’interface, soit en lançant l’application avec un jeu de donnée spécifique. L’interface est disponible en allemand, anglais, italien, français, portugais et roumain. Page web: <a href=https://archeoviz.hypotheses.org class=uri>https://archeoviz.hypotheses.org</a>.</p>
 <ul>
 <li><a href=#installation><strong>Installation</strong></a>
 <ul>
@@ -972,6 +975,7 @@ guidelines.fr <- "
 <ul>
 <li><a href=#signaler-un-bug>Signaler un bug</a></li>
 <li><a href=#soumettre-une-modification>Soumettre une modification</a></li>
+<li><a href=#traduire>Traduire</a></li>
 </ul></li>
 <li><a href=#utilisation><strong>Utilisation</strong></a>
 <ul>
@@ -1095,6 +1099,8 @@ guidelines.fr <- "
 <p>Si vous rencontrez un bug, ouvrez une <a href=https://github.com/sebastien-plutniak/archeoviz/issues><em>issue</em></a> en indiquant tous les détails nécessaires pour le reproduire.</p>
 <h2 id=suggérer-un-changement>Suggérer un changement</h2>
 <p>Les suggestions de modifications sont bienvenues. Les demandes peuvent concerner des fonctions additionnelles, des modifications dans la documentation, des exemples additionnels, de nouvelles fonctionnalités, etc. Elles peuvent être faites en ouvrant une <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> ou, mieux encore, en employant une <em>pull requests</em> et le modèle GitHub <a href=https://docs.github.com/articles/about-pull-requests>Fork and Pull</a>.</p>
+<h2 id=traduire>Traduire</h2>
+<p>Un soin particulier est accordé au multilinguisme. L’interface de l’application est disponible en plusieurs langues et les traduction dans des langues supplémentaires sont bienvenues. Pour cela, éditez ce <a href=https://github.com/sebastien-plutniak/archeoviz/blob/main/R/load_interface_terms_utf8.R>fichier</a> et soumettez une <em>pull request</em>.</p>
 <h1 id=utilisation>Utilisation</h1>
 <p>Considérant les objets archéologiques d’un site de fouille ou de prospection, <code>archeoViz</code> est conçu pour réduire les freins techniques à la réalisation de trois objectifs:</p>
 <ul>
@@ -1272,7 +1278,7 @@ guidelines.fr <- "
 <p>À partir de l’onglet “Statistiques” d’<code>archeoViz</code>, il est possible d’exporter les données vers d’autres applications en ligne. La possibilité de certains exports est conditionnée au type de données ou à la satisfaction d’un nombre minimal de valeurs.</p>
 <p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> est un package R et une application web permettant d’estimer et d’évaluer les distinctions entre unités spatiales archéologiques (par ex. des couches) à partir de l’analyse des relations de remontage entre fragments d’objets. La version web de l’application intègre des méthodes pour mesurer la cohésion et le mélange d’unités spatiales et de les comparer à des données simulées. Lorsqu’une instance d’<code>archeoViz</code> est executée avec des <a href=#tableau-des-remontages>données de remontage</a>, alors ces données peuvent être exportées vers <code>archeofrag</code>. Cf. cet <a href=https://analytics.huma-num.fr/archeoviz/grotte16>exemple</a>.</p>
 <p>Le <a href=https://analytics.huma-num.fr/ModAthom/seriograph/><em>Seriograph</em></a> est une application web (inclues dans la collection <a href=https://spartaas.gitpages.huma-num.fr/r-package/>SPARTAAS</a>) pour visualiser des changements quantitatifs dans la distribution de types d’artefacts dans des séries ordonnées ou non-ordonnées d’unités spatiales. Lorsqu’une instance d’<code>archeoViz</code> est executée avec un jeu de données contenant au moins 2 valeurs différentes pour la variable <code>layers</code> et 2 valeurs différentes pour la variable <code>object_type</code>, alors ces données peuvent être analysées avec l’application <code>Seriograph</code>. Cf. cet <a href=https://analytics.huma-num.fr/archeoviz/poeymau>exemple</a>.</p>
-<p><a href=https://app.ptm.huma-num.fr/amado/><em>Amado</em></a> est une application en ligne permettant d’analyser des tableaux de contingence. Il est possible d’exporter un tableau croisant les valeurs de la variable sélectionnée (par défaut, <code>object_type</code>) et les valeurs de la variable <code>layer</code>. <code>Amado</code> permet de réordonner manuellement les lignes et les colonnes et d’exécuter des sériations et classifications automatiques. Cf. cet <a href=https://analytics.huma-num.fr/archeoviz/tai>exemple</a>.</p>
+<p><a href=https://app.ptm.huma-num.fr/amado/><em>Amado online</em></a> est une application en ligne permettant d’analyser des tableaux de contingence. Il est possible d’exporter un tableau croisant les valeurs de la variable sélectionnée (par défaut, <code>object_type</code>) et les valeurs de la variable <code>layer</code>. <code>Amado</code> permet de réordonner manuellement les lignes et les colonnes et d’exécuter des sériations et classifications automatiques. Cf. cet <a href=https://analytics.huma-num.fr/archeoviz/tai>exemple</a>.</p>
 <p><a href=https://cran.r-project.org/package=explor><em>explor</em></a> est une application R Shiny / package R permettant d’explorer interactivement les résultats d’analyses multidimensionnelles. <code>explor</code> a été adapté pour exécuter une analyse factorielle des correspondances sur un tableau de contingence croisant les valeurs de la variable sélectionnée (par défaut, <code>object_type</code>) et les valeurs de la variable <code>layer</code>. Cf. cet <a href=https://analytics.huma-num.fr/archeoviz/tai>exemple</a>.</p>
 <h3 id=import-vers-archeoviz>Import vers archeoViz</h3>
 <p><a href=https://aurelienroyer.shinyapps.io/Seahors/><em>SEAHORS</em></a> est une application web et un package R permettant de visualiser la distribution spatiale d’objets archéologiques. Comme indiqué <a href=#formater-des-données>ci dessus</a>, <em>SEAHORS</em> peut être employé pour importer, transformer, et transmettre un jeu de donnée à une instance en ligne d’<code>archeoViz</code>.</p>
@@ -1428,6 +1434,7 @@ guidelines.es <- "
 <ul>
 <li><a href=#reportar-errores>Reportar errores</a></li>
 <li><a href=#sugerir-cambios>Sugerir cambios</a></li>
+<li><a href=#traducción>Traducción</a></li>
 </ul></li>
 <li><a href=#uso><strong>Uso</strong></a>
 <ul>
@@ -1551,6 +1558,8 @@ guidelines.es <- "
 <p>Si encuentra un error, complete un <a href=https://github.com/sebastien-plutniak/archeoviz/issues><em>issue</em></a> con todos los detalles necesarios para reproducirlo.</p>
 <h2 id=suggerir-cambios>Suggerir cambios</h2>
 <p>Sugerencias de cambios a archeoViz son bienvenidas. Estas solicitudes pueden referirse a funciones adicionales, cambios en la documentación, ejemplos adicionales, nuevas características, etc. Se puede hacer llenando un <a href=https://github.com/sebastien-plutniak/archeoviz/issues>issue</a> y, aún mejor, usando un <em>pull requests</em> y el modelo de <a href=https://docs.github.com/articles/about-pull-requests>Fork and Pull</a> de GitHub.</p>
+<h2 id=traducción>Traducción</h2>
+<p>Se presta especial atención al multilingüismo. La interfaz de la aplicación está disponible en varios idiomas, y se agradecería su traducción a otros idiomas. Para ello, edite este archivo y envíe una <em>pull request</em>.</p>
 <h1 id=uso>Uso</h1>
 <p>Teniendo restos arqueológicos de un sitio determinado, <code>archeoViz</code> está diseñado para reducir las barreras técnicas para cumplir tres objetivos:</p>
 <ul>
@@ -1728,7 +1737,7 @@ guidelines.es <- "
 <p>Desde la pestaña “Estadísticas” de <code>archeoViz</code>, es posible exportar datos a otras aplicaciones online. La posibilidad de realizar determinadas exportaciones está condicionada al tipo de datos o a la presencia de un número mínimo de valores.</p>
 <p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> es un paquete R y una aplicación web para evaluar y evaluar las distinciones entre unidades espaciales arqueológicas (por ejemplo, capas) basado en el análisis de las relaciones de remontajes entre fragmentos de objetos. La versión web de la aplicación incluye métodos para medir la cohesión y la mezcla de unidades espaciales y compararlas con datos simulados. Si se inicia una instancia de <code>archeoViz</code> con <a href=#tableau-des-remontages>datos de remontaje</a>, estos datos se pueden analizar con <code>archeofrag</code>. Cf. este <a href=https://analytics.huma-num.fr/archeoviz/grotte16>ejemplo</a>.</p>
 <p>El <a href=https://analytics.huma-num.fr/ModAthom/seriograph/><em>Seriograph</em></a> es una aplicación web (parte del <a href=https://spartaas.gitpages.huma-num.fr/r-package/><em>SPARTAAS</em></a>) collection) para visualizar cambios en la distribución cuantitativa de tipos de artefactos en series ordenadas o desordenadas de unidades espaciales. Si se inicia una instancia en línea de archeoViz con un conjunto de datos con al menos 2 valores diferentes para la variable <code>layers</code> y 2 valores diferentes para <code>object_type</code> entonces estos datos se pueden analizar con la aplicación <code>Seriograph</code>. Cf. este <a href=https://analytics.huma-num.fr/archeoviz/poeymau>ejemplo</a>.</p>
-<p><a href=https://app.ptm.huma-num.fr/amado/><em>Amado</em></a> es una aplicación online para analizar tablas de contingencia. Es posible exportar una tabla cruzando los valores de la variable seleccionada (por defecto, <code>object_type</code>) y los valores de la variable <code>layer</code>. <code>Amado</code> permite reordenar filas y columnas manualmente y realizar seriaciones y clasificaciones automáticas. Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
+<p><a href=https://app.ptm.huma-num.fr/amado/><em>Amado online</em></a> es una aplicación online para analizar tablas de contingencia. Es posible exportar una tabla cruzando los valores de la variable seleccionada (por defecto, <code>object_type</code>) y los valores de la variable <code>layer</code>. <code>Amado</code> permite reordenar filas y columnas manualmente y realizar seriaciones y clasificaciones automáticas. Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
 <p><a href=https://cran.r-project.org/package=explor><em>explor</em></a> es una aplicación R Shiny / paquete R para explorar interactivamente los resultados de análisis multidimensionales. <code>explor</code> ha sido adaptado para ejecutar un análisis de correspondencias sobre una tabla de contingencia cruzando los valores de la variable seleccionada (por defecto, <code>object_type</code>) y los valores de la variable <code>layer</code>.<br />
 Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
 <h3 id=importar-a-archeoviz>Importar a archeoViz</h3>

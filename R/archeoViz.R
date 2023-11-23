@@ -23,7 +23,7 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
   
   # : test lang ----
   if( ! lang %in% c("de", "en", "fr", "it", "pt", "es", "ro")){
-    stop("The 'lang' parameter must be one of 'de', 'en', 'es', 'fr', 'it, 'pt', 'ro'.")
+    stop("The 'lang' parameter must be one of 'de', 'en', 'es', 'fr', 'it', 'pt', 'ro'.")
   }
   
   # : test square.size ----
@@ -75,7 +75,7 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                "params" = params,
                "title"       = title,
                "home.text"   = home.text,
-               # "lang"        = lang,
+               "lang"        = lang,
                "set.theme"   = set.theme,
                "ui.terms"    = ui.terms,
                "background.col" = background.col,

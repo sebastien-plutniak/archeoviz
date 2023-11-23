@@ -29,6 +29,7 @@ knitr::opts_chunk$set(
 - [**Recomendaciones comunitarias**](#recomendaciones-comunitarias)
   - [Reportar errores](#reportar-errores)
   - [Sugerir cambios](#sugerir-cambios)
+  - [Traducción](#traducción)
 - [**Uso**](#uso)
   - [Información espacial en archeoViz](#información-espacial-en-archeoviz)
     - [Puntos, ubicación exacta: objetos trazados](#puntos-ubicación-exacta-objetos-trazados)
@@ -164,6 +165,9 @@ Si encuentra un error, complete un [*issue*](https://github.com/sebastien-plutni
 
 Sugerencias de cambios a archeoViz son bienvenidas. Estas solicitudes pueden referirse a funciones adicionales, cambios en la documentación, ejemplos adicionales, nuevas características, etc. Se puede hacer llenando un [issue](https://github.com/sebastien-plutniak/archeoviz/issues) y, aún mejor, usando un *pull requests* y el modelo de [Fork and Pull](https://docs.github.com/articles/about-pull-requests) de GitHub.
 
+## Traducción
+
+Se presta especial atención al multilingüismo. La interfaz de la aplicación está disponible en varios idiomas, y se agradecería su traducción a otros idiomas. Para ello, edite este archivo y envíe una *pull request*.
 
 # Uso
 
@@ -437,7 +441,7 @@ Desde la pestaña “Estadísticas” de `archeoViz`, es posible exportar datos 
 El [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) es una aplicación web (parte del  [*SPARTAAS*](https://spartaas.gitpages.huma-num.fr/r-package/)) collection) para visualizar cambios en la distribución cuantitativa de tipos de artefactos en series ordenadas o desordenadas de unidades espaciales. Si se inicia una instancia en línea de archeoViz con un conjunto de datos con al menos 2 valores diferentes para la variable `layers` y 2 valores diferentes para `object_type` entonces estos datos se pueden analizar con la aplicación `Seriograph`.
 Cf. este [ejemplo](https://analytics.huma-num.fr/archeoviz/poeymau).
 
-[*Amado*](https://app.ptm.huma-num.fr/amado/) es una aplicación online para analizar tablas de contingencia. Es posible exportar una tabla cruzando los valores de la variable seleccionada (por defecto, `object_type`) y los valores de la variable `layer`. `Amado` permite reordenar filas y columnas manualmente y realizar seriaciones y clasificaciones automáticas. 
+[*Amado online*](https://app.ptm.huma-num.fr/amado/) es una aplicación online para analizar tablas de contingencia. Es posible exportar una tabla cruzando los valores de la variable seleccionada (por defecto, `object_type`) y los valores de la variable `layer`. `Amado` permite reordenar filas y columnas manualmente y realizar seriaciones y clasificaciones automáticas. 
 Cf. este [ejemplo](https://analytics.huma-num.fr/archeoviz/tai).
 
 [*explor*](https://cran.r-project.org/package=explor) es una aplicación  R Shiny / paquete R para explorar interactivamente los resultados de análisis multidimensionales. `explor` ha sido adaptado para ejecutar un análisis de correspondencias sobre una tabla de contingencia cruzando los valores de la variable seleccionada (por defecto, `object_type`) y los valores de la variable `layer`.  

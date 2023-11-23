@@ -21,7 +21,6 @@ knitr::opts_chunk$set(
 
 
 
-
 - [**Installation**](#installation)
   - [Local Use](#local-use)
   - [Remote Use](#remote-use)
@@ -29,6 +28,7 @@ knitr::opts_chunk$set(
 - [**Community Guidelines**](#community-guidelines)
   - [Reporting Bugs](#reporting-bugs)
   - [Suggesting Changes](#suggesting-changes)
+  - [Translation](#translation)
 - [**Use**](#use)
   - [Spatial Information in archeoViz](#spatial-information-in-archeoviz)
     - [Points, Exact Location: Plotted Objects](#points-exact-location-plotted-objects)
@@ -163,6 +163,8 @@ Suggestions of changes to `archeoViz` are welcome.
 These requests may concern additional functions, changes to documentation, additional examples, new features, etc.
 They can be made by filling an [issue](https://github.com/sebastien-plutniak/archeoviz/issues) and, even better, using pull requests and the [GitHub Fork and Pull model](https://docs.github.com/articles/about-pull-requests).
 
+## Translation
+In the development of `archeoViz`, particular attention is paid to multilingualism. The application interface is available in several languages and translations into additional languages are welcome. To do so, please edit this [file](https://github.com/sebastien-plutniak/archeoviz/blob/main/R/load_interface_terms_utf8.R) and submit a pull request.
 
 # Use
 
@@ -447,7 +449,7 @@ See an example [here](https://analytics.huma-num.fr/archeoviz/grotte16).
 The [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) is a web application (part of the [SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/) collection) to visualise changes in the quantitative distribution of artefacts types in ordered or unordered series of spatial units. If an online instance of `archeoViz` is launched with a data set with at least 2 different values for the `layers` variable and 2 different values for the `object_type` variable, then this data can be analysed with the `Seriograph` application.
 See an example [here](https://analytics.huma-num.fr/archeoviz/poeymau).
 
-[*Amado*](https://app.ptm.huma-num.fr/amado/) is an on-line application for analyzing contingency tables. It is possible to export a table cross-referencing the values of the selected variable (by default, `object_type`) and the values of the variable `layer`. `Amado` allows you to manually reorder rows and columns, and perform automatic seriations and classifications. See an example [here](https://analytics.huma-num.fr/archeoviz/tai).
+[*Amado online*](https://app.ptm.huma-num.fr/amado/) is an on-line application for analyzing contingency tables. It is possible to export a table cross-referencing the values of the selected variable (by default, `object_type`) and the values of the variable `layer`. `Amado` allows you to manually reorder rows and columns, and perform automatic seriations and classifications. See an example [here](https://analytics.huma-num.fr/archeoviz/tai).
 
 [*explor*](https://cran.r-project.org/package=explor) is an R Shiny / R package application for interactively exploring the results of multi-dimensional analyses. `explor` has been adapted to run a Correspondence analysis on a contingency table intersecting the values of the selected variable (by default, `object_type`) and the values of the variable `layer`.  See an example [here](https://analytics.huma-num.fr/archeoviz/tai).
 

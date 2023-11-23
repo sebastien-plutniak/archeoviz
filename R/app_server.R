@@ -1521,7 +1521,13 @@ app_server <- function(input, output, session) {
     data <- gsub(" ", "%20", data)                   # add spaces
     data <- paste0(data, collapse = "%0A")           # encode lines
     
-    paste0("https://app.ptm.huma-num.fr/amado/main.html?table=", data)
+    amado.lang <- "en"
+    if(getShinyOption("lang") %in% c('es', 'fr', 'it', 'ru', 'tr', 'uk', 'vi', 'zh')){
+      amado.lang <- getShinyOption("lang")
+    }
+    
+    paste0("https://app.ptm.huma-num.fr/amado/main.html?lang=", 
+           amado.lang, "?table=", data)
   })
   
   

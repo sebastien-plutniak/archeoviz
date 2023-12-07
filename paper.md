@@ -45,7 +45,7 @@ For more than a century, archaeologists have generated spatially coordinated dat
 4. recognition related to data publishing 
 
 are factors explaining the insufficient availability of field archaeological data [@SelhoferGeser2015; @Bernard2019].
-Given the reluctance of archaeologists to publish data, `archeoViz` indirectly fosters data publication by demonstrating reuse, from the case of spatial archaeological data at the site level [@Plutniak2023archeoviz1.3.2; @Plutniak2023bspf].
+Given the reluctance of archaeologists to publish data, `archeoViz` indirectly fosters data publication by demonstrating reuse, from the case of spatial archaeological data at the site level [@Plutniak2023archeoviz1.3.3; @Plutniak2023bspf].
 
 Its minimal and multilingual interface (viz. issue 1) and the simple data structure it requires (viz. issues 2, 3) make it handy to use and fast to deploy on the web. This contributes to promoting datasets as citable scientific outputs and also provides recognition to their creators (viz. issue 4).
 

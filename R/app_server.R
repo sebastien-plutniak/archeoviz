@@ -1527,7 +1527,7 @@ app_server <- function(input, output, session) {
     }
     
     paste0("https://app.ptm.huma-num.fr/amado/main.html?lang=", 
-           amado.lang, "?table=", data)
+           amado.lang, "&table=", data)
   })
   
   

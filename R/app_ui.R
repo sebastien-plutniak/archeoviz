@@ -41,7 +41,7 @@ ui <- shinyUI(
                           h2(.term_switcher("header.objects.table")),
                           fluidRow(
                             column(4, fileInput('objects.file', .term_switcher("choose.csv"),
-                                                accept=c('text/csv', 'text/comma-separated-values, text/plain'))
+                                                accept=c('text/csv', 'text/comma-separated-values, text/plain')),
                             ),
                             column(2, radioButtons(inputId = 'sep1',
                                                    label = .term_switcher("separator"),
@@ -52,6 +52,7 @@ ui <- shinyUI(
                                                    choices = c("." ='.', ","),
                                                    inline=T, selected = '.'))
                           ), # end fluidRow
+                          uiOutput("sliderRotation"),
                           uiOutput("objects.preview.table"),
                           tags$div(
                             HTML(paste("<div style=width:80%;, align=left>",

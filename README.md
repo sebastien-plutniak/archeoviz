@@ -62,10 +62,11 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
       - [Data Input](#data-input)
           - [Through the Application
             Interface](#through-the-application-interface)
-          - [Generating Random Data](#generating-random-data)
           - [Through the R Function
             Parameters](#through-the-r-function-parameters)
           - [Through URL Parameters](#through-url-parameters)
+          - [Generating Random Data](#generating-random-data)
+          - [Rotating the points](#rotating-the-points)
       - [Data sub-setting](#data-sub-setting)
           - [By Location Mode](#by-location-mode)
           - [By Layer or Object Category](#by-objects-category)
@@ -176,7 +177,8 @@ Num* Shiny server:
     Italian](https://analytics.huma-num.fr/archeoviz/it).
   - [`archeoViz` in
     Portuguese](https://analytics.huma-num.fr/archeoviz/pt).
-  - [`archeoViz` in Ruman](https://analytics.huma-num.fr/archeoviz/ro).
+  - [`archeoViz` in
+    Romanian](https://analytics.huma-num.fr/archeoviz/ro).
 
 Real use cases are presented on the [*archeoViz
 Portal*](https://analytics.huma-num.fr/archeoviz/home).
@@ -416,17 +418,29 @@ This table must include the following variables:
 There are four ways to input data in `archeoViz`:
 
 1.  uploading data tables through the “Input data” tab,
-2.  generating random data in the “Input data” tab;
-3.  loading data tables through the `archeoViz` function’s parameters,
+2.  loading data tables through the `archeoViz` function’s parameters,
     in the R interface;
-4.  uploading data tables through URL parameters, when using an online
+3.  uploading data tables through URL parameters, when using an online
     instance of `archeoViz`.
+4.  generating random data in the “Input data” tab;
 
 ### Through the Application Interface
 
 The three types of tables can be loaded in the “Input data” tab. The CSV
 separator (one of: comma, semicolon, tabulation) and the character used
 for decimal points (period or comma).
+
+### Through URL parameters
+
+The URL of an online instance of `archeoViz` can include the parameters:
+
+  - `objects.df=`
+  - `refits.df=`
+  - `timeline.df=`
+
+whose values must be the URL of a CSV file observing the `archeoViz`
+format described above. For example:
+<https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>
 
 ### Generating Random Data
 
@@ -457,17 +471,11 @@ archeoViz(objects.df = NULL,  # data.frame with data about the objects
           timeline.df = NULL) # optional data.frame for the excavation timeline
 ```
 
-### Through URL parameters
+### Rotating the points
 
-The URL of an online instance of `archeoViz` can include the parameters:
-
-  - `objects.df=`
-  - `refits.df=`
-  - `timeline.df=`
-
-whose values must be the URL of a CSV file observing the `archeoViz`
-format described above. For example:
-<https://analytics.huma-num.fr/archeoviz/en/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>
+You can change the orientation of the points in the plan. In the “Data”
+tab, select a value (in degrees) and click on the “Validate selection”
+button to confirm.
 
 ## Data Sub-setting
 
@@ -870,7 +878,7 @@ German, and Spanish respectively.
   - Plutniak, Sébastien, Renata Araujo, Laura Coltofean, Nicolas Delsol,
     Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation,
     Exploration, and Web Communication of Archaeological Spatial Data”.
-    v1.3.2, DOI:
+    v1.3.3, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
     Dissemination of Spatial Archaeological
@@ -879,9 +887,10 @@ German, and Spanish respectively.
 
 ## Papers
 
-  - Plutniak, Sébastien. Submitted. “archeoViz: an R package for the
+  - Plutniak, Sébastien. 2023. “archeoViz: an R package for the
     Visualisation, Exploration, and Web Communication of Archaeological
-    Spatial Data”. *Journal of Open Source Software*.
+    Spatial Data”. *Journal of Open Source Software*, 92(8), 5811, DOI:
+    [10.21105/joss.05811](https://doi.org/10.21105/joss.05811).
   - Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution
     spatiale du mobilier archéologique : l’application archeoViz et son
     portail

@@ -214,10 +214,18 @@ app_server <- function(input, output, session) {
       objects.df <- getShinyOption("objects.df")
     }
     
+    
+    if(is.null(input$rotation)){
+      rotation.value <- getShinyOption("params")$rotation
+    } else{
+      rotation.value <- input$rotation
+    }
+    
     result <- .do_objects_dataset(
       from.parameter.input = objects.df,
       from.ui.input        = objects.ui.input,
       demoData.n           = input$demoData.n, 
+      rotation = rotation.value,
       add.x.square.labels = getShinyOption("add.x.square.labels"),
       add.y.square.labels = getShinyOption("add.y.square.labels")
     )
@@ -1472,6 +1480,13 @@ app_server <- function(input, output, session) {
                 value = getShinyOption("params")$point.size)
   })
   
+  # : slider rotation ----
+  output$sliderRotation <- renderUI({
+  sliderInput("rotation", .term_switcher("rotation"),
+              value = getShinyOption("params")$rotation,
+              min = -180, max = 180, step=1)
+  })
+  
   # Exports ----
   
   # : export table   ----
@@ -1780,7 +1795,8 @@ app_server <- function(input, output, session) {
                             "sectionX.refits" = input$sectionX.refits,
                             "sectionY.x.val" = input$sectionY.x.val,
                             "sectionY.y.val" = input$sectionY.y.val,
-                            "sectionY.refits" = input$sectionY.refits
+                            "sectionY.refits" = input$sectionY.refits,
+                            "rotation" = input$rotation
     )
     
     .do_r_command(reactive.params, refitting.df())

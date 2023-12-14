@@ -1,6 +1,6 @@
 archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                       title = NULL, home.text = NULL, lang = "en", set.theme = "cosmo",
-                      square.size = 100,
+                      square.size = 100, rotation = 0,
                       reverse.axis.values = NULL, reverse.square.names = NULL,
                       add.x.square.labels = NULL, add.y.square.labels = NULL,
                       class.variable = NULL, class.values = NULL,
@@ -60,7 +60,7 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                  "plot3d.surfaces" = plot3d.surfaces, "plot3d.refits" = plot3d.refits,
                  "sectionX.x.val" = sectionX.x.val, "sectionX.y.val" = sectionX.y.val, "sectionX.refits" = sectionX.refits,
                  "sectionY.x.val" = sectionY.x.val, "sectionY.y.val" = sectionY.y.val, "sectionY.refits" = sectionY.refits,
-                 "point.size" = point.size,
+                 "point.size" = point.size, "rotation" = rotation,
                  "camera.center" = camera.center, "camera.eye" = camera.eye)
   
   # define shiny options ----

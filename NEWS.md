@@ -1,3 +1,8 @@
+# archeoViz 1.3.4
+Released: 
+
+* Add a function to rotate the points, in the 'Input' tab.
+
 # archeoViz 1.3.3
 Released: 2023-11-23
 

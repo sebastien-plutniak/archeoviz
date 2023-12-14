@@ -1,6 +1,7 @@
 .do_objects_dataset <- function(from.parameter.input=NULL, 
                                 from.ui.input=NULL, 
                                 demoData.n=NULL,
+                                rotation = 0,
                                 add.x.square.labels=NULL, add.y.square.labels=NULL){
   # source selection ----
   if (! is.null(from.parameter.input)){
@@ -94,6 +95,20 @@
   df <- .coordinates_sampling(df, "xmin", "xmax", "x", location.term)
   df <- .coordinates_sampling(df, "ymin", "ymax", "y", location.term)
   df <- .coordinates_sampling(df, "zmin", "zmax", "z", location.term)
+  
+  # rotate coordinates
+  rotate <- function(coords, degrees, pivot = c(0, 0)){
+    radians <- - degrees * pi / 180  
+    rotated.mat <- matrix(c(cos(radians), -sin(radians), sin(radians), cos(radians)), 
+                   byrow = TRUE, ncol = 2)
+    t(pivot + rotated.mat %*% (t(as.matrix(coords) ) - pivot))
+  }
+  
+  df[, c("x", "y")] <- rotate(df[, c("x", "y")],
+                              degrees = rotation,
+                              pivot = c(median(seq(min(df$x, na.rm = T), max(df$x, na.rm = T))),
+                                        median(seq(min(df$y, na.rm = T), max(df$y, na.rm = T))))
+                              )
   
   # compute fuzzy sum
   df$fuzzy.sum <- apply(df[, c("x.fuzzy", "y.fuzzy", "z.fuzzy")], 1, sum)

@@ -816,7 +816,7 @@
 <p><code>archeoViz</code> was designed as one of the building blocks of a decentralised digital ecosystem for archaeological data and analysis. In this perspective, features and functions are distributed in multiple interconnected applications, rather than concentrated into few systems. Consequently, data can be exported and imported between <code>archeoViz</code> and other web-based applications. Note that, so far, the export functionalities are only available when using online <code>archeoViz</code> instances.</p>
 <h3 id=export-from-archeoviz>Export from archeoViz</h3>
 <p>Data can be exported to other online applications from <code>archeoViz</code> \\\\u201cStatistics\\\\u201d tab. Some exports are possible only for specific types of data or if a minimum number of values is satisfied.</p>
-<p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> is an R package and web application to assess and evaluate the distinctions betwen archaeological spatial units (e.g. layers) based on the analysis of refitting relationships between fragments of objects. The web version of the application includes methods to measure the cohesion and admixture of spatial units, and compare it to simulated data. If an instance of <code>archeoViz</code> is launched with <a href=#refittings>refitting data</a>, then this data can be analysed with <code>archeofrag</code>. See an example <a href=https://analytics.huma-num.fr/archeoviz/grotte16>here</a>.</p>
+<p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a> is an R package and web application to assess and evaluate the distinctions betwen archaeological spatial units (e.g. layers) based on the analysis of refitting relationships between fragments of objects. The web version of the application includes methods to measure the cohesion and admixture of spatial units, and compare it to simulated data. If an instance of <code>archeoViz</code> is launched with <a href=#refittings>refitting data</a>, then this data can be analysed with <code>archeofrag</code>. See an example <a href=https://analytics.huma-num.fr/archeoviz/grotte16>here</a>.</p>
 <p>The <a href=https://analytics.huma-num.fr/ModAthom/seriograph/><em>Seriograph</em></a> is a web application (part of the <a href=https://spartaas.gitpages.huma-num.fr/r-package/>SPARTAAS</a> collection) to visualise changes in the quantitative distribution of artefacts types in ordered or unordered series of spatial units. If an online instance of <code>archeoViz</code> is launched with a data set with at least 2 different values for the <code>layers</code> variable and 2 different values for the <code>object_type</code> variable, then this data can be analysed with the <code>Seriograph</code> application. See an example <a href=https://analytics.huma-num.fr/archeoviz/poeymau>here</a>.</p>
 <p><a href=https://app.ptm.huma-num.fr/amado/><em>Amado online</em></a> is an on-line application for analyzing contingency tables. It is possible to export a table cross-referencing the values of the selected variable (by default, <code>object_type</code>) and the values of the variable <code>layer</code>. <code>Amado</code> allows you to manually reorder rows and columns, and perform automatic seriations and classifications. See an example <a href=https://analytics.huma-num.fr/archeoviz/tai>here</a>.</p>
 <p><a href=https://cran.r-project.org/package=explor><em>explor</em></a> is an R Shiny / R package application for interactively exploring the results of multi-dimensional analyses. <code>explor</code> has been adapted to run a Correspondence analysis on a contingency table intersecting the values of the selected variable (by default, <code>object_type</code>) and the values of the variable <code>layer</code>. See an example <a href=https://analytics.huma-num.fr/archeoviz/tai>here</a>.</p>
@@ -1405,7 +1405,7 @@ guidelines.fr <- "
 <h2 id=articles>Articles</h2>
 <ul>
 <li>Plutniak, S\\\\u00e9bastien. Submitted. \\\\u201carcheoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. <em>Journal of Open Source Software</em>.</li>
-<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique : l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
+<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique : l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=pr\\\\u00e9sentations>Pr\\\\u00e9sentations</h2>
 <ul>
@@ -1577,7 +1577,7 @@ guidelines.es <- "
 <p>Sin embargo, tambi\\\\u00e9n es com\\\\u00fan que las coordenadas x, y, z, por objeto no est\\\\u00e9n disponibles, por diferentes motivos debido a:</p>
 <ul>
 <li>errores de registro, p\\\\u00e9rdida de informaci\\\\u00f3n, lo que resulta en la necesidad de reemplazar uno de varios valores de coordenadas por rangos (por ejemplo, falta un valor X para un objeto y se reemplaza por los valores X m\\\\u00ednimo y m\\\\u00e1ximo del cuadrado donde se encuentra este objeto). fue encontrado);</li>
-<li>elecci\\\\u00f3n del m\\\\u00e9todo (p. ej., excavaci\\\\u00f3n realizada y registrada utilizando asadores de profundidad arbitraria, objetos tamizados, etc.).</li>
+<li>elecci\\\\u00f3n del m\\\\u00e9todo (p. ej., excavaci\\\\u00f3n realizada y registrada utilizando asadores de profundidad arbitraria, objetos tamizados, etc.).</li>
 </ul>
 <p>En todos estos casos, tenemos que lidiar con la ubicaci\\\\u00f3n imprecisa, cuando los objetos no se pueden ubicar como puntos sino que se encuentran en alg\\\\u00fan lugar entre rangos de coordenadas. La ubicaci\\\\u00f3n imprecisa puede afectar a una, dos o tres dimensiones espaciales (las coordenadas x, y, z, respectivamente).</p>
 <p>Esta funci\\\\u00f3n tambi\\\\u00e9n puede utilizarse para tener en cuenta la imprecisi\\\\u00f3n de los instrumentos topogr\\\\u00e1ficos.</p>
@@ -1595,7 +1595,7 @@ guidelines.es <- "
 <p>Aunque la segunda estructura de datos es m\\\\u00e1s precisa, la primera se usa con m\\\\u00e1s frecuencia.</p>
 <p><code>archeoViz</code> procesa y representa las dos estructuras de datos de dos maneras:</p>
 <ul>
-<li>los conjuntos de objetos de remontajes deben describirse usando una columna espec\\\\u00edfica en la tabla <code>objects.df</code> (p. ej., `object_refits) y est\\\\u00e1n representados por el color de los puntos en los gr\\\\u00e1ficos ( como cualquier otra variable);</li>
+<li>los conjuntos de objetos de remontajes deben describirse usando una columna espec\\\\u00edfica en la tabla <code>objects.df</code> (p. ej., `object_refits) y est\\\\u00e1n representados por el color de los puntos en los gr\\\\u00e1ficos ( como cualquier otra variable);</li>
 <li>las relaciones de remontajes deben describirse usando la tabla <code>refits.df</code> y se visualizan como segmentos que conectan los objetos de remontaje en las parcelas.</li>
 </ul>
 <h3 id=medici\\\\u00f3n-de-f\\\\u00e1brica>Medici\\\\u00f3n de f\\\\u00e1brica</h3>
@@ -1854,7 +1854,7 @@ Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
 <li>modifica el contenido de la p\\\\u00e1gina de inicio con contenidos HTML b\\\\u00e1sicos (par\\\\u00e1metro <code>home.txt</code>)</li>
 </ol>
 <p><a href=https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Anters%20at%20Bilzingsleben&amp;home.text=Many%20%3Cb%3Eantlers%3C/b%3E&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv>https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&amp;class.values=Antler&amp;square.size=500&amp;run.plots=TRUE&amp;title=Antlers%20at%20Bilzingsleben&amp;home.text=Many%20<b>antlers</b>&amp;objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv</a></p>
-<p>Tenga en cuenta que los par\\\\u00e1metros <code>add.x.square.labels</code>, <code>add.y.square.labels</code>, <code>location.mode</code>, et <code>class.values</code>, que aceptan valores simples o m\\\\u00faltiples en la interfaz de R (p. ej., c(\\\\u201cvalue1\\\\u201d, \\\\u201cvalue2\\\\u201d)) solo aceptan un valor cuando se establecen como par\\\\u00e1metros de URL (esta es una restricci\\\\u00f3n debido a la sintaxis de la URL).</p>
+<p>Tenga en cuenta que los par\\\\u00e1metros <code>add.x.square.labels</code>, <code>add.y.square.labels</code>, <code>location.mode</code>, et <code>class.values</code>, que aceptan valores simples o m\\\\u00faltiples en la interfaz de R (p. ej., c(\\\\u201cvalue1\\\\u201d, \\\\u201cvalue2\\\\u201d)) solo aceptan un valor cuando se establecen como par\\\\u00e1metros de URL (esta es una restricci\\\\u00f3n debido a la sintaxis de la URL).</p>
 <h1 id=agradecimientos>Agradecimientos</h1>
 <p>La aplicaci\\\\u00f3n y el paquete <code>archeoViz</code> son desarrollados y mantenidos por S\\\\u00e9bastien Plutniak. Arthur Coulon, Sol\\\\u00e8ne Denis, Olivier Marlet y Thomas Perrin probaron y apoyaron el proyecto en su etapa inicial. Renata Araujo, Laura Coltofean, Sara Giardino, Julian Laabs, y Nicolas Delsol tradujeron la aplicaci\\\\u00f3n al portugu\\\\u00e9s, rumano, italiano, alem\\\\u00e1n, y espa\\\\u00f1ol respectivamente.</p>
 <h1 id=referencias>Referencias</h1>
@@ -1866,7 +1866,7 @@ Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
 <h2 id=articulos>Articulos</h2>
 <ul>
 <li>Plutniak, S\\\\u00e9bastien. Submitted. \\\\u201carcheoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data\\\\u201d. <em>Journal of Open Source Software</em>.</li>
-<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique : l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
+<li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique : l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=presentationes>Presentationes</h2>
 <ul>
@@ -1947,6 +1947,7 @@ Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
     planar = "Planaire",
     volume = "Volum\\\\u00e9trique",
     grid = "Carroyage",
+    rotation = "Rotation en plan (puis cliquez sur 'Valider')",
     click.on.point = "Cliquez sur un point pour afficher ses informations.",
     notif.objects.ok = "Fichier des objets ok!",
     notif.objects.not.ok = "Erreur. Certains champs requis sont absents, v\\\\u00e9rifiez les donn\\\\u00e9es.",
@@ -2025,6 +2026,7 @@ Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
     variable = "Variable",
     selection = "Selection",
     show.uncertainty = "Show uncertainty",
+    rotation = "Planar rotation (then click on 'Validate')",
     click.on.point = "Click on a point to get more information.",
     notif.objects.ok = "Objects file ok!",
     notif.objects.not.ok = "Error. Some of the mandatory fields are absent. Please check the file.",
@@ -2104,6 +2106,7 @@ Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
     planar = "Planare",
     volume = "Volumetrica",
     grid = "Grade",
+    rotation = "Girar no plano (depois clicar em 'Validar')",
     click.on.point = "Clique sobre um ponto para obter mais informa\\\\u00e7\\\\u00f5es",
     notif.objects.ok = "Arquivo de objetos ok!",
     notif.objects.not.ok = "Erro. Certos campos exigidos est\\\\u00e3o ausentes. Por favor, verifique o arquivo.",
@@ -2183,6 +2186,7 @@ Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
     planar = "Planare",
     volume = "Volumetrica",
     grid = "Griglia",
+    rotation = "Rotazione in pianta (poi cliccare su 'Convalida')",
     click.on.point = "Fare clic su un punto per visualizzarne le informazioni.",
     notif.objects.ok = "File degli oggetto ok!",
     notif.objects.not.ok = "Errore. Mancano alcuni campi obbligatori, controllare il file.",
@@ -2257,6 +2261,7 @@ Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
     planar = "Planar",
     volume = "Volumen",
     grid = "Quadrat",
+    rotation = "In der Ebene drehen (dann auf 'Best\\\\u00e4tigen' klicken)",
     year = "Jahr",
     variable = "Variable",
     selection = "Selection",
@@ -2340,6 +2345,7 @@ Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
     planar = "Planar",
     volume = "Volum\\\\u00e9trica",
     grid = "Cuadr\\\\u00edcula",
+    rotation ="Rotaci\\\\u00f3n en el plano (luego pulse 'Validar'')",
     click.on.point = "Haga clic en un punto para obtener m\\\\u00e1s informaci\\\\u00f3n",
     notif.objects.ok = "Archivo de objetos ok!",
     notif.objects.not.ok = "Error.Faltan algunos campos obligatorios. Por favor revise el archivo.",
@@ -2414,6 +2420,7 @@ Cf. este <a href=https://analytics.huma-num.fr/archeoviz/tai>ejemplo</a>.</p>
     planar = "Planar",
     volume = "Volum",
     grid = "Caroiaj",
+    rotation = "Roti\\\\u021bi \\\\u00een plan (apoi clic pe 'Valideaz\\\\u0103')",
     year = "an",
     variable = "Variabil\\\\u0103",
     selection = "Selection",

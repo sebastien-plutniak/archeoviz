@@ -101,7 +101,8 @@
     radians <- - degrees * pi / 180  
     rotated.mat <- matrix(c(cos(radians), -sin(radians), sin(radians), cos(radians)), 
                    byrow = TRUE, ncol = 2)
-    t(pivot + rotated.mat %*% (t(as.matrix(coords) ) - pivot))
+    rotated.mat <- t(pivot + rotated.mat %*% (t(as.matrix(coords) ) - pivot))
+    apply(rotated.mat, 2, as.integer)
   }
   
   df[, c("x", "y")] <- rotate(df[, c("x", "y")],

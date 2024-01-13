@@ -102,7 +102,7 @@
     arrow.coords <- matrix(c(.95, .95, .1, .04), ncol=2) 
     
     arrow.coords <- .rotate(coords = arrow.coords,  # rotate arrow
-                            degrees = 360 - grid.orientation,
+                            degrees = grid.orientation,
                             pivot = c(.95, .07))
     map <- layout(map,                 
                   annotations = list(

@@ -134,7 +134,7 @@ app_server <- function(input, output, session) {
       from.param.time.df <- utils::read.csv(url(as.character(query[['timeline.df']])))
     } else {
       from.param.time.df <- getShinyOption("timeline.df")
-    }
+    } 
     
     
     # sources priority: 
@@ -146,6 +146,8 @@ app_server <- function(input, output, session) {
     # notification disabled
     # showNotification(.term_switcher(timeline$notif.text),
     #                  type = timeline$notif.type)
+    if(is.null(timeline$data)){return()}
+    
     timeline$data
   })
   
@@ -1198,6 +1200,7 @@ app_server <- function(input, output, session) {
   
   # : slider timeline  ----
   output$sliderTimeline <- renderUI({
+    req(timeline.data)
     time.df <- timeline.data()
     if(is.null(time.df)) return()
     
@@ -1785,8 +1788,9 @@ app_server <- function(input, output, session) {
   #  Timeline ----
   #  : main timeline ----
   timeline.map.plot <- reactive({
-    req(timeline.data)
     time.df <- timeline.data()
+    
+    if(is.null(time.df)) return()
     
     time.sub.df <- time.df[time.df$year == input$history.date, ]
     
@@ -1821,7 +1825,7 @@ app_server <- function(input, output, session) {
       timeline.map.out <- timeline.map.out + 
         theme(axis.text.y = element_blank())
     }
-    # browser()
+    
     # : - add scale ----
     timeline.map.out <- timeline.map.out +
       annotate("text",
@@ -1842,7 +1846,7 @@ app_server <- function(input, output, session) {
                              ncol=2) 
       
       arrow.coords <- .rotate(coords = arrow.coords,  # rotate arrow
-                     degrees = getShinyOption("grid.orientation"),
+                     degrees = 360 - getShinyOption("grid.orientation"),
                      pivot = c(arrow.x.origin,
                                median(c(arrow.coords[, 2])))
                      )
@@ -1863,7 +1867,9 @@ app_server <- function(input, output, session) {
     timeline.map.out
   })
   
-  output$timeline.map <- renderPlot({ timeline.map.plot() })
+  output$timeline.map <- renderPlot({
+    timeline.map.plot() 
+    })
   
   output$download.timeline.map <- downloadHandler(
     filename = "timeline-map.svg",
@@ -1901,7 +1907,10 @@ app_server <- function(input, output, session) {
             panel.grid.major = element_blank())
   })
   
-  output$timeline.map.grid <- renderPlot({ timeline.map.grid()})
+  output$timeline.map.grid <- renderPlot({ 
+    req(timeline.map.grid)
+    timeline.map.grid()
+    })
   
   output$download.timeline.map.grid <- downloadHandler(
     filename = "timeline-map-grid.svg",

@@ -1,4 +1,4 @@
-test_that(".do_section_plot", {
+
   ui.terms <- .load_interface_terms("fr")
   shinyOptions("objects.df"  = df,
                "ui.terms"    = ui.terms)
@@ -42,7 +42,20 @@ test_that(".do_section_plot", {
   refits.res <- function(){.do_refits_preprocessing(refits, df$data)}
   
   # make plot ----
-  fig <- .do_section_plot(selection = df$data$x %in% seq(100, 300),
+  fig.x <- .do_section_plot(selection = df$data$x %in% seq(100, 300),
+                            dataset = df$data,
+                            section.point.size = 1,
+                            refitting.df = refits.res,
+                            show.refits = FALSE,
+                            colors = as.character(unique(df$data$layer_color)),
+                            grid.legend = "test",
+                            grid.coord = grid.coords.res,
+                            coords = coords,
+                            axis.labels = axis.labels.res,
+                            xaxis = "x",
+                            reverse.axis.values = "")
+  
+  fig.y <- .do_section_plot(selection = df$data$x %in% seq(100, 300),
                    dataset = df$data,
                    section.point.size = 1,
                    refitting.df = refits.res,
@@ -52,8 +65,62 @@ test_that(".do_section_plot", {
                    grid.coord = grid.coords.res,
                    coords = coords,
                    axis.labels = axis.labels.res,
-                   xaxis = "y")
+                   xaxis = "y",
+                   reverse.axis.values = "")
+
+  fig.y.reversed <- .do_section_plot(selection = df$data$x %in% seq(100, 300),
+                          dataset = df$data,
+                          section.point.size = 1,
+                          refitting.df = refits.res,
+                          show.refits = FALSE,
+                          colors = as.character(unique(df$data$layer_color)),
+                          grid.legend = "test",
+                          grid.coord = grid.coords.res,
+                          coords = coords,
+                          axis.labels = axis.labels.res,
+                          xaxis = "y",
+                          reverse.axis.values = "y")
   
-  expect_equal(attr(fig, "class"), c("plotly", "htmlwidget"))
-  expect_equal(names(fig$x),c("visdat", "cur_data", "attrs", "layout", "source", "config", "layoutAttrs"))
+  fig.x.reversed <- .do_section_plot(selection = df$data$x %in% seq(100, 300),
+                                     dataset = df$data,
+                                     section.point.size = 1,
+                                     refitting.df = refits.res,
+                                     show.refits = FALSE,
+                                     colors = as.character(unique(df$data$layer_color)),
+                                     grid.legend = "test",
+                                     grid.coord = grid.coords.res,
+                                     coords = coords,
+                                     axis.labels = axis.labels.res,
+                                     xaxis = "x",
+                                     reverse.axis.values = "x")
+  
+test_that(".do_section_plot: attributes", {  
+  expect_equal(attr(fig.y, "class"), c("plotly", "htmlwidget"))
+  expect_equal(names(fig.y$x),c("visdat", "cur_data", "attrs", "layout", "source", "config", "layoutAttrs"))
 })
+
+
+test_that(".do_section_plot: Altitude values", {  
+  expect_gt(fig.y$x$layoutAttrs[[1]]$yaxis$range[1], 1000)
+  expect_lt(fig.y$x$layoutAttrs[[1]]$yaxis$range[2], 200)
+})
+
+test_that(".do_section_plot: X axis ranges", {  
+  expect_equal(fig.x$x$layoutAttrs[[1]]$xaxis$range, c(0, 900))
+}) 
+
+test_that(".do_section_plot: reversed X axis ranges", {  
+  expect_equal(fig.x.reversed$x$layoutAttrs[[1]]$xaxis$range, c(900, 0))
+}) 
+
+
+test_that(".do_section_plot: Y axis ranges", {  
+  expect_equal(fig.y$x$layoutAttrs[[1]]$xaxis$range, c(0, 700))
+}) 
+
+test_that(".do_section_plot: reversed Y axis ranges", {  
+  expect_equal(fig.y.reversed$x$layoutAttrs[[1]]$xaxis$range, c(700, 0))
+}) 
+
+
+

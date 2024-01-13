@@ -22,7 +22,7 @@
   
   # static parameters: ----
   static.params <- list("reverse.axis.values", "reverse.square.names", "square.size",
-                     "title", "lang", "set.theme", "run.plots", "html.export")
+                    "grid.orientation", "title", "lang", "set.theme", "run.plots", "html.export")
   static.params <- sapply(static.params, .get.shiny.param)
   static.params <- static.params[ ! sapply(static.params, is.null) ]
   

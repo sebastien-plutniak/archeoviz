@@ -372,8 +372,8 @@ app_server <- function(input, output, session) {
     if(grepl("x", getShinyOption("reverse.square.names"))){
       squares$square_x <- factor(squares$square_x)
       # levels(squares$square_x) <- rev(levels(squares$square_x))
-      squares$square_y <- factor(squares$square_y,
-                                 labels = rev(levels(squares$square_y)) )
+      squares$square_x <- factor(squares$square_x,
+                                 labels = rev(levels(squares$square_x)) )
     }
     if(grepl("y", getShinyOption("reverse.square.names"))){
       squares$square_y <- factor(squares$square_y)
@@ -584,7 +584,6 @@ app_server <- function(input, output, session) {
                  colour = "grey70" ) +
       geom_hline(yintercept =  after_scale(seq(0.5, length(axis.labels$yaxis$breaks) + .5, 1)),
                  colour = "grey70" ) +
-      coord_fixed() +
       scale_fill_manual("State:",
                         values = c(grDevices::rgb(0,0,0,0), 
                                    grDevices::rgb(.43, .54, .23, .7))) +
@@ -1787,14 +1786,12 @@ app_server <- function(input, output, session) {
   #  : main timeline ----
   timeline.map.plot <- reactive({
     req(timeline.data)
-    
     time.df <- timeline.data()
     
     time.sub.df <- time.df[time.df$year == input$history.date, ]
     
     if(nrow(time.sub.df) == 0) return()
     axis.labels <- axis.labels()
-    # browser()
 
     if("x" %in% getShinyOption("reverse.square.names")){
       levels(time.sub.df$square_x) <- rev(levels(time.sub.df$square_x))
@@ -1810,13 +1807,11 @@ app_server <- function(input, output, session) {
       time.sub.df$square_y <- factor(time.sub.df$square_y,
                           levels = rev(levels(time.sub.df$square_y)))
     }
-    
     timeline.map.out <- timeline.map() +
       geom_tile(data = time.sub.df,
                 aes(x = .data[["square_x"]], y = .data[["square_y"]],
                     fill = .data[["excavation"]]),
                 show.legend = FALSE) 
-    
     
     if(is.null(axis.labels$xaxis$labels)){
       timeline.map.out <- timeline.map.out +
@@ -1826,6 +1821,44 @@ app_server <- function(input, output, session) {
       timeline.map.out <- timeline.map.out + 
         theme(axis.text.y = element_blank())
     }
+    # browser()
+    # : - add scale ----
+    timeline.map.out <- timeline.map.out +
+      annotate("text",
+               x = length(unique(time.sub.df$square_x)) / 3 ,
+               y = -0.5 ,
+               size  = 4,  
+               label = grid.legend) +
+      coord_fixed(ylim = c(1, length(unique(time.sub.df$square_y))), 
+                  clip = 'off') 
+    
+    # : - add north arrow ----
+    if( ! is.null(getShinyOption("grid.orientation"))){
+      arrow.x.origin <- length(unique(time.sub.df$square_x)) * 2/3
+      
+      arrow.coords <- matrix(c(arrow.x.origin,
+                               arrow.x.origin,
+                                0, - .5),
+                             ncol=2) 
+      
+      arrow.coords <- .rotate(coords = arrow.coords,  # rotate arrow
+                     degrees = getShinyOption("grid.orientation"),
+                     pivot = c(arrow.x.origin,
+                               median(c(arrow.coords[, 2])))
+                     )
+      
+      timeline.map.out <- timeline.map.out +
+        annotate("text",
+                 x = arrow.x.origin,
+                 y = arrow.coords[2,2] - .25, size  = 4,  
+                 label = "N") +      
+        annotate("segment",
+                 x = arrow.coords[1,1], xend = arrow.coords[2,1],
+                 y = arrow.coords[2,2], yend = arrow.coords[1,2],
+                 arrow = ggplot2::arrow(length = ggplot2::unit(0.2, "cm"))
+                 ) 
+    }
+    
     
     timeline.map.out
   })
@@ -1861,6 +1894,7 @@ app_server <- function(input, output, session) {
                 aes(x = .data[["square_x"]], y = .data[["square_y"]], 
                     fill = .data[["excavation"]]), 
                 show.legend = FALSE) +
+      coord_fixed() +
       facet_wrap(~year) +
       theme(axis.text.x = element_text(color="white", size = .1),
             axis.text.y = element_text(color="white", size = .1),

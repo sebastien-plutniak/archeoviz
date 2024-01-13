@@ -1,8 +1,10 @@
-do_map_plot <- function(site.map, planZ.df, map.point.size, color.var, col,
-                        map.density, map.refits, refitting.df, grid.legend){
+.do_map_plot <- function(site.map, planZ.df, map.point.size, color.var, col,
+                        map.density, map.refits, refitting.df, grid.legend, 
+                        grid.orientation){
   
   .data <- NULL
   
+  # base point plot ----
   map <- site.map +
     geom_point(data = planZ.df,
                aes(x = .data[["x"]], y = .data[["y"]],
@@ -17,6 +19,7 @@ do_map_plot <- function(site.map, planZ.df, map.point.size, color.var, col,
     ) +
     scale_color_manual(color.var, values = col)
   
+  # add density contours ----
   if(! is.null(map.density)){
     if(map.density == "by.variable"){
       # only layers with > 30 points
@@ -43,7 +46,7 @@ do_map_plot <- function(site.map, planZ.df, map.point.size, color.var, col,
   }
   
   
-  # map.refits
+  # add refits ----
   if( map.refits > 0 ){
     refitting.df <- refitting.df$refits.2d
     
@@ -67,25 +70,59 @@ do_map_plot <- function(site.map, planZ.df, map.point.size, color.var, col,
                      linewidth=.3 )
     }
   }
-  
+  # convert to plotly ----
   map <- ggplotly(map, tooltip = c("id", "xyz", "square",
                                    "location_mode", "object_type"),
                   source = "B") 
   
-  map <-plotly::config(map,
+  map <- plotly::config(map,
                  displaylogo = FALSE,  
                  toImageButtonOptions = list(format = "svg",
                                              filename = "archeoviz-map",
                                              width = 600, height = 600))
-  layout(map,                 # add grid legend:     
-         annotations = list(list(
-           xref="paper", yref="paper",
-           x = 0, y = 0,
-           font = list(size = 12),
-           text = grid.legend,
-           xanchor = "left",
-           xshift = 0, yshift = 0,
-           showarrow = F,
-           opacity = 1 )) # end annotation)
+  
+  # add grid legend:  ----
+  map <- layout(map,                 
+         annotations = list(
+           list( 
+                xref="paper", yref="paper",
+                x = 0, y = 0,
+                font = list(size = 12),
+                text = grid.legend,
+                xanchor = "left",
+                xshift = 0, yshift = 0,
+                showarrow = F,
+                opacity = 1 )
+           ) # end annotation
   )
+  
+  # add north arrow: ----
+  if( ! is.null(grid.orientation)){
+    # compute north orientation: 
+    arrow.coords <- matrix(c(.95, .95, .1, .04), ncol=2) 
+    
+    arrow.coords <- .rotate(coords = arrow.coords,  # rotate arrow
+                            degrees = 360 - grid.orientation,
+                            pivot = c(.95, .07))
+    map <- layout(map,                 
+                  annotations = list(
+                    list(x = arrow.coords[1,1], y = arrow.coords[1,2],
+                         ax = arrow.coords[2,1], ay = arrow.coords[2,2],
+                         xref = "paper", yref = "paper",
+                         axref = "paper", ayref = "paper",
+                         text = "",
+                         showarrow = T),
+                    list(x = .958, y = 0,
+                         xref = "paper", yref = "paper",
+                         text = "N",
+                         showarrow = F)
+                  ) # end annotation
+    )
+  }
+
+  map
 }
+
+
+
+

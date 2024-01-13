@@ -46,9 +46,10 @@ knitr::opts_chunk$set(
      - [Tabla cronológica](#tabla-cronológica)
   - [Cargar datos](#cargar-datos)
      - [A través de la interfaz de la aplicación](#a-través-de-la-interfaz-de-la-aplicación)
-     - [Generación de datos aleatorios](#generación-de-datos-aleatorios)
      - [A través de los parámetros de la función R](#a-través-de-los-parámetros-de-la-función-r)
      - [A través de parámetros de URL](#a-través-de-parámetros-de-url)
+     - [Generación de datos aleatorios](#generación-de-datos-aleatorios)
+     - [Girar los puntos](#girar-los-puntos)
   - [Subconfiguración de datos](#subconfiguración-de-datos)
      - [Por modo de ubicación](#por-modo-de-ubicación)
      - [Por capa o categoría de objeto](#por-capa-o-categoría-de-objeto)
@@ -306,19 +307,14 @@ Hay cuatro formas de ingresar datos en `archeoViz`:
 
 
 1. cargar tablas de datos a través de la pestaña “Cargar datos”,
-2. generar datos aleatorios en la pestaña “Cargar datos”;
-3. cargar tablas de datos a través de los parámetros de la función `archeoViz`, en la interfaz R;
-4. cargar tablas de datos a través de parámetros de URL, cuando se usa una instancia en línea de `archeoViz`.
+2. cargar tablas de datos a través de los parámetros de la función `archeoViz`, en la interfaz R;
+3. cargar tablas de datos a través de parámetros de URL, cuando se usa una instancia en línea de `archeoViz`.
+4. generar datos aleatorios en la pestaña “Cargar datos”;
 
 
 ### A través de la interfaz de la aplicación
 
 Los tres tipos de tablas se pueden cargar en la pestaña “Cargar datos”. El separador CSV (uno de: coma, punto y coma, tabulación) y el carácter utilizado para los puntos decimales (punto o coma).
-
-
-### Generando Datos Aleatorios
-
-El uso de datos generados aleatoriamente es posible con fines de demostración. Para activar esta función, configure el control deslizante en “Cargar datos” a un valor superior a 0 (establecer el valor nuevamente en 0 desactiva la función). Se genera un conjunto de datos de “objetos”, un conjunto de datos de “remontajes” y un conjunto de datos de “cronología”, lo que permite probar todas las funcionalidades de `archeoViz`.
 
 
 ### A través de los parámetros de la función R
@@ -328,6 +324,7 @@ La función de inicio de archeoViz (`archeoViz()`) se puede ejecutar sin paráme
 ```{r, eval=FALSE}
 archeoViz()
 ```
+
 
 o usando los parámetros `objects.df`, `refits.df` o `timeline.df` para ingresar datos.marcos sobre los objetos arqueológicos , las relaciones de remontajes entre estos objetos y la cronología de la excavación, respectivamente.
 
@@ -347,6 +344,15 @@ La URL de una instancia en línea de `archeoViz` puede incluir los parámetros:
 
 cuyos valores deben ser la URL de un archivo CSV respetando el formato archeoViz descrito anteriormente. Por ejemplo:
 [https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/fr/?objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
+
+
+### Generando Datos Aleatorios
+
+El uso de datos generados aleatoriamente es posible con fines de demostración. Para activar esta función, configure el control deslizante en “Cargar datos” a un valor superior a 0 (establecer el valor nuevamente en 0 desactiva la función). Se genera un conjunto de datos de “objetos”, un conjunto de datos de “remontajes” y un conjunto de datos de “cronología”, lo que permite probar todas las funcionalidades de `archeoViz`.
+
+### Girar los puntos
+
+Puede cambiar la orientación de los puntos en planta. En la pestaña “Datos”, seleccione un valor (en grados) y confírmelo haciendo clic en el botón “Validar la selección”.
 
 
 
@@ -468,7 +474,8 @@ La función `archeoViz()` se puede configurar con múltiples parámetros opciona
 ```{r, eval=FALSE}
 archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
-          square.size = 100, reverse.axis.values = NULL, reverse.square.names = NULL,
+          square.size = 100, rotation = 0, grid.orientation = NULL,
+          reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL,
           class.variable = NULL, class.values = NULL,
           default.group = "by.layer", location.mode = NULL,
@@ -478,7 +485,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
           sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
           camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
-          run.plots = FALSE, html.export = TRUE, table.export =TRUE
+          run.plots = FALSE, html.export = TRUE, table.export = TRUE
           )
 ```
 
@@ -492,10 +499,12 @@ archeoViz(square.size = 100,
 ```
 
 * **square.size** : *numérico*. Tamaño (ancho y alto) en centímetros de los cuadrados en el sistema de cuadrícula. El valor predeterminado es 100 cm.
-* **reverse.axis.values** : caractères. Nombre del eje o ejes a invertir (cualquier combinación de “x”, “y”, “z”).
+* **rotation** : *numérico*. Valor (grados) de la rotación en el plano de la nube de puntos.
+* **grid.orientation** : *numérico*. Orientación (grados, positiva o negativa) de la cuadrícula (0 corresponde a una orientación norte).
+* **reverse.axis.values** : *carácter*. Nombre del eje o ejes a invertir (cualquier combinación de “x”, “y”, “z”).
 * **reverse.square.names** : *carácter*. Nombre del eje o ejes para los que invertir el orden de las etiquetas cuadradas (cualquier combinación de “x”, “y”, “z”).
 * **add.x.square.labels** : *carácter*. Etiquetas cuadradas adicionales para el eje “x”.
-* **add.y.square.labels** : *carácter*.  Etiquetas cuadradas adicionales para el eje “y”.
+* **add.y.square.labels** : *carácter*. Etiquetas cuadradas adicionales para el eje “y”.
 
 ### Preajuste de parámetros
 
@@ -601,12 +610,12 @@ La aplicación y el paquete `archeoViz` son desarrollados y mantenidos por Séba
 
 ## Software 
 
-* Plutniak, Sébastien, Renata Araujo, Laura Coltofean, Nicolas Delsol, Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.3.2, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
+* Plutniak, Sébastien, Renata Araujo, Laura Coltofean, Nicolas Delsol, Sara Giardino, Julian Laabs. 2024. “archeoViz. Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. v1.3.4, DOI: [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
 * Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal: Dissemination of Spatial Archaeological Datasets](https://hal.science/hal-04156271)”, portail web, https://analytics.huma-num.fr/archeoviz/home.
 
 ## Articulos
 
-* Plutniak, Sébastien. Submitted. “archeoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. *Journal of Open Source Software*.
+* Plutniak, Sébastien. 2023. “archeoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data”. *Journal of Open Source Software*, 92(8), 5811, DOI: [10.21105/joss.05811](https://doi.org/10.21105/joss.05811).
 * Plutniak, Sébastien. 2023. “[Visualiser et explorer la distribution spatiale du mobilier archéologique : l'application archeoViz et son portail web](https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf)”. *Bulletin de la Société préhistorique française*, 120(1), p. 70-74.
 
 ## Presentationes

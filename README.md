@@ -689,7 +689,8 @@ related to:
 ``` r
 archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
-          square.size = 100, reverse.axis.values = NULL, reverse.square.names = NULL,
+          square.size = 100, rotation = 0, grid.orientation = NULL,
+          reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL,
           class.variable = NULL, class.values = NULL,
           default.group = "by.layer", location.mode = NULL,
@@ -714,6 +715,10 @@ archeoViz(square.size = 100,
 
   - **square.size**: numerical. Size (width and height) in centimeter of
     the squares in the grid system. Default value is 100 cm.
+  - **rotation** : integer. Value (degrees) for the in-plane rotation of
+    the point cloud.
+  - **grid.orientation** : numerical. Orientation (degrees, positive or
+    negative) of the grid (0 corresponds to a north orientation).
   - **reverse.axis.values**: character. Name of the axis or axes to be
     reversed (any combination of “x”, “y”, “z”).
   - **reverse.square.names**: character. Name of the axis or axes for
@@ -876,9 +881,9 @@ German, and Spanish respectively.
 ## Software
 
   - Plutniak, Sébastien, Renata Araujo, Laura Coltofean, Nicolas Delsol,
-    Sara Giardino, Julian Laabs. 2023. “archeoViz. Visualisation,
+    Sara Giardino, Julian Laabs. 2024. “archeoViz. Visualisation,
     Exploration, and Web Communication of Archaeological Spatial Data”.
-    v1.3.3, DOI:
+    v1.3.4, DOI:
     [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
   - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
     Dissemination of Spatial Archaeological

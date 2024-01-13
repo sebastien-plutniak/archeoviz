@@ -141,7 +141,8 @@ app_server <- function(input, output, session) {
     #   function parameter > objects table > timeline table
     timeline <- .do_timelinedata(from.param.time.df, 
                                  objects.df, 
-                                 timeline.ui.df) # this is the reactive object
+                                 timeline.ui.df # this is the reactive object
+                                 )
     # notification disabled
     # showNotification(.term_switcher(timeline$notif.text),
     #                  type = timeline$notif.type)
@@ -307,27 +308,11 @@ app_server <- function(input, output, session) {
                                  coords.max = coords.min.max$ymax, 
                                  square.list = df$square_y, axes="Y")
     
-    # max.nr.of.Xsquares <- length(unique(trunc(seq(coords.min.max$xmin, coords.min.max$xmax) / square.size) * square.size)) - 1
-    # square.Xlabels <- levels(df$square_x)
-    # if(max.nr.of.Xsquares == length(square.Xlabels) ){
-    #   square_x <- square.Xlabels
-    # }  else {
-    #   message(paste0(max.nr.of.Xsquares, " X squares, but ",
-    #                  length(square.Xlabels), " X labels provided: ", 
-    #                  paste0(square.Xlabels, collapse = ", "), ".\n"))
-    # }
-    # 
-    # max.nr.of.Ysquares <- length(unique(trunc(seq(coords.min.max$ymin, coords.min.max$ymax) / square.size) * square.size)) - 1
-    # square.Ylabels <- levels(df$square_y)
-    # if(max.nr.of.Ysquares == length(square.Ylabels) ){
-    #   square_y <- square.Ylabels
-    # } else {
-    #   message(paste0(max.nr.of.Ysquares, " Y squares, but ",
-    #                  length(square.Ylabels), " Y labels provided: ", 
-    #                  paste0(square.Ylabels, collapse = ", "), ".\n"))
-    # }
-    
-    list("square_x" = squares_x, "square_y" = squares_y)
+    list("square_x" = squares_x$squares.print,
+         "square_x.save" = squares_x$squares.save,
+         "square_y" = squares_y$squares.print,
+         "square_y.save" = squares_y$squares.save
+    )
   })
   
   # : ranges ----
@@ -379,26 +364,31 @@ app_server <- function(input, output, session) {
   
   # : axis labels ----
   axis.labels <- reactive({
+    
     square.coords <- square.coords.ranges()
     square.size <- getShinyOption("square.size")
     squares <- squares()
     
     if(grepl("x", getShinyOption("reverse.square.names"))){
-      squares$square_x <-factor(squares$square_x)
-      levels(squares$square_x) <- rev(levels(squares$square_x))
+      squares$square_x <- factor(squares$square_x)
+      # levels(squares$square_x) <- rev(levels(squares$square_x))
+      squares$square_y <- factor(squares$square_y,
+                                 labels = rev(levels(squares$square_y)) )
     }
     if(grepl("y", getShinyOption("reverse.square.names"))){
-      squares$square_y <-factor(squares$square_y)
-      levels(squares$square_y) <- rev(levels(squares$square_y))
+      squares$square_y <- factor(squares$square_y)
+      # levels(squares$square_y) <- rev(levels(squares$square_y))
+      squares$square_y <- factor(squares$square_y,
+                                 labels = rev(levels(squares$square_y)) )
     }
     
     list(
       "xaxis" = list(
-        "breaks" = (square.coords$range.x + square.size / 2)[ seq_len(length(squares$square_x)) ],
+        "breaks" = (square.coords$range.x + square.size / 2)[ seq_len(length(squares$square_x.save)) ],
         "labels" =  squares$square_x
       ),
       "yaxis" = list(
-        "breaks" = (square.coords$range.y + square.size / 2)[ seq_len(length(squares$square_y)) ],
+        "breaks" = (square.coords$range.y + square.size / 2)[ seq_len(length(squares$square_y.save)) ],
         "labels" =  squares$square_y
       )
     )
@@ -588,28 +578,17 @@ app_server <- function(input, output, session) {
   timeline.map <- reactive({
     axis.labels <- axis.labels()
     
-    map.grid <- expand.grid("square_x" = axis.labels$xaxis$labels,
-                            "square_y" = axis.labels$yaxis$labels)
-    
-    # reverse squares if needed:
-    reverse <- getShinyOption("reverse.axis.values")
-    if(grepl("x", reverse)){ 
-      levels(map.grid$square_x) <- rev(levels(map.grid$square_x))
-    }
-    if(grepl("y", reverse)){ 
-      levels(map.grid$square_y) <- rev(levels(map.grid$square_y))
-    }
-    
     timeline.map <- ggplot() +
       theme_minimal(base_size = 12) +
-      geom_tile(data = map.grid,
-                aes(x = .data[["square_x"]], y = .data[["square_y"]]), alpha=0) +
-      geom_vline(xintercept =  seq(0.5, length(axis.labels$xaxis$labels) + .5, 1),
+      geom_vline(xintercept =  after_scale(seq(0.5, length(axis.labels$xaxis$breaks) + .5, 1)),
                  colour = "grey70" ) +
-      geom_hline(yintercept =  seq(0.5, length(axis.labels$yaxis$labels) + .5, 1),
+      geom_hline(yintercept =  after_scale(seq(0.5, length(axis.labels$yaxis$breaks) + .5, 1)),
                  colour = "grey70" ) +
       coord_fixed() +
-      xlab("") + ylab("")
+      scale_fill_manual("State:",
+                        values = c(grDevices::rgb(0,0,0,0), 
+                                   grDevices::rgb(.43, .54, .23, .7))) +
+      scale_x_discrete("") + scale_y_discrete("") 
     
     timeline.map
   })   
@@ -1085,10 +1064,12 @@ app_server <- function(input, output, session) {
     map.refits <- sum(c(input$map.refits,
                         getShinyOption("params")$map.refits))
     
-    do_map_plot(site.map(), planZ.df,
+    .do_map_plot(site.map(), planZ.df,
                 map.point.size, color.var, col,
                 input$map.density,
-                map.refits, refitting.df(), grid.legend)
+                map.refits, refitting.df(),
+                grid.legend,
+                grid.orientation = getShinyOption("grid.orientation"))
     
   }, ignoreNULL = ( ! getShinyOption("run.plots"))
   )   # end eventReactive
@@ -1175,7 +1156,7 @@ app_server <- function(input, output, session) {
     sliderInput("map.z.val", "Z: min/max",  width="100%", sep = "",
                 min = min(coords$zmin, coords$zmax), 
                 max = max(coords$zmin, coords$zmax),
-                round = T,
+                step = 1, round = T,
                 value = init.values()$valuesZ
     )
   })
@@ -1805,25 +1786,48 @@ app_server <- function(input, output, session) {
   #  Timeline ----
   #  : main timeline ----
   timeline.map.plot <- reactive({
-    
     req(timeline.data)
     
     time.df <- timeline.data()
-    if(is.null(time.df)) return()
-    
-    # year <- input$history.date
-    # if(is.null(input$history.date)){ year <- min(time.df$year, na.rm=T)}
     
     time.sub.df <- time.df[time.df$year == input$history.date, ]
     
-    timeline.map() +
+    if(nrow(time.sub.df) == 0) return()
+    axis.labels <- axis.labels()
+    # browser()
+
+    if("x" %in% getShinyOption("reverse.square.names")){
+      levels(time.sub.df$square_x) <- rev(levels(time.sub.df$square_x))
+    }
+    if("y" %in% getShinyOption("reverse.square.names")){
+      levels(time.sub.df$square_y) <- rev(levels(time.sub.df$square_y))
+    }
+    if("x" %in% getShinyOption("reverse.axis.values")){
+      time.sub.df$square_x <- factor(time.sub.df$square_x,
+                        levels = rev(levels(time.sub.df$square_x)))
+    }
+    if("y" %in% getShinyOption("reverse.axis.values")){
+      time.sub.df$square_y <- factor(time.sub.df$square_y,
+                          levels = rev(levels(time.sub.df$square_y)))
+    }
+    
+    timeline.map.out <- timeline.map() +
       geom_tile(data = time.sub.df,
                 aes(x = .data[["square_x"]], y = .data[["square_y"]],
                     fill = .data[["excavation"]]),
-                show.legend = F) +
-      scale_fill_manual("State:",
-                        values = c(grDevices::rgb(0,0,0,0), 
-                                   grDevices::rgb(.43, .54, .23, .7)) )
+                show.legend = FALSE) 
+    
+    
+    if(is.null(axis.labels$xaxis$labels)){
+      timeline.map.out <- timeline.map.out +
+        theme(axis.text.x = element_blank())
+    }
+    if(is.null(axis.labels$yaxis$labels)){
+      timeline.map.out <- timeline.map.out + 
+        theme(axis.text.y = element_blank())
+    }
+    
+    timeline.map.out
   })
   
   output$timeline.map <- renderPlot({ timeline.map.plot() })
@@ -1843,14 +1847,20 @@ app_server <- function(input, output, session) {
     
     if(is.null(time.df)) return()
     
+    if("x" %in% getShinyOption("reverse.axis.values")){
+      time.df$square_x <- factor(time.df$square_x,
+                                     levels = rev(levels(time.df$square_x)))
+    }
+    if("y" %in% getShinyOption("reverse.axis.values")){
+      time.df$square_y <- factor(time.df$square_y,
+                                     levels = rev(levels(time.df$square_y)))
+    }
+    
     timeline.map() +
       geom_tile(data = time.df,
                 aes(x = .data[["square_x"]], y = .data[["square_y"]], 
-                    fill = .data[["excavation"]]),
-                show.legend = F)  +
-      scale_fill_manual("State:",
-                        values = c(grDevices::rgb(0, 0, 0, 0),
-                                   grDevices::rgb(.43, .54, .23, 1)) ) +
+                    fill = .data[["excavation"]]), 
+                show.legend = FALSE) +
       facet_wrap(~year) +
       theme(axis.text.x = element_text(color="white", size = .1),
             axis.text.y = element_text(color="white", size = .1),

@@ -1,7 +1,10 @@
 # archeoViz 1.3.4
-Released: 
+Released: 2024-01-
 
-* Add a function to rotate the points, in the 'Input' tab.
+* Add a north arrow in the map plot, and the 'grid.orientation' parameter in the archeoViz() function to set the orientation of the grid (used to define the orientation of the north arrow).
+* Add a function to rotate the point cloud, in the 'Input' tab.
+* Fix the step value of the slider in the 'Map' tab (step = 1).
+* Add tests for the .do_r_command() and .do_square_list() functions, and the 'reverse.axis.values' parameter in the .do_section_plot() function
 
 # archeoViz 1.3.3
 Released: 2023-11-23

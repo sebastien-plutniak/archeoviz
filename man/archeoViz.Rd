@@ -7,7 +7,7 @@
 \usage{
 archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
-          square.size = 100, rotation = 0,
+          square.size = 100, rotation = 0, grid.orientation = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL,
           class.variable = NULL, class.values = NULL,
@@ -26,11 +26,12 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{refits.df}{data frame, with two columns containin the ids of refitting objects.}
   \item{timeline.df}{data frame, with data documenting the year of excavation of the site's squares.}
   \item{title}{character. Title to display on the application.}
-  \item{home.text}{character. Html contents to display on the home page of the application.}
-  \item{lang}{character. Language of the interface, one of 'de' (German), 'en' (English), 'fr' (French), 'it' (Italian), 'pt' (Portuguese), 'ro' (Romanian).}
+  \item{home.text}{character. HTML contents to display on the home page of the application.}
+  \item{lang}{character. Language of the interface, one of 'de' (German), 'en' (English), 'es' (Spanish), 'fr' (French), 'it' (Italian), 'pt' (Portuguese), 'ro' (Romanian).}
   \item{set.theme}{character. Name of the shinytheme to use.}
   \item{square.size}{integer. Size (width and height) in centimeter of the squares in the grid system. Default value is 100 cm.}
   \item{rotation}{integer. Value (degrees) for the in-plane rotation of the point cloud.}
+  \item{grid.orientation}{numerical. Orientation (degrees, positive or negative) of the grid (0 corresponds to a north orientation.}
   \item{reverse.axis.values}{character. Name of the axis or axes to be reversed (any combination of 'x', 'y', 'z').}
   \item{reverse.square.names}{character. Name of the axis or axes for which to reverse the order of the square labels (any combination of 'x', 'y', 'z').}
   \item{add.x.square.labels}{character. Additional square labels for the 'x' axis.}

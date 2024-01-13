@@ -1,6 +1,6 @@
 archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                       title = NULL, home.text = NULL, lang = "en", set.theme = "cosmo",
-                      square.size = 100, rotation = 0,
+                      square.size = 100, rotation = 0, grid.orientation = NULL,
                       reverse.axis.values = NULL, reverse.square.names = NULL,
                       add.x.square.labels = NULL, add.y.square.labels = NULL,
                       class.variable = NULL, class.values = NULL,
@@ -24,6 +24,13 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
   # : test lang ----
   if( ! lang %in% c("de", "en", "fr", "it", "pt", "es", "ro")){
     stop("The 'lang' parameter must be one of 'de', 'en', 'es', 'fr', 'it', 'pt', 'ro'.")
+  }
+  
+  # : test grid.orientation ----
+  if( ! is.null(grid.orientation)){
+    if( ! is.numeric(grid.orientation)){
+      stop("'grid.orientation' must be numerical.")
+    }
   }
   
   # : test square.size ----
@@ -60,7 +67,7 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                  "plot3d.surfaces" = plot3d.surfaces, "plot3d.refits" = plot3d.refits,
                  "sectionX.x.val" = sectionX.x.val, "sectionX.y.val" = sectionX.y.val, "sectionX.refits" = sectionX.refits,
                  "sectionY.x.val" = sectionY.x.val, "sectionY.y.val" = sectionY.y.val, "sectionY.refits" = sectionY.refits,
-                 "point.size" = point.size, "rotation" = rotation,
+                 "point.size" = point.size, "rotation" = rotation, 
                  "camera.center" = camera.center, "camera.eye" = camera.eye)
   
   # define shiny options ----
@@ -72,6 +79,7 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                "reverse.square.names" = reverse.square.names,
                "add.x.square.labels" = add.x.square.labels,
                "add.y.square.labels" = add.y.square.labels,
+               "grid.orientation" = grid.orientation,
                "params" = params,
                "title"       = title,
                "home.text"   = home.text,

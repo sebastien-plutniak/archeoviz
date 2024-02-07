@@ -1,7 +1,11 @@
-# archeoViz 1.3.4
-Released: 2024-01-
+# archeoViz 1.3.5
 
-* Add a north arrow in the map plot, and the 'grid.orientation' parameter in the archeoViz() function to set the orientation of the grid (used to define the orientation of the north arrow for map and timeline plots).
+*
+
+# archeoViz 1.3.4
+Released: 2024-01-13
+
+* Add a north arrow in the map and timeline plots. The orientation of the arrow is controlled by the 'grid.orientation' parameter in the archeoViz() function.
 * Add a function to rotate the point cloud, in the 'Input' tab.
 * Fix the step value of the slider in the 'Map' tab (step = 1).
 * Add tests for the .do_r_command() and .do_square_list() functions, and the 'reverse.axis.values' parameter in the .do_section_plot() function

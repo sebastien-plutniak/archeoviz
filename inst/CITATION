@@ -1,6 +1,6 @@
 citHeader("To cite archeoViz in publications use:")
 
-citEntry(
+bibentry(
    entry="article",
    author = "Plutniak, Sébastien",
    title = "archeoViz: an R package for the Visualisation, Exploration, and Web Communication of Archaeological Spatial Data",

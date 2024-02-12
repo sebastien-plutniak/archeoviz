@@ -1,13 +1,14 @@
 .do_refits_preprocessing <- function(refits, dataset){
+  
   # remove duplicated refits if any:
   refits <- refits[! duplicated(t(apply(refits[c(1, 2), ], 1, sort))), ]
   
   # refitting data for 2D plots:
-  refits.2d <- refits
+  refits.2d <- refits[, 1:2]
   colnames(refits.2d) <- c("from", "to")
   dataset <- dataset[, c("id", "x", "y", "z")]
   
-  refits.2d <- merge( refits.2d, dataset,
+  refits.2d <- merge(refits.2d, dataset,
                    by.x = "from", by.y="id", sort = FALSE, all.x = T)
   refits.2d <- merge( refits.2d, dataset,
                    by.x = "to",   by.y="id", sort = FALSE, all.x = T)

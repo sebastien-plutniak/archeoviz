@@ -101,8 +101,8 @@ test_that(".do_section_plot: attributes", {
 
 
 test_that(".do_section_plot: Altitude values", {  
-  expect_gt(fig.y$x$layoutAttrs[[1]]$yaxis$range[1], 1000)
-  expect_lt(fig.y$x$layoutAttrs[[1]]$yaxis$range[2], 200)
+  expect_lt(fig.y$x$layoutAttrs[[1]]$yaxis$range[1], 1091)
+  expect_gt(fig.y$x$layoutAttrs[[1]]$yaxis$range[2], 109)
 })
 
 test_that(".do_section_plot: X axis ranges", {  

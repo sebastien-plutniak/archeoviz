@@ -276,14 +276,36 @@ app_server <- function(input, output, session) {
   # Coordinate system ----
   
   # : grid legend ----
-  scale.value <- getShinyOption("square.size") / 100
-  scale.unit <- " m"
-  if(scale.value < 1){
-    scale.value <- scale.value * 100
-    scale.unit <- " cm"
-  }
+  scale.value <- getShinyOption("square.size")  
+  user.unit <- getShinyOption("unit")
+  
+  if(user.unit == "cm"){
+    if(scale.value >= 100){
+      scale.value <- scale.value / 100
+      scale.unit <- " m"
+    } else {
+      scale.unit <- " cm"
+    }
+  } 
+  
+  if(user.unit == "m"){
+     if(scale.value >= 1000){
+       scale.value <- scale.value / 1000
+       scale.unit <- " km"
+     } else {
+       scale.unit <- " m"
+     }
+  } 
+  
+  if(user.unit == "km"){ 
+    scale.unit <- " km" 
+    }
+  
   grid.legend <- paste0(.term_switcher("grid"), ": ",
-                        scale.value, " x ", scale.value, scale.unit)
+                        scale.value, 
+                        " x ", 
+                        scale.value,
+                        scale.unit)
   
   # : coords min/max coordinates ----
   coords.min.max <- reactive({
@@ -619,8 +641,9 @@ app_server <- function(input, output, session) {
       size.scale <- input$point.size
     }
     
-    # : plot initial ----
+    # : add points and create plot ----
     fig <- plot_ly(dataset, x = ~x, y = ~y, z = ~z,
+                   type = "scatter3d", mode = "markers",
                    color = ~group.variable,
                    colors = colors.list(),
                    size  = ~point.size,
@@ -642,8 +665,15 @@ app_server <- function(input, output, session) {
                   )
     )
     
-    # : add points ----
-    fig <- add_markers(fig)
+    # : add background map ----
+    fig <- add_paths(fig, x= ~x, y= ~y,
+                     z = coords$zmax,
+                     split = ~group,
+                     data = getShinyOption("background.map"),
+                     color = I("black"),
+                     hoverinfo = "skip",
+                     showlegend = FALSE, inherit = F)
+    
     
     # : add refits lines  ----
     plot3d.refits <- sum(c(input$plot3d.refits,
@@ -911,7 +941,7 @@ app_server <- function(input, output, session) {
                     aspectmode = "manual", 
                     aspectratio = list(x = 1, 
                                        y = (coords$ymax - coords$ymin) / (coords$xmax - coords$xmin), 
-                                       z = ratio3D.value() * ((coords$zmax - coords$zmin) / (coords$xmax - coords$xmin)))
+                                       z = abs(ratio3D.value() * ((coords$zmax - coords$zmin) / (coords$xmax - coords$xmin))))
                   ))  #end layout
     # fig <- plotly::event_register(fig, 'plotly_click')
   }, ignoreNULL = ( ! getShinyOption("run.plots")) ) #  end plot3d
@@ -1070,6 +1100,7 @@ app_server <- function(input, output, session) {
                 input$map.density,
                 map.refits, refitting.df(),
                 grid.legend,
+                background.map = getShinyOption("background.map"),
                 grid.orientation = getShinyOption("grid.orientation"))
     
   }, ignoreNULL = ( ! getShinyOption("run.plots"))
@@ -1105,7 +1136,7 @@ app_server <- function(input, output, session) {
   
   output$ratio3D <- renderUI({
     sliderInput("ratio", .term_switcher("ratio"), width="100%", sep = "",
-                min=.5, max=2,
+                min=.1, max=2,
                 value = ratio3D.value(),
                 step=.1)
   })

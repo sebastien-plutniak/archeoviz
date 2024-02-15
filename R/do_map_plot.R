@@ -1,11 +1,22 @@
 .do_map_plot <- function(site.map, planZ.df, map.point.size, color.var, col,
                         map.density, map.refits, refitting.df, grid.legend, 
-                        grid.orientation){
+                        grid.orientation, background.map){
   
   .data <- NULL
   
-  # base point plot ----
-  map <- site.map +
+  
+  map <- site.map
+  
+  # add background map ----
+  if(! is.null(background.map)){
+    map <- map +
+      geom_path(data = background.map,
+                aes(x = .data[["x"]], y = .data[["y"]], group = .data[["group"]]), 
+                colour = "black", size = .2) 
+  }
+  
+  # add points ----
+  map <- map +
     geom_point(data = planZ.df,
                aes(x = .data[["x"]], y = .data[["y"]],
                    color = .data[[color.var]],

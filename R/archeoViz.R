@@ -1,6 +1,7 @@
 archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                       title = NULL, home.text = NULL, lang = "en", set.theme = "cosmo",
-                      square.size = 100, rotation = 0, grid.orientation = NULL,
+                      square.size = 100, unit = "cm", rotation = 0, grid.orientation = NULL,
+                      background.map = NULL,
                       reverse.axis.values = NULL, reverse.square.names = NULL,
                       add.x.square.labels = NULL, add.y.square.labels = NULL,
                       class.variable = NULL, class.values = NULL,
@@ -36,6 +37,22 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
   # : test square.size ----
   if( ! is.numeric(square.size)){
     stop("The 'square.size' parameter must be a positive numerical value.")
+  }
+  
+  # : test unit ----
+  if( ! unit %in% c("cm", "m", "km")){
+    stop("The 'unit' parameter must be one of 'cm', 'm', 'km'.")
+  }
+  
+  # : test background.map ----
+  if( ! is.null(background.map)){
+    if(! (is.matrix(background.map) | is.data.frame(background.map))){
+      stop("'background.map' must be a matrix or a data frame.")
+    }
+    if(ncol(background.map) == 2){
+      background.map <- cbind(background.map, 1)
+    }
+    colnames(background.map)[1:3] <- c("x", "y", "group")
   }
   
   # : test reverse.axis.values ----
@@ -75,6 +92,7 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                "refits.df"   = refits.df,
                "timeline.df" = timeline.df,
                "square.size" = square.size,
+               "unit" = unit,
                "reverse.axis.values" = reverse.axis.values,
                "reverse.square.names" = reverse.square.names,
                "add.x.square.labels" = add.x.square.labels,
@@ -89,7 +107,8 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                "background.col" = background.col,
                "run.plots" = run.plots,
                "html.export" = html.export,
-               "table.export" = table.export)
+               "table.export" = table.export,
+               "background.map" = background.map)
   
   shinyApp(ui = app_ui, server = app_server)
 }

@@ -2,10 +2,14 @@
   # sources selection:  ----
   #            function parameter > objects table > timeline table
   
+  condition <- (is.null(full.dataset$year) | 
+                ("" %in% unique(full.dataset$square) & length(unique(full.dataset$square)) == 1)  |
+                length(unique(full.dataset$square)) == 1)
+  
   if (! is.null(from.func.time.df)){
     time.df <- from.func.time.df
   } 
-  else if( ! (is.null(full.dataset$year) | ("" %in% unique(full.dataset$square) & length(unique(full.dataset$square)) == 1) ) ){
+  else if( ! condition ){
     time.df <- table(full.dataset$square, full.dataset$year)
     time.df <- as.data.frame(time.df)
     time.df$square_x <- as.character(gsub("(.*)-(.*)", "\\1", time.df[, 1]))

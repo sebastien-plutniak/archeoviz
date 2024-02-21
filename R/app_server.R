@@ -666,14 +666,16 @@ app_server <- function(input, output, session) {
     )
     
     # : add background map ----
-    fig <- add_paths(fig, x= ~x, y= ~y,
-                     z = coords$zmax,
-                     split = ~group,
-                     data = getShinyOption("background.map"),
-                     color = I("black"),
-                     hoverinfo = "skip",
-                     showlegend = FALSE, inherit = F)
     
+    if( ! is.null(getShinyOption("background.map")) ){
+      fig <- add_paths(fig, x= ~x, y= ~y,
+                       z = coords$zmax,
+                       split = ~group,
+                       data = getShinyOption("background.map"),
+                       color = I("black"),
+                       hoverinfo = "skip",
+                       showlegend = FALSE, inherit = F)
+    }
     
     # : add refits lines  ----
     plot3d.refits <- sum(c(input$plot3d.refits,

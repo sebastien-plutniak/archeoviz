@@ -393,15 +393,16 @@ app_server <- function(input, output, session) {
     square.size <- getShinyOption("square.size")
     squares <- squares()
     
-    if(grepl("x", getShinyOption("reverse.square.names"))){
+    reverse.x <- grepl("x", getShinyOption("reverse.square.names"))
+    reverse.y <- grepl("x", getShinyOption("reverse.square.names"))
+    
+    if(reverse.x & ! is.null(squares$square_x)){
       squares$square_x <- factor(squares$square_x)
-      # levels(squares$square_x) <- rev(levels(squares$square_x))
       squares$square_x <- factor(squares$square_x,
                                  labels = rev(levels(squares$square_x)) )
     }
-    if(grepl("y", getShinyOption("reverse.square.names"))){
+    if(reverse.y & ! is.null(squares$square_x)){
       squares$square_y <- factor(squares$square_y)
-      # levels(squares$square_y) <- rev(levels(squares$square_y))
       squares$square_y <- factor(squares$square_y,
                                  labels = rev(levels(squares$square_y)) )
     }
@@ -513,9 +514,9 @@ app_server <- function(input, output, session) {
       geom_hline(yintercept = square.coords$range.y, colour = "darkgrey" ) +
       coord_fixed() +
       scale_x_continuous("", breaks = axis.labels$xaxis$breaks,
-                         labels = axis.labels$xaxis$labels) +
+                             labels = axis.labels$xaxis$labels) +
       scale_y_continuous("", breaks = axis.labels$yaxis$breaks,
-                         labels = axis.labels$yaxis$labels) 
+                             labels = axis.labels$yaxis$labels) 
     
     # set background color:
     if(getShinyOption("background.col") != "white"){

@@ -193,6 +193,16 @@ app_server <- function(input, output, session) {
     refits # an empty data.frame or a list with three dataframes
   })  
   
+  # Rotation value ----
+  rotation.value <- reactive({
+    if(is.null(input$rotation)){
+        value <- getShinyOption("params")$rotation
+      } else{
+        value <- input$rotation
+      }
+    value
+  })
+  
   # Objects preprocessing: ----
   objects.file <- reactive({
     # waiting objects csv file
@@ -217,18 +227,11 @@ app_server <- function(input, output, session) {
       objects.df <- getShinyOption("objects.df")
     }
     
-    
-    if(is.null(input$rotation)){
-      rotation.value <- getShinyOption("params")$rotation
-    } else{
-      rotation.value <- input$rotation
-    }
-    
     result <- .do_objects_dataset(
       from.parameter.input = objects.df,
       from.ui.input        = objects.ui.input,
       demoData.n           = input$demoData.n, 
-      rotation = rotation.value,
+      rotation = rotation.value(),
       add.x.square.labels = getShinyOption("add.x.square.labels"),
       add.y.square.labels = getShinyOption("add.y.square.labels")
     )
@@ -394,7 +397,7 @@ app_server <- function(input, output, session) {
     squares <- squares()
     
     reverse.x <- grepl("x", getShinyOption("reverse.square.names"))
-    reverse.y <- grepl("x", getShinyOption("reverse.square.names"))
+    reverse.y <- grepl("y", getShinyOption("reverse.square.names"))
     
     if(reverse.x & ! is.null(squares$square_x)){
       squares$square_x <- factor(squares$square_x)
@@ -1813,7 +1816,7 @@ app_server <- function(input, output, session) {
                             "sectionY.x.val" = input$sectionY.x.val,
                             "sectionY.y.val" = input$sectionY.y.val,
                             "sectionY.refits" = input$sectionY.refits,
-                            "rotation" = input$rotation
+                            "rotation" = rotation.value()
     )
     
     .do_r_command(reactive.params, refitting.df())

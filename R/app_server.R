@@ -757,6 +757,8 @@ app_server <- function(input, output, session) {
         # NB: the function output is the updated fig itself (and not a table)
         
         df.fuzzy2 <- dataset[dataset$fuzzy.sum == 2, ]
+        planar.n.objects <- nrow(df.fuzzy2)
+        
         planar.xz.df <- df.fuzzy2[df.fuzzy2$x.fuzzy & df.fuzzy2$z.fuzzy, ]
         planar.yz.df <- df.fuzzy2[df.fuzzy2$y.fuzzy & df.fuzzy2$z.fuzzy, ]
         planar.xy.df <- df.fuzzy2[df.fuzzy2$x.fuzzy & df.fuzzy2$y.fuzzy, ]
@@ -764,9 +766,6 @@ app_server <- function(input, output, session) {
         fig <- .do_uncertain_mesh_plans(fig, planar.xz.df, axes="xz")
         fig <- .do_uncertain_mesh_plans(fig, planar.yz.df, axes="yz")
         fig <- .do_uncertain_mesh_plans(fig, planar.xy.df, axes="xy")
-        
-        planar.n.objects <- (nrow(planar.xz.df) + nrow(planar.yz.df) +
-                               nrow(planar.xy.df)) / 4
       }
       
       
@@ -1332,20 +1331,15 @@ app_server <- function(input, output, session) {
   output$location_choice <- renderUI({
     req(objects.dataset)
     
-    df <- objects.dataset()
-    n.location.modes <- length(unique(df$location_mode))
+    loc.values <- sort(unique(objects.dataset()$location_mode))
     
-    if(n.location.modes == 1){
-      loc.values <- c(unique(df$location_mode))
-      loc.names <-  c(.term_switcher(loc.values))
-    } else if( n.location.modes == 2) {
-      loc.values <- c("exact", "fuzzy", "show.uncertainty")
-      loc.names <- c(.term_switcher("exact"),
-                     .term_switcher("fuzzy"),
-                     .term_switcher("show.uncertainty"))
+    if("fuzzy" %in% loc.values){
+      loc.values <- c(loc.values, "show.uncertainty")
     }
+      
+    loc.names <- sapply(loc.values, .term_switcher, USE.NAMES = F)
     
-    loc.selection <- tolower(sort(unique(df$location_mode))[1])
+    loc.selection <- loc.values[1]
     if( ! is.null(getShinyOption("params")$location)){
       loc.selection <- getShinyOption("params")$location
     }

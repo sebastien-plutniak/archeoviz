@@ -1,6 +1,6 @@
 .do_uncertain_mesh_plans <- function(fig, df, axes){
       
-	if(nrow(df) == 0){ return(NULL) }
+	if(nrow(df) == 0){ return(fig) }
   
 	df$axes <- axes
 	df <- apply(df, 1, function(i)

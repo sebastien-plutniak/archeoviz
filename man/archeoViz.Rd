@@ -2,14 +2,13 @@
 \alias{archeoViz}
 
 \title{archeoViz}
-\description{Launch the archeoViz application to visualise, interactive explore, and expose on the web archaeological data from excavation}
+\description{Launch the archeoViz application for visual and statistical exploration of spatial archaeological data}
 
 \usage{
 archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
-          square.size = 100, rotation = 0, grid.orientation = NULL,
-          square.size = 100, unit = "cm", rotation = 0, grid.orientation = NULL,
-          background.map = NULL,
+          square.size = 100, unit = "cm", rotation = 0, 
+          grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL,
           class.variable = NULL, class.values = NULL,
@@ -35,7 +34,7 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{rotation}{integer. Value (degrees) for the in-plane rotation of the point cloud.}
   \item{grid.orientation}{numerical. Orientation (degrees, positive or negative) of the grid (0 corresponds to a north orientation).}
   \item{unit}{character. Unit for spatial distances. One of 'cm', 'm', 'km'.}
-  \item{background.map}{data frame or matrix. Data to draw lines in the background of the 3D and Map plots}
+  \item{background.map}{data frame or matrix. Coordinates to draw background lines in 3D and Map plots.}
   \item{reverse.axis.values}{character. Name of the axis or axes to be reversed (any combination of 'x', 'y', 'z').}
   \item{reverse.square.names}{character. Name of the axis or axes for which to reverse the order of the square labels (any combination of 'x', 'y', 'z').}
   \item{add.x.square.labels}{character. Additional square labels for the 'x' axis.}
@@ -78,7 +77,7 @@ Note that the `SEAHORS` package includes interactive features to format a datase
 
 }
 \value{
-	Launch the `archeoViz` Shiny application.
+    Launch the `archeoViz` Shiny application.
 }
 \author{Sebastien Plutniak <sebastien.plutniak at posteo.net>}
 
@@ -95,13 +94,13 @@ Note that the `SEAHORS` package includes interactive features to format a datase
 }
 
 \examples{
-	\dontrun{
-	# running the app with no particular data and settings:
-	archeoViz()
-	
-	# running the app with a particular data set:
-	objects <- demo_objects_data(1000)
-	refits <- demo_refits_data(1000)
-	archeoViz(objects.df=objects, refits.df=refits, title="My data set")
-	}
+    \dontrun{
+    # running the app with no particular data and settings:
+    archeoViz()
+    
+    # running the app with a particular data set:
+    objects <- demo_objects_data(1000)
+    refits <- demo_refits_data(1000)
+    archeoViz(objects.df=objects, refits.df=refits, title="My data set")
+    }
 }

@@ -1247,10 +1247,17 @@ app_server <- function(input, output, session) {
   })
   
   # : Object variable  ----
-  output$class.variable <- renderUI({
+  
+  variables.names <- reactive({
     req(objects.dataset())
-    items <- colnames(objects.dataset())[grep("object*", colnames(objects.dataset()))]
-    selectInput("class.variable", .term_switcher("variable"), choices = items,
+    colnames(objects.dataset())[grep("object*", colnames(objects.dataset()))]
+  })
+  
+  output$class.variable <- renderUI({
+    req(variables.names())
+    selectInput("class.variable",
+                .term_switcher("variable"),
+                choices = variables.names(),
                 selected = getShinyOption("params")$class.variable)
   })
   
@@ -1507,19 +1514,89 @@ app_server <- function(input, output, session) {
   
   export.table <- reactive({
     req(input$class.variable, objects.subdataset)
-    
     if( (Sys.getenv('SHINY_PORT') == "") |
-        (! getShinyOption("table.export")) ){ return() }
+        ( ! getShinyOption("table.export")) ){ return(FALSE) }
     
     dataset <- objects.subdataset()
     
-    df <- table(dataset$layer,
-                eval(parse(text = paste0("dataset$", input$class.variable))))
+    stat.variable1 <- input$stat.variable1
+    stat.variable2 <- input$stat.variable2
     
-    if(dim(df)[1] == 1 | dim(df)[2] == 1){ return() }
+    if(is.null(stat.variable1)) stat.variable1 <- "layer"
+    if(is.null(stat.variable2)) stat.variable2 <- "object_type"
+    
+    df <- table(
+      dataset[ , which(colnames(dataset) == stat.variable1)],
+      dataset[ , which(colnames(dataset) == stat.variable2)])
+    
+    if(dim(df)[1] == 1 | dim(df)[2] == 1){ return(FALSE) }
     
     df <- as.matrix(df)
     as.data.frame.matrix(df)
+  })
+  
+  # : seriograph   ----
+  
+  # 1) seriograph handler
+  output$download.seriograph <- downloadHandler(
+    filename = "seriograph.csv",
+    content = function(file) {
+      write.csv(export.table(), file, row.names = TRUE)
+    }
+  )
+  
+  # 2) seriograph links
+  output$run.seriograph <- renderUI({
+    req(export.table())
+    external_app_launch_links(table = export.table(),
+                              app.name = "seriograph", 
+                     app.url ="https://analytics.huma-num.fr/ModAthom/seriograph/?data=",
+                     methods = .term_switcher("seriations"),
+                     session = session) 
+  })
+  
+  
+  # : explor-CA   ----
+  
+  # 1) explor.ca handler
+  output$download.explor.ca <- downloadHandler(
+    filename = "explor-ca.csv",
+    content = function(file) {
+      write.csv(export.table(), file, row.names = TRUE)
+    }
+  )
+  
+  # 2)  explor.ca links
+  output$run.explor.ca <- renderUI({
+    req(export.table())
+    external_app_launch_links(table = export.table(),
+                              app.name = "explor.ca",
+                     app.url = "https://analytics.huma-num.fr/Sebastien.Plutniak/explor-ca/?data=",
+                     methods = .term_switcher("corr.analysis"),
+                     session = session)
+  })
+  
+  
+  # : shinyheatmaply   ----
+  
+  # 1) shinyheatmaply handler
+  output$download.shinyheatmaply <- downloadHandler(
+    filename = "shinyheatmaply.csv",
+    content = function(file) {
+      write.csv(export.table(), file, row.names = TRUE)
+    }
+  )
+  
+  # shinyheatmaply links
+  output$run.shinyheatmaply <- renderUI({
+    req(export.table())
+    external_app_launch_links(table = export.table(),
+                              app.name = "shinyheatmaply",
+            app.url = "https://analytics.huma-num.fr/Sebastien.Plutniak/shinyHeatmaply/?data=",
+            methods = paste0(.term_switcher("classifications"),
+                             ", ",
+                             .term_switcher("heatmaps")),
+            session = session) 
   })
   
   
@@ -1536,144 +1613,47 @@ app_server <- function(input, output, session) {
   # 2) amado url
   amado.url <- reactive({
     req(export.table())
-    
+
     data <- export.table()
-    
+
     data <- eval(parse(text = paste0(
       "cbind('", shiny::getShinyOption("title"), "'= rownames(data), data)"
-      )))
-    
+    )))
+
     data <- cbind("archeoViz" = rownames(data), data)
     data <- rbind(colnames(data), data)
-    
+
     data <- apply(data, 2, paste0, collapse="%09")   # separate cells by tabs
     data <- gsub(" ", "%20", data)                   # add spaces
     data <- paste0(data, collapse = "%0A")           # encode lines
-    
+
     amado.lang <- "en"
     if(getShinyOption("lang") %in% c('es', 'fr', 'it', 'ru', 'tr', 'uk', 'vi', 'zh')){
       amado.lang <- getShinyOption("lang")
     }
-    
-    paste0("https://app.ptm.huma-num.fr/amado/main.html?lang=", 
+
+    paste0("https://app.ptm.huma-num.fr/amado/main.html?lang=",
            amado.lang, "&table=", data)
   })
-  
-  
-  # 3) amado download link
+
+
   output$run.amado <- renderUI({
     req(amado.url())
-    
+
     tagList(
       "> ", .term_switcher("export.to"),
       actionLink("run.amado",
                  label = "AMADO online",
                  onclick = paste("window.open('",
                                  amado.url(), "', '_blank')")),
-      "(", .term_switcher("download"),
-      downloadLink("download.amado", " CSV"),  ") for seriation and classification"
+      paste0(": ", .term_switcher("seriations"), ", ",
+             .term_switcher("classifications")),
+      "-",
+      .term_switcher("download"), downloadLink("download.amado", " CSV"),
     )
   })
   
-  
-  # : seriograph   ----
-  
-  # 1) seriograph handler
-  output$download.seriograph <- downloadHandler(
-    filename = "seriograph.csv",
-    content = function(file) {
-      write.csv(export.table(), file, row.names = TRUE)
-    }
-  )
-  
-  # 2) seriograph url
-  seriograph.url <- reactive({
-    req(export.table())
-    
-    data.url <- session$registerDataObj(name = "table",
-                                        data = export.table(),
-                                        filterFunc = function(data, req) { 
-                                          httpResponse(200, "text/csv",
-                                                       write.csv(data, row.names = TRUE)
-                                          )
-                                        })
-    object.id <- gsub(".*w=(.*)&nonce.*", "\\1", data.url)
-    
-    data.url <- paste0(session$clientData$url_protocol, "//",
-                       session$clientData$url_hostname,
-                       session$clientData$url_pathname,
-                       "_w_", object.id, 
-                       "/session/", session$token, "/download/download.seriograph")
-    
-    paste0("https://analytics.huma-num.fr/ModAthom/seriograph/?data=", data.url)
-  })
-  
-  
-  # 3) seriograph download link
-  output$run.seriograph <- renderUI({
-    req(seriograph.url())
-    
-    tagList(
-      "> ", .term_switcher("export.to"),
-      actionLink("run.seriograph",
-                 label = "Seriograph",
-                 onclick = paste("window.open('",
-                                 seriograph.url(), "', '_blank')")),
-      "(", .term_switcher("download"),
-      downloadLink("download.seriograph", " CSV"),  ") for seriation."
-    )
-  })
-  
-  
-  # : explor-CA   ----
-  
-  # 1) explor.ca handler
-  output$download.explor.ca <- downloadHandler(
-    filename = "explor-ca.csv",
-    content = function(file) {
-      write.csv(export.table(), file, row.names = TRUE)
-    }
-  )
-  
-  # 2) explor.ca url
-  explor.ca.url <- reactive({
-    req(export.table())
-    
-    data.url <- session$registerDataObj(name = "table",
-                                        data = export.table(),
-                                        filterFunc = function(data, req) { 
-                                          httpResponse(200, "text/csv",
-                                                       write.csv(data, row.names = TRUE)
-                                          )
-                                        })
-    object.id <- gsub(".*w=(.*)&nonce.*", "\\1", data.url)
-    
-    data.url <- paste0(session$clientData$url_protocol, "//",
-                       session$clientData$url_hostname,
-                       session$clientData$url_pathname,
-                       "_w_", object.id, 
-                       "/session/", session$token, "/download/download.seriograph")
-    
-    paste0("https://analytics.huma-num.fr/Sebastien.Plutniak/explor-ca/?data=", data.url)
-  })
-  
-  
-  # 3) explor.ca download link
-  output$run.explor.ca <- renderUI({
-    req(explor.ca.url())
-    
-    tagList(
-      "> ", .term_switcher("export.to"),
-      actionLink("run.explor.ca",
-                 label = "explor (Correspondance Analysis)",
-                 onclick = paste("window.open('",
-                                 explor.ca.url(), "', '_blank')")),
-      "(", .term_switcher("download"),
-      downloadLink("download.explor.ca", " CSV"),  ")"
-    )
-  })
-  
-  
+
   # : archeofrag ----
   
   archeofrag.tables <- reactive({
@@ -1753,14 +1733,15 @@ app_server <- function(input, output, session) {
     tagList(
       "> ", .term_switcher("export.to"),
       actionLink("run.archeofrag",
-                 label = "Archeofrag",
+                 label = "archeofrag",
                  onclick = paste("window.open('",
                                  archeofrag.url(), "', '_blank')")),
-      "    (", .term_switcher("download"),
+      ": ",
+      .term_switcher("refit.analysis"),
+      " - ", .term_switcher("download"),
       downloadLink("download.archeofrag.edges", " CSV-1"),
       ", ",
-      downloadLink("download.archeofrag.nodes", " CSV-2"),
-      ")"
+      downloadLink("download.archeofrag.nodes", " CSV-2")
     )
   })
   
@@ -1768,11 +1749,23 @@ app_server <- function(input, output, session) {
   # : Export ui header ----
   output$export.header <- renderUI({
     if(
-      ( (Sys.getenv('SHINY_PORT') != "") & # only if remote use of the app 
+      ( (Sys.getenv('SHINY_PORT') != "") & # only if remote use of the app
         ( getShinyOption("table.export")) ) &
       ( isTruthy(export.table) | isTruthy(archeofrag.tables) ) ){
-      h4(.term_switcher("header.export.data"))
-    } else{  return() }
+      
+      list(h4(.term_switcher("header.export.data")),
+           div(style = "display: flex;",
+           selectInput("stat.variable1",
+                       paste(.term_switcher("variable"), "1"),
+                       choices = c("layer", variables.names()),
+                       selected = "layer"), 
+           selectInput("stat.variable2",
+                       paste(.term_switcher("variable"), "2"),
+                       choices = c("layer", variables.names()),
+                       selected = "object_type")
+           )
+      )
+    } else{ return() }
   })
   
   

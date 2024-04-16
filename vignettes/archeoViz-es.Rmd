@@ -44,6 +44,8 @@ knitr::opts_chunk$set(
      - [Tabla de objetos](#tabla-de-objetos)
      - [Tabla de remontajes](#tabla-de-remontajes)
      - [Tabla cronológica](#tabla-cronológica)
+     - [Dibujo de fondo](#dibujo-de-fondo)
+     - [Unidades](#unidades)
   - [Cargar datos](#cargar-datos)
      - [A través de la interfaz de la aplicación](#a-través-de-la-interfaz-de-la-aplicación)
      - [A través de los parámetros de la función R](#a-través-de-los-parámetros-de-la-función-r)
@@ -226,7 +228,7 @@ Aunque la segunda estructura de datos es más precisa, la primera se usa con má
 
 `archeoViz` procesa y representa las dos estructuras de datos de dos maneras:
 
-* los conjuntos de objetos de remontajes deben describirse usando una columna específica en la tabla `objects.df` (p. ej., `object_refits\) y están representados por el color de los puntos en los gráficos ( como cualquier otra variable);
+* los conjuntos de objetos de remontajes deben describirse usando una columna específica en la tabla `objects.df` (p. ej., `object_refits`) y están representados por el color de los puntos en los gráficos ( como cualquier otra variable);
 * las relaciones de remontajes deben describirse usando la tabla `refits.df` y se visualizan como segmentos que conectan los objetos de remontaje en las parcelas.
 
  
@@ -259,14 +261,15 @@ El formateo de sus datos se puede hacer:
 * o, para la tabla de objetos , usando la aplicación [*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) para cargue sus datos, defina las variables (en la pestaña “Cargar datos”) y expórtelos al formato archeoViz (en la pestaña “Tabla” / “exportaciones archeoViz”). También es posible enviar directamente los datos a una instancia `archeoViz` en línea.
 
 
+
 ### Tabla de objetos
 
 Una fila describe un solo objeto con los siguientes campos obligatorios:
 
 * **id**: *valor alfanumérico*, identificador único del objeto
-* **xmin**: *valor numérico*, coordenada del objeto en el eje X (en cm)
-* **ymin**: *valor numérico*, coordenada del objeto en el eje Y (en cm)
-* **zmin**: *valor numérico*, coordenada del objeto en el eje Z (valor de profundidad positivo en cm)
+* **xmin**: *valor numérico*, coordenada del objeto en el eje X 
+* **ymin**: *valor numérico*, coordenada del objeto en el eje Y 
+* **zmin**: *valor numérico*, coordenada del objeto en el eje Z (valor de profundidad positivo)
 * **layer**: *valor alfanumério*, identificador de la capa del objeto
 * **object_type**: *valeur alphanumérique*, categoría del objeto
 
@@ -283,24 +286,38 @@ Además, los campos opcionales son posibles, incluidos:
 Las etiquetas de los cuadrados de la cuadrícula:
 
 * están ordenados alfanuméricamente; 
-* no se muestran para evitar visualizaciones erróneas, si el número de etiquetas no corresponde exactamente al número total de cuadrados de 100 cm que se pueden definir en el rango de coordenadas mínimas y máximas contenidas en las variables xmin e ymin;
+* no se muestran para evitar visualizaciones erróneas, si el número de etiquetas no corresponde exactamente al número total de cuadrados de 100 (cm, m, km) que se pueden definir en el rango de coordenadas mínimas y máximas contenidas en las variables xmin e ymin;
 * se puede completar con los parámetros `add.x.square.labels` y `add.y.square.labels` de `archeoViz()` para agregar las etiquetas que faltan (en los ejes X e Y de la cuadrícula, respectivamente).
 
 
-### Mesa de montaje
+### Tabla de remontajes
 
 Se puede cargar una tabla de datos con dos columnas para reajustar los datos (formato CSV). Cada fila debe contener los identificadores únicos de dos objetos de reacondicionamiento (correspondientes a los valores de la columna `id` en la tabla de objetos).
 
-
-### Tabla de línea de tiempo
+###  Tabla cronológica
 
 Se puede cargar una tabla (formato CSV) sobre el historial de excavaciones. La fila indica el año en que se excavó o midió cada cuadrado de la cuadrícula del sitio. Esta tabla debe incluir las siguientes variables:
 
 * **year**: *valor numérico*, el año de excavación
 * **square_x**: *valor alfanumérico*, identificador del cuadrado excavado en el eje X
 * **square_y**: *valor alfanumérico*, identificador del cuadrado excavado en el eje Y
-    
-    
+   
+   
+   
+### Dibujo de fondo 
+  
+En las pestañas “3D” y “Mapa” se puede mostrar un dibujo de fondo. Esto puede utilizarse, por ejemplo, para mostrar un plano del sitio como fondo de una nube de puntos.
+Esta función requiere una tabla de datos en la que cada línea contenga las coordenadas X e Y de los puntos que se utilizarán para el dibujo. Tenga en cuenta que las líneas se dibujarán en el orden de los puntos de la tabla.
+El sistema de coordenadas utilizado debe ser el mismo que el utilizado para los objetos.
+Para dibujar varias líneas, se requiere una columna adicional (titulada  “group”), que debe indicar para cada punto el identificador único de la línea a la que pertenece el punto. 
+El conjunto de datos debe cargarse utilizando el parámetro `background.map`.  
+
+
+### Unidades
+
+Por defecto, todas las distancias en `archeoViz` están en centímetros.
+Sin embargo, es posible especificar otra unidad dando uno de los siguientes valores al parámetro `unit`: “cm”, “m”, “km”. Este parámetro determina el contenido de la leyenda relativa al tamaño de los cuadrados de la cuadrícula.
+
 ## Cargar datos
 
 Hay cuatro formas de ingresar datos en `archeoViz`:
@@ -396,7 +413,7 @@ En `archeoViz`, se hace una distinción entre ubicación exacta (dada como coord
 Se pueden generar varios resultados gráficos en`archeoViz`.
 
 * Los gráficos en las pestañas “Gráfico 3D”, “Mapa“, “Sección X” y “Sección Y” se pueden exportar: 
-	* en formato SVG (haciendo clic en el ícono de “cámara” en la barra de menú sobre el gráfico),
+    * en formato SVG (haciendo clic en el ícono de “cámara” en la barra de menú sobre el gráfico),
     * como gráficos interactivos en formato HTML, haciendo clic en el botón “Exportar“.
 * El pequeño mapa en las pestañas “Sección X” y “Sección Y” se puede exportar en SVG haciendo clic en el enlace “Descargar mapa“.
 * El plano de la cronología de la excavación se puede exportar en formato SVG haciendo clic en el botón “Descargar“.
@@ -442,16 +459,18 @@ En la pestaña “Mapa“, al marcar la casilla “Calcular densidad” y hacer 
 
 Desde la pestaña “Estadísticas” de `archeoViz`, es posible exportar datos a otras aplicaciones online. La posibilidad de realizar determinadas exportaciones está condicionada al tipo de datos o a la presencia de un número mínimo de valores.
 
-[*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag) es un paquete R y una aplicación web para evaluar y evaluar las distinciones entre unidades espaciales arqueológicas (por ejemplo, capas) basado en el análisis de las relaciones de remontajes entre fragmentos de objetos. La versión web de la aplicación incluye métodos para medir la cohesión y la mezcla de unidades espaciales y compararlas con datos simulados. Si se inicia una instancia de `archeoViz` con [datos de remontaje](#tableau-des-remontages), estos datos se pueden analizar con `archeofrag`. Cf. este  [ejemplo](https://analytics.huma-num.fr/archeoviz/grotte16).
+[*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag) es un paquete R y una aplicación web para evaluar y evaluar las distinciones entre unidades espaciales arqueológicas (por ejemplo, capas) basado en el análisis de las relaciones de remontajes entre fragmentos de objetos. La versión web de la aplicación incluye métodos para medir la cohesión y la mezcla de unidades espaciales y compararlas con datos simulados. Si se inicia una instancia de `archeoViz` con [datos de remontaje](#tabla-de-remontajes), estos datos se pueden analizar con `archeofrag`. Cf. este  [ejemplo](https://analytics.huma-num.fr/archeoviz/grotte16).
 
-El [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) es una aplicación web (parte del  [*SPARTAAS*](https://spartaas.gitpages.huma-num.fr/r-package/)) collection) para visualizar cambios en la distribución cuantitativa de tipos de artefactos en series ordenadas o desordenadas de unidades espaciales. Si se inicia una instancia en línea de archeoViz con un conjunto de datos con al menos 2 valores diferentes para la variable `layers` y 2 valores diferentes para `object_type` entonces estos datos se pueden analizar con la aplicación `Seriograph`.
+El [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) es una aplicación web (parte del  [*SPARTAAS*](https://spartaas.gitpages.huma-num.fr/r-package/)) collection) para visualizar cambios en la distribución cuantitativa de tipos de artefactos en series ordenadas o desordenadas de unidades espaciales. La exportación a `Seriograph` sólo es posible desde instancias de `archeoViz` ejecutadas online cuyo conjunto de datos tenga (al menos) 2 valores diferentes para la variable `layer` y 2 valores diferentes para la variable seleccionada (`object_type` por defecto).
 Cf. este [ejemplo](https://analytics.huma-num.fr/archeoviz/poeymau).
 
-[*Amado online*](https://app.ptm.huma-num.fr/amado/) es una aplicación online para analizar tablas de contingencia. Es posible exportar una tabla cruzando los valores de la variable seleccionada (por defecto, `object_type`) y los valores de la variable `layer`. `Amado` permite reordenar filas y columnas manualmente y realizar seriaciones y clasificaciones automáticas. 
-Cf. este [ejemplo](https://analytics.huma-num.fr/archeoviz/tai).
+[*Amado online*](https://app.ptm.huma-num.fr/amado/) es una aplicación online para analizar tablas de contingencia. `Amado online` permite reordenar filas y columnas manualmente y realizar seriaciones y clasificaciones automáticas. La exportación a `Amado online` sólo es posible desde instancias de `archeoViz` ejecutadas online cuyo conjunto de datos tenga (al menos) 2 valores diferentes para la variable `layer` y 2 valores diferentes para la variable seleccionada (`object_type` por defecto). Cf. este [ejemplo](https://analytics.huma-num.fr/archeoviz/tai).
 
-[*explor*](https://cran.r-project.org/package=explor) es una aplicación  R Shiny / paquete R para explorar interactivamente los resultados de análisis multidimensionales. `explor` ha sido adaptado para ejecutar un análisis de correspondencias sobre una tabla de contingencia cruzando los valores de la variable seleccionada (por defecto, `object_type`) y los valores de la variable `layer`.  
-Cf. este [ejemplo](https://analytics.huma-num.fr/archeoviz/tai).
+[*explor*](https://cran.r-project.org/package=explor) es una aplicación  R Shiny / paquete R para explorar interactivamente los resultados de análisis multidimensionales. La exportación a `explor` sólo es posible desde instancias de `archeoViz` ejecutadas online cuyo conjunto de datos tenga (al menos) 2 valores diferentes para la variable `layer` y 2 valores diferentes para la variable seleccionada (`object_type` por defecto). La versión de `explor` utilizada desde `archeoViz` es una adaptación de la aplicación original, limitada al análisis factorial de correspondencias. Cf. este [ejemplo](https://analytics.huma-num.fr/archeoviz/tai).
+
+[*shinyHeatmaply*](https://cran.r-project.org/package=shinyHeatmaply) 
+es una aplicación  R Shiny / paquete R para generar y explorar interactivamente mapas de calor  (*heatmaps*). Plusieurs distances et méthodes de classifications peuvent être apploquées. Pueden aplicarse varias distancias y métodos de clasificación. La exportación a `shinyHeatmaply` sólo es posible desde instancias de `archeoViz` ejecutadas online cuyo conjunto de datos tenga (al menos) 2 valores diferentes para la variable `layer` y 2 valores diferentes para la variable seleccionada (`object_type` por defecto). La versión de `shinyHeatmaply` utilizada desde `archeoViz` es una adaptación de la aplicación original. Cf. este [ejemplo](https://analytics.huma-num.fr/archeoviz/grande-rivoire).
+
 
 ### Importar a archeoViz
 
@@ -474,7 +493,8 @@ La función `archeoViz()` se puede configurar con múltiples parámetros opciona
 ```{r, eval=FALSE}
 archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
-          square.size = 100, rotation = 0, grid.orientation = NULL,
+          square.size = 100, unit = "cm", rotation = 0, 
+          grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL,
           class.variable = NULL, class.values = NULL,
@@ -492,16 +512,19 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
 ### Cuadrícula
 
 ```{r, eval=FALSE}
-archeoViz(square.size = 100,
+archeoViz(square.size = 100, unit = "cm", rotation = 0, 
+          grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL
           )
 ```
 
-* **square.size** : *numérico*. Tamaño (ancho y alto) en centímetros de los cuadrados en el sistema de cuadrícula. El valor predeterminado es 100 cm.
+* **square.size** : *numérico*. Tamaño (ancho y alto) de los cuadrados en el sistema de cuadrícula. El valor predeterminado es 100.
+* **unit** : carácter. Unidad para distancias espaciales. Puede ser “cm”, “m” o “km”.
 * **rotation** : *numérico*. Valor (grados) de la rotación en el plano de la nube de puntos.
 * **grid.orientation** : *numérico*. Orientación (grados, positiva o negativa) de la cuadrícula (0 corresponde a una orientación norte).
-* **reverse.axis.values** : *carácter*. Nombre del eje o ejes a invertir (cualquier combinación de “x”, “y”, “z”).
+* **background.map** : data frame o matrix. Coordenadas para dibujar líneas en el fondo de las vistas en 3D y en planta.
+* **reverse.axis.values** : *carácter*. Nombre del eje o ejes a invertir (cualquier combinación de 'x', 'y', 'z”).
 * **reverse.square.names** : *carácter*. Nombre del eje o ejes para los que invertir el orden de las etiquetas cuadradas (cualquier combinación de “x”, “y”, “z”).
 * **add.x.square.labels** : *carácter*. Etiquetas cuadradas adicionales para el eje “x”.
 * **add.y.square.labels** : *carácter*. Etiquetas cuadradas adicionales para el eje “y”.
@@ -510,12 +533,12 @@ archeoViz(square.size = 100,
 
 ```{r, eval=FALSE}
 archeoViz(class.variable = NULL, class.values = NULL,
-		  default.group = "by.layer", location.mode = NULL,
-		  map.z.val = NULL, map.density = "no", map.refits = NULL,
-		  plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
-		  sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
-		  sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
-		  camera.center = NULL, camera.eye = NULL
+          default.group = "by.layer", location.mode = NULL,
+          map.z.val = NULL, map.density = "no", map.refits = NULL,
+          plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+          sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+          camera.center = NULL, camera.eye = NULL
           )
 ```
 
@@ -588,7 +611,7 @@ La siguiente URL inicia el conjunto de datos de Bilzingsleben, preconfigurando l
 
 1. agrupa los puntos por variable (parámetro `default.group`, con valor `by.variable` en lugar de `by.layer`)
 2. selecciona solo las “Astas” (parámetro `class.values`)
-3. redefine el tamaño de la cuadrícula (parámetro `square.size`, 500 cm en lugar del valor predeterminado de 100 cm)
+3. redefine el tamaño de la cuadrícula (parámetro `square.size`, 500 en lugar del valor predeterminado de 100)
 4. habilitar la visualización inmediata de los gráficos (parámetro `run.plots`)
 5. modifica el título de la página (parámetro `title`)
 6. modifica el contenido de la página de inicio con contenidos HTML básicos (parámetro `home.txt`)

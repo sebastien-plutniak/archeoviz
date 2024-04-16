@@ -44,6 +44,8 @@ knitr::opts_chunk$set(
     - [Objects Table](#objects-table)
     - [Refitting Table](#refitting-table)
     - [Timeline Table](#timeline-table)
+    - [Background drawing](#background-drawing)
+    - [Units](#units)
   - [Data Input](#data-input)
     - [Through the Application Interface](#through-the-application-interface)
     - [Through the R Function Parameters](#through-the-r-function-parameters)
@@ -245,7 +247,7 @@ Three types of data can be loaded in `archeoViz`:
 
 * an “objects” table (mandatory), with data about the objects;
 * a “refits” table (optional), with data about the refitting objects;
-* a “timeline” table (optional), with data about when each square of the site was excavated or surveyed.
+* a “timeline” table (optional) giving the year when each square of the site was excavated or surveyed.
 
 ### Formatting Data
 
@@ -262,9 +264,9 @@ Formatting your data can be done:
 A row describes a single object with the following mandatory fields:
 
 * **id**: *alphanumerical value*, unique identifier of the object 
-* **xmin**: *numerical value*, coordinate of the object on the X axis (in cm)
-* **ymin**: *numerical value*, coordinate of the object on the Y axis (in cm)
-* **zmin**: *numerical value*, coordinate of the object on the Z axis (positive depth value in cm)
+* **xmin**: *numerical value*, coordinate of the object on the X axis
+* **ymin**: *numerical value*, coordinate of the object on the Y axis 
+* **zmin**: *numerical value*, coordinate of the object on the Z axis (positive depth value)
 * **layer**: *alphanumerical value*, identifier of the object's layer
 * **object_type**: *alphanumerical value*, category of the object
 
@@ -281,7 +283,7 @@ In addition, optional fields are possible, including:
 The labels of the squares of the grid:
 
 * are ordered alpha-numerically;
-* are not displayed to avoid erroneous displays, if the number of labels does not correspond exactly to the total number of 100 cm squares that can be defined in the range of minimum and maximum coordinates contained in the xmin and ymin variables;
+* are not displayed to avoid erroneous displays, if the number of labels does not correspond exactly to the total number of 100 (cm, m, km) squares that can be defined in the range of minimum and maximum coordinates contained in the xmin and ymin variables;
 * can be completed with the `add.x.square.labels` and `add.y.square.labels` parameters of the `archeoViz()` function in order to add the missing labels (on the X and Y axes of the grid, respectively).
 
 ### Refitting Table
@@ -296,6 +298,18 @@ A table (CSV format) can be uploaded about excavation history. Row gives the yea
 * **square_x**: alphanumerical value, identifier of the excavated square on the X axis
 * **square_y**: alphanumerical value, identifier of the excavated square on the Y axis
 
+
+### Background Drawing
+
+A background drawing can be displayed in the 3D and Map plots. This feature makes it possible, for example, to show a site map behind a point cloud.
+It requires a data table in which each row gives the X and Y coordinates of the points to be used to draw. Note that the lines will be drawn following the order of the points  in the table.
+The coordinates system used  must be the same that the one used for the objects.
+To draw several lines, an additional  column (named “group”) is required, containing for each point the unique identifier of the line to which this point belongs to.  The data set is loaded using the `background.map` parameter.
+
+### Units
+
+By default, all distances in `archeoViz` are in centimeter.
+However, it can be changed by giving the `unit`  parameter one of the following value: “cm”, “m”, “km”. This parameter determines the contents of the legend of the square size.
 
 ## Data Input
 
@@ -397,8 +411,8 @@ Note that this feature is resource intensive and using it with too much data can
 Several graphical outputs can be generated in `archeoViz`.
 
 * The plots in the “3D plot”, “Map”, “Section X”, and “Section Y” tabs can be exported:
-	* in SVG format (by clicking on the “camera” icon in the menu bar above the plot),
-	* as interactive plots in HTML format, by clicking on the “Export” button.
+    * in SVG format (by clicking on the “camera” icon in the menu bar above the plot),
+    * as interactive plots in HTML format, by clicking on the “Export” button.
 * The small map in the “Section X” and “Section Y” tabs can be exported in SVG by clicking on the “Download Map” link.
 * The plan of the excavation chronology can be exported in SVG format by clicking on the “Download” button.
 
@@ -447,30 +461,31 @@ Consequently, data can be exported and imported between `archeoViz` and other we
 Data can be exported to other online applications from `archeoViz` "Statistics" tab. Some exports are possible only for specific types of data or if a minimum number of values is satisfied.
 
 
-[*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag) is an R package and web application to assess and evaluate the distinctions betwen archaeological spatial units (e.g. layers) based on the analysis of refitting relationships between fragments of objects. The web version of the application includes methods to measure the cohesion and admixture of spatial units, and compare it to simulated data. If an instance of `archeoViz` is launched with [refitting data](#refittings), then this data can be analysed with `archeofrag`.
-See an example [here](https://analytics.huma-num.fr/archeoviz/grotte16).
+[*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag) is an R package and web application to assess and evaluate the distinctions betwen archaeological spatial units (e.g. layers) based on the analysis of refitting relationships between fragments of objects. The web version of the application includes methods to measure the cohesion and admixture of spatial units, and compare it to simulated data. If an instance of `archeoViz` is launched with [refitting data](#refittings), then this data can be analysed with `archeofrag`. See an example [here](https://analytics.huma-num.fr/archeoviz/grotte16).
 
-The [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) is a web application (part of the [SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/) collection) to visualise changes in the quantitative distribution of artefacts types in ordered or unordered series of spatial units. If an online instance of `archeoViz` is launched with a data set with at least 2 different values for the `layers` variable and 2 different values for the `object_type` variable, then this data can be analysed with the `Seriograph` application.
-See an example [here](https://analytics.huma-num.fr/archeoviz/poeymau).
+The [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) is a web application (part of the [SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/) collection) to visualise changes in the quantitative distribution of artefacts types in ordered or unordered series of spatial units.
+Export to `Seriograph` is available from online `archeoViz` instance (only) for dataset with at least 2 different values for the `layer` variable and 2 different values for the selected variable (by default, `object_type`). See an example [here](https://analytics.huma-num.fr/archeoviz/poeymau).
 
-[*Amado online*](https://app.ptm.huma-num.fr/amado/) is an on-line application for analyzing contingency tables. It is possible to export a table cross-referencing the values of the selected variable (by default, `object_type`) and the values of the variable `layer`. `Amado` allows you to manually reorder rows and columns, and perform automatic seriations and classifications. See an example [here](https://analytics.huma-num.fr/archeoviz/tai).
+[*Amado online*](https://app.ptm.huma-num.fr/amado/) is an on-line application for analysing contingency tables. `Amado online` allows you to manually reorder rows and columns, and perform automatic seriation and classification. Export to `Amado online` is available from online `archeoViz` instance (only) for dataset with at least 2 different values for the `layer` variable and 2 different values for the selected variable (by default, `object_type`). See an example [here](https://analytics.huma-num.fr/archeoviz/tai).
 
-[*explor*](https://cran.r-project.org/package=explor) is an R Shiny / R package application for interactively exploring the results of multi-dimensional analyses. `explor` has been adapted to run a Correspondence analysis on a contingency table intersecting the values of the selected variable (by default, `object_type`) and the values of the variable `layer`.  See an example [here](https://analytics.huma-num.fr/archeoviz/tai).
+[*explor*](https://cran.r-project.org/package=explor) is an R Shiny / R package application for interactively exploring the results of multi-dimensional analyses. Export to `explor` is available from online `archeoViz` instance (only) for dataset with at least 2 different values for the `layer` variable and 2 different values for the selected variable (by default, `object_type`). The version of `explor` used from `archeoViz` is a fork of the original application, adapted to run correspondence analysis. See an example [here](https://analytics.huma-num.fr/archeoviz/tai).
 
+
+[*shinyHeatmaply*](https://cran.r-project.org/package=shinyHeatmaply) is an R Shiny / R package application to generate and interactively explore heatmaps. Multiple statistical distance and classification methods can be applied. Export to `shinyHeatmaply` is available from online `archeoViz` instance (only) for dataset with at least 2 different values for the `layer` variable and 2 different values for the selected variable (by default, `object_type`). The version of `shinyHeatmaply` used from `archeoViz` is a fork of the original application. See an example [here](https://analytics.huma-num.fr/archeoviz/grande-rivoire).
 
 ### Import to archeoViz 
 
-[*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) is a web application and R package to visualise the spatial distribution of archaeological remains. As mentioned [above](#formatting-data), SEAHORS can be used to import, reshape, and send a data set to an online instance of the `archeoViz` application.
+[*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) is a web application and R package to visualise the spatial distribution of archaeological remains. As mentioned [above](#formatting-data), SEAHORS can be used to import, reshape, and send a dataset to an online instance of the `archeoViz` application.
 
 
 ## Advanced parameters
 
 The `archeoViz()` function can be set with multiple optional parameters, related to:
 
-* the input data (already detailed [above](#through-function-parameters)),
-* the contents of the home page (already detailed [above](#deployed-use)),
+* the input data (see [above](#through-function-parameters)),
+* the contents of the home page (see [above](#deployed-use)),
 * the [square grid](#square-grid),
-* the [presetting](#parameters-presetting) of the parameters that can be set through the application's interface,
+* the [presetting](#parameters-presetting) of the parameters that can be set through the application's graphical interface,
 * the [reactive behavior](#reactive-plot-display) of the application regarding the generation of plots,
 * the [HTML export](#html-export),
 * the [URL parameters](#url-parameters).
@@ -478,7 +493,8 @@ The `archeoViz()` function can be set with multiple optional parameters, related
 ```{r, eval=FALSE}
 archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
-          square.size = 100, rotation = 0, grid.orientation = NULL,
+          square.size = 100, unit = "cm", rotation = 0, 
+          grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL,
           class.variable = NULL, class.values = NULL,
@@ -496,15 +512,17 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
 ### Square grid
 
 ```{r, eval=FALSE}
-archeoViz(square.size = 100,
+archeoViz(square.size = 100, unit = "cm", rotation = 0, 
+          grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL
           )
 ```
-
-* **square.size**: numerical. Size (width and height) in centimeter of the squares in the grid system. Default value is 100 cm.
-* **rotation** : integer. Value (degrees) for the in-plane rotation of the point cloud.
-* **grid.orientation** : numerical. Orientation (degrees, positive or negative) of the grid (0 corresponds to a north orientation).
+* **square.size**: numerical. Size (width and height) of the squares in the grid system. Default value is 100.
+* **unit**: character. Unit for spatial distances. One of “cm”, “m”, “km”.
+* **rotation**: integer. Value (degrees) for the in-plane rotation of the point cloud.
+* **grid.orientation**: numerical. Orientation (degrees, positive or negative) of the grid (0 corresponds to a north orientation).
+* **background.map**: data frame or matrix. Coordinates to draw background lines in 3D and Map plots.
 * **reverse.axis.values**: character. Name of the axis or axes to be reversed (any combination of “x”, “y”, “z”).
 * **reverse.square.names**: character. Name of the axis or axes for which to reverse the order of the square labels (any combination of “x”, “y”, “z”).
 * **add.x.square.labels**: character. Additional square labels for the “x” axis. 
@@ -514,12 +532,12 @@ archeoViz(square.size = 100,
 
 ```{r, eval=FALSE}
 archeoViz(class.variable = NULL, class.values = NULL,
-		  default.group = "by.layer", location.mode = NULL,
-		  map.z.val = NULL, map.density = "no", map.refits = NULL,
-		  plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
-		  sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
-		  sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
-		  camera.center = NULL, camera.eye = NULL
+          default.group = "by.layer", location.mode = NULL,
+          map.z.val = NULL, map.density = "no", map.refits = NULL,
+          plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+          sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+          camera.center = NULL, camera.eye = NULL
           )
 ```
 
@@ -595,10 +613,10 @@ The following URL launches the Bilzingsleben dataset, pre-setting the app to:
 
 1. groups the points by variable (parameter `default.group`, with walue `by.variable` instead of `by.layer`)
 2. selects only the "Antlers" (parameter `class.values`)
-3. redefines the size of the square grid (parameter `square.size`, 500 cm instead of the 100 cm default value)
+3. redefines the size of the square grid (parameter `square.size`, 500 instead of the 100 default value)
 4. enable the immediate display of the plots (parameter `run.plots`)
 5. modifies the title of the page (parameter `title`)
-6. modifies the content of the home page with basic html contents (parameter `home.txt`)
+6. modifies the content of the home page with basic HTML contents (parameter `home.txt`)
 
 [https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Antlers%20at%20Bilzingsleben&home.text=Many%20<b>antlers</b>&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Anters%20at%20Bilzingsleben&home.text=Many%20<b>antlers</b>&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
  

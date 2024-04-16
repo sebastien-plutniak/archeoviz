@@ -1,8 +1,10 @@
 # archeoViz 1.3.5
+Released: 2024-XX-XX
 
-* New feature: archeoViz can now display a background drawing (e.g. a map outline) in the 3D and 'Map' plots, using the new 'background.map' parameter.
+* New feature: archeoViz can now display a background drawing (e.g. a map outline) in '3D' and 'Map' plots, using the new 'background.map' parameter.
 * New 'unit' parameter to define the metric unit (one of: cm, m, km). The internal automatic conversion of units for the scale grid has been revised (from centimeter to meter and meter to kilometer).
-
+* Add an export link to the 'shinyHeatmaply' application the 'Statistics' tab.
+* Add variables selection in the 'Statistics' tab.
 
 # archeoViz 1.3.4
 Released: 2024-01-13

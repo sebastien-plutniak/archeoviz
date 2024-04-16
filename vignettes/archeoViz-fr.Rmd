@@ -42,6 +42,8 @@ knitr::opts_chunk$set(
      - [Tableau des objets](#tableau-des-objets)
      - [Tableau des remontages](#tableau-des-remontages)
      - [Tableau de la chronologie](#tableau-de-la-chronologie)
+     - [Dessin d'arrière-fond](#dessin-darrière-fond)
+     - [Unités](#unités)
   - [Charger des données](#charger-des-données)
      - [Via l'interface de l'application](#via-linterface-de-lapplication)
      - [Via les paramètres de la fonction R](#via-les-paramètres-de-la-fonction-r)
@@ -259,9 +261,9 @@ Le formatage des données peut être réalisé :
 Chaque ligne décrit un objet et doit comporter les variables obligatoires suivantes:
 
 * **id**: *valeur alphanumérique*, identifiant unique de l'objet
-* **xmin**: *valeur numérique*, coordonnée de l'objet en axe X (en cm)
-* **ymin**: *valeur numérique*, coordonnée de l'objet en axe Y (en cm)
-* **zmin**: *valeur numérique*, coordonnée de l'objet en axe Z (valeur positive de profondeur en cm)
+* **xmin**: *valeur numérique*, coordonnée de l'objet en axe X 
+* **ymin**: *valeur numérique*, coordonnée de l'objet en axe Y 
+* **zmin**: *valeur numérique*, coordonnée de l'objet en axe Z (valeur positive de profondeur)
 * **layer**: *valeur alphanumérique*, identifiant de la couche de l'objet
 * **object_type**: *valeur alphanumérique*, catégorie de l'objet
 
@@ -278,7 +280,7 @@ De plus, des variables optionnelles sont possibles:
 Les labels des carrés du carroyage:
 
 * sont ordonnés alpha-numériquement;
-* ne sont pas affichés, afin d'éviter des affichages erronés, si le nombre de labels ne correspond pas exactement au nombre total de carrés de 100cm pouvant être définis dans l'intervalle des coordonnées minimales et maximales contenues dans les variables xmin et ymin;
+* ne sont pas affichés, afin d'éviter des affichages erronés, si le nombre de labels ne correspond pas exactement au nombre total de carrés de 100 (cm, m, km) pouvant être définis dans l'intervalle des coordonnées minimales et maximales contenues dans les variables xmin et ymin;
 * peuvent être complétés avec les paramètres `add.x.square.labels` et `add.y.square.labels` de la fonction `archeoViz()` afin d'ajouter les labels manquants (respectivement, sur les axes X et Y du carroyage).
 
 ### Tableau des remontages
@@ -295,6 +297,19 @@ Optionnellement, un tableau (CSV) peut être chargé à propos du déroulé de l
 * **square_x**: valeur alphanumérique, identifiant du carré en axe X
 * **square_y**: valeur alphanumérique, identifiant du carré en axe Y
     
+   
+### Dessin d'arrière-fond
+
+Un dessin d'arrière-plan peut être affiché dans les visualisations “3D” et “Carte”. Ceci permet par exemple d'afficher le plan d'un site en fonds d'un nuage de points.
+Cette fonctionnalité nécessite un tableau de données où chaque ligne contient les coordonnées X et Y des points à utiliser pour le dessin. À noter que les lignes seront tracées en suivant l'ordre des points dans le tableau.
+Le système de coordonnées utilisé doit être le même que celui utilisé pour les objets.
+Pour dessiner plusieurs lignes, une colonne supplémentaire (intitulée “group”) est nécessaire, et doit indiquer pour chaque point l'identifiant unique de la ligne à laquelle le point appartient. 
+Le jeu de données doit être chargé via le paramètre `background.map`.
+    
+### Unités
+
+Par défaut, toutes les  distances dans `archeoViz` sont exprimées en centimètres.
+Il est cependant possible de spécifier une autre unité en donnant l'une des valeurs suivantes au paramètre `unit` : “cm”, “m”, “km”. Ce paramètre détermine le contenu de la légende relative à la taille des carrés de la grille.
     
 ## Charger des données
 
@@ -407,8 +422,8 @@ Cette dernière option est gourmande en ressources, l'appliquer à un nombre imp
 Plusieurs sorties graphiques peuvent être générées dans `archeoViz`.
 
 * Les visualisations en 3D, en plan et en sections peuvent être exportées:
-	* au format SVG, en cliquant sur l'icône “appareil photo” de la barre de menu s'affichant au-dessus des visualisations;
-	* en format HTML interactif, en cliquant sur le bouton “Exporter” dans la colonne droite de l'interface.
+    * au format SVG, en cliquant sur l'icône “appareil photo” de la barre de menu s'affichant au-dessus des visualisations;
+    * en format HTML interactif, en cliquant sur le bouton “Exporter” dans la colonne droite de l'interface.
 * Le plan miniature dans les onglets “Section X” et “Section Y” peut être exporté au format SVG en cliquant sur le lien “Télécharger plan”.
 * Le plan de la chronologie des fouilles peut être téléchargé au format SVG en cliquant sur le bouton “Télécharger”.
 
@@ -460,22 +475,26 @@ Par conséquent, les données peuvent être exportées et importées entre  `arc
 
 [*archeofrag*](https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag) est un package R et une application web permettant d'estimer et d'évaluer les  distinctions entre unités spatiales archéologiques (par ex. des couches) à partir de l'analyse des relations de remontage entre fragments d'objets. La  version web de l'application intègre des méthodes pour mesurer la cohésion et le mélange d'unités spatiales et de les comparer à des données simulées. Lorsqu'une instance d'`archeoViz` est executée avec des [données de remontage](#tableau-des-remontages), alors ces données peuvent être exportées vers `archeofrag`. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/grotte16).
 
-Le [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) est une application web (inclues dans la collection  [SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/)) pour visualiser des changements quantitatifs dans la distribution de types d'artefacts dans des séries ordonnées ou non-ordonnées d'unités spatiales. 
-Lorsqu'une instance d'`archeoViz` est executée avec un jeu de données contenant au moins 2 valeurs différentes pour la variable `layers` et 2 valeurs différentes pour la variable `object_type`, alors ces données peuvent être analysées avec l'application `Seriograph`. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/poeymau).
+Le [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/) est une application web (issue de la collection  [SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/)) pour visualiser des changements quantitatifs dans la distribution de types d'artefacts dans des séries ordonnées ou non-ordonnées d'unités spatiales. L'export vers le `Seriograph` est uniquement possible depuis les instances d'`archeoViz` déployées en ligne dont le jeu de données possède (au moins) 2 valeurs différentes pour la variable `layer` et 2 valeurs différentes pour la variable sélectionnée (`object_type` par défaut). Voir cet [exemple](https://analytics.huma-num.fr/archeoviz/poeymau).
 
 
-[*Amado online*](https://app.ptm.huma-num.fr/amado/) est une application en ligne permettant d'analyser des tableaux de contingence. Il est possible d'exporter un tableau croisant les valeurs de la variable sélectionnée (par défaut, `object_type`) et les valeurs de la variable `layer`. `Amado` permet de réordonner manuellement les lignes et les colonnes et d'exécuter des sériations et classifications automatiques. Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/tai).
+[*Amado online*](https://app.ptm.huma-num.fr/amado/) est une application en ligne permettant d'analyser des tableaux de contingence. Les lignes et les colonnes peuvent être réordonnées manuellement et des sériations et classifications automatiques peuvent être exécutées. L'export vers `Amado online` est uniquement possible depuis les instances d'`archeoViz` déployées en ligne dont le jeu de données possède (au moins) 2 valeurs différentes pour la variable `layer` et 2 valeurs différentes pour la variable sélectionnée (`object_type` par défaut).  Voir cet [exemple](https://analytics.huma-num.fr/archeoviz/tai).
 
-[*explor*](https://cran.r-project.org/package=explor) est une application R Shiny / package R permettant d'explorer interactivement les résultats d'analyses multidimensionnelles. `explor` a été adapté pour exécuter une analyse factorielle des correspondances sur un tableau de contingence croisant les valeurs de la variable sélectionnée (par défaut, `object_type`) et les valeurs de la variable `layer`.  Cf. cet [exemple](https://analytics.huma-num.fr/archeoviz/tai).
+
+[*explor*](https://cran.r-project.org/package=explor) est une application R Shiny / package R permettant d'explorer interactivement les résultats d'analyses multidimensionnelles. L'export vers `explor` est uniquement possible depuis les instances d'`archeoViz` déployées en ligne dont le jeu de données possède (au moins) 2 valeurs différentes pour la variable `layer` et 2 valeurs différentes pour la variable sélectionnée (`object_type` par défaut). La version d'`explor` utilisée depuis `archeoViz` est une adaptation de l'application originale, limitées aux analyses factorielles de correspondances. Voir cet [exemple](https://analytics.huma-num.fr/archeoviz/tai).
+
+
+[*shinyHeatmaply*](https://cran.r-project.org/package=shinyHeatmaply) est une application R Shiny / package R permettant de générer et d'explorer interactivement des cartes de chaleur (*heatmaps*). Plusieurs distances et méthodes de classifications peuvent être apploquées. L'export vers `shinyHeatmaply` est uniquement possible depuis les instances d'`archeoViz` déployées en ligne dont le jeu de données possède (au moins) 2 valeurs différentes pour la variable `layer` et 2 valeurs différentes pour la variable sélectionnée (`object_type` par défaut). La version de `shinyHeatmaply` utilisée depuis `archeoViz` est une adaptation de l'application originale. Voir cet [exemple](https://analytics.huma-num.fr/archeoviz/grande-rivoire).
+
 
 
 ### Import vers archeoViz
 
-[*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) est une application web et un package R permettant de visualiser la distribution spatiale d'objets archéologiques. Comme indiqué  [ci dessus](#formater-des-données), *SEAHORS* peut être employé pour importer, transformer, et transmettre un jeu de donnée à une instance en ligne d'`archeoViz`.
+[*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors) est une application web et un package R permettant de visualiser la distribution spatiale d'objets archéologiques. Comme indiqué  [ci dessus](#formater-des-données), *SEAHORS* peut être employé pour importer, transformer, et transmettre un jeu de donnée à une instance en ligne d'`archeoViz`.
 
 ## Paramètres avancés
 
-La fonction `archeoViz()` admet de nombreux paramètres optionnels, relatifs aux:
+La fonction `archeoViz()` admet de nombreux paramètres optionnels, relatifs aux :
 
 * données à charger (traité [ci-dessus](#par-paramétrage-de-la-fonction)),
 * contenu de la page d'accueil (traité [ci-dessus](#déployée)),
@@ -487,7 +506,8 @@ La fonction `archeoViz()` admet de nombreux paramètres optionnels, relatifs aux
 ```{r, eval=FALSE}
 archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
-          square.size = 100, rotation = 0, grid.orientation = NULL,
+          square.size = 100, unit = "cm", rotation = 0, 
+          grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL,
           class.variable = NULL, class.values = NULL,
@@ -505,15 +525,18 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
 ### Carroyage
 
 ```{r, eval=FALSE}
-archeoViz(square.size = 100,
+archeoViz(square.size = 100, unit = "cm", rotation = 0, 
+          grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL
           )
 ```
 
-* **square.size** : numérique. Taille (longueur et largeur) en centimètre des carrés du carroyage. La valeur par défaut est 100 cm.
+* **square.size** : numérique. Taille (longueur et largeur)  des carrés du carroyage. La valeur par défaut est 100
+* **unit** : caractères. Unité pour les distances spatiales. Soit 'cm', 'm' ou 'km'.
 * **rotation** : numérique. integer. Valeur (en degrés) pour la rotation à appliquer en plan au nuage de points.
 * **grid.orientation** : numérique. Orientation (en degrés) du carroyage par rapport au nord.
+* **background.map** : data frame ou matrix. Coordonnées pour tracer des lignes en arrière-plan des visualisations en 3D et en plan.
 * **reverse.axis.values** : caractères. Nom de l'axe ou des axes à inverser (une combinaison de 'x', 'y', 'z').
 * **reverse.square.names** : caractères. Nom de l'axe ou des axes pour lesquels inverser l'ordre des labels de carrés (une combinaison de 'x', 'y', 'z').
 * **add.x.square.labels** : caractères. Labels de carrés additionnels pour l'axe 'x'.
@@ -523,12 +546,12 @@ archeoViz(square.size = 100,
 
 ```{r, eval=FALSE}
 archeoViz(class.variable = NULL, class.values = NULL,
-		  default.group = "by.layer", location.mode = NULL,
-		  map.z.val = NULL, map.density = "no", map.refits = NULL,
-		  plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
-		  sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
-		  sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
-		  camera.center = NULL, camera.eye = NULL
+          default.group = "by.layer", location.mode = NULL,
+          map.z.val = NULL, map.density = "no", map.refits = NULL,
+          plot3d.hulls = NULL, plot3d.surfaces = NULL, plot3d.refits = NULL,
+          sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
+          sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+          camera.center = NULL, camera.eye = NULL
           )
 ```
 
@@ -598,14 +621,14 @@ Cette URL fait de même, mais inclut également le tableau des remontages (param
 
 [https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&plot3d.refits=TRUE&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv](https://analytics.huma-num.fr/archeoviz/en/?map.refits=TRUE&plot3d.refits=TRUE&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv&refits.df=https://zenodo.org/record/8003880/files/bilzingsleben-antlers-refits.csv)
 
-L'URL suivante lance le jeu de données Bilzingsleben, en pré-réglant l'application telle que:
+L'URL suivante lance le jeu de données Bilzingsleben, en pré-réglant l'application tel que:
 
 1. les points sont groupés par variable (paramètre `default.group`, avec la valeur `by.variable` plutôt que `by.layer`)
-2. ne sélectionne que les “Antlers” (paramètre `class.values`)
-3. redéfini la taille des carrés du carroyage (paramètre `square.size` 500 cm au lieu de la valeur par défaut 100cm)
-4. active l'affichage immédiat des graphiques (paramètre `run.plots`)
-5. modifie le titre de la page (paramètre `title`)
-6. modifie le contenu de la page d'accueil, illustrant l'usage d'un simple balisage HTML (paramètre `home.txt`)
+2. seuls les “Antlers” sont sélectionnés (paramètre `class.values`)
+3. la taille des carrés du carroyage est redéfinie (paramètre `square.size` 500 cm au lieu de la valeur par défaut 100cm)
+4. l'affichage immédiat des graphiques est activé (paramètre `run.plots`)
+5. le titre de la page est modifé (paramètre `title`)
+6. le contenu de la page d'accueil est modifié, illustrant l'usage d'un simple balisage HTML (paramètre `home.txt`)
 
 [https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Antlers%20at%20Bilzingsleben&home.text=Many%20<b>antlers</b>&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv](https://analytics.huma-num.fr/archeoviz/en/?default.group=by.variable&class.values=Antler&square.size=500&run.plots=TRUE&title=Anters%20at%20Bilzingsleben&home.text=Many%20<b>antlers</b>&objects.df=https://zenodo.org/record/8003880/files/bilzingsleben.csv)
  

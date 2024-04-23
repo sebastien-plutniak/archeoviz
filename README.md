@@ -323,7 +323,7 @@ Three types of data can be loaded in `archeoViz`:
 
 - an “objects” table (mandatory), with data about the objects;
 - a “refits” table (optional), with data about the refitting objects;
-- a “timeline” table (optional), with data about when each square of the
+- a “timeline” table (optional) giving the year when each square of the
   site was excavated or surveyed.
 
 ### Formatting Data
@@ -647,49 +647,59 @@ The [*Seriograph*](https://analytics.huma-num.fr/ModAthom/seriograph/)
 is a web application (part of the
 [SPARTAAS](https://spartaas.gitpages.huma-num.fr/r-package/) collection)
 to visualise changes in the quantitative distribution of artefacts types
-in ordered or unordered series of spatial units. If an online instance
-of `archeoViz` is launched with a data set with at least 2 different
-values for the `layers` variable and 2 different values for the
-`object_type` variable, then this data can be analysed with the
-`Seriograph` application. See an example
+in ordered or unordered series of spatial units. Export to `Seriograph`
+is available from online `archeoViz` instance (only) for dataset with at
+least 2 different values for the `layer` variable and 2 different values
+for the selected variable (by default, `object_type`). See an example
 [here](https://analytics.huma-num.fr/archeoviz/poeymau).
 
 [*Amado online*](https://app.ptm.huma-num.fr/amado/) is an on-line
-application for analyzing contingency tables. It is possible to export a
-table cross-referencing the values of the selected variable (by default,
-`object_type`) and the values of the variable `layer`. `Amado` allows
-you to manually reorder rows and columns, and perform automatic
-seriations and classifications. See an example
+application for analysing contingency tables. `Amado online` allows you
+to manually reorder rows and columns, and perform automatic seriation
+and classification. Export to `Amado online` is available from online
+`archeoViz` instance (only) for dataset with at least 2 different values
+for the `layer` variable and 2 different values for the selected
+variable (by default, `object_type`). See an example
 [here](https://analytics.huma-num.fr/archeoviz/tai).
 
 [*explor*](https://cran.r-project.org/package=explor) is an R Shiny / R
 package application for interactively exploring the results of
-multi-dimensional analyses. `explor` has been adapted to run a
-Correspondence analysis on a contingency table intersecting the values
-of the selected variable (by default, `object_type`) and the values of
-the variable `layer`. See an example
+multi-dimensional analyses. Export to `explor` is available from online
+`archeoViz` instance (only) for dataset with at least 2 different values
+for the `layer` variable and 2 different values for the selected
+variable (by default, `object_type`). The version of `explor` used from
+`archeoViz` is a fork of the original application, adapted to run
+correspondence analysis. See an example
 [here](https://analytics.huma-num.fr/archeoviz/tai).
+
+[*shinyHeatmaply*](https://cran.r-project.org/package=shinyHeatmaply) is
+an R Shiny / R package application to generate and interactively explore
+heatmaps. Multiple statistical distance and classification methods can
+be applied. Export to `shinyHeatmaply` is available from online
+`archeoViz` instance (only) for dataset with at least 2 different values
+for the `layer` variable and 2 different values for the selected
+variable (by default, `object_type`). The version of `shinyHeatmaply`
+used from `archeoViz` is a fork of the original application. See an
+example [here](https://analytics.huma-num.fr/archeoviz/grande-rivoire).
 
 ### Import to archeoViz
 
 [*SEAHORS*](https://aurelienroyer.shinyapps.io/Seahors/) is a web
 application and R package to visualise the spatial distribution of
 archaeological remains. As mentioned [above](#formatting-data), SEAHORS
-can be used to import, reshape, and send a data set to an online
-instance of the `archeoViz` application.
+can be used to import, reshape, and send a dataset to an online instance
+of the `archeoViz` application.
 
 ## Advanced parameters
 
 The `archeoViz()` function can be set with multiple optional parameters,
 related to:
 
-- the input data (already detailed
-  [above](#through-function-parameters)),
-- the contents of the home page (already detailed
-  [above](#deployed-use)),
+- the input data (see [above](#through-function-parameters)),
+- the contents of the home page (see [above](#deployed-use)),
 - the [square grid](#square-grid),
 - the [presetting](#parameters-presetting) of the parameters that can be
-  set through the application’s interface,
+  set through the application’s graphical interface,
 - the [reactive behavior](#reactive-plot-display) of the application
   regarding the generation of plots,
 - the [HTML export](#html-export),
@@ -698,8 +708,8 @@ related to:
 ``` r
 archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
-          square.size = 100, rotation = 0, grid.orientation = NULL,
-          background.map = NULL,
+          square.size = 100, unit = "cm", rotation = 0, 
+          grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL,
           class.variable = NULL, class.values = NULL,
@@ -717,7 +727,8 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
 ### Square grid
 
 ``` r
-archeoViz(square.size = 100,
+archeoViz(square.size = 100, unit = "cm", rotation = 0, 
+          grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL
           )
@@ -725,10 +736,14 @@ archeoViz(square.size = 100,
 
 - **square.size**: numerical. Size (width and height) of the squares in
   the grid system. Default value is 100.
-- **rotation** : integer. Value (degrees) for the in-plane rotation of
+- **unit**: character. Unit for spatial distances. One of “cm”, “m”,
+  “km”.
+- **rotation**: integer. Value (degrees) for the in-plane rotation of
   the point cloud.
-- **grid.orientation** : numerical. Orientation (degrees, positive or
+- **grid.orientation**: numerical. Orientation (degrees, positive or
   negative) of the grid (0 corresponds to a north orientation).
+- **background.map**: data frame or matrix. Coordinates to draw
+  background lines in 3D and Map plots.
 - **reverse.axis.values**: character. Name of the axis or axes to be
   reversed (any combination of “x”, “y”, “z”).
 - **reverse.square.names**: character. Name of the axis or axes for

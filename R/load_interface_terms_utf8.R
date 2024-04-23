@@ -161,7 +161,7 @@
   
     # : ro ----
   welcome.ro <- "
-		<h1>Bun venit în <i>archeoViz</i>!</h1>
+        <h1>Bun venit în <i>archeoViz</i>!</h1>
                 <p><i>archeoViz</i> este o aplicație concepută pentru arheologie.
                 Permite <b>vizualizarea</b>, <b>explorarea</b> interactivă, transferul și
                 <b>communicarea</b> rapide a datelor archaeologice spațiale pe web.
@@ -169,15 +169,15 @@
                 <p>
                 Oferă <b>vizualizări</b> interactive 3D și 2D,
                 poate genera <b>secțiuni</b> și <b>hărți</b> ale resturilor arheologice, 
-		poate rula metode de bază de <b>statistică spațială</b>
+        poate rula metode de bază de <b>statistică spațială</b>
                 (anvelopa convexă, suprafețe de regresie, estimarea densităţii kernel 2D), 
                 și poate afișa o <b>cronologie</b> interactivă a săpăturilor. 
                 </p>
                 <p>
                 Distribuit ca pachet R, 
                 <i>archeoViz</i> poate fi folosit local sau încărcat pe un server, 
-		permițând utilizatorului să urce datele prin intermediul interfeței 
-		sau prin rularea aplicației cu un anumit set de date.
+        permițând utilizatorului să urce datele prin intermediul interfeței 
+        sau prin rularea aplicației cu un anumit set de date.
                 Interfața este disponibilă în 
                 <a href=https://analytics.huma-num.fr/archeoviz/de target=_blank>germană</a>, 
                 engleză, 
@@ -338,7 +338,7 @@
 # :  ro ----
   input.objects.ro <- 
     "<p>
-	Este necesar un tabel de date (format CSV). Un rând descrie un singur obiect cu următoarele câmpuri obligatorii:  
+    Este necesar un tabel de date (format CSV). Un rând descrie un singur obiect cu următoarele câmpuri obligatorii:  
     <ul>
       <li> <b>id</b>: <i>valoare alfanumerică</i>, identificator unic al obiectului </li>
       <li> <b>xmin</b>: <i>valoare numerică</i>, coordonata obiectului pe axa X (în cm)</li>
@@ -774,7 +774,7 @@ more commonly used.</p>
 structures in two ways:</p>
 <ul>
 <li>sets of refitting objects must be described using a specific column
-in the <code>objects.df</code> table (e.g. <code>object_refits</code>)
+in the <code>objects.df</code> table (e.g. <code>object_refits</code>)
 and are represented by the color of points in the plots (like any other
 variable);</li>
 <li>refitting relationships must be described using the
@@ -1072,7 +1072,7 @@ for specific types of data or if a minimum number of values is
 satisfied.</p>
 <p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a>
 is an R package and web application to assess and evaluate the
-distinctions betwen archaeological spatial units (e.g. layers) based on
+distinctions betwen archaeological spatial units (e.g. layers) based on
 the analysis of refitting relationships between fragments of objects.
 The web version of the application includes methods to measure the
 cohesion and admixture of spatial units, and compare it to simulated
@@ -1340,7 +1340,7 @@ DOI: <a href=https://doi.org/10.21105/joss.05811>10.21105/joss.05811</a>.</li>
 <li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser
 et explorer la distribution spatiale du mobilier archéologique :
 l’application archeoViz et son portail web</a>”. <em>Bulletin de la
-Société préhistorique française</em>, 120(1), p. 70-74.</li>
+Société préhistorique française</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=presentations>Presentations</h2>
 <ul>
@@ -2283,7 +2283,7 @@ DOI: <a href=https://doi.org/10.21105/joss.05811>10.21105/joss.05811</a>.</li>
 <li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser
 et explorer la distribution spatiale du mobilier archéologique :
 l’application archeoViz et son portail web</a>”. <em>Bulletin de la
-Société préhistorique française</em>, 120(1), p. 70-74.</li>
+Société préhistorique française</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=présentations>Présentations</h2>
 <ul>
@@ -2545,7 +2545,7 @@ necesidad de reemplazar uno de varios valores de coordenadas por rangos
 (por ejemplo, falta un valor X para un objeto y se reemplaza por los
 valores X mínimo y máximo del cuadrado donde se encuentra este objeto).
 fue encontrado);</li>
-<li>elección del método (p. ej., excavación realizada y registrada
+<li>elección del método (p. ej., excavación realizada y registrada
 utilizando asadores de profundidad arbitraria, objetos tamizados,
 etc.).</li>
 </ul>
@@ -2590,7 +2590,7 @@ usa con más frecuencia.</p>
 datos de dos maneras:</p>
 <ul>
 <li>los conjuntos de objetos de remontajes deben describirse usando una
-columna específica en la tabla <code>objects.df</code> (p. ej.,
+columna específica en la tabla <code>objects.df</code> (p. ej.,
 <code>object_refits</code>) y están representados por el color de los
 puntos en los gráficos ( como cualquier otra variable);</li>
 <li>las relaciones de remontajes deben describirse usando la tabla
@@ -3166,7 +3166,7 @@ básicos (parámetro <code>home.txt</code>)</li>
 <p>Tenga en cuenta que los parámetros <code>add.x.square.labels</code>,
 <code>add.y.square.labels</code>, <code>location.mode</code>, et
 <code>class.values</code>, que aceptan valores simples o múltiples en la
-interfaz de R (p. ej., c(“value1”, “value2”)) solo aceptan un valor
+interfaz de R (p. ej., c(“value1”, “value2”)) solo aceptan un valor
 cuando se establecen como parámetros de URL (esta es una restricción
 debido a la sintaxis de la URL).</p>
 <h1 id=agradecimientos>Agradecimientos</h1>
@@ -3195,7 +3195,7 @@ DOI: <a href=https://doi.org/10.21105/joss.05811>10.21105/joss.05811</a>.</li>
 <li>Plutniak, Sébastien. 2023. “<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser
 et explorer la distribution spatiale du mobilier archéologique :
 l’application archeoViz et son portail web</a>”. <em>Bulletin de la
-Société préhistorique française</em>, 120(1), p. 70-74.</li>
+Société préhistorique française</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=presentationes>Presentationes</h2>
 <ul>

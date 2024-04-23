@@ -161,7 +161,7 @@
   
     # : ro ----
   welcome.ro <- "
-		<h1>Bun venit \\\\u00een <i>archeoViz</i>!</h1>
+        <h1>Bun venit \\\\u00een <i>archeoViz</i>!</h1>
                 <p><i>archeoViz</i> este o aplica\\\\u021bie conceput\\\\u0103 pentru arheologie.
                 Permite <b>vizualizarea</b>, <b>explorarea</b> interactiv\\\\u0103, transferul \\\\u0219i
                 <b>communicarea</b> rapide a datelor archaeologice spa\\\\u021biale pe web.
@@ -169,15 +169,15 @@
                 <p>
                 Ofer\\\\u0103 <b>vizualiz\\\\u0103ri</b> interactive 3D \\\\u0219i 2D,
                 poate genera <b>sec\\\\u021biuni</b> \\\\u0219i <b>h\\\\u0103r\\\\u021bi</b> ale resturilor arheologice, 
-		poate rula metode de baz\\\\u0103 de <b>statistic\\\\u0103 spa\\\\u021bial\\\\u0103</b>
+        poate rula metode de baz\\\\u0103 de <b>statistic\\\\u0103 spa\\\\u021bial\\\\u0103</b>
                 (anvelopa convex\\\\u0103, suprafe\\\\u021be de regresie, estimarea densit\\\\u0103\\\\u0163ii kernel 2D), 
                 \\\\u0219i poate afi\\\\u0219a o <b>cronologie</b> interactiv\\\\u0103 a s\\\\u0103p\\\\u0103turilor. 
                 </p>
                 <p>
                 Distribuit ca pachet R, 
                 <i>archeoViz</i> poate fi folosit local sau \\\\u00eenc\\\\u0103rcat pe un server, 
-		permi\\\\u021b\\\\u00e2nd utilizatorului s\\\\u0103 urce datele prin intermediul interfe\\\\u021bei 
-		sau prin rularea aplica\\\\u021biei cu un anumit set de date.
+        permi\\\\u021b\\\\u00e2nd utilizatorului s\\\\u0103 urce datele prin intermediul interfe\\\\u021bei 
+        sau prin rularea aplica\\\\u021biei cu un anumit set de date.
                 Interfa\\\\u021ba este disponibil\\\\u0103 \\\\u00een 
                 <a href=https://analytics.huma-num.fr/archeoviz/de target=_blank>german\\\\u0103</a>, 
                 englez\\\\u0103, 
@@ -338,7 +338,7 @@
 # :  ro ----
   input.objects.ro <- 
     "<p>
-	Este necesar un tabel de date (format CSV). Un r\\\\u00e2nd descrie un singur obiect cu urm\\\\u0103toarele c\\\\u00e2mpuri obligatorii:  
+    Este necesar un tabel de date (format CSV). Un r\\\\u00e2nd descrie un singur obiect cu urm\\\\u0103toarele c\\\\u00e2mpuri obligatorii:  
     <ul>
       <li> <b>id</b>: <i>valoare alfanumeric\\\\u0103</i>, identificator unic al obiectului </li>
       <li> <b>xmin</b>: <i>valoare numeric\\\\u0103</i>, coordonata obiectului pe axa X (\\\\u00een cm)</li>
@@ -774,7 +774,7 @@ more commonly used.</p>
 structures in two ways:</p>
 <ul>
 <li>sets of refitting objects must be described using a specific column
-in the <code>objects.df</code> table (e.g. <code>object_refits</code>)
+in the <code>objects.df</code> table (e.g. <code>object_refits</code>)
 and are represented by the color of points in the plots (like any other
 variable);</li>
 <li>refitting relationships must be described using the
@@ -1072,7 +1072,7 @@ for specific types of data or if a minimum number of values is
 satisfied.</p>
 <p><a href=https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag><em>archeofrag</em></a>
 is an R package and web application to assess and evaluate the
-distinctions betwen archaeological spatial units (e.g. layers) based on
+distinctions betwen archaeological spatial units (e.g. layers) based on
 the analysis of refitting relationships between fragments of objects.
 The web version of the application includes methods to measure the
 cohesion and admixture of spatial units, and compare it to simulated
@@ -1340,7 +1340,7 @@ DOI: <a href=https://doi.org/10.21105/joss.05811>10.21105/joss.05811</a>.</li>
 <li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser
 et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique :
 l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la
-Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
+Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=presentations>Presentations</h2>
 <ul>
@@ -2283,7 +2283,7 @@ DOI: <a href=https://doi.org/10.21105/joss.05811>10.21105/joss.05811</a>.</li>
 <li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser
 et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique :
 l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la
-Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
+Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=pr\\\\u00e9sentations>Pr\\\\u00e9sentations</h2>
 <ul>
@@ -2545,7 +2545,7 @@ necesidad de reemplazar uno de varios valores de coordenadas por rangos
 (por ejemplo, falta un valor X para un objeto y se reemplaza por los
 valores X m\\\\u00ednimo y m\\\\u00e1ximo del cuadrado donde se encuentra este objeto).
 fue encontrado);</li>
-<li>elecci\\\\u00f3n del m\\\\u00e9todo (p. ej., excavaci\\\\u00f3n realizada y registrada
+<li>elecci\\\\u00f3n del m\\\\u00e9todo (p. ej., excavaci\\\\u00f3n realizada y registrada
 utilizando asadores de profundidad arbitraria, objetos tamizados,
 etc.).</li>
 </ul>
@@ -2590,7 +2590,7 @@ usa con m\\\\u00e1s frecuencia.</p>
 datos de dos maneras:</p>
 <ul>
 <li>los conjuntos de objetos de remontajes deben describirse usando una
-columna espec\\\\u00edfica en la tabla <code>objects.df</code> (p. ej.,
+columna espec\\\\u00edfica en la tabla <code>objects.df</code> (p. ej.,
 <code>object_refits</code>) y est\\\\u00e1n representados por el color de los
 puntos en los gr\\\\u00e1ficos ( como cualquier otra variable);</li>
 <li>las relaciones de remontajes deben describirse usando la tabla
@@ -3166,7 +3166,7 @@ b\\\\u00e1sicos (par\\\\u00e1metro <code>home.txt</code>)</li>
 <p>Tenga en cuenta que los par\\\\u00e1metros <code>add.x.square.labels</code>,
 <code>add.y.square.labels</code>, <code>location.mode</code>, et
 <code>class.values</code>, que aceptan valores simples o m\\\\u00faltiples en la
-interfaz de R (p. ej., c(\\\\u201cvalue1\\\\u201d, \\\\u201cvalue2\\\\u201d)) solo aceptan un valor
+interfaz de R (p. ej., c(\\\\u201cvalue1\\\\u201d, \\\\u201cvalue2\\\\u201d)) solo aceptan un valor
 cuando se establecen como par\\\\u00e1metros de URL (esta es una restricci\\\\u00f3n
 debido a la sintaxis de la URL).</p>
 <h1 id=agradecimientos>Agradecimientos</h1>
@@ -3195,7 +3195,7 @@ DOI: <a href=https://doi.org/10.21105/joss.05811>10.21105/joss.05811</a>.</li>
 <li>Plutniak, S\\\\u00e9bastien. 2023. \\\\u201c<a href=https://www.prehistoire.org/offres/doc_inline_src/515/0-BSPF_2023_1_2e_partie_Correspondance_PLUTNIAK.pdf>Visualiser
 et explorer la distribution spatiale du mobilier arch\\\\u00e9ologique :
 l\\\\u2019application archeoViz et son portail web</a>\\\\u201d. <em>Bulletin de la
-Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
+Soci\\\\u00e9t\\\\u00e9 pr\\\\u00e9historique fran\\\\u00e7aise</em>, 120(1), p. 70-74.</li>
 </ul>
 <h2 id=presentationes>Presentationes</h2>
 <ul>

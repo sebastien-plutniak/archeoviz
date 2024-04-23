@@ -1613,23 +1613,28 @@ app_server <- function(input, output, session) {
   # 2) amado url
   amado.url <- reactive({
     req(export.table())
-
+    
     data <- export.table()
 
+    data <- data[order(rownames(data)), ]
+    
+    # retrieve the name of the instance:
+    title <- shiny::getShinyOption("title")
+    if(is.null(title)){ title <- "archeoViz" }
     data <- eval(parse(text = paste0(
-      "cbind('", shiny::getShinyOption("title"), "'= rownames(data), data)"
+      "cbind('", title, "'= rownames(data), data)"
     )))
-
-    data <- cbind("archeoViz" = rownames(data), data)
     data <- rbind(colnames(data), data)
 
+    # recast the table as a single string:
     data <- apply(data, 2, paste0, collapse="%09")   # separate cells by tabs
     data <- gsub(" ", "%20", data)                   # add spaces
     data <- paste0(data, collapse = "%0A")           # encode lines
 
+    # generate an URL:
     amado.lang <- "en"
-    if(getShinyOption("lang") %in% c('es', 'fr', 'it', 'ru', 'tr', 'uk', 'vi', 'zh')){
-      amado.lang <- getShinyOption("lang")
+    if(shiny::getShinyOption("lang") %in% c('es', 'fr', 'it', 'ru', 'tr', 'uk', 'vi', 'zh')){
+      amado.lang <- shiny::getShinyOption("lang")
     }
 
     paste0("https://app.ptm.huma-num.fr/amado/main.html?lang=",
@@ -1639,7 +1644,7 @@ app_server <- function(input, output, session) {
 
   output$run.amado <- renderUI({
     req(amado.url())
-
+    
     tagList(
       "> ", .term_switcher("export.to"),
       actionLink("run.amado",

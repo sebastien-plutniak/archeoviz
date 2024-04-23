@@ -1615,7 +1615,7 @@ app_server <- function(input, output, session) {
     req(export.table())
     
     data <- export.table()
-
+    
     data <- data[order(rownames(data)), ]
     
     # retrieve the name of the instance:

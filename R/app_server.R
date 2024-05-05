@@ -534,11 +534,11 @@ app_server <- function(input, output, session) {
     # reverse axes if needed:
     reverse <- getShinyOption("reverse.axis.values")
     if(grepl("x", reverse)){ 
-      map <- map + scale_x_reverse(breaks = axis.labels$xaxis$breaks,
+      map <- map + scale_x_reverse("", breaks = axis.labels$xaxis$breaks,
                                    labels = axis.labels$xaxis$labels)
     }
     if(grepl("y", reverse)){ 
-      map <- map + scale_y_reverse(breaks = axis.labels$yaxis$breaks,
+      map <- map + scale_y_reverse("", breaks = axis.labels$yaxis$breaks,
                                    labels = axis.labels$yaxis$labels)
     }
     
@@ -688,7 +688,9 @@ app_server <- function(input, output, session) {
       refitting.df <- refitting.df()
       refitting.df <- refitting.df$refits.3d
       
-      sel <- (refitting.df[, 1] %in% dataset$id) | (refitting.df[, 2] %in% dataset$id)
+      sel <- any(dataset$id == refitting.df[, 1]) | 
+             any(dataset$id == refitting.df[, 2])
+      
       refitting.df <- refitting.df[which(sel), ]
       
       # add color:
@@ -711,7 +713,7 @@ app_server <- function(input, output, session) {
     
     
     # Uncertainty ----
-    if("show.uncertainty" %in% input$location){
+    if(any(input$location == "show.uncertainty")){
       
       linear.n.objects <- 0
       planar.n.objects <- 0
@@ -720,7 +722,7 @@ app_server <- function(input, output, session) {
       fuzzy.sums <- table(dataset$fuzzy.sum)
       
       # : linear uncertainty ####
-      if("1" %in% names(fuzzy.sums) ){
+      if(any(names(fuzzy.sums) == "1")){
         linear.x.df <- dataset[dataset$fuzzy.sum == 1 & dataset$x.fuzzy, ]
         if(nrow(linear.x.df) > 0){  
           linear.x.df <- .do_uncertain_lines(linear.x.df)
@@ -753,7 +755,7 @@ app_server <- function(input, output, session) {
       
       
       # : planar uncertainty----
-      if("2" %in% names(fuzzy.sums) & ! is.null(fig)){
+      if(any(names(fuzzy.sums) == "2") & ! is.null(fig)){
         # NB: the function output is the updated fig itself (and not a table)
         
         df.fuzzy2 <- dataset[dataset$fuzzy.sum == 2, ]
@@ -770,7 +772,7 @@ app_server <- function(input, output, session) {
       
       
       # : add volume uncertainty ----
-      if("3" %in% names(fuzzy.sums) ){
+      if(any(names(fuzzy.sums) == "3")){
         
         volume.df <- dataset[dataset$fuzzy.sum == 3, ]
         volume.n.objects <- nrow(volume.df) 
@@ -1340,7 +1342,7 @@ app_server <- function(input, output, session) {
     
     loc.values <- sort(unique(objects.dataset()$location_mode))
     
-    if("fuzzy" %in% loc.values){
+    if(any(loc.values == "fuzzy")){
       loc.values <- c(loc.values, "show.uncertainty")
     }
       
@@ -1633,7 +1635,7 @@ app_server <- function(input, output, session) {
 
     # generate an URL:
     amado.lang <- "en"
-    if(shiny::getShinyOption("lang") %in% c('es', 'fr', 'it', 'ru', 'tr', 'uk', 'vi', 'zh')){
+    if(any(c('es', 'fr', 'it', 'ru', 'tr', 'uk', 'vi', 'zh') == shiny::getShinyOption("lang"))){
       amado.lang <- shiny::getShinyOption("lang")
     }
 

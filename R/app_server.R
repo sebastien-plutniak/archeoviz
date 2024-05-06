@@ -606,14 +606,20 @@ app_server <- function(input, output, session) {
   timeline.map <- reactive({
     axis.labels <- axis.labels()
     
+    tiles <- expand.grid(x = axis.labels$xaxis$labels,
+                         y = axis.labels$yaxis$labels)
+    
     timeline.map <- ggplot() +
       theme_minimal(base_size = 12) +
+      geom_tile(data = tiles, 
+                aes(x = x, y = y),
+                show.legend = F, alpha=0) +
       geom_vline(xintercept =  after_scale(seq(0.5, length(axis.labels$xaxis$breaks) + .5, 1)),
                  colour = "grey70" ) +
       geom_hline(yintercept =  after_scale(seq(0.5, length(axis.labels$yaxis$breaks) + .5, 1)),
                  colour = "grey70" ) +
       scale_fill_manual("State:",
-                        values = c(grDevices::rgb(0,0,0,0), 
+                        values = c(grDevices::rgb(0,0,0,0),
                                    grDevices::rgb(.43, .54, .23, .7))) +
       scale_x_discrete("") + scale_y_discrete("") 
     
@@ -1819,6 +1825,7 @@ app_server <- function(input, output, session) {
   #  Timeline ----
   #  : main timeline ----
   timeline.map.plot <- reactive({
+    req(input$history.date)
     time.df <- timeline.data()
     
     if(is.null(time.df)) return()
@@ -1856,20 +1863,20 @@ app_server <- function(input, output, session) {
       timeline.map.out <- timeline.map.out + 
         theme(axis.text.y = element_blank())
     }
-    
+    browser()
     # : - add scale ----
     timeline.map.out <- timeline.map.out +
       annotate("text",
-               x = length(unique(time.sub.df$square_x)) / 3 ,
+               x = length(axis.labels[[1]][[1]]) / 3,
                y = -0.5 ,
                size  = 4,  
                label = grid.legend) +
-      coord_fixed(ylim = c(1, length(unique(time.sub.df$square_y))), 
+      coord_fixed(ylim = c(1, length(axis.labels[[2]][[1]])), 
                   clip = 'off') 
     
     # : - add north arrow ----
     if( ! is.null(getShinyOption("grid.orientation"))){
-      arrow.x.origin <- length(unique(time.sub.df$square_x)) * 2/3
+      arrow.x.origin <- length(axis.labels[[1]][[1]]) * 2/3
       
       arrow.coords <- matrix(c(arrow.x.origin,
                                arrow.x.origin,

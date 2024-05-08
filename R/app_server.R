@@ -439,7 +439,7 @@ app_server <- function(input, output, session) {
     input.ui.refits()[1:2, ]
   }, rownames = T, digits=0)
   
-  output$refitss.preview.table <- renderUI({
+  output$refits.preview.table <- renderUI({
     div(style = 'overflow-x: scroll; overflow: auto',
         tableOutput('refits.preview.tab'))
   })

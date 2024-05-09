@@ -691,11 +691,10 @@ app_server <- function(input, output, session) {
     plot3d.refits <- sum(c(input$plot3d.refits,
                            getShinyOption("params")$plot3d.refits))
     if( plot3d.refits > 0 ){
-      refitting.df <- refitting.df()
-      refitting.df <- refitting.df$refits.3d
+      refitting.df <- refitting.df()$refits.3d
       
-      sel <- any(dataset$id == refitting.df[, 1]) | 
-             any(dataset$id == refitting.df[, 2])
+      sel <- refitting.df[, 1] %in% dataset$id | 
+             refitting.df[, 2] %in% dataset$id
       
       refitting.df <- refitting.df[which(sel), ]
       

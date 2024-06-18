@@ -108,6 +108,7 @@
                                   range = c(coords$zmax, coords$zmin),
                                   scaleanchor="x"
                      ),
+                     # scene = list(aspectmode = "cube"), 
                      annotations = list(list(
                        xref="paper", yref="paper",
                        x= 0, y = 0,

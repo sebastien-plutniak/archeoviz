@@ -1,5 +1,6 @@
 app_server <- function(input, output, session) {
   .data <- NULL
+  y <- NULL
   
   # retrieve parameters from URL ----
   observe({
@@ -1862,7 +1863,7 @@ app_server <- function(input, output, session) {
       timeline.map.out <- timeline.map.out + 
         theme(axis.text.y = element_blank())
     }
-    browser()
+    
     # : - add scale ----
     timeline.map.out <- timeline.map.out +
       annotate("text",

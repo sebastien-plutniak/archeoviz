@@ -682,7 +682,7 @@ app_server <- function(input, output, session) {
       fig <- add_paths(fig, x= ~x, y= ~y,
                        z = coords$zmax,
                        split = ~group,
-                       data = getShinyOption("background.map"),
+                       data = data.frame(getShinyOption("background.map")),
                        color = I("black"),
                        hoverinfo = "skip",
                        showlegend = FALSE, inherit = F)

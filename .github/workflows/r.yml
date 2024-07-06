@@ -23,11 +23,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r-version: ['3.6.3', '4.1.1']
+        r-version: ['3.6.3', '4.4.1']
         config:
-           #- {os: windows-latest, r: 'release', windows_32_or_64: '64'}
+           - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
            - {os: macOS-latest, r: 'release'}
-           - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+           - {os: ubuntu-24.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
     env:
        RGL_USE_NULL: true
     steps:
@@ -41,7 +41,7 @@ jobs:
         if: matrix.config.os == 'windows-latest'  
       - name: Install Dependencies (Linux)
         run: sudo apt-get install pandoc libcurl4-openssl-dev libudunits2-dev libgdal-dev
-        if: matrix.config.os == 'ubuntu-20.04'  
+        if: matrix.config.os == 'ubuntu-24.04'  
       - name: Install Dependencies (macOS)
         run: brew install pandoc udunits gdal
         if: matrix.config.os == 'macOS-latest'
@@ -51,7 +51,7 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
         if: matrix.config.os == 'macOS-latest'          
         shell: Rscript {0}    
-      - name: Install R dependencies (windows, R '4.1.1')
+      - name: Install R dependencies (windows, R '4.4.1')
         run: |
           install.packages(c("rlang", "remotes", "rcmdcheck", "sf", "Morpho", "stringi", "rgl"), INSTALL_opts = c("--no-multiarch"))
           install.packages(c("xfun", "stringi"), type="binary", INSTALL_opts = c("--no-multiarch"))
@@ -59,7 +59,7 @@ jobs:
           remotes::install_deps(dependencies = TRUE, INSTALL_opts = c("--no-multiarch"))
         env: 
            GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}  
-        if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '4.1.1') }}
+        if: ${{ (matrix.config.os == 'windows-latest') && (matrix.r-version == '4.4.1') }}
         shell: Rscript {0}      
       - name: Install R dependencies (windows, R '3.6.3')
         run: |
@@ -75,7 +75,7 @@ jobs:
         run: |
           install.packages(c("remotes", "curl", "pkgbuild", "rcmdcheck", "purrr", "sf", "Morpho", "cxhull", "Rvcg", "SEAHORS"))
           remotes::install_deps(dependencies = TRUE)
-        if: matrix.config.os == 'ubuntu-20.04'  
+        if: matrix.config.os == 'ubuntu-24.04'  
         shell: Rscript {0}
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
@@ -94,13 +94,13 @@ jobs:
             )
         shell: Rscript {0}    
       - name: Show testthat output
-        if: ${{ (always()) && ( matrix.config.os == 'ubuntu-20.04' ) }}  
+        if: ${{ (always()) && ( matrix.config.os == 'ubuntu-24.04' ) }}  
         run: |
           ## --------------------------------------------------------------------
           find ${{ runner.temp }}/archeoViz -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
       - name: Upload test results
-        if: ${{ (failure()) && ( matrix.config.os == 'ubuntu-20.04' ) }}  
+        if: ${{ (failure()) && ( matrix.config.os == 'ubuntu-24.04' ) }}  
         uses: actions/upload-artifact@v3
         with:
           name: coverage-test-failures

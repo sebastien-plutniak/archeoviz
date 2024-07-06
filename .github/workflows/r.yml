@@ -73,7 +73,7 @@ jobs:
         shell: Rscript {0}              
       - name: Install R dependencies (Ubuntu)
         run: |
-          install.packages(c("remotes", "curl", "pkgbuild", "rcmdcheck", "purrr", "sf", "Morpho", "cxhull", "Rvcg", "SEAHORS"))
+          install.packages(c("remotes", "curl", "pkgbuild", "rcmdcheck", "purrr", "sf", "Morpho", "cxhull", "Rvcg", "SEAHORS", "svglite", "knitr"))
           remotes::install_deps(dependencies = TRUE)
         if: matrix.config.os == 'ubuntu-24.04'  
         shell: Rscript {0}

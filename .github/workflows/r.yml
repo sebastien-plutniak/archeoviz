@@ -23,11 +23,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r-version: ['3.6.3', '4.4.1']
+        r-version: ['oldrel-1' 'release']
         config:
-           - {os: windows-latest, r: 'release', windows_32_or_64: '64'}
-           - {os: macOS-latest, r: 'release'}
-           - {os: ubuntu-24.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+           - {os: windows-latest, windows_32_or_64: '64'}
+           - {os: macOS-latest, }
+           - {os: ubuntu-24.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
     env:
        RGL_USE_NULL: true
     steps:

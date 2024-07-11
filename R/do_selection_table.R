@@ -1,5 +1,6 @@
 .do_selection_table <- function(dataset, xyz, dims){
   # determine the set of coordinates to use:
+  
   if(is.null(xyz)){
     id <- dataset[1, ]$id
   } else if(dims == "xyz"){
@@ -12,7 +13,7 @@
     id <- dataset[dataset$y == xyz$x & dataset$z == xyz$y, ]$id
   } 
   # retrieve the line corresponding to the selected point:
-  id <- which(dataset$id == id)
+  id <- which(dataset$id %in% id)
 	df.tab <- dataset[id, ]
 	df.tab <- df.tab[, - which(colnames(df.tab) %in% c("x", "y", "z", "square_x", "square_y", "group.variable", "color.values", "xyz", "layer_color", "x.fuzzy", "y.fuzzy", "z.fuzzy", "fuzzy.sum"))]
 

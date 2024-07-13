@@ -795,6 +795,10 @@ app_server <- function(input, output, session) {
         
         volume.df <- do.call("rbind", volume.df)
         
+        volume.df <- data.frame(volume.df)
+        volume.df[, 1:3] <- apply(volume.df[, 1:3], 2, as.integer) 
+        colnames(volume.df) <- c("x", "y", "z", "id", "color", "square", "object_type")
+        
         fig <- plotly::add_mesh(fig,
                                 x = volume.df[, 1],
                                 y = volume.df[, 2],
@@ -803,7 +807,7 @@ app_server <- function(input, output, session) {
                                 i = c(7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2), 
                                 j = c(3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3), 
                                 k = c(0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6), 
-                                split = ~id,
+                                split = volume.df[, 4],
                                 facecolor = ~color,
                                 showscale = FALSE, inherit = FALSE,
                                 flatshading =TRUE, opacity = .5,

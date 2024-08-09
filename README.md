@@ -1,18 +1,18 @@
 archeoViz
 ================
 
-`archeoViz` is a packaged R Shiny application for the *visualisation*,
-*exploration*, and web *communication* of archaeological spatial data.
-It includes interactive 3D and 2D *visualisations*, can generate *cross
-sections* and *maps* of the remains, and display an interactive
-*timeline* of the work made in a site. Simple *spatial statistics* can
-be performed (convex hull, regression surfaces, 2D kernel density
-estimation), as well as *exporting data* to other online applications
-for more complex methods. `archeoViz` can be used locally or deployed on
-a server, either by allowing the user to load data through the interface
-or by running the app with a specific data set. The app interface is
-available in English, French, German, Italian, Portuguese, Romanian, and
-Spanish. Website: <https://archeoviz.hypotheses.org>.
+`archeoViz` is a packaged R Shiny application for *visual* and
+*statistical* exploration and web *communication* of archaeological
+spatial data, either remains or sites. It offers interactive 3D and 2D
+*visualisations* (*cross sections* and *maps* of remains, *timeline* of
+the work made in a site) which can be *exported* in SVG and HTML
+formats. It performs simple *spatial statistics* (convex hull,
+regression surfaces, 2D kernel density estimation) and allows exporting
+data to other online applications for more *complex methods*.
+‘archeoViz’ can be used offline locally or deployed on a server, either
+with interactive input of data or with a static data set. The app
+interface is available in English, French, German, Italian, Portuguese,
+Romanian, and Spanish. Website: <https://archeoviz.hypotheses.org>.
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -28,9 +28,9 @@ badge](https://sebastien-plutniak.r-universe.dev/badges/archeoViz)](https://seba
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
 [![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/sebastien-plutniak/archeoviz)](https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://github.com/sebastien-plutniak/archeoviz)
 [![CRAN
-Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
+Version](http://www.r-pkg.org/badges/version/archeoViz?.svg)](https://cran.r-project.org/package=archeoViz)
 [![CRAN
-Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.org/package=archeoViz)
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/archeoViz?color=brightgreen&.svg)](https://cran.r-project.org/package=archeoViz)
 
 - [**Installation**](#installation)
   - [Local Use](#local-use)
@@ -60,7 +60,6 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
     - [Refitting Table](#refitting-table)
     - [Timeline Table](#timeline-table)
     - [Background drawing](#background-drawing)
-    - [Units](#units)
   - [Data Input](#data-input)
     - [Through the Application
       Interface](#through-the-application-interface)
@@ -87,7 +86,9 @@ Downloads](http://cranlogs.r-pkg.org/badges/archeoViz)](https://cran.r-project.o
   - [Export from archeoViz](#export-from-archeoviz)
   - [Import to archeoViz](#import-to-archeoviz)
 - [**Advanced Parameters**](#advanced-parameters)
+  - [Coordinates](#Coordinates)
   - [Square Grid](#square-grid)
+  - [Background drawing](#background-drawing)
   - [Parameter Presetting](#parameter-presetting)
   - [Reactive Plot Display](#reactive-plot-display)
   - [Control Export Formats](#control-export-formats)
@@ -418,13 +419,6 @@ containing for each point the unique identifier of the line to which
 this point belongs to. The data set is loaded using the `background.map`
 parameter.
 
-### Units
-
-By default, all distances in `archeoViz` are in centimeter. However, it
-can be changed by giving the `unit` parameter one of the following
-value: “cm”, “m”, “km”. This parameter determines the contents of the
-legend of the square size.
-
 ## Data Input
 
 There are four ways to input data in `archeoViz`:
@@ -724,28 +718,38 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           )
 ```
 
+### Coordinates
+
+``` r
+archeoViz(unit = "cm", rotation = 0, reverse.axis.values = NULL)
+```
+
+- **unit**: character. Unit for spatial distances. One of “cm”, “m”,
+  “km”.
+- **rotation**: integer. Value (degrees) for the in-plane rotation of
+  the point cloud.
+- **reverse.axis.values**: character. Name of the axis or axes to be
+  reversed (any combination of “x”, “y”, “z”).
+
+By default, all distances in `archeoViz` are in centimeter. However, it
+can be changed by giving the `unit` parameter one of the following
+value: “cm”, “m”, “km”. This parameter determines the contents of the
+legend of the square size.
+
 ### Square grid
 
 ``` r
-archeoViz(square.size = 100, unit = "cm", rotation = 0, 
-          grid.orientation = NULL, background.map = NULL,
-          reverse.axis.values = NULL, reverse.square.names = NULL,
+archeoViz(square.size = 100, 
+          grid.orientation = NULL,
+          reverse.square.names = NULL,
           add.x.square.labels = NULL, add.y.square.labels = NULL
           )
 ```
 
 - **square.size**: numerical. Size (width and height) of the squares in
   the grid system. Default value is 100.
-- **unit**: character. Unit for spatial distances. One of “cm”, “m”,
-  “km”.
-- **rotation**: integer. Value (degrees) for the in-plane rotation of
-  the point cloud.
 - **grid.orientation**: numerical. Orientation (degrees, positive or
   negative) of the grid (0 corresponds to a north orientation).
-- **background.map**: data frame or matrix. Coordinates to draw
-  background lines in 3D and Map plots.
-- **reverse.axis.values**: character. Name of the axis or axes to be
-  reversed (any combination of “x”, “y”, “z”).
 - **reverse.square.names**: character. Name of the axis or axes for
   which to reverse the order of the square labels (any combination of
   “x”, “y”, “z”).
@@ -753,6 +757,16 @@ archeoViz(square.size = 100, unit = "cm", rotation = 0,
   “x” axis.
 - **add.y.square.labels**: character. Additional square labels for the
   “y” axis.
+
+### Background drawing
+
+``` r
+archeoViz(background.map = NULL)
+```
+
+- **background.map**: data frame or matrix. Coordinates to draw lines on
+  the background of the 3D and Map plots. See for example the [Anyskop
+  Blowout instance](https://analytics.huma-num.fr/archeoviz/anyskop).
 
 ### Parameter presetting
 
@@ -902,8 +916,8 @@ German, and Spanish respectively.
 - Plutniak, Sébastien, Renata Araujo, Laura Coltofean, Nicolas Delsol,
   Sara Giardino, Julian Laabs. 2024. “archeoViz. Visualisation,
   Exploration, and Web Communication of Archaeological Spatial Data”.
-  v1.3.4, DOI:
-  [10.5281/zenodo.7460193](https://doi.org/10.5281/zenodo.7460193).
+  v1.3.5, DOI:
+  [10.5281/zenodo.12200494](https://doi.org/10.5281/zenodo.12200494).
 - Plutniak, Sébastien, Anaïs Vignoles. 2023. “[The archeoViz Portal:
   Dissemination of Spatial Archaeological
   Datasets](https://hal.science/hal-04156271)”, web portal,

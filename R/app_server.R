@@ -1722,7 +1722,7 @@ app_server <- function(input, output, session) {
     edges.url <- paste0(session$clientData$url_protocol, "//",
                         session$clientData$url_hostname,
                         session$clientData$url_pathname,
-                        "_w_", object.id2, 
+                        object.id2, 
                         "/session/", session$token, "/download/download.archeofrag.edges")
     
     # nodes 
@@ -1738,7 +1738,7 @@ app_server <- function(input, output, session) {
     nodes.url <- paste0(session$clientData$url_protocol, "//",
                         session$clientData$url_hostname,
                         session$clientData$url_pathname,
-                        "_w_", object.id, 
+                        object.id, 
                         "/session/", session$token, "/download/download.archeofrag.nodes")
     
     paste0("https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag/?objects=", nodes.url, "&relations=", edges.url)
@@ -1957,7 +1957,7 @@ app_server <- function(input, output, session) {
   output$download.timeline.map.grid <- downloadHandler(
     filename = "timeline-map-grid.svg",
     content = function(file) {
-      ggsave(file, plot = timeline.map.grid(),
+      ggplot2::ggsave(file, plot = timeline.map.grid(),
              device = "svg", width=9, height=9, pointsize = 14)
     }
   )

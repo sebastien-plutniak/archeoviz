@@ -12,8 +12,8 @@
     data.url <- paste0(session$clientData$url_protocol, "//",
                        session$clientData$url_hostname,
                        session$clientData$url_pathname,
-                       "_w_", object.id, 
-                       "/session/", session$token,
+                       object.id, 
+                       "session/", session$token,
                        "/download/download.", app.name)
     
     data.url <- paste0(app.url, data.url)

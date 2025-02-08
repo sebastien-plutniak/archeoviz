@@ -72,12 +72,18 @@ jobs:
         env: 
            GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         shell: Rscript {0}              
-      - name: Install R dependencies (Ubuntu)
+      - name: Install R dependencies (Ubuntu 24.04)
         if: matrix.config.os == 'ubuntu-24.04'  
         run: |
           install.packages(c("remotes", "curl", "pkgbuild", "rcmdcheck", "purrr", "sf", "Morpho", "cxhull", "Rvcg", "SEAHORS", "svglite", "knitr", "systemfonts"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
+      - name: Install R dependencies (Ubuntu latest)
+        if: matrix.config.os == 'ubuntu-latest'  
+        run: |
+          install.packages(c("remotes", "curl", "pkgbuild", "rcmdcheck", "purrr", "sf", "Morpho", "cxhull", "Rvcg", "SEAHORS", "svglite", "knitr", "systemfonts"))
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}        
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}

@@ -432,7 +432,7 @@ In the “3D plot” tab, convex hulls can be displayed as follows:
 2. select, from the menu that appears, the subsets of points for which convex hulls are to be calculated,
 3. click on “Validate”.
 
-Convex hulls associated with each subsets with at least 20 points are displayed. The convex hulls are computed using the  [`cxhull`](https://CRAN.R-project.org/package=cxhull) package.
+Convex hulls associated with each subsets with at least 20 points are displayed. The convex hulls are computed using the  [`geometry`](https://CRAN.R-project.org/package=geometry) package.
 
 ### 2D kernel density
 

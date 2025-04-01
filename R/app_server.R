@@ -12,7 +12,7 @@ app_server <- function(input, output, session) {
     
     # : param_static numerical and logical
     if(length(param_static) > 0){
-      for(x in 1:length(param_static)){
+      for(x in seq_len(length(param_static))){
         eval(parse(text = paste0(
           "shinyOptions(", names(param_static[x]), " = ", query[[ names(param_static[x]) ]], ")"
         )))
@@ -20,7 +20,7 @@ app_server <- function(input, output, session) {
     }
     # : param_static character
     if(length(param_static_char) > 0){
-      for(x in 1:length(param_static_char)){
+      for(x in seq_len(length(param_static_char))){
         eval(parse(text = paste0(
           "shinyOptions(", names(param_static_char[x]), " = \"",
           query[[ names(param_static_char[x]) ]], "\")"
@@ -37,13 +37,13 @@ app_server <- function(input, output, session) {
       
       # param_dynamic numerical and logical:
       if(length(param_dynamic) > 0){
-        for(x in 1:length(param_dynamic)){
+        for(x in seq_len(length(param_dynamic))){
           param.list[ names(param_dynamic[x]) ] <- param_dynamic[x]
         }
       }
       # param_dynamic character:
       if(length(param_dynamic_char) > 0){
-        for(x in 1:length(param_dynamic_char)){
+        for(x in seq_len(length(param_dynamic_char))){
           eval(parse(text = paste0(
             "param.list[ \"", names(param_dynamic_char[x]), "\"] <- \"", param_dynamic_char[x], "\""
           )))
@@ -427,7 +427,7 @@ app_server <- function(input, output, session) {
   # TABLES ----
   # : preview objects tab  ----
   output$objects.preview.tab <- renderTable({
-    objects.ui.input()[1:2, ]
+    objects.ui.input()[c(1, 2), ]
   }, rownames = T, digits=0)
   
   output$objects.preview.table <- renderUI({
@@ -437,7 +437,7 @@ app_server <- function(input, output, session) {
   
   # : preview refits tab  ----
   output$refits.preview.tab <- renderTable({
-    input.ui.refits()[1:2, ]
+    input.ui.refits()[c(1, 2), ]
   }, rownames = T, digits=0)
   
   output$refits.preview.table <- renderUI({
@@ -796,7 +796,7 @@ app_server <- function(input, output, session) {
         volume.df <- do.call("rbind", volume.df)
         
         volume.df <- data.frame(volume.df)
-        volume.df[, 1:3] <- apply(volume.df[, 1:3], 2, as.integer) 
+        volume.df[, c(1, 2, 3)] <- apply(volume.df[, c(1, 2, 3)], 2, as.integer) 
         colnames(volume.df) <- c("x", "y", "z", "id", "color", "square", "object_type")
         
         fig <- plotly::add_mesh(fig,

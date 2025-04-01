@@ -444,7 +444,7 @@ Dans l'onglet “Vue 3D”, l'affichage des enveloppes convexes se réalise en:
 3. appuyant sur  “Valider”.
 
 Les enveloppes convexes associées à chaque sous-ensemble de points comportant au moins 20 points sont alors affichées. 
-Le calcul des enveloppes est réalisé avec le package [`cxhull`](https://CRAN.R-project.org/package=cxhull).
+Le calcul des enveloppes est réalisé avec le package [`geometry`](https://CRAN.R-project.org/package=geometry).
 
 ### Estimation 2D de densité par noyau
 

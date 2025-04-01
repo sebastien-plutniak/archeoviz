@@ -1033,7 +1033,7 @@ convex hulls are to be calculated,</li>
 <li>click on \\\\u201cValidate\\\\u201d.</li>
 </ol>
 <p>Convex hulls associated with each subsets with at least 20 points are
-displayed. The convex hulls are computed using the <a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a>
+displayed. The convex hulls are computed using the <a href=https://CRAN.R-project.org/package=geometry><code>geometry</code></a>
 package.</p>
 <h3 id=id_2d-kernel-density>2D kernel density</h3>
 <p>In the \\\\u201cMap\\\\u201d tab, ticking the \\\\u201cCompute density\\\\u201d box and clicking on
@@ -1950,7 +1950,7 @@ points pour lesquels les enveloppes doivent \\\\u00eatre calcul\\\\u00e9es,</li>
 </ol>
 <p>Les enveloppes convexes associ\\\\u00e9es \\\\u00e0 chaque sous-ensemble de points
 comportant au moins 20 points sont alors affich\\\\u00e9es. Le calcul des
-enveloppes est r\\\\u00e9alis\\\\u00e9 avec le package <a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a>.</p>
+enveloppes est r\\\\u00e9alis\\\\u00e9 avec le package <a href=https://CRAN.R-project.org/package=geometry><code>geometry</code></a>.</p>
 <h3 id=estimation-2d-de-densit\\\\u00e9-par-noyau>Estimation 2D de densit\\\\u00e9 par
 noyau</h3>
 <p>Dans l\\\\u2019onglet \\\\u201cPlan\\\\u201d, cocher la case \\\\u201cCalculer la densit\\\\u00e9\\\\u201d et cliquer
@@ -2863,7 +2863,7 @@ para los que deben calcularse los cascos,</li>
 <li>pulsando \\\\u201cValidar\\\\u201d.</li>
 </ol>
 <p>El casco convexo asociado con cada capa (con al menos 20 puntos) se
-muestran. Los cascos convexos se calculan usando el paquete<a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a>.</p>
+muestran. Los cascos convexos se calculan usando el paquete<a href=https://CRAN.R-project.org/package=geometry><code>geometry</code></a>.</p>
 <h3 id=densidad-kernel-2d>densidad kernel 2D</h3>
 <p>En la pesta\\\\u00f1a \\\\u201cMapa\\\\u201c, al marcar la casilla \\\\u201cCalcular densidad\\\\u201d y
 hacer clic en \\\\u201cValidar\\\\u201d se genera un mapa con l\\\\u00edneas de contorno que

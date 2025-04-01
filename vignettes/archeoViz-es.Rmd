@@ -434,7 +434,7 @@ En la pestaña “Visualización 3D“, los cascos convexos se muestran:
 2. seleccionando, en el menú que aparece, los subconjuntos de puntos para los que deben calcularse los cascos,
 3. pulsando “Validar”.
 
-El casco convexo asociado con cada capa (con al menos 20 puntos) se muestran. Los cascos convexos se calculan usando el paquete[`cxhull`](https://CRAN.R-project.org/package=cxhull).
+El casco convexo asociado con cada capa (con al menos 20 puntos) se muestran. Los cascos convexos se calculan usando el paquete[`geometry`](https://CRAN.R-project.org/package=geometry).
 
 ### densidad kernel 2D
 

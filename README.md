@@ -27,10 +27,9 @@ badge](https://sebastien-plutniak.r-universe.dev/badges/archeoViz)](https://seba
 [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.r-project.org/Licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7460193.svg)](https://doi.org/10.5281/zenodo.7460193)
 [![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/sebastien-plutniak/archeoviz)](https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://github.com/sebastien-plutniak/archeoviz)
-[![CRAN
-Version](http://www.r-pkg.org/badges/version/archeoViz?.svg)](https://cran.r-project.org/package=archeoViz)
-[![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/archeoViz?color=brightgreen&.svg)](https://cran.r-project.org/package=archeoViz)
+[![CRAN Version](http://www.r-pkg.org/badges/version/archeoViz)](https://cran.r-project.org/package=archeoViz)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/archeoViz?color=brightgreen&.svg)](https://cran.r-project.org/package=archeoViz)
+
 
 - [**Installation**](#installation)
   - [Local Use](#local-use)

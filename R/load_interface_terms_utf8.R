@@ -1033,7 +1033,7 @@ convex hulls are to be calculated,</li>
 <li>click on “Validate”.</li>
 </ol>
 <p>Convex hulls associated with each subsets with at least 20 points are
-displayed. The convex hulls are computed using the <a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a>
+displayed. The convex hulls are computed using the <a href=https://CRAN.R-project.org/package=geometry><code>geometry</code></a>
 package.</p>
 <h3 id=id_2d-kernel-density>2D kernel density</h3>
 <p>In the “Map” tab, ticking the “Compute density” box and clicking on
@@ -1950,7 +1950,7 @@ points pour lesquels les enveloppes doivent être calculées,</li>
 </ol>
 <p>Les enveloppes convexes associées à chaque sous-ensemble de points
 comportant au moins 20 points sont alors affichées. Le calcul des
-enveloppes est réalisé avec le package <a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a>.</p>
+enveloppes est réalisé avec le package <a href=https://CRAN.R-project.org/package=geometry><code>geometry</code></a>.</p>
 <h3 id=estimation-2d-de-densité-par-noyau>Estimation 2D de densité par
 noyau</h3>
 <p>Dans l’onglet “Plan”, cocher la case “Calculer la densité” et cliquer
@@ -2863,7 +2863,7 @@ para los que deben calcularse los cascos,</li>
 <li>pulsando “Validar”.</li>
 </ol>
 <p>El casco convexo asociado con cada capa (con al menos 20 puntos) se
-muestran. Los cascos convexos se calculan usando el paquete<a href=https://CRAN.R-project.org/package=cxhull><code>cxhull</code></a>.</p>
+muestran. Los cascos convexos se calculan usando el paquete<a href=https://CRAN.R-project.org/package=geometry><code>geometry</code></a>.</p>
 <h3 id=densidad-kernel-2d>densidad kernel 2D</h3>
 <p>En la pestaña “Mapa“, al marcar la casilla “Calcular densidad” y
 hacer clic en “Validar” se genera un mapa con líneas de contorno que

@@ -1,3 +1,10 @@
+
+
+# archeoViz 1.4.0
+Released: 2025-04-01
+
+* The 'cxhull' package is no longer maintained. Remove dependency to this package and replace the use of the cxhull::cxhull() and cxhull::hullMesh() functions by geometry::convhulln() to compute convex hulls.
+
 # archeoViz 1.3.5
 Released: 2024-06-17
 

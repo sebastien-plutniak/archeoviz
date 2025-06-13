@@ -1,6 +1,8 @@
 .git
 .github
 .gitignore
+.Rhistory
+archeoviz-log.csv
 app.R
 README.md
 README.Rmd
@@ -18,3 +20,5 @@ R/load_interface_terms_utf8.R
 joss-figures
 paper.bib
 paper.md
+^doc$
+^Meta$

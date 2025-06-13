@@ -88,8 +88,7 @@ Note that the `SEAHORS` package includes interactive features to format a datase
   \code{\link[plotly]{layout}}
   \code{ggplot2}
   \code{\link[mgcv]{gam}}
-  \code{\link[cxhull]{cxhull}}
-  \code{\link[cxhull]{hullMesh}}
+  \code{\link[geometry]{convhulln}}
   \code{SEAHORS}
 }
 

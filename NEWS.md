@@ -1,5 +1,10 @@
 
 
+# archeoViz 1.4.1
+Released: 2025-06-01
+
+* Small updates in the package documentation.
+
 # archeoViz 1.4.0
 Released: 2025-04-01
 

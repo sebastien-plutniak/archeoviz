@@ -1319,7 +1319,7 @@ app_server <- function(input, output, session) {
     req(objects.dataset)
     
     group.sel.modes <- structure(c("by.layer", "by.variable"),
-                                 .Names = c(.term_switcher("by.layer"),
+                                 names = c(.term_switcher("by.layer"),
                                             .term_switcher("by.variable")))
     radioButtons("group.selection",
                  .term_switcher("group"),

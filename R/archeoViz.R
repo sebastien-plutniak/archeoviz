@@ -9,8 +9,10 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                       map.z.val = NULL, map.density = "no", map.refits = NULL,
                       plot3d.ratio = 1, plot3d.hulls = FALSE, hulls.class.values = NULL,
                       plot3d.surfaces = NULL, plot3d.refits = NULL, point.size = 2,
-                      sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
-                      sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+                      sectionX.x.val = NULL, sectionX.y.val = NULL,
+                      sectionX.refits = NULL, sectionX.density = "no", 
+                      sectionY.x.val = NULL, sectionY.y.val = NULL,
+                      sectionY.refits = NULL, sectionY.density = "no",
                       camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25), 
                       run.plots = FALSE, html.export = TRUE, table.export = TRUE
                       ){
@@ -82,8 +84,8 @@ archeoViz <- function(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
                  "map.z.val" = map.z.val, "map.density" = map.density, "map.refits" = map.refits, 
                  "plot3d.ratio" = plot3d.ratio, "plot3d.hulls" = plot3d.hulls, "hulls.class.values" = hulls.class.values,
                  "plot3d.surfaces" = plot3d.surfaces, "plot3d.refits" = plot3d.refits,
-                 "sectionX.x.val" = sectionX.x.val, "sectionX.y.val" = sectionX.y.val, "sectionX.refits" = sectionX.refits,
-                 "sectionY.x.val" = sectionY.x.val, "sectionY.y.val" = sectionY.y.val, "sectionY.refits" = sectionY.refits,
+                 "sectionX.x.val" = sectionX.x.val, "sectionX.y.val" = sectionX.y.val, "sectionX.refits" = sectionX.refits, "sectionX.density" = sectionX.density,
+                 "sectionY.x.val" = sectionY.x.val, "sectionY.y.val" = sectionY.y.val, "sectionY.refits" = sectionY.refits, "sectionY.density" = sectionY.density,
                  "point.size" = point.size, "rotation" = rotation, 
                  "camera.center" = camera.center, "camera.eye" = camera.eye)
   

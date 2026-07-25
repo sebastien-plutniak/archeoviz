@@ -1,4 +1,10 @@
 
+# archeoViz 1.4.2
+Released: 2026-07-26
+
+* Add density curves to section plots, and add sectionX.density and sectionY.density parameters
+* Add dependency to MASS (for MASS::kde2d)
+* Redefine default setting for map and section plots: remove useless modbar options, define 'pan' as the default selected tool, and enable scrool zooming.
 
 # archeoViz 1.4.1
 Released: 2025-06-01

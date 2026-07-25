@@ -169,7 +169,8 @@ app_ui <- function(){
                                  column(9,
                                         plotly::plotlyOutput("sectionXplot", width = "100%", height = 500)
                                  ),
-                                 column(3, align="center",
+                                 column(3, align="left",
+                                        uiOutput("sectionX.density_selector"),
                                         uiOutput("show.sectionX.refits"),
                                         uiOutput("sectionX.point.size"),
                                         downloadLink("downloadMinimapX", 
@@ -200,7 +201,8 @@ app_ui <- function(){
                                  column(9,
                                         plotly::plotlyOutput("sectionYplot", width = "100%", height = 500)
                                  ),
-                                 column(3, align="center",
+                                 column(3, align="left",
+                                        uiOutput("sectionY.density_selector"),
                                         uiOutput("show.sectionY.refits"),
                                         uiOutput("sectionY.point.size"),
                                         downloadLink("downloadMinimapY", 
@@ -227,7 +229,7 @@ app_ui <- function(){
                                         uiOutput("run.archeofrag"),
                                         uiOutput("run.explor.ca"),
                                         uiOutput("run.shinyheatmaply"),
-                                        tableOutput("tmp"),
+                                        # tableOutput("tmp"),
                                         br()
                                  )
                                ),

@@ -29,7 +29,7 @@ app_server <- function(input, output, session) {
     }
     
     param_dynamic <- query[ names(query) %in% c("map.refits", "plot3d.ratio", "plot3d.hulls", "plot3d.surfaces", "plot3d.refits", "sectionX.refits", "sectionY.refits") ]
-    param_dynamic_char <- query[ names(query) %in% c("class.variable", "class.values", "default.group", "location", "map.density") ]
+    param_dynamic_char <- query[ names(query) %in% c("class.variable", "class.values", "default.group", "location", "map.density", "sectionX.density", "sectionY.density") ]
     
     # param_dynamic
     if(length(param_dynamic) + length(param_dynamic_char) > 0){
@@ -466,7 +466,7 @@ app_server <- function(input, output, session) {
                         "dims" = "yz")
   })
   
-  ## : sel. tab: Y section ----
+  # : sel. tab: Y section ----
   output$sectionY.selection.tab <- renderUI({
     .do_selection_table("dataset" = objects.subdataset(), 
                         "xyz" = sectionY.click.selection(),
@@ -663,7 +663,7 @@ app_server <- function(input, output, session) {
                    text = ~paste('id:', id,
                                  '<br>Square:', square,
                                  '<br>Location:', location_mode,
-                                 '<br>Class:', object_type),
+                                 '<br>Type:', object_type),
                    source = "A"
     )
     
@@ -860,7 +860,7 @@ app_server <- function(input, output, session) {
                            x = surf.list[[i]]$x,
                            y = surf.list[[i]]$y,
                            colorscale = list(c(0, 1), c("black", surf.list[[i]]$color)),
-                           hoverinfo="skip",  showscale=FALSE,
+                           hoverinfo = "skip",  showscale=FALSE,
                            opacity = .7, inherit = FALSE)
       }
     }
@@ -1013,7 +1013,8 @@ app_server <- function(input, output, session) {
                      coords = coords.min.max(),
                      axis.labels = axis.labels(),
                      xaxis = "x",
-                     reverse.axis.values = getShinyOption("reverse.axis.values"))
+                     reverse.axis.values = getShinyOption("reverse.axis.values"),
+                     section.density = input$sectionX.density)
   }, ignoreNULL = ( ! getShinyOption("run.plots")) ) # end sectionX
   
   output$sectionXplot <- plotly::renderPlotly({sectionXplot()})
@@ -1068,7 +1069,8 @@ app_server <- function(input, output, session) {
                      coords = coords.min.max(),
                      axis.labels = axis.labels(), 
                      xaxis = "y",
-                     reverse.axis.values = getShinyOption("reverse.axis.values"))
+                     reverse.axis.values = getShinyOption("reverse.axis.values"),
+                     section.density = input$sectionY.density)
   }, ignoreNULL = ( ! getShinyOption("run.plots")) ) # end section Y
   
   output$sectionYplot <- plotly::renderPlotly({sectionYplot()})
@@ -1326,7 +1328,7 @@ app_server <- function(input, output, session) {
   })
   
   
-  # : Density selector  ----
+  # : Density selectors  ----
   output$density_selector <- renderUI({
     density.modes <- structure(c("no", "overall", "by.variable"), 
                                .Names = c(.term_switcher("density.no"),
@@ -1342,6 +1344,41 @@ app_server <- function(input, output, session) {
                  choices = density.modes,
                  selected = map.density.sel)
   })
+  
+  output$sectionX.density_selector <- renderUI({
+    density.modes <- structure(c("no", "overall", "by.variable"), 
+                               .Names = c(.term_switcher("density.no"),
+                                          .term_switcher("overall"),
+                                          .term_switcher("by.variable")))  
+    section.x.density.sel <- "no"
+    if( ! is.null(getShinyOption("params")$section.x.density) ){
+      section.x.density.sel <- getShinyOption("params")$sectionX.density
+    }
+    
+    radioButtons("sectionX.density",
+                 .term_switcher("density"),
+                 choices = density.modes,
+                 selected = section.x.density.sel)
+  })
+  
+  
+  output$sectionY.density_selector <- renderUI({
+    density.modes <- structure(c("no", "overall", "by.variable"), 
+                               .Names = c(.term_switcher("density.no"),
+                                          .term_switcher("overall"),
+                                          .term_switcher("by.variable")))  
+    section.y.density.sel <- "no"
+    if( ! is.null(getShinyOption("params")$section.y.density) ){
+      section.y.density.sel <- getShinyOption("params")$sectionY.density
+    }
+    
+    radioButtons("sectionY.density",
+                 .term_switcher("density"),
+                 choices = density.modes,
+                 selected = section.y.density.sel)
+  })
+  
+  
   
   # : Location selector  ----
   output$locationPanel <- reactive({is.data.frame(objects.dataset())})
@@ -1817,9 +1854,11 @@ app_server <- function(input, output, session) {
                             "sectionX.x.val" = input$sectionX.x.val,
                             "sectionX.y.val" = input$sectionX.y.val,
                             "sectionX.refits" = input$sectionX.refits,
+                            "sectionX.density" =  paste0("'", input$sectionX.density, "'"),
                             "sectionY.x.val" = input$sectionY.x.val,
                             "sectionY.y.val" = input$sectionY.y.val,
                             "sectionY.refits" = input$sectionY.refits,
+                            "sectionY.density" = paste0("'", input$sectionY.density, "'"),
                             "rotation" = rotation.value()
     )
     

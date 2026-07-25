@@ -87,6 +87,8 @@
                   source = "B") 
   
   map <- plotly::config(map,
+                 modeBarButtonsToRemove = c('select2d','lasso2d', 'zoomIn2d', 'zoomOut2d'),
+                 scrollZoom = TRUE,
                  displaylogo = FALSE,  
                  toImageButtonOptions = list(format = "svg",
                                              filename = "archeoviz-map",
@@ -115,7 +117,8 @@
     arrow.coords <- .rotate(coords = arrow.coords,  # rotate arrow
                             degrees = grid.orientation,
                             pivot = c(.95, .07))
-    map <- layout(map,                 
+    map <- layout(map,
+                  dragmode = 'pan',
                   annotations = list(
                     list(x = arrow.coords[1,1], y = arrow.coords[1,2],
                          ax = arrow.coords[2,1], ay = arrow.coords[2,2],

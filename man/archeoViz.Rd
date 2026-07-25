@@ -5,8 +5,8 @@
 \description{Launch the archeoViz application for visual and statistical exploration of spatial archaeological data}
 
 \usage{
-archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
-          title=NULL, home.text=NULL, lang="en", set.theme="cosmo",
+archeoViz(objects.df = NULL, refits.df = NULL, timeline.df = NULL,
+          title = NULL, home.text = NULL, lang = "en", set.theme = "cosmo",
           square.size = 100, unit = "cm", rotation = 0, 
           grid.orientation = NULL, background.map = NULL,
           reverse.axis.values = NULL, reverse.square.names = NULL,
@@ -16,8 +16,10 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
           map.z.val = NULL, map.density = "no", map.refits = NULL,
           plot3d.ratio = 1, plot3d.hulls = FALSE, hulls.class.values = NULL,
           plot3d.surfaces = NULL, plot3d.refits = NULL, point.size = 2,
-          sectionX.x.val = NULL, sectionX.y.val = NULL, sectionX.refits = NULL, 
-          sectionY.x.val = NULL, sectionY.y.val = NULL, sectionY.refits = NULL,
+          sectionX.x.val = NULL, sectionX.y.val = NULL,
+          sectionX.refits = NULL,  sectionX.density = "no",
+          sectionY.x.val = NULL, sectionY.y.val = NULL,
+          sectionY.refits = NULL, sectionY.density = "no",
           camera.center = c(0, 0, 0), camera.eye = c(1.25, 1.25, 1.25),
           run.plots = FALSE, html.export = TRUE, table.export = TRUE
           )
@@ -55,9 +57,11 @@ archeoViz(objects.df=NULL, refits.df=NULL, timeline.df=NULL,
   \item{sectionX.x.val}{double. At the launch of the app, minimal and maximal X coordinates values to display in the X section plot, e.g. c(10, 20).}
   \item{sectionX.y.val}{double. At the launch of the app, minimal and maximal Y coordinates values to display in the X section plot, e.g. c(10, 20).}
   \item{sectionX.refits}{logical. At the launch of the app, whether to show refits in the X section plot.}
+  \item{sectionX.density}{character. At the launch of the app, whether to compute and show density contours in the section X plot (one of 'no', 'overall', 'by.variable').}
   \item{sectionY.x.val}{double. At the launch of the app, minimal and maximal X coordinates values to display in the Y section plot, e.g. c(10, 20).}
   \item{sectionY.y.val}{double. At the launch of the app, minimal and maximal Y coordinates values to display in the Y section plot, e.g. c(10, 20).}
   \item{sectionY.refits}{logical. At the launch of the app, whether to show refits in the Y section plot.}
+  \item{sectionY.density}{character. At the launch of the app, whether to compute and show density contours in the section Y plot (one of 'no', 'overall', 'by.variable').}
   \item{camera.center}{double. In 3D plot, x,y,z coordinates of the point to which the camera is oriented, to pass to the `plotly::layout()` function. Default value: c(x=0, y=0, z=0).}
   \item{camera.eye}{double. In 3D plot, x,y,z coordinates of the camera's view point, to pass to the `plotly::layout()` function. Default value: c(x=1.25, y=1.25, z=1.25).}
   \item{run.plots}{logical. Whether to immediately compute and show plots (without requiring the user to click on the buttons in the interface).}

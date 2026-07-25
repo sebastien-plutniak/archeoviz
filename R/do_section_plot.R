@@ -2,7 +2,8 @@
                              refitting.df, show.refits, colors, 
                              grid.legend, grid.coord, coords, 
                              axis.labels, xaxis,
-                             reverse.axis.values=""){
+                             reverse.axis.values="",
+                             section.density="no"){
    # data check: ----
   section.df <- dataset[selection, ]
 
@@ -27,6 +28,8 @@
 
   # add config ----
   section <- plotly::config(section,
+                            modeBarButtonsToRemove = c('zoom2d', 'select2d','lasso2d', 'zoomIn2d', 'zoomOut2d'),
+                            scrollZoom = TRUE,
                             displaylogo = FALSE,
                             toImageButtonOptions = list(
                               format = "svg",
@@ -52,7 +55,52 @@
                                    data = grid.coord,
                                    color = I("grey70"), alpha=.6,
                                    showlegend=F, hoverinfo="skip", inherit = F)
+  # add density contours ----
+  if(! is.null(section.density)){
+    if(section.density == "by.variable"){
+      # only variable with >= 30 points
+      var.sel <- sort(names(table(section.df$group.variable)[table(section.df$group.variable) >= 30]))
+      
+      density.res <- lapply(var.sel, function(value){
+        MASS::kde2d(x = section.df[section.df$group.variable == value, ]$z,
+                    y = section.df[section.df$group.variable == value, ]$x)
+        })
+      
+      color.tab <- unique(section.df[section.df$group.variable %in% var.sel, c("group.variable", "layer_color") , ])
+      color.tab$group.variable <- as.character(color.tab$group.variable)
+      color.tab <- color.tab[order(color.tab$group.variable), ]
+      
+      for(i in seq_len(length(density.res)) ){
+        section <- plotly::add_contour(section,
+                                       name =  color.tab[i, 1],
+                                       x = density.res[[i]]$y, 
+                                       y = density.res[[i]]$x, 
+                                       z = density.res[[i]]$z,
+                                       showscale = FALSE, showlegend = TRUE,
+                                       hoverinfo = "skip",
+                                       contours = list(coloring = "none"),
+                                       line = list(smoothing = 0.85,
+                                                   color = color.tab[i, 2]
+                                                   )
+                                       )
+      }
+    }
+    
+    if(section.density == "overall"){
+      density.res <- MASS::kde2d(x = section.df$z, y = section.df$x)
+      section <- plotly::add_contour(section, 
+                          name = "Density",           
+                          x = density.res$y, y = density.res$x, z= density.res$z,
+                          showscale = FALSE,
+                          showlegend = TRUE,
+                          hoverinfo = "skip",
+                          contours = list(coloring = "none"),
+                          line = list(smoothing = 0.85, color = "black"))
+    }
+  }
+  
 
+  
   # add refits ----
   if( sum(show.refits) > 0){
     
@@ -108,7 +156,7 @@
                                   range = c(coords$zmax, coords$zmin),
                                   scaleanchor="x"
                      ),
-                     # scene = list(aspectmode = "cube"), 
+                     dragmode = 'pan',
                      annotations = list(list(
                        xref="paper", yref="paper",
                        x= 0, y = 0,

@@ -1331,7 +1331,7 @@ app_server <- function(input, output, session) {
   # : Density selectors  ----
   output$density_selector <- renderUI({
     density.modes <- structure(c("no", "overall", "by.variable"), 
-                               .Names = c(.term_switcher("density.no"),
+                               names = c(.term_switcher("density.no"),
                                           .term_switcher("overall"),
                                           .term_switcher("by.variable")))  
     map.density.sel <- "no"
@@ -1347,7 +1347,7 @@ app_server <- function(input, output, session) {
   
   output$sectionX.density_selector <- renderUI({
     density.modes <- structure(c("no", "overall", "by.variable"), 
-                               .Names = c(.term_switcher("density.no"),
+                               names = c(.term_switcher("density.no"),
                                           .term_switcher("overall"),
                                           .term_switcher("by.variable")))  
     section.x.density.sel <- "no"
@@ -1364,7 +1364,7 @@ app_server <- function(input, output, session) {
   
   output$sectionY.density_selector <- renderUI({
     density.modes <- structure(c("no", "overall", "by.variable"), 
-                               .Names = c(.term_switcher("density.no"),
+                               names = c(.term_switcher("density.no"),
                                           .term_switcher("overall"),
                                           .term_switcher("by.variable")))  
     section.y.density.sel <- "no"

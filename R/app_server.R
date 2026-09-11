@@ -1721,7 +1721,8 @@ app_server <- function(input, output, session) {
     dataset <- objects.dataset()
     dataset <- dataset[, c("id", "layer")]
     
-    if( (nrow(refits.df) == 0) | (length(unique(dataset$layer)) < 2) ){return()}
+    # if( (nrow(refits.df) == 0) | (length(unique(dataset$layer)) < 2) ){return()}
+    if( (nrow(refits.df) == 0)){return()}
     
     refits.df <- refits.df[refits.df[,1] %in% dataset[,1], ]
     refits.df <- refits.df[refits.df[,2] %in% dataset[,1], ]
@@ -1778,7 +1779,7 @@ app_server <- function(input, output, session) {
                         object.id, 
                         "/session/", session$token, "/download/download.archeofrag.nodes")
     
-    paste0("https://analytics.huma-num.fr/Sebastien.Plutniak/archeofrag/?objects=", nodes.url, "&relations=", edges.url)
+    paste0("https://analytics.huma-num.fr/archeofrag/?objects=", nodes.url, "&relations=", edges.url)
   })
   
   output$run.archeofrag <- renderUI({

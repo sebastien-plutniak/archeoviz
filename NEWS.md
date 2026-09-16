@@ -1,4 +1,8 @@
 
+# archeoViz 1.4.3
+
+* Add an export function to the 'fabryka' application.
+
 # archeoViz 1.4.2
 Released: 2026-07-26
 

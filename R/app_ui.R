@@ -227,6 +227,7 @@ app_ui <- function(){
                                         uiOutput("run.seriograph"),
                                         uiOutput("run.amado"),
                                         uiOutput("run.archeofrag"),
+                                        uiOutput("run.fabryka"),
                                         uiOutput("run.explor.ca"),
                                         uiOutput("run.shinyheatmaply"),
                                         # tableOutput("tmp"),

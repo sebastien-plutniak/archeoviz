@@ -143,7 +143,7 @@ app_server <- function(input, output, session) {
     timeline <- .do_timelinedata(from.param.time.df, 
                                  objects.df, 
                                  timeline.ui.df # this is the reactive object
-                                 )
+    )
     # notification disabled
     # showNotification(.term_switcher(timeline$notif.text),
     #                  type = timeline$notif.type)
@@ -197,10 +197,10 @@ app_server <- function(input, output, session) {
   # Rotation value ----
   rotation.value <- reactive({
     if(is.null(input$rotation)){
-        value <- getShinyOption("params")$rotation
-      } else{
-        value <- input$rotation
-      }
+      value <- getShinyOption("params")$rotation
+    } else{
+      value <- input$rotation
+    }
     value
   })
   
@@ -293,17 +293,17 @@ app_server <- function(input, output, session) {
   } 
   
   if(user.unit == "m"){
-     if(scale.value >= 1000){
-       scale.value <- scale.value / 1000
-       scale.unit <- " km"
-     } else {
-       scale.unit <- " m"
-     }
+    if(scale.value >= 1000){
+      scale.value <- scale.value / 1000
+      scale.unit <- " km"
+    } else {
+      scale.unit <- " m"
+    }
   } 
   
   if(user.unit == "km"){ 
     scale.unit <- " km" 
-    }
+  }
   
   grid.legend <- paste0(.term_switcher("grid"), ": ",
                         scale.value, 
@@ -427,6 +427,7 @@ app_server <- function(input, output, session) {
   # TABLES ----
   # : preview objects tab  ----
   output$objects.preview.tab <- renderTable({
+    req(objects.ui.input)
     objects.ui.input()[c(1, 2), ]
   }, rownames = T, digits=0)
   
@@ -512,21 +513,21 @@ app_server <- function(input, output, session) {
     squares <- squares()
     axis.labels <- axis.labels()
     
-    map <- ggplot() +
-      theme_minimal(base_size = 11) +
-      geom_vline(xintercept = square.coords$range.x, colour = "darkgrey" ) +
-      geom_hline(yintercept = square.coords$range.y, colour = "darkgrey" ) +
-      coord_fixed() +
-      scale_x_continuous("", breaks = axis.labels$xaxis$breaks,
-                             labels = axis.labels$xaxis$labels) +
-      scale_y_continuous("", breaks = axis.labels$yaxis$breaks,
-                             labels = axis.labels$yaxis$labels) 
+    map <- ggplot2::ggplot() +
+      ggplot2::theme_minimal(base_size = 11) +
+      ggplot2::geom_vline(xintercept = square.coords$range.x, colour = "darkgrey" ) +
+      ggplot2::geom_hline(yintercept = square.coords$range.y, colour = "darkgrey" ) +
+      ggplot2::coord_fixed() +
+      ggplot2::scale_x_continuous("", breaks = axis.labels$xaxis$breaks,
+                         labels = axis.labels$xaxis$labels) +
+      ggplot2::scale_y_continuous("", breaks = axis.labels$yaxis$breaks,
+                         labels = axis.labels$yaxis$labels) 
     
     # set background color:
     if(getShinyOption("background.col") != "white"){
       background <- element_rect(fill = getShinyOption("background.col"))
-      map <- map + theme_dark(base_size = 11) + 
-        theme(panel.background = background,
+      map <- map + ggplot2::theme_dark(base_size = 11) + 
+        ggplot2::theme(panel.background = background,
               plot.background = background,
               legend.background = background
         ) 
@@ -535,11 +536,11 @@ app_server <- function(input, output, session) {
     # reverse axes if needed:
     reverse <- getShinyOption("reverse.axis.values")
     if(grepl("x", reverse)){ 
-      map <- map + scale_x_reverse("", breaks = axis.labels$xaxis$breaks,
+      map <- map + ggplot2::scale_x_reverse("", breaks = axis.labels$xaxis$breaks,
                                    labels = axis.labels$xaxis$labels)
     }
     if(grepl("y", reverse)){ 
-      map <- map + scale_y_reverse("", breaks = axis.labels$yaxis$breaks,
+      map <- map + ggplot2::scale_y_reverse("", breaks = axis.labels$yaxis$breaks,
                                    labels = axis.labels$yaxis$labels)
     }
     
@@ -558,8 +559,8 @@ app_server <- function(input, output, session) {
       "xmax" = input$sectionX.x.val[2])
     
     site.map() +
-      geom_rect(data = rect.df,
-                aes(ymin = .data[["ymin"]], ymax = .data[["ymax"]],
+      ggplot2::geom_rect(data = rect.df,
+                ggplot2::aes(ymin = .data[["ymin"]], ymax = .data[["ymax"]],
                     xmin = .data[["xmin"]], xmax = .data[["xmax"]]),
                 fill="red", alpha=.7)
   })
@@ -586,8 +587,8 @@ app_server <- function(input, output, session) {
       "xmax" = input$sectionY.x.val[2])
     
     site.map() +
-      geom_rect(data = rect.df,
-                aes(ymin = .data[["ymin"]], ymax = .data[["ymax"]],
+      ggplot2::geom_rect(data = rect.df,
+                         ggplot2::aes(ymin = .data[["ymin"]], ymax = .data[["ymax"]],
                     xmin = .data[["xmin"]], xmax = .data[["xmax"]]),
                 fill="red",  alpha=.7
       )
@@ -597,7 +598,7 @@ app_server <- function(input, output, session) {
   output$downloadMinimapY <- downloadHandler(
     filename = paste0(gsub(" ", "-", shiny::getShinyOption("title")), "-minimap-y.svg"),
     content = function(file) {
-      ggsave(file, plot = site.mapY(),
+      ggplot2::ggsave(file, plot = site.mapY(),
              device = "svg", width=9, height=9, pointsize = 14)
     }
   )
@@ -610,19 +611,19 @@ app_server <- function(input, output, session) {
     tiles <- expand.grid(x = axis.labels$xaxis$labels,
                          y = axis.labels$yaxis$labels)
     
-    timeline.map <- ggplot() +
-      theme_minimal(base_size = 12) +
-      geom_tile(data = tiles, 
-                aes(x = x, y = y),
+    timeline.map <- ggplot2::ggplot() +
+      ggplot2::theme_minimal(base_size = 12) +
+      ggplot2::geom_tile(data = tiles, 
+                         ggplot2::aes(x = x, y = y),
                 show.legend = F, alpha=0) +
-      geom_vline(xintercept =  after_scale(seq(0.5, length(axis.labels$xaxis$breaks) + .5, 1)),
+      ggplot2::geom_vline(xintercept =  after_scale(seq(0.5, length(axis.labels$xaxis$breaks) + .5, 1)),
                  colour = "grey70" ) +
-      geom_hline(yintercept =  after_scale(seq(0.5, length(axis.labels$yaxis$breaks) + .5, 1)),
+      ggplot2::geom_hline(yintercept =  after_scale(seq(0.5, length(axis.labels$yaxis$breaks) + .5, 1)),
                  colour = "grey70" ) +
-      scale_fill_manual("State:",
+      ggplot2::scale_fill_manual("State:",
                         values = c(grDevices::rgb(0,0,0,0),
                                    grDevices::rgb(.43, .54, .23, .7))) +
-      scale_x_discrete("") + scale_y_discrete("") 
+      ggplot2::scale_x_discrete("") + ggplot2::scale_y_discrete("") 
     
     timeline.map
   })   
@@ -695,7 +696,7 @@ app_server <- function(input, output, session) {
       refitting.df <- refitting.df()$refits.3d
       
       sel <- refitting.df[, 1] %in% dataset$id | 
-             refitting.df[, 2] %in% dataset$id
+        refitting.df[, 2] %in% dataset$id
       
       refitting.df <- refitting.df[which(sel), ]
       
@@ -1115,12 +1116,12 @@ app_server <- function(input, output, session) {
                         getShinyOption("params")$map.refits))
     
     .do_map_plot(site.map(), planZ.df,
-                map.point.size, color.var, col,
-                input$map.density,
-                map.refits, refitting.df(),
-                grid.legend,
-                background.map = getShinyOption("background.map"),
-                grid.orientation = getShinyOption("grid.orientation"))
+                 map.point.size, color.var, col,
+                 input$map.density,
+                 map.refits, refitting.df(),
+                 grid.legend,
+                 background.map = getShinyOption("background.map"),
+                 grid.orientation = getShinyOption("grid.orientation"))
     
   }, ignoreNULL = ( ! getShinyOption("run.plots"))
   )   # end eventReactive
@@ -1320,7 +1321,7 @@ app_server <- function(input, output, session) {
     
     group.sel.modes <- structure(c("by.layer", "by.variable"),
                                  names = c(.term_switcher("by.layer"),
-                                            .term_switcher("by.variable")))
+                                           .term_switcher("by.variable")))
     radioButtons("group.selection",
                  .term_switcher("group"),
                  choices = group.sel.modes,
@@ -1332,8 +1333,8 @@ app_server <- function(input, output, session) {
   output$density_selector <- renderUI({
     density.modes <- structure(c("no", "overall", "by.variable"), 
                                names = c(.term_switcher("density.no"),
-                                          .term_switcher("overall"),
-                                          .term_switcher("by.variable")))  
+                                         .term_switcher("overall"),
+                                         .term_switcher("by.variable")))  
     map.density.sel <- "no"
     if( ! is.null(getShinyOption("params")$map.density) ){
       map.density.sel <- getShinyOption("params")$map.density
@@ -1348,8 +1349,8 @@ app_server <- function(input, output, session) {
   output$sectionX.density_selector <- renderUI({
     density.modes <- structure(c("no", "overall", "by.variable"), 
                                names = c(.term_switcher("density.no"),
-                                          .term_switcher("overall"),
-                                          .term_switcher("by.variable")))  
+                                         .term_switcher("overall"),
+                                         .term_switcher("by.variable")))  
     section.x.density.sel <- "no"
     if( ! is.null(getShinyOption("params")$section.x.density) ){
       section.x.density.sel <- getShinyOption("params")$sectionX.density
@@ -1365,8 +1366,8 @@ app_server <- function(input, output, session) {
   output$sectionY.density_selector <- renderUI({
     density.modes <- structure(c("no", "overall", "by.variable"), 
                                names = c(.term_switcher("density.no"),
-                                          .term_switcher("overall"),
-                                          .term_switcher("by.variable")))  
+                                         .term_switcher("overall"),
+                                         .term_switcher("by.variable")))  
     section.y.density.sel <- "no"
     if( ! is.null(getShinyOption("params")$section.y.density) ){
       section.y.density.sel <- getShinyOption("params")$sectionY.density
@@ -1392,7 +1393,7 @@ app_server <- function(input, output, session) {
     if(any(loc.values == "fuzzy")){
       loc.values <- c(loc.values, "show.uncertainty")
     }
-      
+    
     loc.names <- sapply(loc.values, .term_switcher, USE.NAMES = F)
     
     loc.selection <- loc.values[1]
@@ -1552,9 +1553,9 @@ app_server <- function(input, output, session) {
   
   # : slider rotation ----
   output$sliderRotation <- renderUI({
-  sliderInput("rotation", .term_switcher("rotation"),
-              value = getShinyOption("params")$rotation,
-              min = -180, max = 180, step=1)
+    sliderInput("rotation", .term_switcher("rotation"),
+                value = getShinyOption("params")$rotation,
+                min = -180, max = 180, step=1)
   })
   
   # Exports ----
@@ -1599,9 +1600,9 @@ app_server <- function(input, output, session) {
     req(export.table())
     external_app_launch_links(table = export.table(),
                               app.name = "seriograph", 
-                     app.url ="https://analytics.huma-num.fr/ModAthom/seriograph/?data=",
-                     methods = .term_switcher("seriations"),
-                     session = session) 
+                              app.url ="https://analytics.huma-num.fr/ModAthom/seriograph/?data=",
+                              methods = .term_switcher("seriations"),
+                              session = session) 
   })
   
   
@@ -1620,9 +1621,9 @@ app_server <- function(input, output, session) {
     req(export.table())
     external_app_launch_links(table = export.table(),
                               app.name = "explor.ca",
-                     app.url = "https://analytics.huma-num.fr/Sebastien.Plutniak/explor-ca/?data=",
-                     methods = .term_switcher("corr.analysis"),
-                     session = session)
+                              app.url = "https://analytics.huma-num.fr/Sebastien.Plutniak/explor-ca/?data=",
+                              methods = .term_switcher("corr.analysis"),
+                              session = session)
   })
   
   
@@ -1641,11 +1642,11 @@ app_server <- function(input, output, session) {
     req(export.table())
     external_app_launch_links(table = export.table(),
                               app.name = "shinyheatmaply",
-            app.url = "https://analytics.huma-num.fr/Sebastien.Plutniak/shinyHeatmaply/?data=",
-            methods = paste0(.term_switcher("classifications"),
-                             ", ",
-                             .term_switcher("heatmaps")),
-            session = session) 
+                              app.url = "https://analytics.huma-num.fr/Sebastien.Plutniak/shinyHeatmaply/?data=",
+                              methods = paste0(.term_switcher("classifications"),
+                                               ", ",
+                                               .term_switcher("heatmaps")),
+                              session = session) 
   })
   
   
@@ -1674,23 +1675,23 @@ app_server <- function(input, output, session) {
       "cbind('", title, "'= rownames(data), data)"
     )))
     data <- rbind(colnames(data), data)
-
+    
     # recast the table as a single string:
     data <- apply(data, 2, paste0, collapse="%09")   # separate cells by tabs
     data <- gsub(" ", "%20", data)                   # add spaces
     data <- paste0(data, collapse = "%0A")           # encode lines
-
+    
     # generate an URL:
     amado.lang <- "en"
     if(any(c('es', 'fr', 'it', 'ru', 'tr', 'uk', 'vi', 'zh') == shiny::getShinyOption("lang"))){
       amado.lang <- shiny::getShinyOption("lang")
     }
-
+    
     paste0("https://app.ptm.huma-num.fr/amado/main.html?lang=",
            amado.lang, "&table=", data)
   })
-
-
+  
+  
   output$run.amado <- renderUI({
     req(amado.url())
     
@@ -1707,22 +1708,21 @@ app_server <- function(input, output, session) {
     )
   })
   
-
+  
   # : archeofrag ----
   
   archeofrag.tables <- reactive({
-    req(input$class.variable, objects.dataset(), refitting.df())
+    req(input$class.variable, objects.dataset, refitting.df)
     
     if( (Sys.getenv('SHINY_PORT') == "") |
         (! getShinyOption("table.export")) ){ return() }
     
     refits.df <- refitting.df()[[3]]
+    if((nrow(refits.df) == 0)){return()}
     
     dataset <- objects.dataset()
     dataset <- dataset[, c("id", "layer")]
     
-    # if( (nrow(refits.df) == 0) | (length(unique(dataset$layer)) < 2) ){return()}
-    if( (nrow(refits.df) == 0)){return()}
     
     refits.df <- refits.df[refits.df[,1] %in% dataset[,1], ]
     refits.df <- refits.df[refits.df[,2] %in% dataset[,1], ]
@@ -1734,13 +1734,13 @@ app_server <- function(input, output, session) {
   output$download.archeofrag.edges <- downloadHandler(
     filename = "archeofrag-edges.csv",
     content = function(file) {
-      write.csv(archeofrag.tables()[[1]], file, row.names = FALSE)
+      utils::write.csv(archeofrag.tables()[[1]], file, row.names = FALSE)
     }
   )
   output$download.archeofrag.nodes <- downloadHandler(
     filename = "archeofrag-nodes.csv",
     content = function(file) {
-      write.csv(archeofrag.tables()[[2]], file, row.names = FALSE)
+      utils::write.csv(archeofrag.tables()[[2]], file, row.names = FALSE)
     }
   )
   
@@ -1752,7 +1752,7 @@ app_server <- function(input, output, session) {
                                          data = archeofrag.tables()[[1]],
                                          filterFunc = function(data, req) { 
                                            httpResponse(200, "text/csv",
-                                                        write.csv(data, row.names=FALSE)
+                                                        utils::write.csv(data, row.names=FALSE)
                                            )
                                          })
     object.id2 <- gsub(".*w=(.*)&nonce.*", "\\1", edges.url)
@@ -1767,8 +1767,8 @@ app_server <- function(input, output, session) {
     nodes.url <- session$registerDataObj(name = "table",
                                          data = archeofrag.tables()[[2]],
                                          filterFunc = function(data, req) { 
-                                           httpResponse(200, "text/csv",
-                                                        write.csv(data, row.names = FALSE)
+                                           shiny::httpResponse(200, "text/csv",
+                                                               utils::write.csv(data, row.names = FALSE)
                                            )
                                          })
     object.id <- gsub(".*w=(.*)&nonce.*", "\\1", nodes.url)
@@ -1801,23 +1801,116 @@ app_server <- function(input, output, session) {
   })
   
   
+  # : fabryka ----
+  
+  fabryka.table <- reactive({
+    req(input$stat.variable1, objects.dataset, refitting.df)
+    
+    if( (Sys.getenv('SHINY_PORT') == "") |
+        (! getShinyOption("table.export")) ){ return() }
+    
+    refits.df <- refitting.df()$refits.2d
+    if(nrow(refits.df) == 0){return()}
+    
+    colnames(refits.df) <- c("from", "to", "X1", "Y1", "Z1", "X2", "Y2", "Z2")
+    objects.df <- objects.dataset()
+    
+    stat.variable1 <- input$stat.variable1
+    stat.variable2 <- input$stat.variable2
+    
+    idx <- which(colnames(objects.df) %in% c("id", stat.variable1, stat.variable2))
+    objects.df <- objects.df[ , idx]
+    
+    refits.df <- merge(refits.df, objects.df, by.x="from", by.y="id")
+    refits.df <- merge(refits.df, objects.df, by.x="to", by.y="id", suffixes=c(".from", ".to"))
+    
+    # add subset variables and values
+    code.var <- refits.df[, grep(stat.variable1, colnames(refits.df))] 
+    code.var <- apply(code.var, 1, function(x){
+      if(any(is.na(x))){ res <- "n/a" }
+      else if(x[1] == x[2]){ res <- x[1] } 
+      else {res <- paste(sort(c(x[1], x[2])), collapse="-")}
+      res
+    })
+    refits.df$code <- code.var
+    
+    sample.var <- refits.df[, grep(stat.variable2, colnames(refits.df))] 
+    sample.var <- apply(sample.var, 1, function(x){
+      if(any(is.na(x))){ res <- "n/a" }
+      else if(x[1] == x[2]){ res <- x[1] } 
+      else {res <- paste(sort(c(x[1], x[2])), collapse="-")}
+      res
+    } )
+    refits.df$sample <- sample.var
+    
+    refits.df$id <- paste(refits.df$from, refits.df$to, sep="-")
+    
+    refits.df[, c("id", "code", "sample", "X1", "Y1", "Z1", "X2", "Y2", "Z2")]
+  })
+  
+  
+  output$download.fabryka <- downloadHandler(
+    filename = "fabryka.csv",
+    content = function(file) {
+      utils::write.csv2(fabryka.table(), file, row.names = FALSE)
+    }
+  )
+  
+  
+  fabryka.url <- reactive({
+    req(fabryka.table())
+    fabryka.url <- session$registerDataObj(name = "table",
+                                           data = fabryka.table(),
+                                           filterFunc = function(data, req) { 
+                                             shiny::httpResponse(200, "text/csv",
+                                                                 utils::write.csv2(data, row.names=FALSE)
+                                             )
+                                           })
+    object.id2 <- gsub(".*w=(.*)&nonce.*", "\\1", fabryka.url)
+    
+    data.url <- paste0(session$clientData$url_protocol, "//",
+                       session$clientData$url_hostname,
+                       session$clientData$url_pathname,
+                       object.id2, 
+                       "/session/", session$token, "/download/download.fabryka")
+    
+    
+    paste0("https://analytics.huma-num.fr/Sebastien.Plutniak/fabryka/?data=", data.url, "&dataType=5")
+  })
+  
+  output$run.fabryka <- renderUI({
+    req(fabryka.url())
+    
+    tagList(
+      "> ", .term_switcher("export.to"),
+      actionLink("run.fabryka",
+                 label = "fabryka",
+                 onclick = paste("window.open('",
+                                 fabryka.url(), "', '_blank')")),
+      ": ",
+      .term_switcher("refit.analysis"),
+      " - ", .term_switcher("download"),
+      downloadLink("download.fabryka", " CSV")
+    )
+  })
+  
   # : Export ui header ----
   output$export.header <- renderUI({
     if(
       ( (Sys.getenv('SHINY_PORT') != "") & # only if remote use of the app
         ( getShinyOption("table.export")) ) &
-      ( isTruthy(export.table) | isTruthy(archeofrag.tables) ) ){
+      ( isTruthy(export.table) | isTruthy(archeofrag.tables) | isTruthy(fabryka.table) ) ){
       
       list(h4(.term_switcher("header.export.data")),
            div(style = "display: flex;",
-           selectInput("stat.variable1",
-                       paste(.term_switcher("variable"), "1"),
-                       choices = c("layer", variables.names()),
-                       selected = "layer"), 
-           selectInput("stat.variable2",
-                       paste(.term_switcher("variable"), "2"),
-                       choices = c("layer", variables.names()),
-                       selected = "object_type")
+               selectInput("stat.variable1",
+                           paste(.term_switcher("variable"), "1"),
+                           choices = c("layer", variables.names()),
+                           selected = "layer"), 
+               selectInput("stat.variable2",
+                           paste(.term_switcher("variable"), "2"),
+                           choices = c("layer", variables.names()),
+                           selected = "object_type")
            )
       )
     } else{ return() }
@@ -1878,7 +1971,7 @@ app_server <- function(input, output, session) {
     
     if(nrow(time.sub.df) == 0) return()
     axis.labels <- axis.labels()
-
+    
     if("x" %in% getShinyOption("reverse.square.names")){
       levels(time.sub.df$square_x) <- rev(levels(time.sub.df$square_x))
     }
@@ -1887,11 +1980,11 @@ app_server <- function(input, output, session) {
     }
     if("x" %in% getShinyOption("reverse.axis.values")){
       time.sub.df$square_x <- factor(time.sub.df$square_x,
-                        levels = rev(levels(time.sub.df$square_x)))
+                                     levels = rev(levels(time.sub.df$square_x)))
     }
     if("y" %in% getShinyOption("reverse.axis.values")){
       time.sub.df$square_y <- factor(time.sub.df$square_y,
-                          levels = rev(levels(time.sub.df$square_y)))
+                                     levels = rev(levels(time.sub.df$square_y)))
     }
     timeline.map.out <- timeline.map() +
       geom_tile(data = time.sub.df,
@@ -1924,14 +2017,14 @@ app_server <- function(input, output, session) {
       
       arrow.coords <- matrix(c(arrow.x.origin,
                                arrow.x.origin,
-                                0, - .5),
+                               0, - .5),
                              ncol=2) 
       
       arrow.coords <- .rotate(coords = arrow.coords,  # rotate arrow
-                     degrees = 360 - getShinyOption("grid.orientation"),
-                     pivot = c(arrow.x.origin,
-                               median(c(arrow.coords[, 2])))
-                     )
+                              degrees = 360 - getShinyOption("grid.orientation"),
+                              pivot = c(arrow.x.origin,
+                                        median(c(arrow.coords[, 2])))
+      )
       
       timeline.map.out <- timeline.map.out +
         annotate("text",
@@ -1942,7 +2035,7 @@ app_server <- function(input, output, session) {
                  x = arrow.coords[1,1], xend = arrow.coords[2,1],
                  y = arrow.coords[2,2], yend = arrow.coords[1,2],
                  arrow = ggplot2::arrow(length = ggplot2::unit(0.2, "cm"))
-                 ) 
+        ) 
     }
     
     
@@ -1951,7 +2044,7 @@ app_server <- function(input, output, session) {
   
   output$timeline.map <- renderPlot({
     timeline.map.plot() 
-    })
+  })
   
   output$download.timeline.map <- downloadHandler(
     filename = "timeline-map.svg",
@@ -1970,11 +2063,11 @@ app_server <- function(input, output, session) {
     
     if("x" %in% getShinyOption("reverse.axis.values")){
       time.df$square_x <- factor(time.df$square_x,
-                                     levels = rev(levels(time.df$square_x)))
+                                 levels = rev(levels(time.df$square_x)))
     }
     if("y" %in% getShinyOption("reverse.axis.values")){
       time.df$square_y <- factor(time.df$square_y,
-                                     levels = rev(levels(time.df$square_y)))
+                                 levels = rev(levels(time.df$square_y)))
     }
     
     timeline.map() +
@@ -1992,13 +2085,13 @@ app_server <- function(input, output, session) {
   output$timeline.map.grid <- renderPlot({ 
     req(timeline.map.grid)
     timeline.map.grid()
-    })
+  })
   
   output$download.timeline.map.grid <- downloadHandler(
     filename = "timeline-map-grid.svg",
     content = function(file) {
       ggplot2::ggsave(file, plot = timeline.map.grid(),
-             device = "svg", width=9, height=9, pointsize = 14)
+                      device = "svg", width=9, height=9, pointsize = 14)
     }
   )
   
